@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "alwaysStrict": true,
+    "outDir": "./dist",
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "module": "ESNext",
+    "target": "ES2022",
+    "declaration": true
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.mts"
+  ]
+}

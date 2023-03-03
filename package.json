@@ -1,0 +1,33 @@
+{
+  "name": "shell-builder",
+  "version": "1.0.0",
+  "description": "Typescript module to dynamically build Bourne Shell scripts",
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "type": "module",
+  "scripts": {
+    "build": "npx tsc",
+    "test": "npx tsc -p tsconfig-tests.json && npx c8 -r html mocha ./tests-build/tests/*.test.js; rm -rf ./tests-build",
+    "lint": "npx eslint .",
+    "example": "npm run build && node --experimental-vm-modules ./examples/app.js"
+  },
+  "author": "monstermichl",
+  "license": "MIT",
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.13.0",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "c8": "^7.13.0",
+    "chai": "^4.3.7",
+    "eslint": "^8.34.0",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "files": [
+    "dist/**/*"
+  ]
+}
