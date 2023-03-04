@@ -27,7 +27,7 @@ const script = new Script([
                 'echo "$j works"',
             ]),
         ]),
-    ])?.otherwise([
+    ])?.else([
         new While('$i -gt 1', [
             'echo "nothing to do here"',
             new For('j', '$i', [
