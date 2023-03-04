@@ -4,14 +4,22 @@ import {
     StatementOrBlockOrString,
 } from '../base/block.mjs';
 import { Statement } from '../base/statement.mjs';
-import { StatementsBlock } from './statements-block.mjs';
+
+/**
+ * Serves as the body of a FlowBlock.
+ */
+export class Body extends Block {
+    constructor() {
+        super();
+    }
+}
 
 /**
  * Serves as the base for all code parts that somehow change the
  * execution flow.
  */
 export abstract class FlowBlock extends Block {
-    protected _body = new StatementsBlock();
+    protected _body = new Body();
     protected _openingStatement: Statement;
     protected _closingStatement: Statement | null;
 

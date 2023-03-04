@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import { Block } from '../src/base/block.mjs';
 import { Statement } from '../src/base/statement.mjs';
-import { StatementsBlock } from '../src/blocks/statements-block.mjs';
 
 /* Helper class to instantiate Block. */
 class BlockHelper extends Block {
@@ -32,7 +31,7 @@ describe('Block tests', () => {
             });
 
             it('get Block content', () => {
-                const statementsBlock = new StatementsBlock('test');
+                const statementsBlock = new BlockHelper('test');
                 const block = new BlockHelper(statementsBlock);
                 const content = block.content;
 
@@ -67,8 +66,8 @@ describe('Block tests', () => {
 
             it('get Blocks content', () => {
                 const statements = [
-                    new StatementsBlock('echo 123'),
-                    new StatementsBlock('echo 456'),
+                    new BlockHelper('echo 123'),
+                    new BlockHelper('echo 456'),
                 ];
                 const block = new BlockHelper(statements);
                 const content = block.content;
@@ -82,7 +81,7 @@ describe('Block tests', () => {
             it('get Statement or Blocks or String content', () => {
                 const statements = [
                     new Statement('echo 123'),
-                    new StatementsBlock('echo 456'),
+                    new BlockHelper('echo 456'),
                     'echo 789',
                 ];
                 const block = new BlockHelper(statements);
@@ -124,7 +123,7 @@ describe('Block tests', () => {
             });
 
             it('get raw Block content', () => {
-                const statementsBlock = new StatementsBlock('test');
+                const statementsBlock = new BlockHelper('test');
                 const block = new BlockHelper(statementsBlock);
                 const content = block.raw;
 
@@ -159,8 +158,8 @@ describe('Block tests', () => {
 
             it('get raw Blocks content', () => {
                 const statements = [
-                    new StatementsBlock('echo 123'),
-                    new StatementsBlock('echo 456'),
+                    new BlockHelper('echo 123'),
+                    new BlockHelper('echo 456'),
                 ];
                 const block = new BlockHelper(statements);
                 const content = block.raw;
@@ -174,7 +173,7 @@ describe('Block tests', () => {
             it('get raw Statement or Blocks or String content', () => {
                 const statements = [
                     new Statement('echo 123'),
-                    new StatementsBlock('echo 456'),
+                    new BlockHelper('echo 456'),
                     'echo 789',
                 ];
                 const block = new BlockHelper(statements);
@@ -220,7 +219,7 @@ describe('Block tests', () => {
             });
 
             it('add Block content', () => {
-                const statementsBlock = new StatementsBlock('test');
+                const statementsBlock = new BlockHelper('test');
                 const block = new BlockHelper();
 
                 block.addContent(statementsBlock);
@@ -232,7 +231,7 @@ describe('Block tests', () => {
 
             it('add string statements content', () => {
                 const statements = ['echo 123', 'echo 456'];
-                const block = new StatementsBlock();
+                const block = new BlockHelper();
 
                 block.addContent(statements);
                 const content = block.content;
@@ -261,8 +260,8 @@ describe('Block tests', () => {
 
             it('add Blocks content', () => {
                 const statements = [
-                    new StatementsBlock('echo 123'),
-                    new StatementsBlock('echo 456'),
+                    new BlockHelper('echo 123'),
+                    new BlockHelper('echo 456'),
                 ];
                 const block = new BlockHelper();
 
@@ -278,7 +277,7 @@ describe('Block tests', () => {
             it('add Statement or Blocks or String content', () => {
                 const statements = [
                     new Statement('echo 123'),
-                    new StatementsBlock('echo 456'),
+                    new BlockHelper('echo 456'),
                     'echo 789',
                 ];
                 const block = new BlockHelper();
@@ -338,7 +337,7 @@ describe('Block tests', () => {
             });
 
             it('insert Block content', () => {
-                const statementsBlock = new StatementsBlock('test');
+                const statementsBlock = new BlockHelper('test');
                 const block = new BlockHelper();
 
                 block.insertContent(0, statementsBlock);
@@ -379,8 +378,8 @@ describe('Block tests', () => {
 
             it('insert Blocks content', () => {
                 const statements = [
-                    new StatementsBlock('echo 123'),
-                    new StatementsBlock('echo 456'),
+                    new BlockHelper('echo 123'),
+                    new BlockHelper('echo 456'),
                 ];
                 const block = new BlockHelper();
 
@@ -396,7 +395,7 @@ describe('Block tests', () => {
             it('insert Statement or Blocks or String content', () => {
                 const statements = [
                     new Statement('echo 123'),
-                    new StatementsBlock('echo 456'),
+                    new BlockHelper('echo 456'),
                     'echo 789',
                 ];
                 const block = new BlockHelper();

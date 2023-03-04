@@ -4,7 +4,15 @@ import {
     Block,
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
-import { StatementsBlock } from '../../../blocks/statements-block.mjs';
+
+/**
+ * Marks the end of a CaseOption block.
+ */
+class CaseOptionTerminator extends Block {
+    constructor() {
+        super(';;');
+    }
+}
 
 /**
  * Represents a single case of a CaseBlock.
@@ -67,7 +75,7 @@ export class CaseOption extends FlowBlock {
             throw new Error('Missing pattern');
         }
         super(`${pattern})`, content);
-        this._addContent(new StatementsBlock(';;'));
+        this._addContent(new CaseOptionTerminator());
         this._pattern = pattern;
     }
 
