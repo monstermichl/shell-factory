@@ -1,6 +1,13 @@
 import { Block, StatementOrBlock, StatementOrBlockOrString } from '../../base/block.mjs';
-import { FlowBlock } from '../../blocks/flow-block.mjs';
 import { Statement } from '../../base/statement.mjs';
+import { Function } from '../function/function.mjs';
+import { If } from '../flow/if/if.mjs';
+import { While } from '../flow/while/while.mjs';
+import { Case } from '../flow/case/case.mjs';
+import { CaseOption } from '../flow/case/case-option.mjs';
+import { ElseIf } from '../flow/if/else-if.mjs';
+import { Else } from '../flow/if/else.mjs';
+import { For } from '../flow/for/for.mjs';
 
 /**
  * Represents a Bourne Shell script.
@@ -139,16 +146,35 @@ export class Script extends Block {
             spaces = Script.DEFAULT_SPACES;
         }
         content.forEach((value) => {
+            let addString = '';
+
             if (value instanceof Statement) {
-                s += `${' '.repeat(spaces * indent)}${value.value}\n`;
+                addString = `${' '.repeat(spaces * indent)}${value.value}\n`;
             } else {
                 let indentAddition = 0;
 
-                if (!(value instanceof FlowBlock)) {
+                if (value instanceof Function) {
+                    /* Do something. */
+                } else if (value instanceof If) {
+                    /* Do something. */
+                } else if (value instanceof ElseIf) {
+                    /* Do something. */
+                } else if (value instanceof Else) {
+                    /* Do something. */
+                } else if (value instanceof While) {
+                    /* Do something. */
+                } else if (value instanceof For) {
+                    /* Do something. */
+                } else if (value instanceof Case) {
+                    /* Do something. */
+                } else if (value instanceof CaseOption) {
+                    /* Do something. */
+                } else {
                     indentAddition = 1;
                 }
-                s += this._dump(value.raw, spaces, indent + indentAddition);
+                addString = this._dump(value.raw, spaces, indent + indentAddition);
             }
+            s += addString;
         });
         return s;
     }
