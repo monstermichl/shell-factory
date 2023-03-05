@@ -127,6 +127,18 @@ describe('Script tests', () => {
                 });
                 expect(dumpedScript).to.be.equal(compareScript);
             });
+
+            it('newline after function blocks', () => {
+                const compareScript = loadScript('script-new-line-after-function-blocks.sh');
+                const dumpedScript = scriptBlock.dump({
+                    detailed: {
+                        function: {
+                            newlinesAfter: 1,
+                        },
+                    },
+                });
+                expect(dumpedScript).to.be.equal(compareScript);
+            });
         });
     });
 
