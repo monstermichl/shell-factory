@@ -64,7 +64,7 @@ export type Config = {
  * Represents a Bourne Shell script.
  */
 export class Script extends Block {
-    public static readonly DEFAULT_CONFIG = {
+    private static readonly _DEFAULT_CONFIG = {
         common: {
             indent: 2,
             newlinesBefore: 0,
@@ -80,7 +80,7 @@ export class Script extends Block {
     private readonly _INTERPRETER_START_PATTERN = '#!';
 
     private _interpreter = '/bin/sh';
-    private _config = this._correctConfig(Script.DEFAULT_CONFIG);
+    private _config = Script._correctConfig();
 
     /**
      * Script constructor.
@@ -133,8 +133,8 @@ export class Script extends Block {
     /**
      * Gets the default config for dumping the script as string.
      */
-    public get defaultConfig(): Config {
-        return Script.DEFAULT_CONFIG;
+    public static get defaultConfig(): Config {
+        return Script._correctConfig();
     }
 
     /**
@@ -207,7 +207,7 @@ export class Script extends Block {
         let s = '';
 
         /* Copy and correct config. */
-        config = this._correctConfig(config);
+        config = Script._correctConfig(config);
 
         /* Defensive branches which should never be reached. */
         if (indentFactor < 0) {
@@ -260,7 +260,7 @@ export class Script extends Block {
                     contextFlags |= ContextFlags.CaseOption;
                 } else {
                     indentAddition = 1;
-                    blockConfig = Script.DEFAULT_CONFIG.common;
+                    blockConfig = Script.defaultConfig.common;
                 }
 
                 /* Add newlines before block. */
@@ -285,10 +285,10 @@ export class Script extends Block {
      * @param config Config to correct.
      * @return Corrected config.
      */
-    private _correctConfig(config?: Config): Config {
+    private static _correctConfig(config?: Config): Config {
         const correctedConfig = {} as Config; /* Copy default config. */
 
-        copyOver(correctedConfig, Script.DEFAULT_CONFIG, true);
+        copyOver(correctedConfig, Script._DEFAULT_CONFIG, true);
         copyOver(correctedConfig, config || {}, true);
 
         return correctedConfig;

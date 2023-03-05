@@ -146,7 +146,7 @@ describe('Script tests', () => {
                 const dumpedScript = scriptBlock.dump();
                 expect(dumpedScript).to.be.equal(compareScript);
 
-                scriptBlock.config = Script.DEFAULT_CONFIG; /* Reset to original default value. */
+                scriptBlock.config = Script.defaultConfig; /* Reset to original default value. */
             });
 
             it('set default to negative value', () => {
