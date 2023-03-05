@@ -8,6 +8,7 @@ import { CaseOption } from '../flow/case/case-option.mjs';
 import { ElseIf } from '../flow/if/else-if.mjs';
 import { Else } from '../flow/if/else.mjs';
 import { For } from '../flow/for/for.mjs';
+import { copyOver } from '../../helpers/copy.mjs';
 
 type BlockConfig = {
     indent?: number;
@@ -229,19 +230,11 @@ export class Script extends Block {
      * @return Corrected config.
      */
     private _correctConfig(config?: Config): Config {
-        const correctedConfig: {[key: string]: unknown} = config ? {...config} : {...Script.DEFAULT_CONFIG};
+        const correctedConfig = {} as Config; /* Copy default config. */
 
-        if (!correctedConfig.common) {
-            correctedConfig.common = {...Script.DEFAULT_CONFIG.common};
-        } else {
-            Object.entries(Script.DEFAULT_CONFIG.common).forEach(([key, value]) => {
-                const common = correctedConfig.common as {[key: string]: unknown};
+        copyOver(correctedConfig, Script.DEFAULT_CONFIG, true);
+        copyOver(correctedConfig, config || {}, true);
 
-                if (!Object.keys(common).includes(key) || (common[key] < 0)) {
-                    common[key] = value;
-                }
-            });
-        }
         return correctedConfig;
     }
 }
