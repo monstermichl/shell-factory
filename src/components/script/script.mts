@@ -216,7 +216,13 @@ export class Script extends Block {
         
         content.forEach((value, index) => {
             if (value instanceof Statement) {
-                s += `${' '.repeat(config.common.indent * indentFactor)}${value.value}\n`;
+                let indent = config.common.indent;
+
+                /* Correct indent if necessary. */
+                if (indent < 0) {
+                    indent = 0;
+                }
+                s += `${' '.repeat(indent * indentFactor)}${value.value}\n`;
             } else {
                 let indentAddition = 0;
                 let blockConfig: BlockConfig = null;

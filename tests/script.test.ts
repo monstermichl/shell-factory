@@ -115,7 +115,7 @@ describe('Script tests', () => {
             });
 
             it('negative spaces', () => {
-                const compareScript = loadScript('script-default-spaces.sh');
+                const compareScript = loadScript('script-0-spaces.sh');
                 const dumpedScript = scriptBlock.dump({
                     common: {
                         indent: -1,
@@ -146,7 +146,7 @@ describe('Script tests', () => {
             });
 
             it('set default to negative value', () => {
-                const compareScript = loadScript('script-default-spaces.sh');
+                const compareScript = loadScript('script-0-spaces.sh');
 
                 scriptBlock.config = {
                     common: {
