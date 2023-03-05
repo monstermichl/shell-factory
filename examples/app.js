@@ -18,6 +18,10 @@ const script = new Script([
         'echo hello world',
         new If('"" == ""', [
             'echo "another layer"',
+        ]).elseIf('4 -eq 4', [
+            'echo "else-if"',
+        ]).else([
+            'echo "else"',
         ]),
     ])?.elseIf('1 -eq 2', [
         new For('i', [1, 2, 3], [
