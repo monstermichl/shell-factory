@@ -434,7 +434,7 @@ export class If extends IfBase {
             elseIf = new ElseIf(arg, content); /* Create new else-if entry and add the reference to content. */
 
             this._elseIfs.push(elseIf);
-            this._insertContent(this.raw.length - 1, elseIf.raw);
+            this._insertContent(insertIndex, elseIf);
         } else if (elseIf && replace) {
             elseIf.clearContent(); /* Replace else-if content. */
             elseIf.addContent(content);
@@ -513,7 +513,7 @@ export class If extends IfBase {
 
         if (!this._else) {
             this._else = new Else(content); /* Create new else-if entry and add the reference to content. */
-            this._insertContent(this.raw.length - 1, this._else.raw);
+            this._insertContent(this.raw.length - 1, this._else);
         } else if (this._else && replace) {
             this._else.clearContent(); /* Replace else content. */
             this._else.addContent(content);
