@@ -1,5 +1,7 @@
 import { expect } from 'chai';
 import { Statement } from '../src/base/statement.mjs';
+import { ElseIf } from '../src/components/flow/if/else-if.mjs';
+import { Else } from '../src/components/flow/if/else.mjs';
 import { If } from '../src/components/flow/if/if.mjs';
 
 describe('If tests', () => {
@@ -40,6 +42,18 @@ describe('If tests', () => {
 
                 expect(ifBlock.elseIf('2 -eq 2')).to.be.equal(ifBlock);
                 expect(ifBlock.elseIf('2 -eq 2', undefined, true)).to.be.equal(ifBlock);
+            });
+
+            it('add one before and one after else', () => {
+                const ifBlock = new If('1 -eq 1');
+
+                expect(ifBlock.elseIf('2 -eq 2')).to.be.equal(ifBlock);
+                expect(ifBlock.else('echo "Intermediate else"')).to.be.equal(ifBlock);
+                expect(ifBlock.elseIf('3 -eq 3')).to.be.equal(ifBlock);
+
+                expect(ifBlock.raw.at(-4) instanceof ElseIf).to.be.equal(true);
+                expect(ifBlock.raw.at(-3) instanceof ElseIf).to.be.equal(true);
+                expect(ifBlock.raw.at(-2) instanceof Else).to.be.equal(true);
             });
         });
 

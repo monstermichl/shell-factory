@@ -431,9 +431,15 @@ export class If extends IfBase {
         let elseIf = this._elseIfs.find((value) => value.conditions.equal(arg));
 
         if (!elseIf) {
-            elseIf = new ElseIf(arg, content); /* Create new else-if entry and add the reference to content. */
+            let insertIndex = -1;
 
+            elseIf = new ElseIf(arg, content); /* Create new else-if entry and add the reference to content. */
             this._elseIfs.push(elseIf);
+
+            /* Make sure, to push else-if before else. */
+            if (this.raw.at(insertIndex - 1) instanceof Else) {
+                insertIndex -= 1;
+            }
             this._insertContent(insertIndex, elseIf);
         } else if (elseIf && replace) {
             elseIf.clearContent(); /* Replace else-if content. */
