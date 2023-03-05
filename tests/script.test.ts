@@ -6,7 +6,7 @@ import { While } from '../src/components/flow/while/while.mjs';
 import { For } from '../src/components/flow/for/for.mjs';
 import { Case } from '../src/components/flow/case/case.mjs';
 import { CaseOption } from '../src/components/flow/case/case-option.mjs';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import { join } from 'path';
 
 describe('Script tests', () => {
@@ -89,34 +89,39 @@ describe('Script tests', () => {
         describe('successful', () => {
             it('default spaces', () => {
                 const compareScript = loadScript('script-default-spaces.sh');
-                expect(scriptBlock.dump()).to.be.equal(compareScript);
+                const dumpedScript = scriptBlock.dump();
+
+                expect(dumpedScript).to.be.equal(compareScript);
             });
 
             it('4 spaces', () => {
                 const compareScript = loadScript('script-4-spaces.sh');
-                expect(scriptBlock.dump({
+                const dumpedScript = scriptBlock.dump({
                     common: {
                         indent: 4,
                     },
-                })).to.be.equal(compareScript);
+                });
+                expect(dumpedScript).to.be.equal(compareScript);
             });
 
             it('0 spaces', () => {
                 const compareScript = loadScript('script-0-spaces.sh');
-                expect(scriptBlock.dump({
+                const dumpedScript = scriptBlock.dump({
                     common: {
                         indent: 0,
                     },
-                })).to.be.equal(compareScript);
+                });
+                expect(dumpedScript).to.be.equal(compareScript);
             });
 
             it('negative spaces', () => {
                 const compareScript = loadScript('script-default-spaces.sh');
-                expect(scriptBlock.dump({
+                const dumpedScript = scriptBlock.dump({
                     common: {
                         indent: -1,
                     },
-                })).to.be.equal(compareScript);
+                });
+                expect(dumpedScript).to.be.equal(compareScript);
             });
         });
     });
@@ -133,7 +138,10 @@ describe('Script tests', () => {
 
                 scriptBlock.config = config;
                 expect(scriptBlock.config).to.be.equal(config);
-                expect(scriptBlock.dump()).to.be.equal(compareScript);
+
+                const dumpedScript = scriptBlock.dump();
+                expect(dumpedScript).to.be.equal(compareScript);
+
                 scriptBlock.config = Script.DEFAULT_CONFIG; /* Reset to original default value. */
             });
 
@@ -145,7 +153,8 @@ describe('Script tests', () => {
                         indent: -1,
                     },
                 };
-                expect(scriptBlock.dump()).to.be.equal(compareScript);
+                const dumpedScript = scriptBlock.dump();
+                expect(dumpedScript).to.be.equal(compareScript);
             });
         });
     });
