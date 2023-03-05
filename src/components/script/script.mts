@@ -1,4 +1,8 @@
-import { Block, StatementOrBlock, StatementOrBlockOrString } from '../../base/block.mjs';
+import {
+    Block,
+    StatementOrBlock,
+    StatementOrBlockOrString,
+} from '../../base/block.mjs';
 import { Statement } from '../../base/statement.mjs';
 import { Function } from '../function/function.mjs';
 import { If } from '../flow/if/if.mjs';
@@ -9,13 +13,39 @@ import { ElseIf } from '../flow/if/else-if.mjs';
 import { Else } from '../flow/if/else.mjs';
 import { For } from '../flow/for/for.mjs';
 import { copyOver } from '../../helpers/copy.mjs';
+import { FlowBlock } from '../../blocks/flow-block.mjs';
 
+/**
+ * Used to help the Script dump-method to understand, in which
+ * context the current content is being processed. These enum
+ * values are used for bit masking (hence, the bit-shifting
+ * notation).
+ */
+enum ContextFlags {
+    Block      = 1 << 0, /* 1   */
+    FlowBlock  = 1 << 1, /* 2   */
+    Function   = 1 << 2, /* 4   */
+    If         = 1 << 3, /* 8   */
+    ElseIf     = 1 << 4, /* 16  */
+    Else       = 1 << 5, /* 32  */
+    While      = 1 << 6, /* 64  */
+    For        = 1 << 7, /* 128 */
+    Case       = 1 << 8, /* 256 */
+    CaseOption = 1 << 9, /* 512 */
+}
+
+/**
+ * Script string dump block configuration.
+ */
 type BlockConfig = {
     indent?: number;
     newlinesBefore?: number;
     newlinesAfter?: number;
 };
 
+/**
+ * Script string dump configuration.
+ */
 export type Config = {
     common?: BlockConfig;
     detailed?: {
@@ -167,52 +197,72 @@ export class Script extends Block {
      * @param content      Stratements or Blocks which shall be stringified.
      * @param spaces       Whitespaces before each statement.
      * @param indentFactor Indent by which whitespaces are multiplied.
+     * @param contextFlags Additional info for recursive calls to understand,
+     *                     in which context the content is being processed.
      *
      * @return String representation of the provided Statement or Block list.
      */
-    private _dump(content: StatementOrBlock[], config: Config, indentFactor=0): string {
+    private _dump(content: StatementOrBlock[], config: Config, indentFactor=0, contextFlags=ContextFlags.Block): string {
+        const contextFlagsCopy = contextFlags;
         let s = '';
-        config = this._correctConfig(config); /* Copy and correct config. */
+
+        /* Copy and correct config. */
+        config = this._correctConfig(config);
 
         /* Defensive branches which should never be reached. */
         if (indentFactor < 0) {
             indentFactor = 0;
         }
         
-        content.forEach((value) => {
+        content.forEach((value, index) => {
             if (value instanceof Statement) {
                 s += `${' '.repeat(config.common.indent * indentFactor)}${value.value}\n`;
             } else {
                 let indentAddition = 0;
                 let blockConfig: BlockConfig = null;
 
+                /* Set basic content-type. */
+                if (value instanceof FlowBlock) {
+                    contextFlags = ContextFlags.FlowBlock;
+                } else {
+                    contextFlags = ContextFlags.Block;
+                }
+
                 if (value instanceof Function) {
                     blockConfig = config?.detailed?.function;
+                    contextFlags |= ContextFlags.Function;
                 } else if (value instanceof If) {
                     blockConfig = config?.detailed?.if;
+                    contextFlags |= ContextFlags.If;
                 } else if (value instanceof ElseIf) {
                     blockConfig = config?.detailed?.elseIf;
+                    contextFlags |= ContextFlags.ElseIf;
                 } else if (value instanceof Else) {
                     blockConfig = config?.detailed?.else;
+                    contextFlags |= ContextFlags.Else;
                 } else if (value instanceof While) {
                     blockConfig = config?.detailed?.while;
+                    contextFlags |= ContextFlags.While;
                 } else if (value instanceof For) {
                     blockConfig = config?.detailed?.for;
+                    contextFlags |= ContextFlags.For;
                 } else if (value instanceof Case) {
                     blockConfig = config?.detailed?.case;
+                    contextFlags |= ContextFlags.Case;
                 } else if (value instanceof CaseOption) {
                     blockConfig = config?.detailed?.caseOption;
+                    contextFlags |= ContextFlags.CaseOption;
                 } else {
                     indentAddition = 1;
                     blockConfig = Script.DEFAULT_CONFIG.common;
                 }
 
                 /* Add newlines before block. */
-                if (blockConfig?.newlinesBefore > 0) {
+                if ((blockConfig?.newlinesBefore > 0) && ((index > 0) || (contextFlagsCopy & ContextFlags.FlowBlock))) {
                     s += '\n'.repeat(blockConfig.newlinesBefore);
                 }
                 /* Process children. */
-                s += this._dump(value.raw, config, indentFactor + indentAddition);
+                s += this._dump(value.raw, config, indentFactor + indentAddition, contextFlags);
 
                 /* Add newlines after block. */
                 if (blockConfig?.newlinesAfter > 0) {
