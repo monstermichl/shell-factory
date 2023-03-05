@@ -7,7 +7,9 @@
   "type": "module",
   "scripts": {
     "build": "npx tsc",
-    "test": "npx tsc -p tsconfig-tests.json && npx c8 -r html mocha ./tests-build/tests/*.test.js; rm -rf ./tests-build",
+    "test": "npx tsc -p tsconfig-tests.json && npx c8 -r html mocha ./tests-build/tests/*.test.js",
+    "testCleanup": "rm -rf ./tests-build",
+    "testAndCleanup": "npm run test; npm run testCleanup",
     "lint": "npx eslint .",
     "example": "npm run build && node --experimental-vm-modules ./examples/app.js"
   },
