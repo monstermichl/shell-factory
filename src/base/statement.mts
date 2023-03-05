@@ -1,8 +1,10 @@
+import { Identifyable } from './identifyable.mjs';
+
 /**
  * Represents the most basic element in a script. It literally
  * just contains a statement which is printed.
  */
-export class Statement {
+export class Statement extends Identifyable {
     protected _statement: string;
 
     /**
@@ -12,6 +14,7 @@ export class Statement {
      *                  only be set by deriving classes.
      */
     constructor(statement?: string) {
+        super();
         this._statement = statement || '';
     }
 

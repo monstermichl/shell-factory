@@ -1,3 +1,4 @@
+import { Identifyable } from './identifyable.mjs';
 import { Statement } from './statement.mjs';
 
 export type StatementOrBlock = Statement | Block;
@@ -7,7 +8,7 @@ export type StatementOrBlockOrString = StatementOrBlock | string;
  * Represents a container to group a list of Statement- and other
  * Block-objects. New content can be added dynamically.
  */
-export abstract class Block {
+export abstract class Block extends Identifyable {
     protected _contentList: StatementOrBlock[] = [];
 
     /**
@@ -54,6 +55,7 @@ export abstract class Block {
     protected constructor(content?: StatementOrBlockOrString[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     protected constructor(content?: any) {
+        super();
         this._addContent(content);
     }
 
