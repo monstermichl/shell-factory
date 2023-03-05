@@ -20,6 +20,10 @@ if [ 1 -eq 1 ]; then
 
     if [ 3 -eq 3 ]; then
       echo "Third level If"
+    elif [ 4 -eq 4 ]; then
+      echo "Third level If-ElseIf"
+    else
+      echo "Third level If-Else"
     fi
   fi
 fi

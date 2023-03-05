@@ -26,6 +26,10 @@ describe('Script tests', () => {
                 'echo "Second level If"',
                 new If('3 -eq 3', [
                     'echo "Third level If"',
+                ]).elseIf('4 -eq 4', [
+                    'echo "Third level If-ElseIf"',
+                ]).else([
+                    'echo "Third level If-Else"',
                 ]),
             ]),
         ]),
