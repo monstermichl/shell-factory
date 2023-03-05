@@ -94,37 +94,57 @@ describe('Script tests', () => {
 
             it('4 spaces', () => {
                 const compareScript = loadScript('script-4-spaces.sh');
-                expect(scriptBlock.dump(4)).to.be.equal(compareScript);
+                expect(scriptBlock.dump({
+                    common: {
+                        indent: 4,
+                    },
+                })).to.be.equal(compareScript);
             });
 
             it('0 spaces', () => {
                 const compareScript = loadScript('script-0-spaces.sh');
-                expect(scriptBlock.dump(0)).to.be.equal(compareScript);
+                expect(scriptBlock.dump({
+                    common: {
+                        indent: 0,
+                    },
+                })).to.be.equal(compareScript);
             });
 
             it('negative spaces', () => {
                 const compareScript = loadScript('script-default-spaces.sh');
-                expect(scriptBlock.dump(-1)).to.be.equal(compareScript);
+                expect(scriptBlock.dump({
+                    common: {
+                        indent: -1,
+                    },
+                })).to.be.equal(compareScript);
             });
         });
     });
 
-    describe('defaultSpaces', () => {
+    describe('config', () => {
         describe('successful', () => {
             it('set default to 4', () => {
                 const compareScript = loadScript('script-4-spaces.sh');
-                const spaces = 4;
+                const config = {
+                    common: {
+                        indent: 4,
+                    },
+                };
 
-                scriptBlock.defaultSpaces = spaces;
-                expect(scriptBlock.defaultSpaces).to.be.equal(spaces);
+                scriptBlock.config = config;
+                expect(scriptBlock.config).to.be.equal(config);
                 expect(scriptBlock.dump()).to.be.equal(compareScript);
-                scriptBlock.defaultSpaces = Script.DEFAULT_SPACES; /* Reset to original default value. */
+                scriptBlock.config = Script.DEFAULT_CONFIG; /* Reset to original default value. */
             });
 
             it('set default to negative value', () => {
                 const compareScript = loadScript('script-default-spaces.sh');
 
-                scriptBlock.defaultSpaces = -1;
+                scriptBlock.config = {
+                    common: {
+                        indent: -1,
+                    },
+                };
                 expect(scriptBlock.dump()).to.be.equal(compareScript);
             });
         });

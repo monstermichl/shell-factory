@@ -9,15 +9,47 @@ import { ElseIf } from '../flow/if/else-if.mjs';
 import { Else } from '../flow/if/else.mjs';
 import { For } from '../flow/for/for.mjs';
 
+type BlockConfig = {
+    indent?: number;
+    newlinesBefore?: number;
+    newlinesAfter?: number;
+};
+
+export type Config = {
+    common?: BlockConfig;
+    detailed?: {
+        function?: BlockConfig;
+        if?: BlockConfig;
+        elseIf?: BlockConfig;
+        else?: BlockConfig;
+        while?: BlockConfig;
+        for?: BlockConfig;
+        case?: BlockConfig;
+        caseOption?: BlockConfig;
+    }
+};
+
 /**
  * Represents a Bourne Shell script.
  */
 export class Script extends Block {
-    public static readonly DEFAULT_SPACES = 2;
+    public static readonly DEFAULT_CONFIG = {
+        common: {
+            indent: 2,
+            newlinesBefore: 0,
+        },
+        detailed: {
+            function: { newlinesBefore: 1 },
+            if: { newlinesBefore: 1 },
+            while: { newlinesBefore: 1 },
+            for: { newlinesBefore: 1 },
+            case: { newlinesBefore: 1 },
+        }
+    } as Config;
     private readonly _INTERPRETER_START_PATTERN = '#!';
 
-    private _default_spaces = Script.DEFAULT_SPACES;
     private _interpreter = '/bin/sh';
+    private _config = this._correctConfig(Script.DEFAULT_CONFIG);
 
     /**
      * Script constructor.
@@ -68,20 +100,24 @@ export class Script extends Block {
     }
 
     /**
-     * Gets the default whitespaces when dumping the script as string.
+     * Gets the default config for dumping the script as string.
      */
-    public get defaultSpaces(): number {
-        return this._default_spaces;
+    public get defaultConfig(): Config {
+        return Script.DEFAULT_CONFIG;
     }
 
     /**
-     * Sets the default whitespaces for dumping the script as string.
+     * Gets the default config for dumping the script as string.
      */
-    public set defaultSpaces(spaces: number) {
-        if (spaces < 0) {
-            spaces = Script.DEFAULT_SPACES;
-        }
-        this._default_spaces = spaces;
+    public get config(): Config {
+        return this._config;
+    }
+
+    /**
+     * Sets the default config for dumping the script as string.
+     */
+    public set config(config: Config) {
+        this._config = config;
     }
 
     /**
@@ -117,65 +153,95 @@ export class Script extends Block {
      * The magic function that turns the carefully crafted script
      * structure into a string.
      *
-     * @param spaces Whitespaces before each statement.
+     * @param config: Config to configure the script dumping.
      * @return Script string.
      */
-    public dump(spaces=this._default_spaces): string {
-        if (spaces < 0) {
-            spaces = Script.DEFAULT_SPACES;
-        }
-        return this._dump(this.raw, spaces);
+    public dump(config = this._config): string {
+        return this._dump(this.raw, config);
     }
 
     /**
      * Internal dump function.
      *
-     * @param content Stratements or Blocks which shall be stringified.
-     * @param spaces Whitespaces before each statement.
-     * @param indent Indent by which whitespaces are multiplied.
+     * @param content      Stratements or Blocks which shall be stringified.
+     * @param spaces       Whitespaces before each statement.
+     * @param indentFactor Indent by which whitespaces are multiplied.
      *
      * @return String representation of the provided Statement or Block list.
      */
-    private _dump(content: StatementOrBlock[], spaces: number, indent=0): string {
+    private _dump(content: StatementOrBlock[], config: Config, indentFactor=0): string {
         let s = '';
+        config = this._correctConfig(config); /* Copy and correct config. */
 
         /* Defensive branches which should never be reached. */
-        if (indent < 0) {
-            indent = 0;
-        } else if (spaces < 0) {
-            spaces = Script.DEFAULT_SPACES;
+        if (indentFactor < 0) {
+            indentFactor = 0;
         }
+        
         content.forEach((value) => {
-            let addString = '';
-
             if (value instanceof Statement) {
-                addString = `${' '.repeat(spaces * indent)}${value.value}\n`;
+                s += `${' '.repeat(config.common.indent * indentFactor)}${value.value}\n`;
             } else {
                 let indentAddition = 0;
+                let blockConfig: BlockConfig = null;
 
                 if (value instanceof Function) {
-                    /* Do something. */
+                    blockConfig = config?.detailed?.function;
                 } else if (value instanceof If) {
-                    /* Do something. */
+                    blockConfig = config?.detailed?.if;
                 } else if (value instanceof ElseIf) {
-                    /* Do something. */
+                    blockConfig = config?.detailed?.elseIf;
                 } else if (value instanceof Else) {
-                    /* Do something. */
+                    blockConfig = config?.detailed?.else;
                 } else if (value instanceof While) {
-                    /* Do something. */
+                    blockConfig = config?.detailed?.while;
                 } else if (value instanceof For) {
-                    /* Do something. */
+                    blockConfig = config?.detailed?.for;
                 } else if (value instanceof Case) {
-                    /* Do something. */
+                    blockConfig = config?.detailed?.case;
                 } else if (value instanceof CaseOption) {
-                    /* Do something. */
+                    blockConfig = config?.detailed?.caseOption;
                 } else {
                     indentAddition = 1;
+                    blockConfig = Script.DEFAULT_CONFIG.common;
                 }
-                addString = this._dump(value.raw, spaces, indent + indentAddition);
+
+                /* Add newlines before block. */
+                if (blockConfig?.newlinesBefore > 0) {
+                    s += '\n'.repeat(blockConfig.newlinesBefore);
+                }
+                /* Process children. */
+                s += this._dump(value.raw, config, indentFactor + indentAddition);
+
+                /* Add newlines after block. */
+                if (blockConfig?.newlinesAfter > 0) {
+                    s += '\n'.repeat(blockConfig.newlinesAfter);
+                }
             }
-            s += addString;
         });
         return s;
+    }
+
+    /**
+     * Corrects the provided config to at least fulfil the default conditions.
+     *
+     * @param config Config to correct.
+     * @return Corrected config.
+     */
+    private _correctConfig(config?: Config): Config {
+        const correctedConfig: {[key: string]: unknown} = config ? {...config} : {...Script.DEFAULT_CONFIG};
+
+        if (!correctedConfig.common) {
+            correctedConfig.common = {...Script.DEFAULT_CONFIG.common};
+        } else {
+            Object.entries(Script.DEFAULT_CONFIG.common).forEach(([key, value]) => {
+                const common = correctedConfig.common as {[key: string]: unknown};
+
+                if (!Object.keys(common).includes(key) || (common[key] < 0)) {
+                    common[key] = value;
+                }
+            });
+        }
+        return correctedConfig;
     }
 }
