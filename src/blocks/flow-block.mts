@@ -125,7 +125,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public override clearContent(): FlowBlock {
+    public override clearContent(): this {
         this._body.clearContent();
         return this;
     }
@@ -138,7 +138,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public override insertContent(position: number, statement: string): FlowBlock;
+    public override insertContent(position: number, statement: string): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -147,7 +147,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public override insertContent(position: number, statement: Statement): FlowBlock;
+    public override insertContent(position: number, statement: Statement): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -156,7 +156,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public override insertContent(position: number, block: Block): FlowBlock;
+    public override insertContent(position: number, block: Block): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -165,7 +165,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public override insertContent(position: number, statements: string[]): FlowBlock;
+    public override insertContent(position: number, statements: string[]): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -174,7 +174,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public override insertContent(position: number, statements: Statement[]): FlowBlock;
+    public override insertContent(position: number, statements: Statement[]): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -183,7 +183,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public override insertContent(position: number, blocks: Block[]): FlowBlock;
+    public override insertContent(position: number, blocks: Block[]): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -192,9 +192,9 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public override insertContent(position: number, content: StatementOrBlockOrString[]): FlowBlock;
+    public override insertContent(position: number, content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public override insertContent(position: number, content: any): FlowBlock | null {
+    public override insertContent(position: number, content: any): this | null {
         return this._insertBodyContent(position, content);
     }
 
@@ -204,51 +204,51 @@ export abstract class FlowBlock extends Block {
      * @param statement Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public override addContent(statement: string): FlowBlock;
+    public override addContent(statement: string): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statement Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public override addContent(statement: Statement): FlowBlock;
+    public override addContent(statement: Statement): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param block Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public override addContent(block: Block): FlowBlock;
+    public override addContent(block: Block): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statements Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public override addContent(statements: string[]): FlowBlock;
+    public override addContent(statements: string[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statements Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public override addContent(statements: Statement[]): FlowBlock;
+    public override addContent(statements: Statement[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param blocks Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public override addContent(blocks: Block[]): FlowBlock;
+    public override addContent(blocks: Block[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param content Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public override addContent(content: StatementOrBlockOrString[]): FlowBlock;
+    public override addContent(content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public override addContent(content: any): FlowBlock | null {
+    public override addContent(content: any): this | null {
         return this._addBodyContent(content);
     }
 
@@ -260,7 +260,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertBodyContent(position: number, statement: string): FlowBlock;
+    protected _insertBodyContent(position: number, statement: string): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -269,7 +269,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertBodyContent(position: number, statement: Statement): FlowBlock;
+    protected _insertBodyContent(position: number, statement: Statement): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -278,7 +278,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertBodyContent(position: number, block: Block): FlowBlock;
+    protected _insertBodyContent(position: number, block: Block): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -287,7 +287,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertBodyContent(position: number, statements: string[]): FlowBlock;
+    protected _insertBodyContent(position: number, statements: string[]): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -296,7 +296,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertBodyContent(position: number, statements: Statement[]): FlowBlock;
+    protected _insertBodyContent(position: number, statements: Statement[]): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -305,7 +305,7 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertBodyContent(position: number, blocks: Block[]): FlowBlock;
+    protected _insertBodyContent(position: number, blocks: Block[]): this;
     /**
      * Inserts new content at the given position into the block's body.
      *
@@ -314,9 +314,9 @@ export abstract class FlowBlock extends Block {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertBodyContent(position: number, content: StatementOrBlockOrString[]): FlowBlock;
+    protected _insertBodyContent(position: number, content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    protected _insertBodyContent(position: number, content: any): FlowBlock | null {
+    protected _insertBodyContent(position: number, content: any): this | null {
         return this._body.insertContent(position, content) ? this : null;
     }
 
@@ -326,51 +326,51 @@ export abstract class FlowBlock extends Block {
      * @param statement Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addBodyContent(statement: string): FlowBlock;
+    protected _addBodyContent(statement: string): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statement Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addBodyContent(statement: Statement): FlowBlock;
+    protected _addBodyContent(statement: Statement): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param block Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addBodyContent(block: Block): FlowBlock;
+    protected _addBodyContent(block: Block): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statements Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addBodyContent(statements: FlowBlock[]): FlowBlock;
+    protected _addBodyContent(statements: FlowBlock[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statements Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addBodyContent(statements: Statement[]): FlowBlock;
+    protected _addBodyContent(statements: Statement[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param blocks Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addBodyContent(blocks: Block[]): FlowBlock;
+    protected _addBodyContent(blocks: Block[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param content Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addBodyContent(content: StatementOrBlockOrString[]): FlowBlock;
+    protected _addBodyContent(content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    protected _addBodyContent(content: any): FlowBlock | null {
+    protected _addBodyContent(content: any): this | null {
         return this._body.addContent(content) ? this : null;
     }
 }

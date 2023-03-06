@@ -103,106 +103,106 @@ export class Case extends FlowBlock {
      *
      * @param cas Case-option to add.
      */
-    public override addContent(cas: CaseOption): Case;
+    public override addContent(cas: CaseOption): this;
     /**
      * Adds new case-options to the case.
      *
      * @param cas Case-options to add.
      */
-    public override addContent(cases: CaseOption[]): Case;
+    public override addContent(cases: CaseOption[]): this;
     /**
      * Adds a new case-option to the case.
      *
      * @param pattern Pattern to create a new case-option from.
      * @param statement Content of the new case-option.
      */
-    public override addContent(pattern: string, statement: string): Case;
+    public override addContent(pattern: string, statement: string): this;
     /**
      * Adds a new case-option to the case.
      *
      * @param pattern Pattern to create a new case-option from.
      * @param statement Content of the new case-option.
      */
-    public override addContent(pattern: string, statement: Statement): Case;
+    public override addContent(pattern: string, statement: Statement): this;
     /**
      * Adds a new case-option to the case.
      *
      * @param pattern Pattern to create a new case-option from.
      * @param block Content of the new case-option.
      */
-    public override addContent(pattern: string, block: Block): Case;
+    public override addContent(pattern: string, block: Block): this;
     /**
      * Adds a new case-option to the case.
      *
      * @param pattern Pattern to create a new case-option from.
      * @param statements Content of the new case-option.
      */
-    public override addContent(pattern: string, statements: FlowBlock[]): Case;
+    public override addContent(pattern: string, statements: FlowBlock[]): this;
     /**
      * Adds a new case-option to the case.
      *
      * @param pattern Pattern to create a new case-option from.
      * @param statements Content of the new case-option.
      */
-    public override addContent(pattern: string, statements: Statement[]): Case;
+    public override addContent(pattern: string, statements: Statement[]): this;
     /**
      * Adds a new case-option to the case.
      *
      * @param pattern Pattern to create a new case-option from.
      * @param blocks Content of the new case-option.
      */
-    public override addContent(pattern: string, blocks: Block[]): Case;
+    public override addContent(pattern: string, blocks: Block[]): this;
     /**
      * Adds a new case-option to the case.
      *
      * @param pattern Pattern to create a new case-option from.
      * @param content Content of the new case-option.
      */
-    public override addContent(pattern: string, content: StatementOrBlockOrString[]): Case;
+    public override addContent(pattern: string, content: StatementOrBlockOrString[]): this;
     /**
      * Adds the provided content to the last case-option.
      *
      * @param statement Content to add to the last case-option.
      */
-    public override addContent(statement: string): Case;
+    public override addContent(statement: string): this;
     /**
      * Adds the provided content to the last case-option.
      *
      * @param statement Content to add to the last case-option.
      */
-    public override addContent(statement: Statement): Case;
+    public override addContent(statement: Statement): this;
     /**
      * Adds the provided content to the last case-option.
      *
      * @param block Content to add to the last case-option.
      */
-    public override addContent(block: Block): Case;
+    public override addContent(block: Block): this;
     /**
      * Adds the provided content to the last case-option.
      *
      * @param statements Content to add to the last case-option.
      */
-    public override addContent(statements: FlowBlock[]): Case;
+    public override addContent(statements: FlowBlock[]): this;
     /**
      * Adds the provided content to the last case-option.
      *
      * @param statements Content to add to the last case-option.
      */
-    public override addContent(statements: Statement[]): Case;
+    public override addContent(statements: Statement[]): this;
     /**
      * Adds the provided content to the last case-option.
      *
      * @param blocks Content to add to the last case-option.
      */
-    public override addContent(blocks: Block[]): Case;
+    public override addContent(blocks: Block[]): this;
     /**
      * Adds the provided content to the last case-option.
      *
      * @param content Content to add to the last case-option.
      */
-    public override addContent(content: StatementOrBlockOrString[]): Case;
+    public override addContent(content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public override addContent(arg1: any, arg2?: any): Case | null {
+    public override addContent(arg1: any, arg2?: any): this | null {
         let content;
 
         /* If pattern and content are provided separately, create a new case. */

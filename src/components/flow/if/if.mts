@@ -200,7 +200,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: string, statement?: Statement, replace?: boolean): If;
+    public elseIf(condition: string, statement?: Statement, replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -211,7 +211,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: string, statement?: string, replace?: boolean): If;
+    public elseIf(condition: string, statement?: string, replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -222,7 +222,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: string, block?: Block, replace?: boolean): If;
+    public elseIf(condition: string, block?: Block, replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -233,7 +233,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: string, statements?: Statement[], replace?: boolean): If;
+    public elseIf(condition: string, statements?: Statement[], replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -244,7 +244,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: string, statements?: string[], replace?: boolean): If;
+    public elseIf(condition: string, statements?: string[], replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -255,7 +255,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: string, blocks?: Block[], replace?: boolean): If;
+    public elseIf(condition: string, blocks?: Block[], replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -266,7 +266,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: string, content?: StatementOrBlockOrString[], replace?: boolean): If;
+    public elseIf(condition: string, content?: StatementOrBlockOrString[], replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -277,7 +277,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: Condition, statement?: Statement, replace?: boolean): If;
+    public elseIf(condition: Condition, statement?: Statement, replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -288,7 +288,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: Condition, statement?: string, replace?: boolean): If;
+    public elseIf(condition: Condition, statement?: string, replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -299,7 +299,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: Condition, block?: Block, replace?: boolean): If;
+    public elseIf(condition: Condition, block?: Block, replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -310,7 +310,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: Condition, statements?: Statement[], replace?: boolean): If;
+    public elseIf(condition: Condition, statements?: Statement[], replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -321,7 +321,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: Condition, statements?: string[], replace?: boolean): If;
+    public elseIf(condition: Condition, statements?: string[], replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -332,7 +332,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: Condition, blocks?: Block[], replace?: boolean): If;
+    public elseIf(condition: Condition, blocks?: Block[], replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -343,7 +343,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(condition: Condition, content?: StatementOrBlockOrString[], replace?: boolean): If;
+    public elseIf(condition: Condition, content?: StatementOrBlockOrString[], replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -354,7 +354,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(conditions: Conditions, statement?: Statement, replace?: boolean): If;
+    public elseIf(conditions: Conditions, statement?: Statement, replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -365,7 +365,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(conditions: Conditions, statement?: string, replace?: boolean): If;
+    public elseIf(conditions: Conditions, statement?: string, replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -376,7 +376,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(conditions: Conditions, block?: Block, replace?: boolean): If;
+    public elseIf(conditions: Conditions, block?: Block, replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -387,7 +387,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(conditions: Conditions, content?: Statement[], replace?: boolean): If;
+    public elseIf(conditions: Conditions, content?: Statement[], replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -398,7 +398,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(conditions: Conditions, statements?: string[], replace?: boolean): If;
+    public elseIf(conditions: Conditions, statements?: string[], replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -409,7 +409,7 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(conditions: Conditions, block?: Block[], replace?: boolean): If;
+    public elseIf(conditions: Conditions, block?: Block[], replace?: boolean): this;
     /**
      * Adds an else-if branch to the if-block.
      *
@@ -420,9 +420,9 @@ export class If extends IfBase {
      * 
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public elseIf(conditions: Conditions, content?: StatementOrBlockOrString[], replace?: boolean): If;
+    public elseIf(conditions: Conditions, content?: StatementOrBlockOrString[], replace?: boolean): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public elseIf(arg: any, content?: any, replace=false): If {
+    public elseIf(arg: any, content?: any, replace=false): this {
         /* Only continue if If-condition doesn't cover provided condition. */
         if (this.conditions.equal(arg)) {
             throw new Error('Condition already covered by "if"');
@@ -458,7 +458,7 @@ export class If extends IfBase {
      *
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public else(statement?: Statement, replace?: boolean): If;
+    public else(statement?: Statement, replace?: boolean): this;
     /**
      * Sets the else branch for the if-block
      *
@@ -467,7 +467,7 @@ export class If extends IfBase {
      *
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public else(statement?: string, replace?: boolean): If;
+    public else(statement?: string, replace?: boolean): this;
     /**
      * Sets the else branch for the if-block
      *
@@ -476,7 +476,7 @@ export class If extends IfBase {
      *
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public else(block?: Block, replace?: boolean): If;
+    public else(block?: Block, replace?: boolean): this;
     /**
      * Sets the else branch for the if-block
      *
@@ -485,7 +485,7 @@ export class If extends IfBase {
      *
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public else(statements?: Statement[], replace?: boolean): If;
+    public else(statements?: Statement[], replace?: boolean): this;
     /**
      * Sets the else branch for the if-block
      *
@@ -494,7 +494,7 @@ export class If extends IfBase {
      *
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public else(statements?: string[], replace?: boolean): If;
+    public else(statements?: string[], replace?: boolean): this;
     /**
      * Sets the else branch for the if-block
      *
@@ -503,7 +503,7 @@ export class If extends IfBase {
      *
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public else(blocks?: Block[], replace?: boolean): If;
+    public else(blocks?: Block[], replace?: boolean): this;
     /**
      * Sets the else branch for the if-block
      *
@@ -512,9 +512,9 @@ export class If extends IfBase {
      *
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    public else(content?: StatementOrBlockOrString[], replace?: boolean): If;
+    public else(content?: StatementOrBlockOrString[], replace?: boolean): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public else(content?: any, replace=false): If {
+    public else(content?: any, replace=false): this {
         let ok = true;
 
         if (!this._else) {

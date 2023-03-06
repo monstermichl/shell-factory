@@ -84,7 +84,7 @@ export abstract class Block extends Identifyable {
      *
      * @return This block object.
      */
-    public clearContent(): Block {
+    public clearContent(): this {
         return this._clearContent();
     }
 
@@ -93,7 +93,7 @@ export abstract class Block extends Identifyable {
      *
      * @return This block object.
      */
-    public clearRaw(): Block {
+    public clearRaw(): this {
         this._contentList = [];
         return this;
     }
@@ -107,7 +107,7 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public insertContent(position: number, statement: string): Block;
+    public insertContent(position: number, statement: string): this;
     /**
      * Inserts a new statement at the given position in the content list. Be aware though,
      * that this function might be overwritten by subclasses to fit their needs.
@@ -117,7 +117,7 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public insertContent(position: number, statement: Statement): Block;
+    public insertContent(position: number, statement: Statement): this;
     /**
      * Inserts a new block at the given position in the content list. Be aware though,
      * that this function might be overwritten by subclasses to fit their needs.
@@ -127,7 +127,7 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public insertContent(position: number, block: Block): Block;
+    public insertContent(position: number, block: Block): this;
     /**
      * Inserts new statements at the given position in the content list. Be aware though,
      * that this function might be overwritten by subclasses to fit their needs.
@@ -137,7 +137,7 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public insertContent(position: number, statements: string[]): Block;
+    public insertContent(position: number, statements: string[]): this;
     /**
      * Inserts new statements at the given position in the content list. Be aware though,
      * that this function might be overwritten by subclasses to fit their needs.
@@ -147,7 +147,7 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public insertContent(position: number, statements: Statement[]): Block;
+    public insertContent(position: number, statements: Statement[]): this;
     /**
      * Inserts new blocks at the given position in the content list. Be aware though,
      * that this function might be overwritten by subclasses to fit their needs.
@@ -157,7 +157,7 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public insertContent(position: number, blocks: Block[]): Block;
+    public insertContent(position: number, blocks: Block[]): this;
     /**
      * Inserts new statements or blocks at the given position in the content list. Be aware though,
      * that this function might be overwritten by subclasses to fit their needs.
@@ -167,9 +167,9 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public insertContent(position: number, content: StatementOrBlockOrString[]): Block;
+    public insertContent(position: number, content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public insertContent(position: number, content: any): Block {
+    public insertContent(position: number, content: any): this {
         return this._insertContent(position, content);
     }
 
@@ -179,51 +179,51 @@ export abstract class Block extends Identifyable {
      * @param statement Statement to add.
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public addContent(statement: string): Block;
+    public addContent(statement: string): this;
     /**
      * Pushes a new statement to the end of the content list.
      *
      * @param statement Statement to add.
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public addContent(statement: Statement): Block;
+    public addContent(statement: Statement): this;
     /**
      * Pushes a new block to the end of the content list.
      *
      * @param block Block to add.
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public addContent(block: Block): Block;
+    public addContent(block: Block): this;
     /**
      * Pushes new statements to the end of the content list.
      *
      * @param statements Statements to add.
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public addContent(statements: string[]): Block;
+    public addContent(statements: string[]): this;
     /**
      * Pushes new statements to the end of the content list.
      *
      * @param statements Statements to add.
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public addContent(statements: Statement[]): Block;
+    public addContent(statements: Statement[]): this;
     /**
      * Pushes new blocks to the end of the content list.
      *
      * @param blocks Blocks to add.
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public addContent(blocks: Block[]): Block;
+    public addContent(blocks: Block[]): this;
     /**
      * Pushes new statements or blocks to the end of the content list.
      *
      * @param content Statements or blocks to add.
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    public addContent(content: StatementOrBlockOrString[]): Block;
+    public addContent(content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public addContent(content: any): Block {
+    public addContent(content: any): this {
         return this._addContent(content);
     }
 
@@ -239,7 +239,7 @@ export abstract class Block extends Identifyable {
      *
      * @return This block object.
      */
-    protected _clearContent(): Block {
+    protected _clearContent(): this {
         this._contentList = [];
         return this;
     }
@@ -252,7 +252,7 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertContent(position: number, statement: string): Block;
+    protected _insertContent(position: number, statement: string): this;
     /**
      * Inserts a new statement at the given position in the content list.
      *
@@ -261,14 +261,14 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertContent(position: number, statement: Statement): Block;
+    protected _insertContent(position: number, statement: Statement): this;
     /**
      * Inserts a new block at the given position in the content list.
      *
      * @param block Block to add.
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertContent(position: number, block: Block): Block;
+    protected _insertContent(position: number, block: Block): this;
     /**
      * Inserts new statements at the given position in the content list.
      *
@@ -277,7 +277,7 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertContent(position: number, statements: string[]): Block;
+    protected _insertContent(position: number, statements: string[]): this;
     /**
      * Inserts new statements at the given position in the content list.
      *
@@ -286,7 +286,7 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertContent(position: number, statements: Statement[]): Block;
+    protected _insertContent(position: number, statements: Statement[]): this;
     /**
      * Inserts new blocks at the given position in the content list.
      *
@@ -295,7 +295,7 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertContent(position: number, blocks: Block[]): Block;
+    protected _insertContent(position: number, blocks: Block[]): this;
     /**
      * Inserts new statements or blocks at the given position in the content list.
      *
@@ -304,9 +304,9 @@ export abstract class Block extends Identifyable {
      *
      * @return If successful, the current object is returned. Otherwise, null is returned.
      */
-    protected _insertContent(position: number, content: StatementOrBlockOrString[]): Block;
+    protected _insertContent(position: number, content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    protected _insertContent(position: number, content: any): Block | null {
+    protected _insertContent(position: number, content: any): this | null {
         let contentTyped;
 
         /* No position check required, splice does that for us. */
@@ -326,51 +326,51 @@ export abstract class Block extends Identifyable {
      * @param statement Statement to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addContent(statement: string): Block;
+    protected _addContent(statement: string): this;
     /**
      * Pushes a new statement to the end of the content list.
      *
      * @param statement Statement to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addContent(statement: Statement): Block;
+    protected _addContent(statement: Statement): this;
     /**
      * Pushes a new block to the end of the content list.
      *
      * @param block Block to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addContent(block: Block): Block;
+    protected _addContent(block: Block): this;
     /**
      * Pushes new statements to the end of the content list.
      *
      * @param statements Statements to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addContent(statements: string[]): Block;
+    protected _addContent(statements: string[]): this;
     /**
      * Pushes new statements to the end of the content list.
      *
      * @param statements Statements to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addContent(statements: Statement[]): Block;
+    protected _addContent(statements: Statement[]): this;
     /**
      * Pushes new blocks to the end of the content list.
      *
      * @param blocks Blocks to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addContent(blocks: Block[]): Block;
+    protected _addContent(blocks: Block[]): this;
     /**
      * Pushes new statements or blocks to the end of the content list.
      *
      * @param content Statements or blocks to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addContent(content: StatementOrBlockOrString[]): Block;
+    protected _addContent(content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    protected _addContent(content: any): Block | null {
+    protected _addContent(content: any): this | null {
         const contentTyped = this._correctContent(content);
 
         if (contentTyped) {
