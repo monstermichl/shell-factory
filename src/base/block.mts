@@ -1,4 +1,4 @@
-import { Identifyable } from './identifyable.mjs';
+import { Base } from './base.mjs';
 import { Statement } from './statement.mjs';
 
 export type StatementOrBlock = Statement | Block;
@@ -8,7 +8,7 @@ export type StatementOrBlockOrString = StatementOrBlock | string;
  * Represents a container to group a list of Statement- and other
  * Block-objects. New content can be added dynamically.
  */
-export abstract class Block extends Identifyable {
+export abstract class Block extends Base {
     protected _contentList: StatementOrBlock[] = [];
 
     /**

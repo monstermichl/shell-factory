@@ -1,10 +1,10 @@
-import { Identifyable } from './identifyable.mjs';
+import { Base } from './base.mjs';
 
 /**
  * Represents the most basic element in a script. It literally
  * just contains a statement which is printed.
  */
-export class Statement extends Identifyable {
+export class Statement extends Base {
     protected _statement: string;
 
     /**
