@@ -41,6 +41,7 @@ type BlockConfig = {
     indent?: number;
     newlinesBefore?: number;
     newlinesAfter?: number;
+    indentBeforeComment?: number;
 };
 
 /**
@@ -64,17 +65,22 @@ export type Config = {
  * Represents a Bourne Shell script.
  */
 export class Script extends Block {
+    private static readonly _DEFAULT_INDENT = 2;
+    private static readonly _DEFAULT_COMMENT_INDENT = 1;
+    private static readonly _DEFAULT_NEW_LINES_FLOW_COMMON = 0;
+    private static readonly _DEFAULT_NEW_LINES_FLOW_BLOCKS = 1;
     private static readonly _DEFAULT_CONFIG = {
         common: {
-            indent: 2,
-            newlinesBefore: 0,
+            indent: Script._DEFAULT_INDENT,
+            newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_COMMON,
+            indentBeforeComment: Script._DEFAULT_COMMENT_INDENT,
         },
         detailed: {
-            function: { newlinesBefore: 1 },
-            if: { newlinesBefore: 1 },
-            while: { newlinesBefore: 1 },
-            for: { newlinesBefore: 1 },
-            case: { newlinesBefore: 1 },
+            function: { newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_BLOCKS },
+            if: { newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_BLOCKS },
+            while: { newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_BLOCKS },
+            for: { newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_BLOCKS },
+            case: { newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_BLOCKS },
         }
     } as Config;
     private readonly _INTERPRETER_START_PATTERN = '#!';
@@ -203,11 +209,20 @@ export class Script extends Block {
      * @return String representation of the provided Statement or Block list.
      */
     private _dump(content: StatementOrBlock[], config: Config, indentFactor=0, contextFlags=ContextFlags.Block): string {
+        const checkValue = (value: number) => ((typeof value === 'number') && (value >= 0));
         const contextFlagsCopy = contextFlags;
         let s = '';
 
         /* Copy and correct config. */
         config = Script._correctConfig(config);
+
+        /* Process common indent. */
+        let commonIndent = config.common?.indent;
+
+        /* Correct indent if necessary. */
+        if (!checkValue(commonIndent)) {
+            commonIndent = Script._DEFAULT_INDENT;
+        }
 
         /* Defensive branches which should never be reached. */
         if (indentFactor < 0) {
@@ -216,13 +231,19 @@ export class Script extends Block {
         
         content.forEach((value, index) => {
             if (value instanceof Statement) {
-                let indent = config.common.indent;
-
-                /* Correct indent if necessary. */
-                if (indent < 0) {
-                    indent = 0;
+                let indentBeforeComment = config.common?.indentBeforeComment;
+                
+                /* Correct comment-indent if necessary. */
+                if (!checkValue(indentBeforeComment)) {
+                    indentBeforeComment = Script._DEFAULT_COMMENT_INDENT;
                 }
-                s += `${' '.repeat(indent * indentFactor)}${value.value}\n`;
+                s += `${' '.repeat(commonIndent * indentFactor)}${value.value}`;
+
+                /* Add comment behind line. */
+                if (value.comment) {
+                    s += `${' '.repeat(indentBeforeComment)}# ${value.comment}`;
+                }
+                s += '\n';
             } else {
                 let indentAddition = 0;
                 let blockConfig: BlockConfig = null;
@@ -266,6 +287,12 @@ export class Script extends Block {
                 /* Add newlines before block. */
                 if ((blockConfig?.newlinesBefore > 0) && ((index > 0) || (contextFlagsCopy & ContextFlags.FlowBlock))) {
                     s += '\n'.repeat(blockConfig.newlinesBefore);
+                }
+                const indent = checkValue(blockConfig?.indent) ? blockConfig.indent : commonIndent;
+
+                /* Add comment before block. */
+                if (value.comment) {
+                    s += `${' '.repeat(indent * indentFactor)}# ${value.comment}\n`;
                 }
                 /* Process children. */
                 s += this._dump(value.raw, config, indentFactor + indentAddition, contextFlags);

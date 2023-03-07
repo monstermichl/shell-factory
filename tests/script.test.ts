@@ -8,6 +8,7 @@ import { Case } from '../src/components/flow/case/case.mjs';
 import { CaseOption } from '../src/components/flow/case/case-option.mjs';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { Statement } from '../src/base/statement.mjs';
 
 describe('Script tests', () => {
     const scriptBlock = new Script([
@@ -29,7 +30,7 @@ describe('Script tests', () => {
                 ]).elseIf('4 -eq 4', [
                     'echo "Third level If-ElseIf"',
                 ]).else([
-                    'echo "Third level If-Else"',
+                    new Statement('echo "Third level If-Else"').setComment('I have no idea how I got here.'),
                 ]),
             ]),
         ]),
@@ -51,9 +52,9 @@ describe('Script tests', () => {
                 'echo "Second level For ($j)"',
                 new For('k', [1, 2, 3], [
                     'echo "Third level For ($k)"',
-                ]),
-            ]),
-        ]),
+                ]).setComment('Come on...Stop it...'),
+            ]).setComment('This is a for-loop again...'),
+        ]).setComment('This is a for-loop'),
         new Case('$input', [
             new CaseOption('1', 'echo "First level Case"'),
             new CaseOption('*', [
@@ -119,7 +120,7 @@ describe('Script tests', () => {
             });
 
             it('negative spaces', () => {
-                const compareScript = loadScript('script-0-spaces.sh');
+                const compareScript = loadScript('script-default-spaces.sh');
                 const dumpedScript = scriptBlock.dump({
                     common: {
                         indent: -1,
@@ -135,6 +136,16 @@ describe('Script tests', () => {
                         function: {
                             newlinesAfter: 1,
                         },
+                    },
+                });
+                expect(dumpedScript).to.be.equal(compareScript);
+            });
+
+            it('negative spaces before comments', () => {
+                const compareScript = loadScript('script-default-spaces-before-comments.sh');
+                const dumpedScript = scriptBlock.dump({
+                    common: {
+                        indentBeforeComment: -1,
                     },
                 });
                 expect(dumpedScript).to.be.equal(compareScript);
@@ -162,7 +173,7 @@ describe('Script tests', () => {
             });
 
             it('set default to negative value', () => {
-                const compareScript = loadScript('script-0-spaces.sh');
+                const compareScript = loadScript('script-default-spaces.sh');
 
                 scriptBlock.config = {
                     common: {

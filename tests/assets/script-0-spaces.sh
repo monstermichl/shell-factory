@@ -23,7 +23,7 @@ echo "Third level If"
 elif [ 4 -eq 4 ]; then
 echo "Third level If-ElseIf"
 else
-echo "Third level If-Else"
+echo "Third level If-Else" # I have no idea how I got here.
 fi
 fi
 fi
@@ -43,12 +43,15 @@ done
 break
 done
 
+# This is a for-loop
 for i in 1 2 3; do
 echo "First level For ($i)"
 
+# This is a for-loop again...
 for j in 1 2 3; do
 echo "Second level For ($j)"
 
+# Come on...Stop it...
 for k in 1 2 3; do
 echo "Third level For ($k)"
 done
