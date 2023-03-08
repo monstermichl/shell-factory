@@ -228,6 +228,18 @@ export abstract class Block extends Base {
     }
 
     /**
+     * Removes all entries based on the provided ID from the content-list.
+     * 
+     * @param id        Content id.
+     * @param recursive The id will also be searched in all sub-blocks.
+     *
+     * @returns The current object.
+     */
+    public removeContent(id: string, recursive=false): this {
+        return this._removeContent(id, recursive);
+    }
+
+    /**
      * Returns the block's unbiased content.
      */
     protected get _content(): StatementOrBlock[] {
@@ -377,6 +389,34 @@ export abstract class Block extends Base {
             this._contentList.push(...contentTyped as StatementOrBlock[]);
         }
         return contentTyped ? this : null;
+    }
+
+    /**
+     * Removes all entries based on the provided ID from the content-list.
+     * 
+     * @param id        Content id.
+     * @param recursive The id will also be searched in all sub-blocks.
+     *
+     * @returns The current object.
+     */
+    protected _removeContent(id: string, recursive=false): this {
+        /* Iterate from back to front to be able to remove entries. */
+        for (let i = this._contentList.length - 1; i >= 0; --i) {
+            if (this._contentList[i].id === id) {
+                this._contentList.splice(i, 1);
+                break;
+            }
+        }
+
+        /* Process all sub-blocks. */
+        if (recursive) {
+            this._contentList.forEach((entry) => {
+                if (entry instanceof Block) {
+                    entry.removeContent(id, recursive);
+                }
+            });
+        }
+        return this;
     }
 
     /**

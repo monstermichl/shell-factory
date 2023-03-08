@@ -44,7 +44,7 @@ describe('Base tests', () => {
         });
     });
 
-    describe('deleteComment', () => {
+    describe('clearComment', () => {
         describe('successful', () => {
             it('delete', () => {
                 const comment = 'This is a comment';
@@ -54,7 +54,7 @@ describe('Base tests', () => {
                 expect(base.meta(metaData)).to.be.equal(base);
                 expect(metaData.comment).to.be.equal(comment);
 
-                expect(base.deleteComment()).to.be.equal(base);
+                expect(base.clearComment()).to.be.equal(base);
                 expect(base.meta(metaData)).to.be.equal(base);
                 expect(metaData.comment).to.be.equal(undefined);
             });

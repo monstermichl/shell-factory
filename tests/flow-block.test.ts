@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { MetaData } from '../src/base/base.mjs';
 import { Statement } from '../src/base/statement.mjs';
 import { FlowBlock } from '../src/blocks/flow-block.mjs';
 
@@ -48,6 +49,21 @@ describe('FlowBlock tests', () => {
 
                 expect(block.content.length).to.be.equal(1);
                 expect((block.content[0] as Statement).value).to.be.equal(content);
+            });
+        });
+    });
+
+    describe('removeContent', () => {
+        describe('successful', () => {
+            it('non recursive', () => {
+                const metaData = new MetaData();
+                const block = new FlowBlockHelper('if', [
+                    new Statement('echo "Simple statement"').meta(metaData),
+                ]);
+
+                expect(block.content?.length).to.be.equal(1);
+                expect(block.removeContent(metaData.id)).to.be.equal(block);
+                expect(block.content.length).to.be.equal(0);
             });
         });
     });

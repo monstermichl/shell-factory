@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { MetaData } from '../src/base/base.mjs';
 import { Block } from '../src/base/block.mjs';
 import { Statement } from '../src/base/statement.mjs';
 
@@ -438,6 +439,40 @@ describe('Block tests', () => {
 
                 expect(content.length).to.be.equal(1);
                 expect((content[0] as Statement).value).to.be.equal(statement);
+            });
+        });
+    });
+
+    describe('removeContent', () => {
+        describe('successful', () => {
+            it('non recursive', () => {
+                const metaData = new MetaData();
+                const block = new BlockHelper([
+                    new Statement('echo "Simple statement"').meta(metaData),
+                ]);
+
+                expect(block.content?.length).to.be.equal(1);
+                expect(block.removeContent(metaData.id)).to.be.equal(block);
+                expect(block.content.length).to.be.equal(0);
+            });
+
+            it('recursive', () => {
+                const metaData = new MetaData();
+                const block = new BlockHelper([
+                    new BlockHelper([
+                        new BlockHelper([
+                            new Statement('echo "Nested statement"').meta(metaData),
+                        ]),
+                    ]),
+                ]);
+
+                expect(block.content?.length).to.be.equal(1);
+                expect((block.content[0] as Block)?.content?.length).to.be.equal(1);
+                expect(((block.content[0] as Block).content[0] as Block).content.length).to.be.equal(1);
+                expect(((block.content[0] as Block).content[0] as Block).content[0].id).to.be.equal(metaData.id);
+
+                expect(block.removeContent(metaData.id, true)).to.be.equal(block);
+                expect(((block.content[0] as Block)?.content[0] as Block)?.content.length).to.be.equal(0);
             });
         });
     });

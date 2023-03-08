@@ -253,6 +253,19 @@ export abstract class FlowBlock extends Block {
     }
 
     /**
+     * Removes all entries based on the provided ID from the block's body.
+     * 
+     * @param id        Content id.
+     * @param recursive The id will also be searched in all sub-blocks.
+     *
+     * @returns The current object.
+     */
+    public override removeContent(id: string, recursive=false): this {
+        this._body.removeContent(id, recursive);
+        return this;
+    }
+
+    /**
      * Inserts new content at the given position into the block's body.
      *
      * @param position  Insertion position.

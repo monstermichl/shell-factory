@@ -46,7 +46,7 @@ export abstract class Base {
      *
      * @returns The current object.
      */
-    public deleteComment(): this {
+    public clearComment(): this {
         this._comment = undefined;
         return this;
     }
