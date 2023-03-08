@@ -404,7 +404,6 @@ export abstract class Block extends Base {
         for (let i = this._contentList.length - 1; i >= 0; --i) {
             if (this._contentList[i].id === id) {
                 this._contentList.splice(i, 1);
-                break;
             }
         }
 
