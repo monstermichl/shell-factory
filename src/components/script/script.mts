@@ -62,6 +62,32 @@ export type Config = {
 };
 
 /**
+ * Represents the interpreter (shebang) statement.
+ */
+export class Interpreter extends Statement {
+    private _path: string;
+
+    constructor(path: string) {
+        const shebang = '#!';
+        const shebangRegex = new RegExp(`^${shebang}`);
+        const cleanedPath = path.replace(shebangRegex, '');
+        const interpreter = `${shebang}${cleanedPath}`;
+
+        /* Removes the shebang from the provided interpreter and assigns it. */
+        super(interpreter);
+        this._path = cleanedPath;
+    }
+
+    public get path(): string {
+        return this._path;
+    }
+
+    public static get defaultInterpreter(): Interpreter {
+        return new Interpreter('/bin/sh');
+    }
+}
+
+/**
  * Represents a Bourne Shell script.
  */
 export class Script extends Block {
@@ -83,9 +109,8 @@ export class Script extends Block {
             case: { newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_BLOCKS },
         }
     } as Config;
-    private readonly _INTERPRETER_START_PATTERN = '#!';
 
-    private _interpreter = '/bin/sh';
+    private _interpreter = Interpreter.defaultInterpreter;
     private _config = Script._correctConfig();
 
     /**
@@ -133,7 +158,7 @@ export class Script extends Block {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     constructor(content?: any) {
         super(content);
-        this.interpreter = this._interpreter;
+        this.setInterpreter(this._interpreter.value);
     }
 
     /**
@@ -160,30 +185,34 @@ export class Script extends Block {
     /**
      * Gets the script interpreter location.
      */
-    public get interpreter(): string {
+    public getInterpreter(): Interpreter {
         return this._interpreter;
     }
 
     /**
      * Sets the script interpreter location.
      */
-    public set interpreter(interpreter: string) {
-        const INTERPRETER_REGEX = new RegExp(`^${this._INTERPRETER_START_PATTERN}`);
-        const INTERPRETER_STATEMENT = `${this._INTERPRETER_START_PATTERN}${interpreter.replace(INTERPRETER_REGEX, '')}`;
-        const index = this._content.findIndex((value) => value instanceof Statement && value.value.match(INTERPRETER_REGEX));
+    public setInterpreter(interpreter: string): this;
+    public setInterpreter(interpreter: Interpreter): this;
+    public setInterpreter(interpreter: unknown): this {
+        if (interpreter)
+        {
+            this._interpreter = (interpreter instanceof Interpreter) ? interpreter : new Interpreter(`${interpreter}`);
 
-        /* Removes the shebang from the provided interpreter and assigns it. */
-        this._interpreter = interpreter.trim().replace(INTERPRETER_REGEX, '');
+            /* Look for an already existing interpreter. */
+            const index = this._content.findIndex((value) => value instanceof Interpreter);
 
-        if (index >= 0) {
-            this._content[index] = new Statement(INTERPRETER_STATEMENT);
-        } else if (this.raw.length === 0) {
-            this._addContent(INTERPRETER_STATEMENT);
-        } else {
-            /* Defensive branch which should never be reached since
-               interpreter is set in constructor. */
-            this._insertContent(0, INTERPRETER_STATEMENT);
+            if (index >= 0) {
+                this._content[index] = this._interpreter;
+            } else if (this.raw.length === 0) {
+                this._addContent(this._interpreter);
+            } else {
+                /* Defensive branch which should never be reached since
+                interpreter is set in constructor. */
+                this._insertContent(0, this._interpreter);
+            }
         }
+        return this;
     }
 
     /**

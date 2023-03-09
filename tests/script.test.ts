@@ -1,4 +1,7 @@
-import { Script } from '../src/components/script/script.mjs';
+import {
+    Interpreter,
+    Script,
+} from '../src/components/script/script.mjs';
 import { expect } from 'chai';
 import { Function } from '../src/components/function/function.mjs';
 import { If } from '../src/components/flow/if/if.mjs';
@@ -74,18 +77,49 @@ describe('Script tests', () => {
         return readFileSync(join('tests', 'assets' ,name)).toString();
     }
 
-    describe('interpreter', () => {
+    describe('getInterpreter', () => {
         describe('successful', () => {
             it('get default', () => {
-                expect(new Script().interpreter).to.be.equal('/bin/sh');
-            });
+                const defaultInterpreter = '/bin/sh';
 
+                expect(new Script().getInterpreter().path).to.be.equal(defaultInterpreter);
+                expect(new Script().getInterpreter().value).to.be.equal(`#!${defaultInterpreter}`);
+            });
+        });
+    });
+
+    describe('setInterpreter', () => {
+        describe('successful', () => {
             it('set bash', () => {
                 const script = new Script();
                 const interpreter = '/bin/bash';
 
-                script.interpreter = interpreter
-                expect(script.interpreter).to.be.equal(interpreter);
+                script.setInterpreter(interpreter);
+
+                expect(script.getInterpreter().path).to.be.equal(interpreter);
+                expect(script.getInterpreter().value).to.be.equal(`#!${interpreter}`);
+            });
+
+            it('set interpreter object', () => {
+                const script = new Script();
+                const interpreter = new Interpreter('/bin/bash');
+
+                script.setInterpreter(interpreter);
+
+                expect(script.getInterpreter()).to.be.equal(interpreter);
+                expect(script.getInterpreter().path).to.be.equal(interpreter.path);
+                expect(script.getInterpreter().value).to.be.equal(interpreter.value);
+            });
+        });
+
+        describe('failed', () => {
+            it('set undefined', () => {
+                const script = new Script();
+
+                script.setInterpreter(undefined as any);
+
+                expect(script.getInterpreter().path).to.be.equal(Interpreter.defaultInterpreter.path);
+                expect(script.getInterpreter().value).to.be.equal(Interpreter.defaultInterpreter.value);
             });
         });
     });
