@@ -37,7 +37,7 @@ enum ContextFlags {
 /**
  * Script string dump block configuration.
  */
-type BlockConfig = {
+type Format = {
     indent?: number;
     newlinesBefore?: number;
     newlinesAfter?: number;
@@ -48,16 +48,18 @@ type BlockConfig = {
  * Script string dump configuration.
  */
 export type Config = {
-    common?: BlockConfig;
+    common?: Format;
     detailed?: {
-        function?: BlockConfig;
-        if?: BlockConfig;
-        elseIf?: BlockConfig;
-        else?: BlockConfig;
-        while?: BlockConfig;
-        for?: BlockConfig;
-        case?: BlockConfig;
-        caseOption?: BlockConfig;
+        function?: Format;
+        if?: Format;
+        elseIf?: Format;
+        else?: Format;
+        while?: Format;
+        for?: Format;
+        case?: Format;
+        caseOption?: Format;
+        statement?: Format;
+        interpreter?: Omit<Format, 'newlinesBefore'>;
     }
 };
 
@@ -93,20 +95,22 @@ export class Interpreter extends Statement {
 export class Script extends Block {
     private static readonly _DEFAULT_INDENT = 2;
     private static readonly _DEFAULT_COMMENT_INDENT = 1;
-    private static readonly _DEFAULT_NEW_LINES_FLOW_COMMON = 0;
-    private static readonly _DEFAULT_NEW_LINES_FLOW_BLOCKS = 1;
+    private static readonly _DEFAULT_NEW_LINES_AFTER_INTERPRETER = 1;
+    private static readonly _DEFAULT_NEW_LINES_BEFORE_COMMON = 0;
+    private static readonly _DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS = 1;
     private static readonly _DEFAULT_CONFIG = {
         common: {
             indent: Script._DEFAULT_INDENT,
-            newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_COMMON,
+            newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_COMMON,
             indentBeforeComment: Script._DEFAULT_COMMENT_INDENT,
         },
         detailed: {
-            function: { newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_BLOCKS },
-            if: { newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_BLOCKS },
-            while: { newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_BLOCKS },
-            for: { newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_BLOCKS },
-            case: { newlinesBefore: Script._DEFAULT_NEW_LINES_FLOW_BLOCKS },
+            interpreter: { newlinesAfter: Script._DEFAULT_NEW_LINES_AFTER_INTERPRETER },
+            function: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
+            if: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
+            while: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
+            for: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
+            case: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
         }
     } as Config;
 
@@ -257,16 +261,67 @@ export class Script extends Block {
         if (indentFactor < 0) {
             indentFactor = 0;
         }
+        let previousNewlines = 0;
         
         content.forEach((value, index) => {
+            let indentAddition = 0;
+            let format: Format = null;
+
+            if (value instanceof Interpreter) {
+                format = config?.detailed?.interpreter;
+            } else if (value instanceof Function) {
+                format = config?.detailed?.function;
+                contextFlags |= ContextFlags.Function;
+            } else if (value instanceof If) {
+                format = config?.detailed?.if;
+                contextFlags |= ContextFlags.If;
+            } else if (value instanceof ElseIf) {
+                format = config?.detailed?.elseIf;
+                contextFlags |= ContextFlags.ElseIf;
+            } else if (value instanceof Else) {
+                format = config?.detailed?.else;
+                contextFlags |= ContextFlags.Else;
+            } else if (value instanceof While) {
+                format = config?.detailed?.while;
+                contextFlags |= ContextFlags.While;
+            } else if (value instanceof For) {
+                format = config?.detailed?.for;
+                contextFlags |= ContextFlags.For;
+            } else if (value instanceof Case) {
+                format = config?.detailed?.case;
+                contextFlags |= ContextFlags.Case;
+            } else if (value instanceof CaseOption) {
+                format = config?.detailed?.caseOption;
+                contextFlags |= ContextFlags.CaseOption;
+            } else {
+                indentAddition = 1;
+                format = Script.defaultConfig.common;
+            }
+
+            /* Add newlines before statement or block. */
+            if (format?.newlinesBefore > 0) {
+                let newlinesBefore = 0;
+
+                /* Use only the difference between previous newlines and current newlines. */
+                if (format.newlinesBefore > previousNewlines) {
+                    newlinesBefore = format.newlinesBefore - previousNewlines;
+                }
+                console.log('previous', previousNewlines, 'new line', format.newlinesBefore, 'calculated', newlinesBefore);
+
+                if ((index > 0) || (contextFlagsCopy & ContextFlags.FlowBlock)) {
+                    s += '\n'.repeat(newlinesBefore);
+                }
+            }
+
             if (value instanceof Statement) {
-                let indentBeforeComment = config.common?.indentBeforeComment;
+                const format = config.detailed?.statement || config.common;
+                let indentBeforeComment = format?.indentBeforeComment;
                 
                 /* Correct comment-indent if necessary. */
                 if (!checkValue(indentBeforeComment)) {
                     indentBeforeComment = Script._DEFAULT_COMMENT_INDENT;
                 }
-                s += `${' '.repeat(commonIndent * indentFactor)}${value.value}`;
+                s += `${' '.repeat((checkValue(format.indent) ? format.indent : commonIndent) * indentFactor)}${value.value}`;
 
                 /* Add comment behind line. */
                 if (value.comment) {
@@ -274,50 +329,13 @@ export class Script extends Block {
                 }
                 s += '\n';
             } else {
-                let indentAddition = 0;
-                let blockConfig: BlockConfig = null;
-
                 /* Set basic content-type. */
                 if (value instanceof FlowBlock) {
                     contextFlags = ContextFlags.FlowBlock;
                 } else {
                     contextFlags = ContextFlags.Block;
                 }
-
-                if (value instanceof Function) {
-                    blockConfig = config?.detailed?.function;
-                    contextFlags |= ContextFlags.Function;
-                } else if (value instanceof If) {
-                    blockConfig = config?.detailed?.if;
-                    contextFlags |= ContextFlags.If;
-                } else if (value instanceof ElseIf) {
-                    blockConfig = config?.detailed?.elseIf;
-                    contextFlags |= ContextFlags.ElseIf;
-                } else if (value instanceof Else) {
-                    blockConfig = config?.detailed?.else;
-                    contextFlags |= ContextFlags.Else;
-                } else if (value instanceof While) {
-                    blockConfig = config?.detailed?.while;
-                    contextFlags |= ContextFlags.While;
-                } else if (value instanceof For) {
-                    blockConfig = config?.detailed?.for;
-                    contextFlags |= ContextFlags.For;
-                } else if (value instanceof Case) {
-                    blockConfig = config?.detailed?.case;
-                    contextFlags |= ContextFlags.Case;
-                } else if (value instanceof CaseOption) {
-                    blockConfig = config?.detailed?.caseOption;
-                    contextFlags |= ContextFlags.CaseOption;
-                } else {
-                    indentAddition = 1;
-                    blockConfig = Script.defaultConfig.common;
-                }
-
-                /* Add newlines before block. */
-                if ((blockConfig?.newlinesBefore > 0) && ((index > 0) || (contextFlagsCopy & ContextFlags.FlowBlock))) {
-                    s += '\n'.repeat(blockConfig.newlinesBefore);
-                }
-                const indent = checkValue(blockConfig?.indent) ? blockConfig.indent : commonIndent;
+                const indent = checkValue(format?.indent) ? format.indent : commonIndent;
 
                 /* Add comment before block. */
                 if (value.comment) {
@@ -325,11 +343,12 @@ export class Script extends Block {
                 }
                 /* Process children. */
                 s += this._dump(value.raw, config, indentFactor + indentAddition, contextFlags);
+            }
+            /* Add newlines after statement or block. */
+            previousNewlines = (format?.newlinesAfter > 0) ? format?.newlinesAfter : 0;
 
-                /* Add newlines after block. */
-                if (blockConfig?.newlinesAfter > 0) {
-                    s += '\n'.repeat(blockConfig.newlinesAfter);
-                }
+            if (previousNewlines > 0) {
+                s += '\n'.repeat(previousNewlines);
             }
         });
         return s;

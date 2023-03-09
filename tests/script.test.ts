@@ -9,7 +9,7 @@ import { While } from '../src/components/flow/while/while.mjs';
 import { For } from '../src/components/flow/for/for.mjs';
 import { Case } from '../src/components/flow/case/case.mjs';
 import { CaseOption } from '../src/components/flow/case/case-option.mjs';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { Statement } from '../src/base/statement.mjs';
 
@@ -164,14 +164,15 @@ describe('Script tests', () => {
             });
 
             it('newline after function blocks', () => {
-                const compareScript = loadScript('script-new-line-after-function-blocks.sh');
+                const compareScript = loadScript('script-new-lines-after-function-blocks.sh');
                 const dumpedScript = scriptBlock.dump({
                     detailed: {
                         function: {
-                            newlinesAfter: 1,
+                            newlinesAfter: 2,
                         },
                     },
                 });
+                writeFileSync('script-new-lines-after-function-blocks.sh', dumpedScript);
                 expect(dumpedScript).to.be.equal(compareScript);
             });
 
