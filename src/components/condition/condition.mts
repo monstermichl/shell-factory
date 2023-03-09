@@ -9,11 +9,32 @@ export class Condition {
      *
      * @param condition Condition string.
      */
-    constructor(condition: string) {
-        if (!condition) {
-            throw new Error('No condition provided');
+    constructor(condition: boolean);
+    /**
+     * Condition constructor.
+     *
+     * @param condition Condition string.
+     */
+    constructor(condition: number);
+    /**
+     * Condition constructor.
+     *
+     * @param condition Condition string.
+     */
+    constructor(condition: string);
+    constructor(condition: unknown) {
+        const oneString = '1';
+        const zeroString = '0';
+
+        /* Convert numbers and booleans to string condition. */
+        if (['number', 'bigint'].includes(typeof condition)) {
+            condition = (condition !== 0) ? oneString : zeroString;
+        } else if (typeof condition === 'boolean') {
+            condition = condition ? oneString : zeroString;
+        } else if (typeof condition !== 'string') {
+            throw new Error('No or invalid condition provided');
         }
-        this._condition = condition;
+        this._condition = condition as string;
     }
 
     /**

@@ -306,7 +306,6 @@ export class Script extends Block {
                 if (format.newlinesBefore > previousNewlines) {
                     newlinesBefore = format.newlinesBefore - previousNewlines;
                 }
-                console.log('previous', previousNewlines, 'new line', format.newlinesBefore, 'calculated', newlinesBefore);
 
                 if ((index > 0) || (contextFlagsCopy & ContextFlags.FlowBlock)) {
                     s += '\n'.repeat(newlinesBefore);

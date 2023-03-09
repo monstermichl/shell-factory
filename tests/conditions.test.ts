@@ -23,9 +23,9 @@ describe('Conditions tests', () => {
         describe('failed', () => {
             it('undefined condition', () => {
                 try {
-                    new Condition(undefined as any);
+                    new Conditions(undefined as any);
                 } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('No condition provided');
+                    expect((e as Error).message).to.be.equal('No or invalid condition provided');
                 }
             });
         });

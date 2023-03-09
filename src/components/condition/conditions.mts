@@ -14,6 +14,20 @@ export class Conditions {
      * @param condition        Primary condition.
      * @param linkedConditions Logically linked conditions.
      */
+    constructor(condition: boolean, ...linkedConditions: LinkedCondition[]);
+    /**
+     * Conditions constructor.
+     *
+     * @param condition        Primary condition.
+     * @param linkedConditions Logically linked conditions.
+     */
+    constructor(condition: number, ...linkedConditions: LinkedCondition[]);
+    /**
+     * Conditions constructor.
+     *
+     * @param condition        Primary condition.
+     * @param linkedConditions Logically linked conditions.
+     */
     constructor(condition: string, ...linkedConditions: LinkedCondition[]);
     /**
      * Conditions constructor.
@@ -23,10 +37,30 @@ export class Conditions {
      */
     constructor(condition: Condition, ...linkedConditions: LinkedCondition[]);
     constructor(condition: unknown, ...linkedConditions: LinkedCondition[]) {
-        this._condition = (condition instanceof Condition) ? condition : new Condition(condition as string);
+        /* Convert string condition to Condition object. */
+        if (['number', 'bigint', 'string', 'boolean'].includes(typeof condition)) {
+            condition = new Condition(condition as string);
+        } else if (!(condition instanceof Condition)) {
+            throw new Error('No or invalid condition provided');
+        }
+        this._condition = condition as Condition;
         this._linkedConditions = linkedConditions;
     }
 
+    /**
+     * Converts a condition string to a Conditions object.
+     *
+     * @param condition Condition string.
+     * @return Conditions object.
+     */
+    public static convert(condition: boolean): Conditions;
+    /**
+     * Converts a condition string to a Conditions object.
+     *
+     * @param condition Condition string.
+     * @return Conditions object.
+     */
+    public static convert(condition: number): Conditions;
     /**
      * Converts a condition string to a Conditions object.
      *
@@ -53,17 +87,15 @@ export class Conditions {
 
         if (!arg) {
             throw new Error('No condition provided');
-        } else if (typeof arg === 'string') {
-            conditions = new Conditions(arg);
         } else if (arg instanceof Condition) {
             conditions = new Conditions(arg.value);
-        } else {
-            const inputConditions = arg as Conditions;
-
+        } else if (arg instanceof Conditions) {
             conditions = new Conditions(
-                inputConditions.primaryCondition,
-                ...inputConditions.linkedConditions,
+                arg.primaryCondition,
+                ...arg.linkedConditions,
             );
+        } else {
+            conditions = new Conditions(arg as string);
         }
         return conditions;
     }
