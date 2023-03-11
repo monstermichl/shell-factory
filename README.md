@@ -1,12 +1,11 @@
 # Script builder
-Script builder is a simple yet powerful library that allows you to create Bourne shell scripts on the fly using Typescript. It's intuitive syntax and chainable commands take all the hassle of formatting strings manually and remembering weird syntax away from you and provides you with a rich set of configurations to configure the script output to tailor it according to your needs.
-
----
+Script builder is a simple yet powerful library that allows you to create Bourne shell scripts on the fly using Typescript. It's intuitive syntax and chainable commands take all the hassle of formatting strings manually and remembering weird syntax away from you and provides you with a rich set of configurations to tailor the script according your needs.
 
 ## Examples
 *The output of the following examples was provided by console.log. It is not dumped to the console or any file automatically. This is shown in the first example but for readability reasons avoided in the other examples.*
 
 ### Functions
+#### Typescript
 ```typescript
 const script = new Script([
     new Function('hello_world', [
@@ -18,6 +17,7 @@ const script = new Script([
 console.log(script);
 ```
 
+#### Shell
 ```sh
 #!/bin/sh
 
@@ -28,6 +28,7 @@ hello_world
 ```
 
 ### If conditions
+#### Typescript
 ```typescript
 new Script([
     'read -p "What do you want to say? " input',
@@ -41,6 +42,7 @@ new Script([
 ]).dump();
 ```
 
+#### Shell
 ```sh
 #!/bin/sh
 
@@ -56,6 +58,7 @@ fi
 ```
 
 ### While loop
+#### Typescript
 ```typescript
 new Script([
     'input=0',
@@ -67,6 +70,7 @@ new Script([
 ]).dump();
 ```
 
+#### Shell
 ```sh
 #!/bin/sh
 
@@ -77,4 +81,57 @@ while [ 1 ]; do
   echo $input
   sleep 1
 done
+```
+
+### For loop
+#### Typescript
+```typescript
+new Script([
+    new For('i', [true, 2, 'three'], [
+        'echo $i',
+        'sleep 1',
+    ]),
+]).dump();
+```
+
+#### Shell
+```sh
+#!/bin/sh
+
+for i in true 2 three; do
+  echo $i
+  sleep 1
+done
+```
+
+### Case
+#### Typescript
+```typescript
+new Script([
+    'read -p "Where are we running? " input',
+    new Case('$input', [
+        new CaseOption('We need some time to clear our heads', [
+            'echo "Keep on working \'til we\'re dead"',
+        ]),
+        new CaseOption('*', [
+            'echo "I have no idea"'
+        ]),
+    ]),
+]).dump();
+```
+
+#### Shell
+```sh
+#!/bin/sh
+
+read -p "Where are we running? " input
+
+case $input in
+  "We need some time to clear our heads")
+    echo "Keep on working 'til we're dead"
+    ;;
+  *)
+    echo "I have no idea"
+    ;;
+esac
 ```
