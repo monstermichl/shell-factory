@@ -74,6 +74,12 @@ export class CaseOption extends FlowBlock {
         if (!pattern) {
             throw new Error('Missing pattern');
         }
+        pattern = `${pattern}`;
+
+        /* If pattern contains whitespaces, put it in quotes. */
+        if (pattern.match(/\s+/)) {
+            pattern = `"${pattern}"`;
+        }
         super(`${pattern})`, content);
         this._addContent(new CaseOptionTerminator());
         this._pattern = pattern;
