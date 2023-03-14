@@ -1,4 +1,4 @@
-import { FlowBlock } from './flow-block.mjs';
+import { WrapBlock } from './wrap-block.mjs';
 import { Statement } from '../base/statement.mjs';
 import {
     Block,
@@ -24,7 +24,7 @@ export enum BracketType {
  * Serves as the base for all blocks that require to handle conditions
  * (e.g., If, While, For, ...).
  */
-export abstract class ConditionBlock extends FlowBlock {
+export abstract class ConditionBlock extends WrapBlock {
     protected _conditions: Conditions;
 
     /**

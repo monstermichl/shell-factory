@@ -1,4 +1,4 @@
-import { FlowBlock } from '../../../blocks/flow-block.mjs';
+import { WrapBlock } from '../../../blocks/wrap-block.mjs';
 import { Statement } from '../../../base/statement.mjs';
 import {
     Block,
@@ -17,7 +17,7 @@ class CaseOptionTerminator extends Block {
 /**
  * Represents a single case of a CaseBlock.
  */
-export class CaseOption extends FlowBlock {
+export class CaseOption extends WrapBlock {
     private _pattern: string;
 
     /**

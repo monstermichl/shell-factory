@@ -1,4 +1,4 @@
-import { FlowBlock } from '../../blocks/flow-block.mjs';
+import { WrapBlock } from '../../blocks/wrap-block.mjs';
 import { Statement } from '../../base/statement.mjs';
 import {
     Block,
@@ -8,7 +8,7 @@ import {
 /**
  * Represents a Bourne Shell function-block.
  */
-export class Function extends FlowBlock {
+export class Function extends WrapBlock {
     /**
      * Function constructor.
      *

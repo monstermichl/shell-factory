@@ -6,7 +6,7 @@ import {
 import { Statement } from '../base/statement.mjs';
 
 /**
- * Serves as the body of a FlowBlock.
+ * Serves as the body of a WrapBlock.
  */
 export class Body extends Block {
     constructor() {
@@ -18,65 +18,65 @@ export class Body extends Block {
  * Serves as the base for all code parts that somehow change the
  * execution flow.
  */
-export abstract class FlowBlock extends Block {
+export abstract class WrapBlock extends Block {
     protected _body = new Body();
     protected _openingStatement: Statement;
     protected _closingStatement: Statement | null;
 
     /**
-     * FlowBlock constructor.
+     * WrapBlock constructor.
      *
-     * @param openingStatement FlowBlock opening statement.
-     * @param statement        FlowBlock content.
-     * @param closingStatement FlowBlock closing statement.
+     * @param openingStatement WrapBlock opening statement.
+     * @param statement        WrapBlock content.
+     * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, statement?: Statement, closingStatement?: string);
     /**
-     * FlowBlock constructor.
+     * WrapBlock constructor.
      *
-     * @param openingStatement FlowBlock opening statement.
-     * @param statement        FlowBlock content.
-     * @param closingStatement FlowBlock closing statement.
+     * @param openingStatement WrapBlock opening statement.
+     * @param statement        WrapBlock content.
+     * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, statement?: string, closingStatement?: string);
     /**
-     * FlowBlock constructor.
+     * WrapBlock constructor.
      *
-     * @param openingStatement FlowBlock opening statement.
-     * @param statement        FlowBlock content.
-     * @param closingStatement FlowBlock closing statement.
+     * @param openingStatement WrapBlock opening statement.
+     * @param statement        WrapBlock content.
+     * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, block?: Block, closingStatement?: string);
     /**
-     * FlowBlock constructor.
+     * WrapBlock constructor.
      *
-     * @param openingStatement FlowBlock opening statement.
-     * @param statement        FlowBlock content.
-     * @param closingStatement FlowBlock closing statement.
+     * @param openingStatement WrapBlock opening statement.
+     * @param statement        WrapBlock content.
+     * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, statements?: Statement[], closingStatement?: string);
     /**
-     * FlowBlock constructor.
+     * WrapBlock constructor.
      *
-     * @param openingStatement FlowBlock opening statement.
-     * @param statement        FlowBlock content.
-     * @param closingStatement FlowBlock closing statement.
+     * @param openingStatement WrapBlock opening statement.
+     * @param statement        WrapBlock content.
+     * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, statements?: string[], closingStatement?: string);
     /**
-     * FlowBlock constructor.
+     * WrapBlock constructor.
      *
-     * @param openingStatement FlowBlock opening statement.
-     * @param statement        FlowBlock content.
-     * @param closingStatement FlowBlock closing statement.
+     * @param openingStatement WrapBlock opening statement.
+     * @param statement        WrapBlock content.
+     * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, blocks?: Block[], closingStatement?: string);
     /**
-     * FlowBlock constructor.
+     * WrapBlock constructor.
      *
-     * @param openingStatement FlowBlock opening statement.
-     * @param statement        FlowBlock content.
-     * @param closingStatement FlowBlock closing statement.
+     * @param openingStatement WrapBlock opening statement.
+     * @param statement        WrapBlock content.
+     * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, content?: StatementOrBlockOrString[], closingStatement?: string);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -360,7 +360,7 @@ export abstract class FlowBlock extends Block {
      * @param statements Content to add.
      * @return If successful, the current class is returned. Otherwise, null is returned.
      */
-    protected _addBodyContent(statements: FlowBlock[]): this;
+    protected _addBodyContent(statements: WrapBlock[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *

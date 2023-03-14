@@ -3,13 +3,13 @@ import {
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
 import { Statement } from '../../../base/statement.mjs';
-import { FlowBlock } from '../../../blocks/flow-block.mjs';
+import { WrapBlock } from '../../../blocks/wrap-block.mjs';
 import { CaseOption } from './case-option.mjs';
 
 /**
  * Represents a Bourne Shell case-block.
  */
-export class Case extends FlowBlock {
+export class Case extends WrapBlock {
     protected _cases: CaseOption[] = [];
 
     /**
@@ -57,7 +57,7 @@ export class Case extends FlowBlock {
      * @param pattern Pattern to create a new case-option from.
      * @param statements Content of the new case-option.
      */
-    public constructor(value: string, pattern?: string, statements?: FlowBlock[]);
+    public constructor(value: string, pattern?: string, statements?: WrapBlock[]);
     /**
      * Case constructor.
      *
@@ -137,7 +137,7 @@ export class Case extends FlowBlock {
      * @param pattern Pattern to create a new case-option from.
      * @param statements Content of the new case-option.
      */
-    public override addContent(pattern: string, statements: FlowBlock[]): this;
+    public override addContent(pattern: string, statements: WrapBlock[]): this;
     /**
      * Adds a new case-option to the case.
      *
@@ -182,7 +182,7 @@ export class Case extends FlowBlock {
      *
      * @param statements Content to add to the last case-option.
      */
-    public override addContent(statements: FlowBlock[]): this;
+    public override addContent(statements: WrapBlock[]): this;
     /**
      * Adds the provided content to the last case-option.
      *

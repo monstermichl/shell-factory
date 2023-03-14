@@ -3,12 +3,12 @@ import {
     Block,
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
-import { FlowBlock } from '../../../blocks/flow-block.mjs';
+import { WrapBlock } from '../../../blocks/wrap-block.mjs';
 
 /**
  * Represents a Bourne Shell else-block.
  */
-export class Else extends FlowBlock {
+export class Else extends WrapBlock {
     /**
      * Else constructor.
      *

@@ -13,7 +13,7 @@ import { ElseIf } from '../flow/if/else-if.mjs';
 import { Else } from '../flow/if/else.mjs';
 import { For } from '../flow/for/for.mjs';
 import { copyOver } from '../../helpers/copy.mjs';
-import { FlowBlock } from '../../blocks/flow-block.mjs';
+import { WrapBlock } from '../../blocks/wrap-block.mjs';
 
 /**
  * Used to help the Script dump-method to understand, in which
@@ -23,7 +23,7 @@ import { FlowBlock } from '../../blocks/flow-block.mjs';
  */
 enum ContextFlags {
     Block      = 1 << 0, /* 1   */
-    FlowBlock  = 1 << 1, /* 2   */
+    WrapBlock  = 1 << 1, /* 2   */
     Function   = 1 << 2, /* 4   */
     If         = 1 << 3, /* 8   */
     ElseIf     = 1 << 4, /* 16  */
@@ -307,7 +307,7 @@ export class Script extends Block {
                     newlinesBefore = format.newlinesBefore - previousNewlines;
                 }
 
-                if ((index > 0) || (contextFlagsCopy & ContextFlags.FlowBlock)) {
+                if ((index > 0) || (contextFlagsCopy & ContextFlags.WrapBlock)) {
                     s += '\n'.repeat(newlinesBefore);
                 }
             }
@@ -329,8 +329,8 @@ export class Script extends Block {
                 s += '\n';
             } else {
                 /* Set basic content-type. */
-                if (value instanceof FlowBlock) {
-                    contextFlags = ContextFlags.FlowBlock;
+                if (value instanceof WrapBlock) {
+                    contextFlags = ContextFlags.WrapBlock;
                 } else {
                     contextFlags = ContextFlags.Block;
                 }
