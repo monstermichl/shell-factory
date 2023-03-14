@@ -13,6 +13,7 @@ const script = new Script([
         new CaseOption('*', [
             'echo "I have no idea"'
         ]),
+        'echo "I\'m added to the last CaseOption"',
     ]),
 ]).dump();
 
