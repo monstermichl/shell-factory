@@ -22,7 +22,7 @@ export enum BracketType {
 
 /**
  * Serves as the base for all blocks that require to handle conditions
- * (e.g., If, While, For, ...).
+ * (e.g., If, While, ...).
  */
 export abstract class ConditionBlock extends WrapBlock {
     protected _conditions: Conditions;

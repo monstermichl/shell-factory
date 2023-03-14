@@ -1,19 +1,16 @@
-import {
-    ConditionBlock,
-    BracketType,
-} from '../../../blocks/condition-block.mjs';
 import { Statement } from '../../../base/statement.mjs';
 import {
     Block,
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
+import { IterationBlock } from '../../../blocks/iteration-block.mjs';
 
 type StringOrNumber = string | number;
 
 /**
  * Represents a Bourne Shell for-block.
  */
-export class For extends ConditionBlock {
+export class For extends IterationBlock {
     /**
      * For constructor.
      *
@@ -183,24 +180,7 @@ export class For extends ConditionBlock {
      */
     constructor(variable: string, values: StringOrNumber[], content?: StatementOrBlockOrString[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    constructor(variable: string, arg: string | number | StringOrNumber[], content?: any) {
-        let values: string;
-
-        /* Check if variables has been provided. */
-        if (!variable) {
-            throw new Error('Missing variable');
-        } 
-
-        if (arg instanceof Array) {
-            values = arg.join(' ');
-        } else {
-            values = `${arg}`; /* Convert possible number to string. */
-        }
-
-        /* Check if values have been provided. */
-        if (!values) {
-            throw new Error('Missing values');
-        }
-        super('for', BracketType.None, `${variable.trim().replace(/^\$/, '')} in ${values}`, 'do', content, 'done');
+    constructor(variable: string, arg: any, content?: any) {
+        super('for', variable, arg, content);
     }
 }
