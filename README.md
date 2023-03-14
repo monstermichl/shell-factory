@@ -1,34 +1,30 @@
 # Script builder
 Script builder is a simple yet powerful library that allows you to create Bourne shell scripts on the fly using Typescript. It's intuitive syntax and chainable commands take all the hassle of formatting strings manually and remembering weird syntax away from you and provides you with a rich set of configurations to tailor the script according your needs.
 
-## Examples
-*The output of the following examples was provided by console.log. It is not dumped to the console or any file automatically. This is shown in the first example but for readability reasons avoided in the other examples.*
+Each shell-script is built with the Script-class which serves as the container for all building blocks. At this point, the following building-blocks are supported (*The output of the following examples was provided by console.log. It is not dumped to the console or any file automatically. This is shown in the first example but for readability reasons avoided in the other examples.*).
 
-### Functions
-#### Typescript
+## Statement
+A statement represents a single line of code. It can be a string or an instance of the Statement class. Usually, a simple string is sufficient. However, the Statement class inherits from the Base class which offers additional functionalities like having an ID for later adjustment or adding comments which will be added to the generated code.
+
 ```typescript
 const script = new Script([
-    new Function('hello_world', [
-        'echo "Hello World"',
-    ]),
-    'hello_world',
+    'echo "Hello World"',
+    new Statement('echo "Hello Statement"').setComment('Statement class example'),
 ]).dump();
 
 console.log(script);
 ```
 
-#### Shell
 ```sh
 #!/bin/sh
 
-hello_world() {
-  echo "Hello World"
-}
-hello_world
+echo "Hello World"
+echo "Hello Statement" # Statement class example
 ```
 
-### If conditions
-#### Typescript
+## If
+If-statements control the further code execution flow. The If-class adds the possibility to add all required else-if (+ else) branches via chaining as shown in the example.
+
 ```typescript
 new Script([
     'read -p "What do you want to say? " input',
@@ -42,7 +38,6 @@ new Script([
 ]).dump();
 ```
 
-#### Shell
 ```sh
 #!/bin/sh
 
@@ -57,8 +52,9 @@ else
 fi
 ```
 
-### While loop
-#### Typescript
+## While
+While-loops execute the content in their body as long as the condition is fulfilled.
+
 ```typescript
 new Script([
     'input=0',
@@ -70,7 +66,6 @@ new Script([
 ]).dump();
 ```
 
-#### Shell
 ```sh
 #!/bin/sh
 
@@ -83,8 +78,9 @@ while [ 1 ]; do
 done
 ```
 
-### For loop
-#### Typescript
+## For
+For-loops iterate over a defined collection of values and provided the current value via the specified variable.
+
 ```typescript
 new Script([
     new For('i', [true, 2, 'three'], [
@@ -94,7 +90,6 @@ new Script([
 ]).dump();
 ```
 
-#### Shell
 ```sh
 #!/bin/sh
 
@@ -104,8 +99,9 @@ for i in true 2 three; do
 done
 ```
 
-### Select
-#### Typescript
+## Select
+Select is a builtin Shell function which provides the user with a selection menu.
+
 ```typescript
 new Script([
     new Select('selection', ['a', 'b', 'c'], [
@@ -114,7 +110,6 @@ new Script([
 ]).dump();
 ```
 
-#### Shell
 ```sh
 #!/bin/sh
 
@@ -123,8 +118,9 @@ select selection in a b c; do
 done
 ```
 
-### Case
-#### Typescript
+## Case
+Case looks at the provided input and decides based on the defined cases, which branch to execute. The Case-class expects CaseOption as it's content. Everything that is not a CaseOption instance is being added to the latest defined CaseOption.
+
 ```typescript
 new Script([
     'read -p "Where are we running? " input',
@@ -135,11 +131,11 @@ new Script([
         new CaseOption('*', [
             'echo "I have no idea"'
         ]),
+        'echo "I\'m added to the last CaseOption"',
     ]),
 ]).dump();
 ```
 
-#### Shell
 ```sh
 #!/bin/sh
 
@@ -151,6 +147,33 @@ case $input in
     ;;
   *)
     echo "I have no idea"
+    echo "I'm added to the last CaseOption"
     ;;
 esac
+```
+
+## Function
+Functions are reusable code blocks which can be called at later points in the script. The Function-class also adds the possibility to map the positional parameters to function-internal variables for better usability.
+
+```typescript
+new Script([
+    new Function('hello_world', [
+        'echo "Greetings $first_name, $last_name"',
+    ], [
+        'first_name',
+        'last name',
+    ]),
+    'hello_world',
+]).dump();
+```
+
+```sh
+#!/bin/sh
+
+hello_world() {
+  first_name=$1
+  last_name=$2
+  echo "Greetings $first_name, $last_name"
+}
+hello_world
 ```
