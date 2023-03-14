@@ -104,6 +104,25 @@ for i in true 2 three; do
 done
 ```
 
+### Select
+#### Typescript
+```typescript
+new Script([
+    new Select('selection', ['a', 'b', 'c'], [
+        'echo "You\'ve selected $selection"',
+    ]),
+]).dump();
+```
+
+#### Shell
+```sh
+#!/bin/sh
+
+select selection in a b c; do
+  echo "You've selected $selection"
+done
+```
+
 ### Case
 #### Typescript
 ```typescript

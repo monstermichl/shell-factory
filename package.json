@@ -17,6 +17,7 @@
     "example:if": "npm run build && node --experimental-vm-modules ./examples/example-if.js",
     "example:while": "npm run build && node --experimental-vm-modules ./examples/example-while.js",
     "example:for": "npm run build && node --experimental-vm-modules ./examples/example-for.js",
+    "example:select": "npm run build && node --experimental-vm-modules ./examples/example-select.js",
     "example:case": "npm run build && node --experimental-vm-modules ./examples/example-case.js"
   },
   "author": "monstermichl",

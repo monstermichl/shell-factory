@@ -14,6 +14,7 @@ import { Else } from '../flow/if/else.mjs';
 import { For } from '../flow/for/for.mjs';
 import { copyOver } from '../../helpers/copy.mjs';
 import { WrapBlock } from '../../blocks/wrap-block.mjs';
+import { Select } from '../select/select.mjs';
 
 /**
  * Used to help the Script dump-method to understand, in which
@@ -22,16 +23,17 @@ import { WrapBlock } from '../../blocks/wrap-block.mjs';
  * notation).
  */
 enum ContextFlags {
-    Block      = 1 << 0, /* 1   */
-    WrapBlock  = 1 << 1, /* 2   */
-    Function   = 1 << 2, /* 4   */
-    If         = 1 << 3, /* 8   */
-    ElseIf     = 1 << 4, /* 16  */
-    Else       = 1 << 5, /* 32  */
-    While      = 1 << 6, /* 64  */
-    For        = 1 << 7, /* 128 */
-    Case       = 1 << 8, /* 256 */
-    CaseOption = 1 << 9, /* 512 */
+    Block      = 1 <<  0, /*    1 */
+    WrapBlock  = 1 <<  1, /*    2 */
+    Function   = 1 <<  2, /*    4 */
+    If         = 1 <<  3, /*    8 */
+    ElseIf     = 1 <<  4, /*   16 */
+    Else       = 1 <<  5, /*   32 */
+    While      = 1 <<  6, /*   64 */
+    For        = 1 <<  7, /*  128 */
+    Case       = 1 <<  8, /*  256 */
+    CaseOption = 1 <<  9, /*  512 */
+    Select     = 1 << 10, /* 1024 */
 }
 
 /**
@@ -56,6 +58,7 @@ export type Config = {
         else?: Format;
         while?: Format;
         for?: Format;
+        select?: Format;
         case?: Format;
         caseOption?: Format;
         statement?: Format;
@@ -110,6 +113,7 @@ export class Script extends Block {
             if: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
             while: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
             for: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
+            select: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
             case: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
         }
     } as Config;
@@ -284,6 +288,9 @@ export class Script extends Block {
             } else if (value instanceof While) {
                 format = config?.detailed?.while;
                 contextFlags |= ContextFlags.While;
+            } else if (value instanceof Select) {
+                format = config?.detailed?.select;
+                contextFlags |= ContextFlags.Select;
             } else if (value instanceof For) {
                 format = config?.detailed?.for;
                 contextFlags |= ContextFlags.For;
