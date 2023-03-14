@@ -6,8 +6,8 @@ const KEYWORD = 'for';
 
 /* Helper class to instantiate IterationBlock. */
 export class IterationBlockHelper extends IterationBlock {
-    constructor(variable: string, arg: any, content?: any) {
-        super(KEYWORD, variable, arg, content);
+    constructor(keyword: string, variable: string, arg: any, content?: any) {
+        super(keyword, variable, arg, content);
     }
 }
 
@@ -18,7 +18,7 @@ describe('IterationBlock tests', () => {
                 const variable = 'VARIABLE';
                 const values = 0;
                 const content = 'echo 123';
-                const whileBlock = new IterationBlockHelper(`$${variable}`, values, content);
+                const whileBlock = new IterationBlockHelper(KEYWORD, `$${variable}`, values, content);
 
                 expect(whileBlock.raw.length).to.be.equal(3);
                 expect((whileBlock.raw[0] as Statement).value).to.be.equal(`${KEYWORD} ${variable} in ${values}; do`);
@@ -32,7 +32,7 @@ describe('IterationBlock tests', () => {
                 const variable = 'VARIABLE';
                 const values = 'test';
                 const content = 'echo 123';
-                const whileBlock = new IterationBlockHelper(variable, values, content);
+                const whileBlock = new IterationBlockHelper(KEYWORD, variable, values, content);
 
                 expect(whileBlock.raw.length).to.be.equal(3);
                 expect((whileBlock.raw[0] as Statement).value).to.be.equal(`${KEYWORD} ${variable} in ${values}; do`);
@@ -46,7 +46,7 @@ describe('IterationBlock tests', () => {
                 const variable = 'VARIABLE';
                 const values = ['test', 3];
                 const content = 'echo 123';
-                const whileBlock = new IterationBlockHelper(variable, values, content);
+                const whileBlock = new IterationBlockHelper(KEYWORD, variable, values, content);
 
                 expect(whileBlock.raw.length).to.be.equal(3);
                 expect((whileBlock.raw[0] as Statement).value).to.be.equal(`${KEYWORD} ${variable} in ${values.join(' ')}; do`);
@@ -58,9 +58,17 @@ describe('IterationBlock tests', () => {
         });
 
         describe('failed', () => {
+            it('undefined keyword', () => {
+                try {
+                    new IterationBlockHelper(undefined as any, '$variable', [1, 2]);
+                } catch (e: any) {
+                    expect((e as Error).message).to.be.equal('Missing keyword');
+                }
+            });
+
             it('undefined variable', () => {
                 try {
-                    new IterationBlockHelper(undefined as any, [1, 2]);
+                    new IterationBlockHelper(KEYWORD, undefined as any, [1, 2]);
                 } catch (e: any) {
                     expect((e as Error).message).to.be.equal('Missing variable');
                 }
@@ -68,7 +76,7 @@ describe('IterationBlock tests', () => {
 
             it('empty values', () => {
                 try {
-                    new IterationBlockHelper('$variable', []);
+                    new IterationBlockHelper(KEYWORD, '$variable', []);
                 } catch (e: any) {
                     expect((e as Error).message).to.be.equal('Missing values');
                 }
