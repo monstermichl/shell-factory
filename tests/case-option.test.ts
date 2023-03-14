@@ -19,6 +19,20 @@ describe('CaseOption tests', () => {
                 expect(caseOption.content.length).to.be.equal(1);
                 expect((caseOption.content[0] as Statement).value).to.be.equal(content);
             });
+
+            it('pattern with whitespaces', () => {
+                const pattern = 'whitespace test';
+                const content = 'found files';
+                const caseOption = new CaseOption(pattern, content);
+
+                expect(caseOption.raw.length).to.be.equal(3);
+                expect((caseOption.raw[0] as Statement).value).to.be.equal(`"${pattern}")`);
+                expect((caseOption.raw[2] as Block).content.length).to.be.equal(1);
+                expect(((caseOption.raw[2] as Block).content[0] as Statement).value).to.be.equal(';;');
+
+                expect(caseOption.content.length).to.be.equal(1);
+                expect((caseOption.content[0] as Statement).value).to.be.equal(content);
+            });
         });
 
         describe('failed', () => {
