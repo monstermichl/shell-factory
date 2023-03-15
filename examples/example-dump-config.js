@@ -6,8 +6,8 @@ import {
 
 const spacyConfig = {
     detailed: {
-        interpreter: {
-            newlinesAfter: 3,
+        for: {
+            newlinesAfter: 2,
         },
         statement: {
             newlinesBefore: 1,
@@ -21,7 +21,7 @@ const script = new Script([
         new Statement('echo "Iteration $i"').setComment('Far away comment.'),
     ]),
     'echo "First statement"',
-    'echo "Second statement"',
+    new Statement('echo "Second statement"').setComment('Another far away comment.'),
     'echo "Third statement"',
 ]).dump(spacyConfig);
 
