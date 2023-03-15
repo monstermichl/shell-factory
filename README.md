@@ -1,7 +1,8 @@
-# Script builder
-Script builder is a simple yet powerful library that allows you to create Bourne shell scripts on the fly using Typescript. It's intuitive syntax and chainable commands take all the hassle of formatting strings manually and remembering weird syntax away from you and provides you with a rich set of configurations to tailor the script according your needs.
+# Overview
+Script builder is a simple yet powerful library that allows you to create Bourne shell scripts on the fly using Typescript. It's intuitive syntax and chainable commands take all the hassle of formatting strings manually and remembering weird syntax away from you and provides you with a rich set of configurations to tailor the script according to your needs.
 
-Each shell-script is built with the Script-class which serves as the container for all building blocks. At this point, the following building-blocks are supported (*The output of the following examples was provided by console.log. It is not dumped to the console or any file automatically. This is shown in the first example but for readability reasons avoided in the other examples.*).
+# Components
+Each shell-script is built with the Script-class which serves as the container for all building blocks. At this point, the following building-blocks are supported (*the output of the following examples was provided by console.log. It is not dumped to the console or any file automatically. This is shown in the first example but for readability reasons avoided in the other examples.*).
 
 ## Statement
 A statement represents a single line of code. It can be a string or an instance of the Statement class. Usually, a simple string is sufficient. However, the Statement class inherits from the Base class which offers additional functionalities like having an ID for later adjustment or adding comments which will be added to the generated code.
@@ -79,7 +80,7 @@ done
 ```
 
 ## For
-For-loops iterate over a defined collection of values and provided the current value via the specified variable.
+For-loops iterate over a defined collection of values and provid the current value via the specified variable.
 
 ```typescript
 new Script([
@@ -100,7 +101,7 @@ done
 ```
 
 ## Select
-Select is a builtin Shell function which provides the user with a selection menu.
+Select is a builtin Shell function which provides the user with a selection menu based on the provided values.
 
 ```typescript
 new Script([
@@ -119,7 +120,7 @@ done
 ```
 
 ## Case
-Case looks at the provided input and decides based on the defined cases, which branch to execute. The Case-class expects CaseOption as it's content. Everything that is not a CaseOption instance is being added to the latest defined CaseOption.
+Case looks at the provided input and decides, based on the defined cases, which branch to execute. *The Case-class expects CaseOption as it's content. Everything that is not a CaseOption instance is being added to the latest defined CaseOption.*
 
 ```typescript
 new Script([
@@ -176,4 +177,45 @@ hello_world() {
   echo "Greetings $first_name, $last_name"
 }
 hello_world
+```
+
+# Formatting
+How scripts are dumped can be configured separatelly. Either by setting the config directly on the Script instance or by passing it to the dump-method.
+```typescript
+const spacyConfig = {
+    detailed: {
+        interpreter: {
+            newlinesAfter: 3,
+        },
+        statement: {
+            newlinesBefore: 1,
+            indentBeforeComment: 6,
+        },
+    }
+} as Config;
+
+const script = new Script([
+    new For('i', [1, 2, 3], [
+        new Statement('echo "Iteration $i"').setComment('Far away comment.'),
+    ]),
+    'echo "First statement"',
+    'echo "Second statement"',
+    'echo "Third statement"',
+]).dump(spacyConfig);
+```
+
+```sh
+#!/bin/sh
+
+
+
+for i in 1 2 3; do
+  echo "Iteration $i"      # Far away comment.
+done
+
+echo "First statement"
+
+echo "Second statement"
+
+echo "Third statement"
 ```
