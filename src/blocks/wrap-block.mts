@@ -5,6 +5,14 @@ import {
 } from '../base/block.mjs';
 import { Statement } from '../base/statement.mjs';
 
+export class OpeningStatement extends Statement {
+    /* Nothing to do. */
+}
+
+export class ClosingStatement extends Statement {
+    /* Nothing to do. */
+}
+
 /**
  * Serves as the body of a WrapBlock.
  */
@@ -84,8 +92,8 @@ export abstract class WrapBlock extends Block {
         if (!openingStatement) {
             throw new Error('Missing opening statement');
         }
-        const openingStatementTemp = new Statement(openingStatement);
-        const closingStatementTemp = closingStatement ? new Statement(closingStatement) : null;
+        const openingStatementTemp = new OpeningStatement(openingStatement);
+        const closingStatementTemp = closingStatement ? new ClosingStatement(closingStatement) : null;
 
         super(openingStatementTemp);
         super.addContent(this._body);
