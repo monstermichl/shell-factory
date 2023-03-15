@@ -13,7 +13,11 @@ import { ElseIf } from '../flow/if/else-if.mjs';
 import { Else } from '../flow/if/else.mjs';
 import { For } from '../flow/for/for.mjs';
 import { copyOver } from '../../helpers/copy.mjs';
-import { WrapBlock } from '../../blocks/wrap-block.mjs';
+import {
+    ClosingStatement,
+    OpeningStatement,
+    WrapBlock,
+} from '../../blocks/wrap-block.mjs';
 import { Select } from '../select/select.mjs';
 
 /**
@@ -271,8 +275,14 @@ export class Script extends Block {
             let indentAddition = 0;
             let format: Format = null;
 
+            /* Statements */
             if (value instanceof Interpreter) {
                 format = config?.detailed?.interpreter;
+            } else if ((value instanceof OpeningStatement) || (value instanceof ClosingStatement)) {
+                /* Nothing to do. Ignore special formatting for now. */
+            } else if (value instanceof Statement) {
+                format = config?.detailed?.statement;
+            /* Blocks */
             } else if (value instanceof Function) {
                 format = config?.detailed?.function;
                 contextFlags |= ContextFlags.Function;
