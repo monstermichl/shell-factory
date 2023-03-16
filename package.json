@@ -14,6 +14,7 @@
     "example1": "npm run build && node --experimental-vm-modules ./examples/example1.js",
     "example2": "npm run build && node --experimental-vm-modules ./examples/example2.js",
     "example:function": "npm run build && node --experimental-vm-modules ./examples/example-function.js",
+    "example:function-call": "npm run build && node --experimental-vm-modules ./examples/example-function-call.js",
     "example:statement": "npm run build && node --experimental-vm-modules ./examples/example-statement.js",
     "example:if": "npm run build && node --experimental-vm-modules ./examples/example-if.js",
     "example:while": "npm run build && node --experimental-vm-modules ./examples/example-while.js",

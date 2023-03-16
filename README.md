@@ -179,6 +179,44 @@ hello_world() {
 hello_world
 ```
 
+The Function class additionally provides the *call*-method to return a function-call Statement with the provided parameters.
+```typescript
+const exitFunc = new Function('exit_function', [
+    new If('"$2" != ""', [
+        'echo "$2"',
+    ]),
+    new Statement('exit $1').setComment('Exiting with the provided error-code.'),
+]);
+const script = new Script([
+    exitFunc,
+
+    new If('-e "hello.txt"', [
+        exitFunc.call(0),
+    ]).else([
+        exitFunc.call(-1, 'File doesn\'t exit.'),
+    ])
+]).dump();
+
+console.log(script);
+```
+
+```sh
+#!/bin/sh
+
+exit_function() {
+  if [ "$2" != "" ]; then
+    echo "$2"
+  fi
+  exit $1 # Exiting with the provided error-code.
+}
+
+if [ -e "hello.txt" ]; then
+  exit_function 0
+else
+  exit_function -1 "File doesn't exit."
+fi
+```
+
 ## Formatting
 How scripts are dumped can be configured separatelly. Either by setting the config directly on the Script instance or by passing it to the dump-method.
 ```typescript

@@ -96,5 +96,31 @@ describe('Function tests', () => {
             });
         });
     });
+
+    describe('call', () => {
+        describe('successful', () => {
+            it('with different parameter types', () => {
+                const name = 'test';
+                const param1 = true;
+                const param2 = 2;
+                const param3 = 'three';
+                const testFunc = new Function(name);
+                const statement = testFunc.call(param1, param2, param3);
+
+                expect(statement).to.be.not.null;
+                expect(statement.value).to.be.equal(`${name} ${param1} ${param2} "${param3}"`);
+            });
+        });
+
+        describe('failed', () => {
+            it('with invalid parameter type', () => {
+                try {
+                    new Function('test').call(undefined as any);
+                } catch (e: any) {
+                    expect((e as Error).message).to.be.equal('Parameter is neither string nor number nor boolean');
+                }
+            });
+        });
+    });
 });
 

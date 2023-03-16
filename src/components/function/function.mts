@@ -6,6 +6,7 @@ import {
 } from '../../base/block.mjs';
 
 type StringOrParameter = string | Parameter;
+type StringOrNumberOrBoolean = string | number | boolean;
 
 /**
  * Represents a function-parameter.
@@ -26,6 +27,7 @@ export class Parameter extends Statement {
  * Represents a Bourne Shell function-block.
  */
 export class Function extends WrapBlock {
+    private _name: string;
     private _parameters = [] as Parameter[];
 
     /**
@@ -240,10 +242,12 @@ export class Function extends WrapBlock {
     public constructor(name: string, content?: StatementOrBlockOrString[], parameters?: StringOrParameter[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public constructor(name: string, content?: any, parameters?: unknown[]) {
+        name = name?.trim(); /* Trim whitespaces. */
+
+        /* Make sure a name is provided. */
         if (!name) {
             throw new Error('Missing function name');
         }
-        name = name.trim(); /* Trim whitespaces. */
 
         /* Check if function name matches rules. */
         if (!name.match(/^(_|[a-zA-^])+\w+$/)) {
@@ -279,13 +283,63 @@ export class Function extends WrapBlock {
             parameters = [];
         }
         super(`${name}() {`, content, '}');
+
+        this._name = name;
         this._parameters.push(...(parameters as Parameter[]));
+    }
+
+    /**
+     * Returns the function name.
+     */
+    public get name(): string {
+        return this._name;
     }
 
     /**
      * Returns the function parameters.
      */
     public get parameters(): Parameter[] {
-        return this._parameters;
+        return [...this._parameters];
+    }
+
+    /**
+     * Returns a function-call Statement.
+     *
+     * @param parameters Parameters with which to call the function.
+     * @returns Function-call Statement object.
+     */
+    public call(...parameters: number[]): Statement;
+    /**
+     * Returns a function-call Statement.
+     *
+     * @param parameters Parameters with which to call the function.
+     * @returns Function-call Statement object.
+     */
+    public call(...parameters: boolean[]): Statement;
+    /**
+     * Returns a function-call Statement.
+     *
+     * @param parameters Parameters with which to call the function.
+     * @returns Function-call Statement object.
+     */
+    public call(...parameters: string[]): Statement;
+    /**
+     * Returns a function-call Statement.
+     *
+     * @param parameters Parameters with which to call the function.
+     * @returns Function-call Statement object.
+     */
+    public call(...parameters: StringOrNumberOrBoolean[]): Statement;
+    public call(...parameters: unknown[]): Statement {
+        parameters = parameters.map((parameter) => {
+            /* Put strings into quotes. */
+            if (typeof parameter === 'string') {
+                parameter = `"${parameter}"`;
+            } else if (!['boolean', 'number'].includes(typeof parameter)) {
+                throw new Error('Parameter is neither string nor number nor boolean');
+            }
+            return parameter;
+        });
+        return new Statement(`${this.name} ${parameters.join(' ')}`);
     }
 }
