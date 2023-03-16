@@ -235,29 +235,6 @@ export abstract class Block extends Base {
     }
 
     /**
-     * Removes all entries based on the provided ID or Statement pattern from the content-list.
-     * 
-     * @param idOrPattern Content ID or Statement pattern.
-     * @param recursive   The id will also be searched in all sub-blocks.
-     *
-     * @returns The current object.
-     */
-    public removeContent(idOrPattern: string, recursive?: boolean): this;
-    /**
-     * Removes all entries based on the provided ID or Statement pattern from the content-list.
-     * 
-     * @param pattern   Content ID or Statement pattern.
-     * @param recursive The id will also be searched in all sub-blocks.
-     *
-     * @returns The current object.
-     */
-    public removeContent(pattern: string, recursive?: boolean): this;
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public removeContent(arg: any, recursive=false): this {
-        return this._removeContent(arg, recursive);
-    }
-
-    /**
      * Searches all entries based on the provided ID or Statement pattern in the
      * content-list.
      * 
@@ -280,6 +257,29 @@ export abstract class Block extends Base {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public findContent(arg: any, recursive=false): StatementOrBlock[] {
         return this._findContent(arg, recursive);
+    }
+
+    /**
+     * Removes all entries based on the provided ID or Statement pattern from the content-list.
+     * 
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param recursive   The id will also be searched in all sub-blocks.
+     *
+     * @returns The current object.
+     */
+    public removeContent(idOrPattern: string, recursive?: boolean): this;
+    /**
+     * Removes all entries based on the provided ID or Statement pattern from the content-list.
+     * 
+     * @param pattern   Content ID or Statement pattern.
+     * @param recursive The id will also be searched in all sub-blocks.
+     *
+     * @returns The current object.
+     */
+    public removeContent(pattern: string, recursive?: boolean): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public removeContent(arg: any, recursive=false): this {
+        return this._removeContent(arg, recursive);
     }
 
     /**
@@ -435,6 +435,45 @@ export abstract class Block extends Base {
     }
 
     /**
+     * Searches all entries based on the provided ID or Statement pattern in the
+     * content-list.
+     * 
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param recursive   The id will also be searched in all sub-blocks.
+     *
+     * @returns List of found objects.
+     */
+    protected _findContent(idOrPattern: string, recursive?: boolean): StatementOrBlock[];
+    /**
+     * Searches all entries based on the provided ID or Statement pattern in the
+     * content-list.
+     * 
+     * @param pattern   Content ID or Statement pattern.
+     * @param recursive The id will also be searched in all sub-blocks.
+     *
+     * @returns List of found objects.
+     */
+    protected _findContent(pattern: RegExp, recursive?: boolean): StatementOrBlock[];
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    protected _findContent(arg: any, recursive=false): StatementOrBlock[] {
+        const idOrPatternEvaluationResult = this._evaluateIdOrPattern(arg);
+        let found = [] as StatementOrBlock[];
+
+        this._contentList.forEach((entry) => {
+            if (this._compareIdOrPattern(entry, idOrPatternEvaluationResult)) {
+                found.push(entry);
+            }
+
+            if (recursive && (entry instanceof Block)) {
+                found.push(...entry._findContent(arg, recursive));
+            }
+            /* Remove doubles. */
+            found = [...new Set(found)];
+        });
+        return found;
+    }
+
+    /**
      * Removes all entries based on the provided ID or Statement pattern from the content-list.
      * 
      * @param idOrPattern Content ID or Statement pattern.
@@ -472,45 +511,6 @@ export abstract class Block extends Base {
             });
         }
         return this;
-    }
-
-    /**
-     * Searches all entries based on the provided ID or Statement pattern in the
-     * content-list.
-     * 
-     * @param idOrPattern Content ID or Statement pattern.
-     * @param recursive   The id will also be searched in all sub-blocks.
-     *
-     * @returns List of found objects.
-     */
-    protected _findContent(idOrPattern: string, recursive?: boolean): StatementOrBlock[];
-    /**
-     * Searches all entries based on the provided ID or Statement pattern in the
-     * content-list.
-     * 
-     * @param pattern   Content ID or Statement pattern.
-     * @param recursive The id will also be searched in all sub-blocks.
-     *
-     * @returns List of found objects.
-     */
-    protected _findContent(pattern: RegExp, recursive?: boolean): StatementOrBlock[];
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    protected _findContent(arg: any, recursive=false): StatementOrBlock[] {
-        const idOrPatternEvaluationResult = this._evaluateIdOrPattern(arg);
-        let found = [] as StatementOrBlock[];
-
-        this._contentList.forEach((entry) => {
-            if (this._compareIdOrPattern(entry, idOrPatternEvaluationResult)) {
-                found.push(entry);
-            }
-
-            if (recursive && (entry instanceof Block)) {
-                found.push(...entry._findContent(arg, recursive));
-            }
-            /* Remove doubles. */
-            found = [...new Set(found)];
-        });
-        return found;
     }
 
     /**
