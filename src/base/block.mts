@@ -235,7 +235,7 @@ export abstract class Block extends Base {
     }
 
     /**
-     * Removes all entries based on the provided ID from the content-list.
+     * Removes all entries based on the provided ID or Statement pattern from the content-list.
      * 
      * @param idOrPattern Content ID or Statement pattern.
      * @param recursive   The id will also be searched in all sub-blocks.
@@ -244,7 +244,7 @@ export abstract class Block extends Base {
      */
     public removeContent(idOrPattern: string, recursive?: boolean): this;
     /**
-     * Removes all entries based on the provided ID from the content-list.
+     * Removes all entries based on the provided ID or Statement pattern from the content-list.
      * 
      * @param pattern   Content ID or Statement pattern.
      * @param recursive The id will also be searched in all sub-blocks.
@@ -435,7 +435,7 @@ export abstract class Block extends Base {
     }
 
     /**
-     * Removes all entries based on the provided ID from the content-list.
+     * Removes all entries based on the provided ID or Statement pattern from the content-list.
      * 
      * @param idOrPattern Content ID or Statement pattern.
      * @param recursive   The id will also be searched in all sub-blocks.
@@ -444,7 +444,7 @@ export abstract class Block extends Base {
      */
     protected _removeContent(idOrPattern: string, recursive?: boolean): this;
     /**
-     * Removes all entries based on the provided ID from the content-list.
+     * Removes all entries based on the provided ID or Statement pattern from the content-list.
      * 
      * @param pattern   Content ID or Statement pattern.
      * @param recursive The id will also be searched in all sub-blocks.
