@@ -53,6 +53,25 @@ describe('WrapBlock tests', () => {
         });
     });
 
+    describe('findContent', () => {
+        describe('successful', () => {
+            it('non recursive', () => {
+                const metaData = new MetaData();
+                const statement = new Statement('echo "Simple statement"').meta(metaData);
+                const block = new WrapBlockHelper('if', [
+                    statement,
+                ]);
+
+                expect(block.content?.length).to.be.equal(1);
+
+                const found = block.findContent(metaData.id);
+
+                expect(found.length).to.be.equal(1);
+                expect(found[0]).to.be.equal(statement);
+            });
+        });
+    });
+
     describe('removeContent', () => {
         describe('successful', () => {
             it('non recursive', () => {

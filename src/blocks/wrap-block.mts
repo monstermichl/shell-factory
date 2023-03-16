@@ -261,16 +261,52 @@ export abstract class WrapBlock extends Block {
     }
 
     /**
-     * Removes all entries based on the provided ID from the block's body.
+     * Removes all entries based on the provided ID or Statement pattern from the block's body.
      * 
-     * @param id        Content id.
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param recursive   The id will also be searched in all sub-blocks.
+     *
+     * @returns The current object.
+     */
+    public override removeContent(idOrPattern: string, recursive?: boolean): this;
+    /**
+     * Removes all entries based on the provided ID or Statement pattern from the block's body.
+     * 
+     * @param pattern   Content ID or Statement pattern.
      * @param recursive The id will also be searched in all sub-blocks.
      *
      * @returns The current object.
      */
-    public override removeContent(id: string, recursive=false): this {
-        this._body.removeContent(id, recursive);
+    public override removeContent(pattern: string, recursive?: boolean): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public override removeContent(arg: any, recursive=false): this {
+        this._body.removeContent(arg, recursive);
         return this;
+    }
+
+    /**
+     * Searches all entries based on the provided ID or Statement pattern in the
+     * block's body.
+     * 
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param recursive   The id will also be searched in all sub-blocks.
+     *
+     * @returns List of found objects.
+     */
+    public override findContent(idOrPattern: string, recursive?: boolean): StatementOrBlock[];
+    /**
+     * Searches all entries based on the provided ID or Statement pattern in the
+     * block's body.
+     * 
+     * @param pattern   Content ID or Statement pattern.
+     * @param recursive The id will also be searched in all sub-blocks.
+     *
+     * @returns List of found objects.
+     */
+    public override findContent(pattern: RegExp, recursive?: boolean): StatementOrBlock[];
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public override findContent(arg: any, recursive=false): StatementOrBlock[] {
+        return this._body.findContent(arg, recursive);
     }
 
     /**
