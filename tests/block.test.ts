@@ -474,6 +474,77 @@ describe('Block tests', () => {
                 expect(block.removeContent(metaData.id, true)).to.be.equal(block);
                 expect(((block.content[0] as Block)?.content[0] as Block)?.content.length).to.be.equal(0);
             });
+
+            it('string pattern', () => {
+                const echoOutput = 'Simple statement';
+                const metaData = new MetaData();
+                const block = new BlockHelper([
+                    new Statement(`echo "${echoOutput}"`).meta(metaData),
+                ]);
+
+                expect(block.content?.length).to.be.equal(1);
+                expect(block.removeContent(`.*${echoOutput}`)).to.be.equal(block);
+                expect(block.content.length).to.be.equal(0);
+            });
+        });
+
+        describe('failed', () => {
+            it('no ID or pattern provided', () => {
+                try {
+                    new BlockHelper().removeContent(undefined as any);
+                } catch (e: any) {
+                    expect((e as Error).message).to.be.equal('No ID or pattern provided');
+                }
+            });
+
+            it('invalid ID or pattern type', () => {
+                try {
+                    new BlockHelper().removeContent({} as any);
+                } catch (e: any) {
+                    expect((e as Error).message).to.be.equal('Invalid ID or pattern type');
+                }
+            });
+        });
+    });
+
+    describe('findContent', () => {
+        describe('successful', () => {
+            it('non recursive', () => {
+                const metaData = new MetaData();
+                const statement = new Statement('echo "Simple statement"').meta(metaData);
+                const block = new BlockHelper([
+                    statement,
+                ]);
+
+                expect(block.content?.length).to.be.equal(1);
+
+                const found = block.findContent(metaData.id);
+
+                expect(found.length).to.be.equal(1);
+                expect(found[0]).to.be.equal(statement);
+            });
+
+            it('recursive', () => {
+                const metaData = new MetaData();
+                const statement = new Statement('echo "Simple statement"').meta(metaData);
+                const block = new BlockHelper([
+                    new BlockHelper([
+                        new BlockHelper([
+                            statement,
+                        ]),
+                    ]),
+                ]);
+
+                expect(block.content?.length).to.be.equal(1);
+                expect((block.content[0] as Block)?.content?.length).to.be.equal(1);
+                expect(((block.content[0] as Block).content[0] as Block).content.length).to.be.equal(1);
+                expect(((block.content[0] as Block).content[0] as Block).content[0].id).to.be.equal(metaData.id);
+
+                const found = block.findContent(metaData.id, true);
+
+                expect(found.length).to.be.equal(1);
+                expect(found[0]).to.be.equal(statement);
+            });
         });
     });
 

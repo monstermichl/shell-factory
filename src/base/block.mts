@@ -4,11 +4,18 @@ import { Statement } from './statement.mjs';
 export type StatementOrBlock = Statement | Block;
 export type StatementOrBlockOrString = StatementOrBlock | string;
 
+class IdOrPatternEvaluationResult {
+    isId: boolean;
+    regex: RegExp;
+}
+
 /**
  * Represents a container to group a list of Statement- and other
  * Block-objects. New content can be added dynamically.
  */
 export abstract class Block extends Base {
+    private readonly _UUID_PATTERN = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/; /* RegEx taken from https://ihateregex.io/expr/uuid/. */
+
     protected _contentList: StatementOrBlock[] = [];
 
     /**
@@ -230,13 +237,49 @@ export abstract class Block extends Base {
     /**
      * Removes all entries based on the provided ID from the content-list.
      * 
-     * @param id        Content id.
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param recursive   The id will also be searched in all sub-blocks.
+     *
+     * @returns The current object.
+     */
+    public removeContent(idOrPattern: string, recursive?: boolean): this;
+    /**
+     * Removes all entries based on the provided ID from the content-list.
+     * 
+     * @param pattern   Content ID or Statement pattern.
      * @param recursive The id will also be searched in all sub-blocks.
      *
      * @returns The current object.
      */
-    public removeContent(id: string, recursive=false): this {
-        return this._removeContent(id, recursive);
+    public removeContent(pattern: string, recursive?: boolean): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public removeContent(arg: any, recursive=false): this {
+        return this._removeContent(arg, recursive);
+    }
+
+    /**
+     * Finds all entries based on the provided ID or Statement pattern from the
+     * content-list.
+     * 
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param recursive   The id will also be searched in all sub-blocks.
+     *
+     * @returns List of found objects.
+     */
+    public findContent(idOrPattern: string, recursive?: boolean): StatementOrBlock[];
+    /**
+     * Finds all entries based on the provided ID or Statement pattern from the
+     * content-list.
+     * 
+     * @param pattern   Content ID or Statement pattern.
+     * @param recursive The id will also be searched in all sub-blocks.
+     *
+     * @returns List of found objects.
+     */
+    public findContent(pattern: RegExp, recursive?: boolean): StatementOrBlock[];
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public findContent(arg: any, recursive=false): StatementOrBlock[] {
+        return this._findContent(arg, recursive);
     }
 
     /**
@@ -394,15 +437,28 @@ export abstract class Block extends Base {
     /**
      * Removes all entries based on the provided ID from the content-list.
      * 
-     * @param id        Content id.
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param recursive   The id will also be searched in all sub-blocks.
+     *
+     * @returns The current object.
+     */
+    protected _removeContent(idOrPattern: string, recursive?: boolean): this;
+    /**
+     * Removes all entries based on the provided ID from the content-list.
+     * 
+     * @param pattern   Content ID or Statement pattern.
      * @param recursive The id will also be searched in all sub-blocks.
      *
      * @returns The current object.
      */
-    protected _removeContent(id: string, recursive=false): this {
+    protected _removeContent(pattern: string, recursive?: boolean): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    protected _removeContent(arg: any, recursive=false): this {
+        const idOrPatternEvaluationResult = this._evaluateIdOrPattern(arg);
+
         /* Iterate from back to front to be able to remove entries. */
         for (let i = this._contentList.length - 1; i >= 0; --i) {
-            if (this._contentList[i].id === id) {
+            if (this._compareIdOrPattern(this._contentList[i], idOrPatternEvaluationResult)) {
                 this._contentList.splice(i, 1);
             }
         }
@@ -411,11 +467,105 @@ export abstract class Block extends Base {
         if (recursive) {
             this._contentList.forEach((entry) => {
                 if (entry instanceof Block) {
-                    entry.removeContent(id, recursive);
+                    entry.removeContent(arg, recursive);
                 }
             });
         }
         return this;
+    }
+
+    /**
+     * Finds all entries based on the provided ID or Statement pattern from the
+     * content-list.
+     * 
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param recursive   The id will also be searched in all sub-blocks.
+     *
+     * @returns List of found objects.
+     */
+    protected _findContent(idOrPattern: string, recursive?: boolean): StatementOrBlock[];
+    /**
+     * Finds all entries based on the provided ID or Statement pattern from the
+     * content-list.
+     * 
+     * @param pattern   Content ID or Statement pattern.
+     * @param recursive The id will also be searched in all sub-blocks.
+     *
+     * @returns List of found objects.
+     */
+    protected _findContent(pattern: RegExp, recursive?: boolean): StatementOrBlock[];
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    protected _findContent(arg: any, recursive=false): StatementOrBlock[] {
+        const idOrPatternEvaluationResult = this._evaluateIdOrPattern(arg);
+        let found = [] as StatementOrBlock[];
+
+        this._contentList.forEach((entry) => {
+            if (this._compareIdOrPattern(entry, idOrPatternEvaluationResult)) {
+                found.push(entry);
+            }
+
+            if (recursive && (entry instanceof Block)) {
+                found.push(...entry._findContent(arg, recursive));
+            }
+            /* Remove doubles. */
+            found = [...new Set(found)];
+        });
+        return found;
+    }
+
+    /**
+     * Checks if the provided string/RegExp is a UUID or a pattern to look for.
+     *
+     * @param idOrPattern UUID or pattern to look for.
+     * @returns IdOrPatternEvaluationResult
+     */
+    private _evaluateIdOrPattern(idOrPattern: string | RegExp): IdOrPatternEvaluationResult {
+        let result: IdOrPatternEvaluationResult;
+
+        /* Make sure an ID or pattern has been provided. */
+        if (!idOrPattern) {
+            throw new Error('No ID or pattern provided');
+        }
+
+        /* If string has been provided convert it to a RegExp. */
+        if (typeof idOrPattern === 'string') {
+            idOrPattern = new RegExp(idOrPattern);
+        }
+
+        /* Make sure a RegExp has been provided or the provided string has
+           been converted to a RegExp for easier further processing. */
+        if (idOrPattern instanceof RegExp) {
+            result = new IdOrPatternEvaluationResult();
+
+            result.isId = !!idOrPattern.source.match(this._UUID_PATTERN); /* Check if RegExp source matches UUID pattern. */
+            result.regex = idOrPattern;
+        } else {
+            throw new Error('Invalid ID or pattern type');
+        }
+        return result;
+    }
+
+    /**
+     * Checks if a Statement or Block matches an ID or a pattern (only Statements are compared
+     * with a pattern.
+     *
+     * @param statementOrBlock            StatementOrBlock to compare a ID or pattern with.
+     * @param idOrPatternEvaluationResult IdOrPatternEvaluationResult.
+     *
+     * @returns True if the ID or pattern matched.
+     */
+    private _compareIdOrPattern(statementOrBlock: StatementOrBlock, idOrPatternEvaluationResult: IdOrPatternEvaluationResult): boolean {
+        if (!(idOrPatternEvaluationResult instanceof IdOrPatternEvaluationResult)) {
+            throw new Error('Invalid ID or pattern evaluation result object');
+        } else if (!(statementOrBlock instanceof Statement) && !(statementOrBlock instanceof Block)) {
+            throw new Error('Invalid compare object');
+        }
+        const { isId, regex } = idOrPatternEvaluationResult;
+
+        return (
+            (isId && !!statementOrBlock.id.match(regex)) ||
+            (!isId && (statementOrBlock instanceof Statement) && !!(statementOrBlock as Statement).value.match(regex))
+        );
     }
 
     /**
