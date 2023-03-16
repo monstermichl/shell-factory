@@ -258,7 +258,7 @@ export abstract class Block extends Base {
     }
 
     /**
-     * Finds all entries based on the provided ID or Statement pattern from the
+     * Searches all entries based on the provided ID or Statement pattern in the
      * content-list.
      * 
      * @param idOrPattern Content ID or Statement pattern.
@@ -268,7 +268,7 @@ export abstract class Block extends Base {
      */
     public findContent(idOrPattern: string, recursive?: boolean): StatementOrBlock[];
     /**
-     * Finds all entries based on the provided ID or Statement pattern from the
+     * Searches all entries based on the provided ID or Statement pattern in the
      * content-list.
      * 
      * @param pattern   Content ID or Statement pattern.
@@ -475,7 +475,7 @@ export abstract class Block extends Base {
     }
 
     /**
-     * Finds all entries based on the provided ID or Statement pattern from the
+     * Searches all entries based on the provided ID or Statement pattern in the
      * content-list.
      * 
      * @param idOrPattern Content ID or Statement pattern.
@@ -485,7 +485,7 @@ export abstract class Block extends Base {
      */
     protected _findContent(idOrPattern: string, recursive?: boolean): StatementOrBlock[];
     /**
-     * Finds all entries based on the provided ID or Statement pattern from the
+     * Searches all entries based on the provided ID or Statement pattern in the
      * content-list.
      * 
      * @param pattern   Content ID or Statement pattern.
