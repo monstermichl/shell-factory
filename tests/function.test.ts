@@ -94,6 +94,14 @@ describe('Function tests', () => {
                     expect((e as Error).message).to.be.equal('Parameter 0 is neither a string nor a Parameter class instance');
                 }
             });
+
+            it('invalid parameter type 2', () => {
+                try {
+                    new Parameter(6 as any);
+                } catch (e: any) {
+                    expect((e as Error).message).to.be.equal('Parameter name is not a string');
+                }
+            });
         });
     });
 
