@@ -9,7 +9,7 @@ import { While } from '../src/components/flow/while/while.mjs';
 import { For } from '../src/components/flow/for/for.mjs';
 import { Case } from '../src/components/flow/case/case.mjs';
 import { CaseOption } from '../src/components/flow/case/case-option.mjs';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import { join } from 'path';
 import { Statement } from '../src/base/statement.mjs';
 import { Select } from '../src/components/select/select.mjs';
@@ -179,7 +179,6 @@ describe('Script tests', () => {
                         },
                     },
                 });
-                writeFileSync('script-new-lines-after-function-blocks.sh', dumpedScript);
                 expect(dumpedScript).to.be.equal(compareScript);
             });
 

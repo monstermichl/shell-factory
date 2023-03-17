@@ -1,5 +1,8 @@
 import { Conditions } from '../dist/components/condition/conditions.mjs';
-import { Link, LinkedCondition } from '../dist/components/condition/linked-condition.mjs';
+import {
+    Link,
+    LinkedCondition,
+} from '../dist/components/condition/linked-condition.mjs';
 import {
     Script,
     If,

@@ -1,4 +1,7 @@
-import { Function, Parameter } from '../src/components/function/function.mjs';
+import {
+    Function,
+    Parameter,
+} from '../src/components/function/function.mjs';
 import { expect } from 'chai';
 import { Statement } from '../src/base/statement.mjs';
 
