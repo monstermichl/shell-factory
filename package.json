@@ -1,5 +1,5 @@
 {
-  "name": "shell-builder",
+  "name": "shell-factory",
   "version": "1.0.0",
   "description": "Typescript module to dynamically build Bourne Shell scripts",
   "main": "./dist/index.mjs",

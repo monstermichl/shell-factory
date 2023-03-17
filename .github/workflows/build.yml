@@ -1,4 +1,4 @@
-name: Build shell-builder
+name: Build shell-factory
 
 on:
   push:
