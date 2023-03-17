@@ -81,6 +81,14 @@ describe('IterationBlock tests', () => {
                     expect((e as Error).message).to.be.equal('Missing values');
                 }
             });
+
+            it('invalid value', () => {
+                try {
+                    new IterationBlockHelper(KEYWORD, '$variable', [{}]);
+                } catch (e: any) {
+                    expect((e as Error).message).to.be.equal('Invalid iteration value provided');
+                }
+            });
         });
     });
 });
