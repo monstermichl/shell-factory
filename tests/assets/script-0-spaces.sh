@@ -77,3 +77,14 @@ esac
 esac
 ;;
 esac
+
+select selection in true 2 three; do
+case $selection in
+true)
+echo "It's true! I swear!"
+;;
+*)
+echo "Whatever..."
+;;
+esac
+done

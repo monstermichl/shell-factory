@@ -12,6 +12,7 @@ import { CaseOption } from '../src/components/flow/case/case-option.mjs';
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { Statement } from '../src/base/statement.mjs';
+import { Select } from '../src/components/select/select.mjs';
 
 describe('Script tests', () => {
     const scriptBlock = new Script([
@@ -69,6 +70,12 @@ describe('Script tests', () => {
                         ]),
                     ]),
                 ]),
+            ]),
+        ]),
+        new Select('selection', [true, 2, 'three'], [
+            new Case('$selection', [
+                new CaseOption('true', 'echo "It\'s true! I swear!"'),
+                new CaseOption('*', 'echo "Whatever..."'),
             ]),
         ]),
     ]);
