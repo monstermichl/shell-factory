@@ -261,3 +261,113 @@ echo "Second statement"      # Another far away comment.
 
 echo "Third statement"
 ```
+
+## Modification
+### Add
+New content can be added to a block (e.g. If) by using the *addContent* method.
+
+```typescript
+const meta = new MetaData(); /* MetaData container. */
+const script = new Script([
+    new If(1, [
+        'echo "This is the first statement"',
+    ]).meta(meta),
+]);
+console.log(script.dump()); /* Dump the original script. */
+
+/* Find the If-block in the Script-block by its ID. */
+const ifBlock = script.findContent(meta.id)[0];
+
+/* Add another statement to the If-block. */
+ifBlock.addContent('echo "Here\'s another statement"');
+
+console.log(script.dump()); /* Dump the updated script. */
+```
+
+```sh
+#!/bin/sh
+
+if [ 1 ]; then
+  echo "This is the first statement"
+fi
+```
+
+```sh
+#!/bin/sh
+
+if [ 1 ]; then
+  echo "This is the first statement"
+  echo "Here's another statement"
+fi
+```
+
+### Remove
+Blocks and Statements can removed from their parent block (e.g. Script) via their ID or a statement pattern using the *removeContent* method.
+
+```typescript
+const script = new Script([
+    new Statement().setComment('First line of this script'),
+    'echo "Is this going to be removed?"',
+    'echo "Will this also be removed?"',
+    new Statement().setComment('Last line of this script'),
+]);
+
+/* Dump the original script. */
+console.log(script.dump());
+
+/* Remove statements by pattern. */
+script.removeContent(/remove/);
+
+/* Dump the altered script. */
+console.log(script.dump());
+```
+
+```sh
+#!/bin/sh
+
+# First line of this script
+echo "Is this going to be removed?"
+echo "Will this also be removed?"
+# Last line of this script
+```
+
+```sh
+#!/bin/sh
+
+# First line of this script
+# Last line of this script
+```
+
+### Alter
+Blocks and Statements can altered by retrieving them via their ID or a statement pattern through their parent block (e.g. Script) with the *findContent* method and altering the returned object(s) directly.
+
+```typescript
+const meta = new MetaData(); /* MetaData container. */
+const script = new Script([
+    new Statement('echo "Hello"')
+        .setComment('This might be altered at the next dump')
+        .meta(meta), /* Get the Statement's meta-data. */
+]);
+console.log(script.dump()); /* Dump the original script. */
+
+/* Find the statement in the script by its ID. */
+const statement = script.findContent(meta.id)[0];
+
+/* Update the Statement's value and comment. */
+statement.value = 'echo "World';
+statement.setComment('It has been altered"');
+
+console.log(script.dump()); /* Dump the altered script. */
+```
+
+```sh
+#!/bin/sh
+
+echo "Hello" # This might be altered at the next dump
+```
+
+```sh
+#!/bin/sh
+
+echo "World" # It has been altered"
+```
