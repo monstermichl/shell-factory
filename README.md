@@ -339,7 +339,7 @@ echo "Will this also be removed?"
 ```
 
 ### Alter
-Blocks and Statements can altered by retrieving them via their ID or a statement pattern through their parent block (e.g. Script) with the *findContent* method and altering the returned object(s) directly.
+Blocks and Statements can altered by retrieving them via their ID or a statement pattern through their parent block (e.g. Script) with the *findContent* method and altering the returned object(s).
 
 ```typescript
 const meta = new MetaData(); /* MetaData container. */
