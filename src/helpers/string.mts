@@ -89,6 +89,8 @@ export function convertToString(arg: any, errorCallback?: ConvertToStringErrorCa
     if (!['string', 'number', 'bigint', 'boolean'].includes(typeof arg)) {
         callbackHelper(ConvertToStringError.InvalidType, arg);
     } else {
+        arg = `${arg}`; /* Convert to string. */
+
         /* Trim if required. */
         if (trim) {
             arg = arg.trim();
@@ -99,5 +101,5 @@ export function convertToString(arg: any, errorCallback?: ConvertToStringErrorCa
             callbackHelper(ConvertToStringError.EmptyValue, arg);
         }
     }
-    return `${arg}`; /* Convert to string. */
+    return arg;
 }
