@@ -276,7 +276,7 @@ export abstract class Block extends Base {
      *
      * @returns The current object.
      */
-    public removeContent(pattern: string, recursive?: boolean): this;
+    public removeContent(pattern: RegExp, recursive?: boolean): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public removeContent(arg: any, recursive=false): this {
         return this._removeContent(arg, recursive);
@@ -490,7 +490,7 @@ export abstract class Block extends Base {
      *
      * @returns The current object.
      */
-    protected _removeContent(pattern: string, recursive?: boolean): this;
+    protected _removeContent(pattern: RegExp, recursive?: boolean): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     protected _removeContent(arg: any, recursive=false): this {
         const idOrPatternEvaluationResult = this._evaluateIdOrPattern(arg);

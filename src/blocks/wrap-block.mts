@@ -277,7 +277,7 @@ export abstract class WrapBlock extends Block {
      *
      * @returns The current object.
      */
-    public override removeContent(pattern: string, recursive?: boolean): this;
+    public override removeContent(pattern: RegExp, recursive?: boolean): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public override removeContent(arg: any, recursive=false): this {
         this._body.removeContent(arg, recursive);
