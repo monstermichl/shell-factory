@@ -17,5 +17,15 @@ describe('Statement tests', () => {
                 expect(statement.value).to.be.equal('');
             });
         });
+
+        describe('failed', () => {
+            it('set invalid type', () => {
+                try {
+                    new Statement(4 as any);
+                } catch (e: any) {
+                    expect((e as Error).message).to.be.equal('Invalid Statement value type provided');
+                }
+            });
+        });
     });
 });
