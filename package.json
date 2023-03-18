@@ -11,7 +11,7 @@
     "testCleanup": "rm -rf ./tests-build",
     "testAndCleanup": "npm run test; npm run testCleanup",
     "lint": "npx eslint .",
-    "generateDoc": "npx typedoc",
+    "generateDocs": "npx typedoc",
     "example1": "npm run build && node ./examples/example1.js",
     "example2": "npm run build && node ./examples/example2.js",
     "example:function": "npm run build && node ./examples/example-function.js",
