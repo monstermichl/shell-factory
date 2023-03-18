@@ -16,11 +16,13 @@ export type ConvertToStringConfig = {
  * @returns Wrapped string if string containes whitespaces.
  */
 export function wrapInQuotes(s: string): string {
-    /* Check if string is ok. */
-    if (typeof s !== 'string') {
-        throw new Error('Variable is not a string');
-    }
-
+    /* Make sure the provided string is valid. */
+    s = convertToString(s, (e: ConvertToStringError) => {
+        switch(e) {
+            case ConvertToStringError.InvalidType: throw new Error('Variable is not a string');
+        }
+    }, { emptyAllowed: true });
+    
     /* If string contains whitespaces and is not between quotes, put it in quotes. */
     if (s.match(/\s+/)) {
         const quoteRegex = /'|`|"/;
@@ -85,21 +87,27 @@ export function convertToString(arg: any, errorCallback?: ConvertToStringErrorCa
     const emptyAllowed = config?.emptyAllowed ? config.emptyAllowed : false;
     const trim = config?.trim ? config.trim : true;
 
-    /* Check if value is actually convertable. */
-    if (!['string', 'number', 'bigint', 'boolean'].includes(typeof arg)) {
-        callbackHelper(ConvertToStringError.InvalidType, arg);
+    /* Make sure arg is neither null nor undefined. Numbers and booleans
+       which are considered false are okay. */
+    if (![null, undefined].includes(arg)) {
+        /* Check if value is actually convertable. */
+        if (!['string', 'number', 'bigint', 'boolean'].includes(typeof arg)) {
+            callbackHelper(ConvertToStringError.InvalidType, arg);
+        } else {
+            arg = `${arg}`; /* Convert to string. */
+    
+            /* Trim if required. */
+            if (trim) {
+                arg = arg.trim();
+            }
+        }
     } else {
-        arg = `${arg}`; /* Convert to string. */
+        arg = ''; /* Make sure, arg is a string. */
+    }
 
-        /* Trim if required. */
-        if (trim) {
-            arg = arg.trim();
-        }
-
-        /* Check if value has been provided if required. */
-        if (!arg && !emptyAllowed) {
-            callbackHelper(ConvertToStringError.EmptyValue, arg);
-        }
+    /* Check if value has been provided if required. */
+    if (!arg && !emptyAllowed) {
+        callbackHelper(ConvertToStringError.EmptyValue, arg);
     }
     return arg;
 }
