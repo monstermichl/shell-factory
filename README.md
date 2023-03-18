@@ -7,7 +7,7 @@ npm install shell-factory
 
 
 ## Components
-Each shell-script is built with the Script-class which serves as the container for all building blocks. At this point, the following building-blocks are supported (*the output of the following examples was provided by console.log. It is not dumped to the console or any file automatically. This is shown in the first example but for readability reasons avoided in the other examples.*).
+Each shell-script is built with the Script-class which serves as the container for all building blocks. At this point, the following building-blocks are supported (*the output of the following examples was provided by console.log. It is not dumped to the console or any file automatically. This is shown in the first example but for readability reasons avoided in the other ones.*).
 
 ### Statement
 A statement represents a single line of code. It can be a string or an instance of the Statement class. Usually, a simple string is sufficient. However, the Statement class inherits from the Base class which offers additional functionalities like having an ID for later adjustment or adding comments which will be added to the generated code.
