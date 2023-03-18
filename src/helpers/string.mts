@@ -12,10 +12,12 @@ export type ConvertToStringConfig = {
 /**
  * Wraps a string in quotes if it contains whitespaces and is not already quoted.
  * 
- * @param s String to wrap.
+ * @param s     String to wrap.
+ * @param force Always wrap string in quotes.
+ *
  * @returns Wrapped string if string containes whitespaces.
  */
-export function wrapInQuotes(s: string): string {
+export function wrapInQuotes(s: string, force?: boolean): string {
     /* Make sure the provided string is valid. */
     s = convertToString(s, (e: ConvertToStringError) => {
         switch(e) {
@@ -24,7 +26,7 @@ export function wrapInQuotes(s: string): string {
     }, { emptyAllowed: true });
     
     /* If string contains whitespaces and is not between quotes, put it in quotes. */
-    if (s.match(/\s+/)) {
+    if (s.match(/\s+/) || force) {
         const quoteRegex = /'|`|"/;
         const foundStartQuote = s.match(new RegExp(`^${quoteRegex.source}`))?.[0]; /* Check if string has start-quote. */
         const foundEndQuote = s.match(new RegExp(`${quoteRegex.source}$`))?.[0]; /* Check if string has end-quote. */
