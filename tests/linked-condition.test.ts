@@ -5,6 +5,18 @@ import {
 } from '../src/components/condition/linked-condition.mjs';
 
 describe('LinkedCondition tests', () => {
+    describe('consructor', () => {
+        describe('failed', () => {
+            it('invalid link', () => {
+                try {
+                    new LinkedCondition(5, '1 -eq 1');
+                } catch (e: any) {
+                    expect((e as Error).message).to.be.equal('Invalid condition link provided');
+                }
+            });
+        });
+    });
+
     describe('link', () => {
         describe('successful', () => {
             it('link', () => {

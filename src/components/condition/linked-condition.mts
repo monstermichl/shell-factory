@@ -15,13 +15,35 @@ export enum Link {
 export class LinkedCondition extends Condition {
     protected _link: Link;
 
+
     /**
      * LinkedCondition constructor.
      *
      * @param link      Link used to logically connect two conditions.
      * @param condition Condition string.
      */
-    constructor(link: Link, condition: string) {
+    constructor(link: Link, condition: string);
+    /**
+     * LinkedCondition constructor.
+     *
+     * @param link      Link used to logically connect two conditions.
+     * @param condition Boolean as condition (everything except false
+     *                  will be converted to 1).
+     */
+    constructor(link: Link, condition: boolean);
+    /**
+     * LinkedCondition constructor.
+     *
+     * @param link      Link used to logically connect two conditions.
+     * @param condition Number as condition (everything 0 will
+     *                  will be converted to 1).
+     */
+    constructor(link: Link, condition: number);
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    constructor(link: Link, condition: any) {
+        if (!Object.values(Link).includes(link)) {
+            throw new Error('Invalid condition link provided');
+        }
         super(condition);
         this._link = link;
     }
