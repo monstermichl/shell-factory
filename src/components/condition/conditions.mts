@@ -51,35 +51,35 @@ export class Conditions {
      * Converts a condition string to a Conditions object.
      *
      * @param condition Condition string.
-     * @return Conditions object.
+     * @returns Conditions object.
      */
     public static convert(condition: boolean): Conditions;
     /**
      * Converts a condition string to a Conditions object.
      *
      * @param condition Condition string.
-     * @return Conditions object.
+     * @returns Conditions object.
      */
     public static convert(condition: number): Conditions;
     /**
      * Converts a condition string to a Conditions object.
      *
      * @param condition Condition string.
-     * @return Conditions object.
+     * @returns Conditions object.
      */
     public static convert(condition: string): Conditions;
     /**
      * Converts a Condition object to a Conditions object.
      *
      * @param condition Condition object.
-     * @return Conditions object.
+     * @returns Conditions object.
      */
     public static convert(condition: Condition): Conditions;
     /**
      * Converts a Conditions object to a Conditions object (nothing happens).
      *
      * @param conditions Conditions object.
-     * @return Converted Conditions object.
+     * @returns Converted Conditions object.
      */
     public static convert(conditions: Conditions): Conditions;
     public static convert(arg: unknown): Conditions {
@@ -133,7 +133,7 @@ export class Conditions {
      * object's condition.
      *
      * @param condition Condition to compare.
-     * @return true if equal, otherwise false.
+     * @returns true if equal, otherwise false.
      */
     public equal(condition: string): boolean;
     /**
@@ -141,7 +141,7 @@ export class Conditions {
      * the Conditions object's condition.
      *
      * @param condition Condition to compare.
-     * @return true if equal, otherwise false.
+     * @returns true if equal, otherwise false.
      */
     public equal(condition: Condition): boolean;
     /**
@@ -149,7 +149,7 @@ export class Conditions {
      * object's conditions.
      *
      * @param condition Condition to compare.
-     * @return true if equal, otherwise false.
+     * @returns true if equal, otherwise false.
      */
     public equal(conditions: Conditions): boolean;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

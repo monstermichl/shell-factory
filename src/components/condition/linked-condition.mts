@@ -37,7 +37,7 @@ export class LinkedCondition extends Condition {
      * Compares if the provided condition is equal.
      *
      * @param condition Condition to compare.
-     * @return true if equal, otherwise false.
+     * @returns true if equal, otherwise false.
      */
     public override equal(condition: LinkedCondition): boolean {
         return super.equal(condition) && condition?.link === this.link;

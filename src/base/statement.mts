@@ -20,7 +20,7 @@ export class Statement extends Base {
     /**
      * Returns the Statement value.
      *
-     * @return Statement string.
+     * @returns The Statement value.
      */
     public get value(): string {
         return this._statement;

@@ -89,7 +89,7 @@ export abstract class Block extends Base {
      * all content may be cleared. To clear the actual block content, use
      * the clearRaw-function.
      *
-     * @return This block object.
+     * @returns This block object.
      */
     public clearContent(): this {
         return this._clearContent();
@@ -98,7 +98,7 @@ export abstract class Block extends Base {
     /**
      * Clears the block's unbiased content.
      *
-     * @return This block object.
+     * @returns This block object.
      */
     public clearRaw(): this {
         this._contentList = [];
@@ -112,7 +112,7 @@ export abstract class Block extends Base {
      * @param position  Insertion position.
      * @param statement Statement to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public insertContent(position: number, statement: string): this;
     /**
@@ -122,7 +122,7 @@ export abstract class Block extends Base {
      * @param position  Insertion position.
      * @param statement Statement to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public insertContent(position: number, statement: Statement): this;
     /**
@@ -132,7 +132,7 @@ export abstract class Block extends Base {
      * @param position Insertion position.
      * @param block    Block to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public insertContent(position: number, block: Block): this;
     /**
@@ -142,7 +142,7 @@ export abstract class Block extends Base {
      * @param position   Insertion position.
      * @param statements Statements to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public insertContent(position: number, statements: string[]): this;
     /**
@@ -152,7 +152,7 @@ export abstract class Block extends Base {
      * @param position   Insertion position.
      * @param statements Statements to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public insertContent(position: number, statements: Statement[]): this;
     /**
@@ -162,7 +162,7 @@ export abstract class Block extends Base {
      * @param position Insertion position.
      * @param blocks   Blocks to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public insertContent(position: number, blocks: Block[]): this;
     /**
@@ -172,7 +172,7 @@ export abstract class Block extends Base {
      * @param position Insertion position.
      * @param content  Statements or blocks to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public insertContent(position: number, content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -184,49 +184,49 @@ export abstract class Block extends Base {
      * Pushes a new statement to the end of the content list.
      *
      * @param statement Statement to add.
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public addContent(statement: string): this;
     /**
      * Pushes a new statement to the end of the content list.
      *
      * @param statement Statement to add.
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public addContent(statement: Statement): this;
     /**
      * Pushes a new block to the end of the content list.
      *
      * @param block Block to add.
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public addContent(block: Block): this;
     /**
      * Pushes new statements to the end of the content list.
      *
      * @param statements Statements to add.
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public addContent(statements: string[]): this;
     /**
      * Pushes new statements to the end of the content list.
      *
      * @param statements Statements to add.
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public addContent(statements: Statement[]): this;
     /**
      * Pushes new blocks to the end of the content list.
      *
      * @param blocks Blocks to add.
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public addContent(blocks: Block[]): this;
     /**
      * Pushes new statements or blocks to the end of the content list.
      *
      * @param content Statements or blocks to add.
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public addContent(content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -292,7 +292,7 @@ export abstract class Block extends Base {
     /**
      * Clears the block's unbiased content.
      *
-     * @return This block object.
+     * @returns This block object.
      */
     protected _clearContent(): this {
         this._contentList = [];
@@ -305,7 +305,7 @@ export abstract class Block extends Base {
      * @param statement Statement to add.
      * @param position Insertion position.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertContent(position: number, statement: string): this;
     /**
@@ -314,14 +314,14 @@ export abstract class Block extends Base {
      * @param statement Statement to add.
      * @param position Insertion position.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertContent(position: number, statement: Statement): this;
     /**
      * Inserts a new block at the given position in the content list.
      *
      * @param block Block to add.
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertContent(position: number, block: Block): this;
     /**
@@ -330,7 +330,7 @@ export abstract class Block extends Base {
      * @param statements Statements to add.
      * @param position Insertion position.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertContent(position: number, statements: string[]): this;
     /**
@@ -339,7 +339,7 @@ export abstract class Block extends Base {
      * @param statements Statements to add.
      * @param position Insertion position.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertContent(position: number, statements: Statement[]): this;
     /**
@@ -348,7 +348,7 @@ export abstract class Block extends Base {
      * @param blocks Blocks to add.
      * @param position Insertion position.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertContent(position: number, blocks: Block[]): this;
     /**
@@ -357,7 +357,7 @@ export abstract class Block extends Base {
      * @param content Statements or blocks to add.
      * @param position Insertion position.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertContent(position: number, content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -379,49 +379,49 @@ export abstract class Block extends Base {
      * Pushes a new statement to the end of the content list.
      *
      * @param statement Statement to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addContent(statement: string): this;
     /**
      * Pushes a new statement to the end of the content list.
      *
      * @param statement Statement to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addContent(statement: Statement): this;
     /**
      * Pushes a new block to the end of the content list.
      *
      * @param block Block to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addContent(block: Block): this;
     /**
      * Pushes new statements to the end of the content list.
      *
      * @param statements Statements to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addContent(statements: string[]): this;
     /**
      * Pushes new statements to the end of the content list.
      *
      * @param statements Statements to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addContent(statements: Statement[]): this;
     /**
      * Pushes new blocks to the end of the content list.
      *
      * @param blocks Blocks to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addContent(blocks: Block[]): this;
     /**
      * Pushes new statements or blocks to the end of the content list.
      *
      * @param content Statements or blocks to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addContent(content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -573,7 +573,7 @@ export abstract class Block extends Base {
      * and Blocks remain untouched. If the input is not a list it is wrapped into one.
      *
      * @param content Content to be corrected.
-     * @return Statement, Block or an list of those two types, depending on the input.
+     * @returns Statement, Block or an list of those two types, depending on the input.
      */
     private _correctContent(content: StatementOrBlockOrString | StatementOrBlockOrString[]): StatementOrBlock[] {
         let contentTyped: StatementOrBlockOrString[];

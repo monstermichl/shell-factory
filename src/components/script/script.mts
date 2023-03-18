@@ -232,7 +232,7 @@ export class Script extends Block {
      * structure into a string.
      *
      * @param config: Config to configure the script dumping.
-     * @return Script string.
+     * @returns Script string.
      */
     public dump(config = this._config): string {
         return this._dump(this.raw, config);
@@ -247,7 +247,7 @@ export class Script extends Block {
      * @param contextFlags Additional info for recursive calls to understand,
      *                     in which context the content is being processed.
      *
-     * @return String representation of the provided Statement or Block list.
+     * @returns String representation of the provided Statement or Block list.
      */
     private _dump(content: StatementOrBlock[], config: Config, indentFactor=0, contextFlags=ContextFlags.Block): string {
         const checkValue = (value: number) => ((typeof value === 'number') && (value >= 0));
@@ -374,7 +374,7 @@ export class Script extends Block {
      * Corrects the provided config to at least fulfil the default conditions.
      *
      * @param config Config to correct.
-     * @return Corrected config.
+     * @returns Corrected config.
      */
     private static _correctConfig(config?: Config): Config {
         const correctedConfig = {} as Config; /* Copy default config. */

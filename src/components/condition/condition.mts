@@ -48,7 +48,7 @@ export class Condition {
      * Compares if the provided condition is equal.
      *
      * @param condition Condition to compare.
-     * @return true if equal, otherwise false.
+     * @returns true if equal, otherwise false.
      */
     public equal(condition: Condition): boolean {
         return condition?.value === this.value;

@@ -180,7 +180,7 @@ export class If extends IfBase {
     /**
      * Returns the parts of the if-statement (if, else-if(s), else).
      *
-     * @return IfParts object.
+     * @returns IfParts object.
      */
     public get parts(): IfParts {
         return {
@@ -198,7 +198,7 @@ export class If extends IfBase {
      * @param replace   If condition already exists and replace is set to true
      *                  the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: string, statement?: Statement, replace?: boolean): this;
     /**
@@ -209,7 +209,7 @@ export class If extends IfBase {
      * @param replace   If condition already exists and replace is set to true
      *                  the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: string, statement?: string, replace?: boolean): this;
     /**
@@ -220,7 +220,7 @@ export class If extends IfBase {
      * @param replace   If condition already exists and replace is set to true
      *                  the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: string, block?: Block, replace?: boolean): this;
     /**
@@ -231,7 +231,7 @@ export class If extends IfBase {
      * @param replace    If condition already exists and replace is set to true
      *                   the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: string, statements?: Statement[], replace?: boolean): this;
     /**
@@ -242,7 +242,7 @@ export class If extends IfBase {
      * @param replace    If condition already exists and replace is set to true
      *                   the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: string, statements?: string[], replace?: boolean): this;
     /**
@@ -253,7 +253,7 @@ export class If extends IfBase {
      * @param replace   If condition already exists and replace is set to true
      *                  the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: string, blocks?: Block[], replace?: boolean): this;
     /**
@@ -264,7 +264,7 @@ export class If extends IfBase {
      * @param replace   If condition already exists and replace is set to true
      *                  the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: string, content?: StatementOrBlockOrString[], replace?: boolean): this;
     /**
@@ -275,7 +275,7 @@ export class If extends IfBase {
      * @param replace   If condition already exists and replace is set to true
      *                  the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: Condition, statement?: Statement, replace?: boolean): this;
     /**
@@ -286,7 +286,7 @@ export class If extends IfBase {
      * @param replace   If condition already exists and replace is set to true
      *                  the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: Condition, statement?: string, replace?: boolean): this;
     /**
@@ -297,7 +297,7 @@ export class If extends IfBase {
      * @param replace   If condition already exists and replace is set to true
      *                  the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: Condition, block?: Block, replace?: boolean): this;
     /**
@@ -308,7 +308,7 @@ export class If extends IfBase {
      * @param replace    If condition already exists and replace is set to true
      *                   the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: Condition, statements?: Statement[], replace?: boolean): this;
     /**
@@ -319,7 +319,7 @@ export class If extends IfBase {
      * @param replace    If condition already exists and replace is set to true
      *                   the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: Condition, statements?: string[], replace?: boolean): this;
     /**
@@ -330,7 +330,7 @@ export class If extends IfBase {
      * @param replace   If condition already exists and replace is set to true
      *                  the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: Condition, blocks?: Block[], replace?: boolean): this;
     /**
@@ -341,7 +341,7 @@ export class If extends IfBase {
      * @param replace   If condition already exists and replace is set to true
      *                  the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: Condition, content?: StatementOrBlockOrString[], replace?: boolean): this;
     /**
@@ -352,7 +352,7 @@ export class If extends IfBase {
      * @param replace    If conditions already exist and replace is set to true
      *                   the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(conditions: Conditions, statement?: Statement, replace?: boolean): this;
     /**
@@ -363,7 +363,7 @@ export class If extends IfBase {
      * @param replace    If conditions already exist and replace is set to true
      *                   the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(conditions: Conditions, statement?: string, replace?: boolean): this;
     /**
@@ -374,7 +374,7 @@ export class If extends IfBase {
      * @param replace    If conditions already exist and replace is set to true
      *                   the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(conditions: Conditions, block?: Block, replace?: boolean): this;
     /**
@@ -385,7 +385,7 @@ export class If extends IfBase {
      * @param replace    If conditions already exist and replace is set to true
      *                   the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(conditions: Conditions, content?: Statement[], replace?: boolean): this;
     /**
@@ -396,7 +396,7 @@ export class If extends IfBase {
      * @param replace    If conditions already exist and replace is set to true
      *                   the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(conditions: Conditions, statements?: string[], replace?: boolean): this;
     /**
@@ -407,7 +407,7 @@ export class If extends IfBase {
      * @param replace    If conditions already exist and replace is set to true
      *                   the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(conditions: Conditions, block?: Block[], replace?: boolean): this;
     /**
@@ -418,7 +418,7 @@ export class If extends IfBase {
      * @param replace    If conditions already exist and replace is set to true
      *                   the else-if-block's content will be replaced.
      * 
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(conditions: Conditions, content?: StatementOrBlockOrString[], replace?: boolean): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -456,7 +456,7 @@ export class If extends IfBase {
      * @param statement Else-block content.
      * @param replace   If the else-block is already present its content will be replaced.
      *
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public else(statement?: Statement, replace?: boolean): this;
     /**
@@ -465,7 +465,7 @@ export class If extends IfBase {
      * @param statement Else-block content.
      * @param replace   If the else-block is already present its content will be replaced.
      *
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public else(statement?: string, replace?: boolean): this;
     /**
@@ -474,7 +474,7 @@ export class If extends IfBase {
      * @param block   Else-block content.
      * @param replace If the else-block is already present its content will be replaced.
      *
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public else(block?: Block, replace?: boolean): this;
     /**
@@ -483,7 +483,7 @@ export class If extends IfBase {
      * @param statements Else-block content.
      * @param replace    If the else-block is already present its content will be replaced.
      *
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public else(statements?: Statement[], replace?: boolean): this;
     /**
@@ -492,7 +492,7 @@ export class If extends IfBase {
      * @param statements Else-block content.
      * @param replace    If the else-block is already present its content will be replaced.
      *
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public else(statements?: string[], replace?: boolean): this;
     /**
@@ -501,7 +501,7 @@ export class If extends IfBase {
      * @param blocks  Else-block content.
      * @param replace If the else-block is already present its content will be replaced.
      *
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public else(blocks?: Block[], replace?: boolean): this;
     /**
@@ -510,7 +510,7 @@ export class If extends IfBase {
      * @param content Else-block content.
      * @param replace If the else-block is already present its content will be replaced.
      *
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public else(content?: StatementOrBlockOrString[], replace?: boolean): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

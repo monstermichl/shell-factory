@@ -131,7 +131,7 @@ export abstract class WrapBlock extends Block {
     /**
      * Clears the block's body content.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public override clearContent(): this {
         this._body.clearContent();
@@ -144,7 +144,7 @@ export abstract class WrapBlock extends Block {
      * @param position  Insertion position.
      * @param statement Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public override insertContent(position: number, statement: string): this;
     /**
@@ -153,7 +153,7 @@ export abstract class WrapBlock extends Block {
      * @param position  Insertion position.
      * @param statement Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public override insertContent(position: number, statement: Statement): this;
     /**
@@ -162,7 +162,7 @@ export abstract class WrapBlock extends Block {
      * @param position Insertion position.
      * @param block    Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public override insertContent(position: number, block: Block): this;
     /**
@@ -171,7 +171,7 @@ export abstract class WrapBlock extends Block {
      * @param position   Insertion position.
      * @param statements Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public override insertContent(position: number, statements: string[]): this;
     /**
@@ -180,7 +180,7 @@ export abstract class WrapBlock extends Block {
      * @param position   Insertion position.
      * @param statements Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public override insertContent(position: number, statements: Statement[]): this;
     /**
@@ -189,7 +189,7 @@ export abstract class WrapBlock extends Block {
      * @param position Insertion position.
      * @param blocks   Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public override insertContent(position: number, blocks: Block[]): this;
     /**
@@ -198,7 +198,7 @@ export abstract class WrapBlock extends Block {
      * @param position Insertion position.
      * @param content  Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     public override insertContent(position: number, content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -210,49 +210,49 @@ export abstract class WrapBlock extends Block {
      * Pushes new content to the end of the block's body.
      *
      * @param statement Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public override addContent(statement: string): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statement Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public override addContent(statement: Statement): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param block Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public override addContent(block: Block): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statements Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public override addContent(statements: string[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statements Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public override addContent(statements: Statement[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param blocks Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public override addContent(blocks: Block[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param content Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public override addContent(content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -315,7 +315,7 @@ export abstract class WrapBlock extends Block {
      * @param position  Insertion position.
      * @param statement Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertBodyContent(position: number, statement: string): this;
     /**
@@ -324,7 +324,7 @@ export abstract class WrapBlock extends Block {
      * @param position  Insertion position.
      * @param statement Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertBodyContent(position: number, statement: Statement): this;
     /**
@@ -333,7 +333,7 @@ export abstract class WrapBlock extends Block {
      * @param position Insertion position.
      * @param block    Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertBodyContent(position: number, block: Block): this;
     /**
@@ -342,7 +342,7 @@ export abstract class WrapBlock extends Block {
      * @param position   Insertion position.
      * @param statements Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertBodyContent(position: number, statements: string[]): this;
     /**
@@ -351,7 +351,7 @@ export abstract class WrapBlock extends Block {
      * @param position   Insertion position.
      * @param statements Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertBodyContent(position: number, statements: Statement[]): this;
     /**
@@ -360,7 +360,7 @@ export abstract class WrapBlock extends Block {
      * @param position Insertion position.
      * @param blocks   Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertBodyContent(position: number, blocks: Block[]): this;
     /**
@@ -369,7 +369,7 @@ export abstract class WrapBlock extends Block {
      * @param position Insertion position.
      * @param content  Content to add.
      *
-     * @return If successful, the current object is returned. Otherwise, null is returned.
+     * @returns If successful, the current object is returned. Otherwise, null is returned.
      */
     protected _insertBodyContent(position: number, content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -381,49 +381,49 @@ export abstract class WrapBlock extends Block {
      * Pushes new content to the end of the block's body.
      *
      * @param statement Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addBodyContent(statement: string): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statement Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addBodyContent(statement: Statement): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param block Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addBodyContent(block: Block): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statements Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addBodyContent(statements: WrapBlock[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param statements Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addBodyContent(statements: Statement[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param blocks Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addBodyContent(blocks: Block[]): this;
     /**
      * Pushes new content to the end of the block's body.
      *
      * @param content Content to add.
-     * @return If successful, the current class is returned. Otherwise, null is returned.
+     * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     protected _addBodyContent(content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
