@@ -4,6 +4,11 @@ import {
     Block,
     StatementOrBlockOrString,
 } from '../../base/block.mjs';
+import {
+    convertToString,
+    ConvertToStringError,
+    wrapInQuotes,
+} from '../../helpers/string.mjs';
 
 type StringOrParameter = string | Parameter;
 type StringOrNumberOrBoolean = string | number | boolean;
@@ -13,10 +18,13 @@ type StringOrNumberOrBoolean = string | number | boolean;
  */
 export class Parameter extends Statement {
     constructor(name: string) {
+        if (typeof name !== 'string') {
+            throw new Error('Parameter name is not a string');
+        }
+        name = name.trim();
+
         if (!name) {
             throw new Error('No parameter name provided');
-        } else if (typeof name !== 'string') {
-            throw new Error('Parameter name is not a string');
         }
         const nameCleaned = name.replace(/\s+/, '_'); /* Replace whitepspaces with underline. */
         super(nameCleaned);
@@ -242,12 +250,13 @@ export class Function extends WrapBlock {
     public constructor(name: string, content?: StatementOrBlockOrString[], parameters?: StringOrParameter[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public constructor(name: string, content?: any, parameters?: unknown[]) {
-        name = name?.trim(); /* Trim whitespaces. */
-
-        /* Make sure a name is provided. */
-        if (!name) {
-            throw new Error('Missing function name');
-        }
+        /* Make sure the provided function name is valid. */
+        name = convertToString(name, (e: ConvertToStringError) => {
+            switch(e) {
+                case ConvertToStringError.EmptyValue: throw new Error('Missing function name');
+                case ConvertToStringError.InvalidType: throw new Error('Invalid function name type');
+            }
+        });
 
         /* Check if function name matches rules. */
         if (!name.match(/^(_|[a-zA-^])+\w+$/)) {
@@ -332,13 +341,14 @@ export class Function extends WrapBlock {
     public call(...parameters: StringOrNumberOrBoolean[]): Statement;
     public call(...parameters: unknown[]): Statement {
         parameters = parameters.map((parameter) => {
-            /* Put strings into quotes. */
-            if (typeof parameter === 'string') {
-                parameter = `"${parameter}"`;
-            } else if (!['boolean', 'number'].includes(typeof parameter)) {
-                throw new Error('Parameter is neither string nor number nor boolean');
-            }
-            return parameter;
+            /* Make sure the provided parameter is valid. */
+            parameter = convertToString(parameter as string, (e: ConvertToStringError) => {
+                switch(e) {
+                    case ConvertToStringError.InvalidType: throw new Error('Parameter is neither string nor number nor boolean');
+                }
+            }, { emptyAllowed: true }); /* Allow empty value. */
+
+            return wrapInQuotes(parameter as string); /* Wrap parameter in quotes if necessary. */
         });
         return new Statement(`${this.name} ${parameters.join(' ')}`);
     }

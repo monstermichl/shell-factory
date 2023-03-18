@@ -1,5 +1,9 @@
 import { LinkedCondition } from './linked-condition.mjs';
 import { Condition } from './condition.mjs';
+import {
+    convertToString,
+    ConvertToStringError,
+} from '../../helpers/string.mjs';
 
 /**
  * Serves as a container which holds one or more conditions.
@@ -37,13 +41,14 @@ export class Conditions {
      */
     constructor(condition: Condition, ...linkedConditions: LinkedCondition[]);
     constructor(condition: unknown, ...linkedConditions: LinkedCondition[]) {
-        /* Convert string condition to Condition object. */
-        if (['number', 'bigint', 'string', 'boolean'].includes(typeof condition)) {
-            condition = new Condition(condition as string);
-        } else if (!(condition instanceof Condition)) {
-            throw new Error('No or invalid condition provided');
-        }
-        this._condition = condition as Condition;
+        this._condition = Conditions._conditionFromString(condition as string);
+
+        /* Make sure all linked conditions are actually linked conditions. */
+        linkedConditions.forEach((linkedCondition) => {
+            if (!(linkedCondition instanceof LinkedCondition)) {
+                throw new Error('Invalid linked condition type');
+            }
+        });
         this._linkedConditions = linkedConditions;
     }
 
@@ -85,9 +90,7 @@ export class Conditions {
     public static convert(arg: unknown): Conditions {
         let conditions: Conditions;
 
-        if (!arg) {
-            throw new Error('No condition provided');
-        } else if (arg instanceof Condition) {
+        if (arg instanceof Condition) {
             conditions = new Conditions(arg.value);
         } else if (arg instanceof Conditions) {
             conditions = new Conditions(
@@ -95,7 +98,9 @@ export class Conditions {
                 ...arg.linkedConditions,
             );
         } else {
-            conditions = new Conditions(arg as string);
+            /* Make sure the provided condition is valid. */
+            const condition = Conditions._conditionFromString(arg as string);
+            conditions = new Conditions(condition);
         }
         return conditions;
     }
@@ -162,5 +167,31 @@ export class Conditions {
             equal = this.conditions.every((condition, index) =>  condition.equal(conditions.conditions[index]));
         }
         return equal;
+    }
+
+    /**
+     * Creates a Condition object out of a string.
+     *
+     * @param condition Condition string.
+     * @returns Condition object.
+     */
+    private static _conditionFromString(condition: string): Condition;
+    /**
+     * Creates a Condition object out of a Condition object. (Does.
+     * nothing. This signature exists just to make the function callable
+     * with a Condition object without throwing a compiler error).
+     *
+     * @param condition Condition object.
+     * @returns Condition object.
+     */
+    private static _conditionFromString(condition: Condition): Condition;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    private static _conditionFromString(condition: any): Condition {
+        return (condition instanceof Condition) ? condition : new Condition(convertToString(condition, (e: ConvertToStringError) => {
+            switch(e) {
+                case ConvertToStringError.EmptyValue: throw new Error('No condition provided');
+                case ConvertToStringError.InvalidType: throw new Error('Invalid condition type');
+            }
+        }));
     }
 }

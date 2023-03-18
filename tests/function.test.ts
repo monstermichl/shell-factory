@@ -114,7 +114,7 @@ describe('Function tests', () => {
                 const name = 'test';
                 const param1 = true;
                 const param2 = 2;
-                const param3 = 'three';
+                const param3 = 'three with space';
                 const testFunc = new Function(name);
                 const statement = testFunc.call(param1, param2, param3);
 

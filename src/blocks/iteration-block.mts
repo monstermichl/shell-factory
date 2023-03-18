@@ -4,6 +4,11 @@ import {
     StatementOrBlockOrString,
 } from '../base/block.mjs';
 import { WrapBlock } from './wrap-block.mjs';
+import {
+    convertToString,
+    ConvertToStringError,
+    wrapInQuotes,
+} from '../helpers/string.mjs';
 
 export type StringOrNumberOrBoolean = string | number | boolean;
 
@@ -265,26 +270,40 @@ export abstract class IterationBlock extends WrapBlock {
     constructor(keyword: string, variable: string, values: StringOrNumberOrBoolean[], content?: StatementOrBlockOrString[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     constructor(keyword: string, variable: string, arg: StringOrNumberOrBoolean | StringOrNumberOrBoolean[], content?: any) {
-        /* Check if keyword has been provided. */
-        if (!keyword) {
-            throw new Error('Missing keyword');
-        } 
+        /* Make sure the provided keyword is valid. */
+        keyword = convertToString(keyword, (e: ConvertToStringError) => {
+            switch(e) {
+                case ConvertToStringError.EmptyValue: throw new Error('Missing keyword');
+                case ConvertToStringError.InvalidType: throw new Error('Invalid keyword type');
+            }
+        });
 
-        /* Check if variables has been provided. */
-        if (!variable) {
-            throw new Error('Missing variable');
-        }
+        /* Make sure the provided variable is valid. */
+        variable = convertToString(variable, (e: ConvertToStringError) => {
+            switch(e) {
+                case ConvertToStringError.EmptyValue: throw new Error('Missing variable');
+                case ConvertToStringError.InvalidType: throw new Error('Invalid variable type');
+            }
+        });
 
         /* If iteration value is not a list, make one out of it. */
         if (!(arg instanceof Array)) {
             arg = [arg];
         }
         
-        const values = arg.map((value) => {
-            if (['number', 'boolean'].includes(typeof value)) {
-                value = `${value}`; /* Convert possible number to string. */
-            } else if (typeof value !== 'string') {
-                throw new Error('Invalid iteration value provided'); /* Invalid type provided. */
+        const values = arg.map((value: string) => {
+            const isString = (typeof value === 'string');
+
+            /* Make sure the provided value is valid. */
+            value = convertToString(value, (e: ConvertToStringError) => {
+                switch(e) {
+                    case ConvertToStringError.InvalidType: throw new Error('Invalid iteration value provided');
+                }
+            }, { emptyAllowed: true }); /* Allow empty values. */
+
+            /* If type was empty but already string before, make sure to wrap it in quotes. */
+            if (!value && isString) {
+                value = wrapInQuotes(value, true);
             }
             return value;
         }).join(' ');
