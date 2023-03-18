@@ -22,7 +22,10 @@
     "example:for": "npm run build && node ./examples/example-for.js",
     "example:select": "npm run build && node ./examples/example-select.js",
     "example:case": "npm run build && node ./examples/example-case.js",
-    "example:dump-config": "npm run build && node ./examples/example-dump-config.js"
+    "example:dump-config": "npm run build && node ./examples/example-dump-config.js",
+    "example:add": "npm run build && node ./examples/example-add.js",
+    "example:remove": "npm run build && node ./examples/example-remove.js",
+    "example:alter": "npm run build && node ./examples/example-alter.js"
   },
   "author": "monstermichl",
   "license": "MIT",
