@@ -43,7 +43,7 @@ enum ContextFlags {
 /**
  * Script string dump block configuration.
  */
-type Format = {
+export type Format = {
     indent?: number;
     newlinesBefore?: number;
     newlinesAfter?: number;
