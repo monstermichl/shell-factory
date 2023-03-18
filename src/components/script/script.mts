@@ -203,9 +203,21 @@ export class Script extends Block {
 
     /**
      * Sets the script interpreter location.
+     *
+     * @param interpreter Interpreter path.
      */
     public setInterpreter(interpreter: string): this;
+    /**
+     * Sets the script interpreter location.
+     *
+     * @param interpreter Interpreter path.
+     */
     public setInterpreter(interpreter: Interpreter): this;
+    /**
+     * Sets the script interpreter location.
+     *
+     * @param interpreter Interpreter path.
+     */
     public setInterpreter(interpreter: unknown): this {
         if (interpreter)
         {
