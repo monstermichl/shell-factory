@@ -341,7 +341,7 @@ export class Script extends Block {
 
                 /* Add comment behind line. */
                 if (value.comment) {
-                    s += `${' '.repeat(indentBeforeComment)}# ${value.comment}`;
+                    s += `${' '.repeat(value.value ? indentBeforeComment : 0)}# ${value.comment}`;
                 }
                 s += '\n';
             } else {
