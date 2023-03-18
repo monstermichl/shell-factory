@@ -9,19 +9,21 @@ export class Condition {
      *
      * @param condition Condition string.
      */
+    constructor(condition: string);
+    /**
+     * Condition constructor.
+     *
+     * @param condition Boolean as condition (everything except
+     *                  false will be converted to 1).
+     */
     constructor(condition: boolean);
     /**
      * Condition constructor.
      *
-     * @param condition Condition string.
+     * @param condition Number as condition (everything except
+     *                  0 will be converted to 1).
      */
     constructor(condition: number);
-    /**
-     * Condition constructor.
-     *
-     * @param condition Condition string.
-     */
-    constructor(condition: string);
     constructor(condition: unknown) {
         const oneString = '1';
         const zeroString = '0';
