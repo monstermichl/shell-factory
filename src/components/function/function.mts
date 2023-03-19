@@ -339,16 +339,17 @@ export class Function extends WrapBlock {
      * @returns Function-call Statement object.
      */
     public call(...parameters: StringOrNumberOrBoolean[]): Statement;
-    public call(...parameters: unknown[]): Statement {
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public call(...parameters: any[]): Statement {
         parameters = parameters.map((parameter) => {
             /* Make sure the provided parameter is valid. */
-            parameter = convertToString(parameter as string, (e: ConvertToStringError) => {
+            parameter = convertToString(parameter, (e: ConvertToStringError) => {
                 switch(e) {
                     case ConvertToStringError.InvalidType: throw new Error('Parameter is neither string nor number nor boolean');
                 }
             }, { emptyAllowed: true }); /* Allow empty value. */
 
-            return wrapInQuotes(parameter as string); /* Wrap parameter in quotes if necessary. */
+            return wrapInQuotes(parameter); /* Wrap parameter in quotes if necessary. */
         });
         return new Statement(`${this.name} ${parameters.join(' ')}`);
     }
