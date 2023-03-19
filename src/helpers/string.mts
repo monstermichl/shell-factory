@@ -27,7 +27,7 @@ export function wrapInQuotes(s: string, force?: boolean): string {
     
     /* If string contains whitespaces and is not between quotes, put it in quotes. */
     if (s.match(/\s+/) || force) {
-        const quoteRegex = /'|`|"/;
+        const quoteRegex = /('|`|")/;
         const foundStartQuote = s.match(new RegExp(`^${quoteRegex.source}`))?.[0]; /* Check if string has start-quote. */
         const foundEndQuote = s.match(new RegExp(`${quoteRegex.source}$`))?.[0]; /* Check if string has end-quote. */
         let setStartQuote = foundStartQuote;
@@ -87,7 +87,7 @@ export function convertToString(arg: any, errorCallback?: ConvertToStringErrorCa
         }
     }
     const emptyAllowed = config?.emptyAllowed ? config.emptyAllowed : false;
-    const trim = config?.trim ? config.trim : true;
+    const trim = (typeof config?.trim === 'boolean') ? config.trim : true;
 
     /* Make sure arg is neither null nor undefined. Numbers and booleans
        which are considered false are okay. */
