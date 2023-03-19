@@ -116,7 +116,7 @@ describe('Function tests', () => {
         describe('failed', () => {
             it('with invalid parameter type', () => {
                 expect(function() {
-                    new Function('test').call(undefined as any)
+                    new Function('test').call({} as any)
                 }).to.throw('Parameter is neither string nor number nor boolean');
             });
         });

@@ -153,4 +153,72 @@ describe('ConditionBlock tests', () => {
             });
         });
     });
+
+    describe('read', () => {
+        describe('successful', () => {
+            it('valid path', () => {
+                const conditionKeyword = 'if';
+                const blockStartKeyword = 'then';
+                const condition = '1 -eq 1';
+                const blockEndKeyword = 'fi';
+                const file = 'test.txt';
+                const block = new ConditionBlockHelper(
+                    conditionKeyword,
+                    BracketType.Square,
+                    condition,
+                    blockStartKeyword,
+                    undefined,
+                    blockEndKeyword,
+                ).read(file);
+
+                expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
+                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} ${condition}; ${blockStartKeyword}`);
+                expect((block.raw[2] as Statement).value).to.be.equal(`${blockEndKeyword} < ${file}`);
+            });
+        });
+
+        describe('failed', () => {
+            it('no input file provided', () => {
+                expect(function() {
+                    new ConditionBlockHelper('if', BracketType.Square, '1 -eq 1', 'then', null, 'fi').read('')
+                }).to.throw('No input file provided');
+            });
+
+            it('invalid file path type', () => {
+                expect(function() {
+                    new ConditionBlockHelper('if', BracketType.Square, '1 -eq 1', 'then', null, 'fi').read({} as any)
+                }).to.throw('Invalid file path type');
+            });
+        });
+    });
+
+    describe('test', () => {
+        describe('successful', () => {
+            it('get', () => {
+                const conditionKeyword = 'if';
+                const blockStartKeyword = 'then';
+                const condition = '1 -eq 1';
+                const blockEndKeyword = 'fi';
+                const block = new ConditionBlockHelper(
+                    conditionKeyword,
+                    BracketType.Square,
+                    condition,
+                    blockStartKeyword,
+                    undefined,
+                    blockEndKeyword,
+                )
+                block.dontTest; /* Deactivate testing. */
+
+                expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
+
+                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} ${condition}; ${blockStartKeyword}`);
+                expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
+
+                block.test; /* Activate testing. */
+
+                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} [ ${condition} ]; ${blockStartKeyword}`);
+                expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
+            });
+        });
+    });
 });

@@ -10,6 +10,11 @@ import {
     LinkedCondition,
 } from '../components/condition/linked-condition.mjs';
 import { Condition } from '../components/condition/condition.mjs';
+import {
+    ConvertToStringError,
+    convertToString,
+    wrapInQuotes,
+} from '../helpers/string.mjs';
 
 /**
  * ConditionBlock bracket type.
@@ -27,11 +32,65 @@ export enum BracketType {
 export abstract class ConditionBlock extends WrapBlock {
     protected _conditions: Conditions;
 
+    private _conditionKeyword: string;
+    private _bracketType: BracketType;
+    private _blockStartKeyword: string;
+    private _blockEndKeyword: string;
+
     /**
      * Returns the condition block's conditions.
      */
     public get conditions(): Conditions {
         return this._conditions;
+    }
+
+    public get test(): this {
+        return this._updateOpeningStatement(true);
+    }
+
+    public get dontTest(): this {
+        return this._updateOpeningStatement(false);
+    }
+
+    /**
+     * Read from file into condition block.
+     * 
+     * @param file File to read from.
+     */
+    public read(file: string): this;
+    /**
+     * Read from file into condition block.
+     * 
+     * @param file File to read from.
+     */
+    public read(file: number): this;
+    /**
+     * Read from file into condition block.
+     * 
+     * @param file File to read from.
+     */
+    public read(file: boolean): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public read(file: any): this {
+        /* ConditionBlock can only read input if it has an
+           end-statement to which the read can be attached. */
+        if (this.closingStatement) {
+            /* Make sure the provided file path is valid. */
+            file = convertToString(file, (e: ConvertToStringError) => {
+                switch(e) {
+                    case ConvertToStringError.EmptyValue: throw new Error('No input file provided');
+                    case ConvertToStringError.InvalidType: throw new Error('Invalid file path type');
+                }
+            });
+            file = wrapInQuotes(file); /* If file contains whitespaces and is not between quotes, wrap it. */
+
+            /* Disable testing. */
+            this.dontTest;
+
+            /* Update closing statement. */
+            this.closingStatement.value = `${this._blockEndKeyword} < ${file}`;
+        }
+        return this;
     }
 
     /**
@@ -267,6 +326,19 @@ export abstract class ConditionBlock extends WrapBlock {
     protected constructor(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string, content?: StatementOrBlockOrString[], blockEndKeyword?: string);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     protected constructor(conditionKeyword: string, bracketType: BracketType, arg: any, blockStartKeyword: string, content?: any, blockEndKeyword?: string) {
+        const conditions = Conditions.convert(arg);
+        const openingStatement = ConditionBlock._buildOpeningStatementString(conditionKeyword, bracketType, conditions, blockStartKeyword);
+
+        super(openingStatement, content, blockEndKeyword);
+
+        this._conditionKeyword = conditionKeyword;
+        this._bracketType = bracketType;
+        this._conditions = conditions;
+        this._blockStartKeyword = blockStartKeyword;
+        this._blockEndKeyword = blockEndKeyword;
+    }
+
+    private static _buildOpeningStatementString(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string): string {
         if (!conditionKeyword) {
             throw new Error('Missing condition');
         } else if (!blockStartKeyword) {
@@ -274,7 +346,6 @@ export abstract class ConditionBlock extends WrapBlock {
         }
         let startBracket = '';
         let stopBracket = '';
-        const conditions = Conditions.convert(arg);
 
         switch (bracketType) {
             case BracketType.Square:
@@ -296,8 +367,16 @@ export abstract class ConditionBlock extends WrapBlock {
             }
             conditionString += `${startBracket}${startBracket ? ` ${value}` : value}${startBracket ? ` ${stopBracket}` : stopBracket}`; /* Add space in front if brackets are used. */
         });
+        return `${conditionKeyword} ${conditionString}; ${blockStartKeyword}`;
+    }
 
-        super(`${conditionKeyword} ${conditionString}; ${blockStartKeyword}`, content, blockEndKeyword);
-        this._conditions = conditions;
+    private _updateOpeningStatement(test: boolean): this {
+        this._openingStatement.value = ConditionBlock._buildOpeningStatementString(
+            this._conditionKeyword,
+            test ? this._bracketType : BracketType.None,
+            this._conditions,
+            this._blockStartKeyword,
+        );
+        return this;
     }
 }
