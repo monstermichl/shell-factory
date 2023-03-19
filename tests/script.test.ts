@@ -16,6 +16,7 @@ import { Select } from '../src/components/select/select.mjs';
 
 describe('Script tests', () => {
     const scriptBlock = new Script([
+        new Statement().setComment('Script start'),
         new Function('func1', [
             'echo "First level Function"',
             new Function('func2', [

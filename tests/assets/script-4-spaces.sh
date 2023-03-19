@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Script start
+
 func1() {
     echo "First level Function"
 
