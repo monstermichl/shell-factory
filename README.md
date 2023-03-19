@@ -1,5 +1,5 @@
 # Shell-factory
-Shell-factory is a simple yet powerful library that allows you to create Bourne shell scripts on the fly using Typescript. It's intuitive syntax and chainable commands take all the hassle of formatting strings manually and remembering weird syntax away from you and provides you with a rich set of configurations to tailor the script according to your needs.
+Shell-factory is a simple yet powerful ESM module that allows you to create Bourne shell scripts on the fly using Typescript. It's intuitive syntax and chainable commands take all the hassle of formatting strings manually and remembering weird syntax away from you and provides you with a rich set of configurations to tailor the script according to your needs.
 
 ```sh
 npm install shell-factory
