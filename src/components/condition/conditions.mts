@@ -14,6 +14,13 @@ export class Conditions {
      * @param condition        Primary condition.
      * @param linkedConditions Logically linked conditions.
      */
+    constructor(condition: string, ...linkedConditions: LinkedCondition[]);
+    /**
+     * Conditions constructor.
+     *
+     * @param condition        Primary condition.
+     * @param linkedConditions Logically linked conditions.
+     */
     constructor(condition: boolean, ...linkedConditions: LinkedCondition[]);
     /**
      * Conditions constructor.
@@ -22,13 +29,6 @@ export class Conditions {
      * @param linkedConditions Logically linked conditions.
      */
     constructor(condition: number, ...linkedConditions: LinkedCondition[]);
-    /**
-     * Conditions constructor.
-     *
-     * @param condition        Primary condition.
-     * @param linkedConditions Logically linked conditions.
-     */
-    constructor(condition: string, ...linkedConditions: LinkedCondition[]);
     /**
      * Conditions constructor.
      *

@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { Condition } from '../src/components/condition/condition.mjs';
 import { Conditions } from '../src/components/condition/conditions.mjs';
+import { LinkedCondition } from '../src/components/condition/linked-condition.mjs';
 
 describe('Conditions tests', () => {
     describe('constructor', () => {
@@ -25,6 +26,12 @@ describe('Conditions tests', () => {
                 expect(function() {
                     new Conditions(undefined as any)
                 }).to.throw('No condition provided');
+            });
+
+            it('invalid linked condition type', () => {
+                expect(function() {
+                    new Conditions('1 -eq 1', (1 as any) as LinkedCondition);
+                }).to.throw('Invalid linked condition type');
             });
         });
     });
