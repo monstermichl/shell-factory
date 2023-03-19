@@ -55,28 +55,54 @@ describe('IterationBlock tests', () => {
                 expect(whileBlock.content.length).to.be.equal(1);
                 expect((whileBlock.content[0] as Statement).value).to.be.equal(content);
             });
+
+            it('construct with empty string as value', () => {
+                const variable = 'VARIABLE';
+                const values = [''];
+                const content = 'echo 123';
+                const whileBlock = new IterationBlockHelper(KEYWORD, `$${variable}`, values, content);
+
+                expect(whileBlock.raw.length).to.be.equal(3);
+                expect((whileBlock.raw[0] as Statement).value).to.be.equal(`${KEYWORD} ${variable} in ""; do`);
+                expect((whileBlock.raw[2] as Statement).value).to.be.equal(`done`);
+
+                expect(whileBlock.content.length).to.be.equal(1);
+                expect((whileBlock.content[0] as Statement).value).to.be.equal(content);
+            });
         });
 
         describe('failed', () => {
-            it('undefined keyword', () => {
+            it('missing keyword', () => {
                 expect(function() {
                     new IterationBlockHelper(undefined as any, '$variable', [1, 2])
                 }).to.throw('Missing keyword');
             });
 
-            it('undefined variable', () => {
+            it('invalid keyword type', () => {
+                expect(function() {
+                    new IterationBlockHelper({} as any, '$variable', [1, 2])
+                }).to.throw('Invalid keyword type');
+            });
+
+            it('missing variable', () => {
                 expect(function() {
                     new IterationBlockHelper(KEYWORD, undefined as any, [1, 2])
                 }).to.throw('Missing variable');
             });
 
-            it('empty values', () => {
+            it('invalid variable type', () => {
+                expect(function() {
+                    new IterationBlockHelper(KEYWORD, {} as any, [1, 2])
+                }).to.throw('Invalid variable type');
+            });
+
+            it('missing values', () => {
                 expect(function() {
                     new IterationBlockHelper(KEYWORD, '$variable', [])
                 }).to.throw('Missing values');
             });
 
-            it('invalid value', () => {
+            it('Invalid iteration value provided', () => {
                 expect(function() {
                     new IterationBlockHelper(KEYWORD, '$variable', [{}])
                 }).to.throw('Invalid iteration value provided');
