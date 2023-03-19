@@ -47,10 +47,10 @@ describe('Condition tests', () => {
                 }).to.throw('No condition provided');
             });
 
-            it('no or invalid condition provided', () => {
+            it('invalid condition type', () => {
                 expect(function() {
                     new Condition({} as any);
-                }).to.throw('No or invalid condition provided');
+                }).to.throw('Invalid condition type');
             });
         });
     });

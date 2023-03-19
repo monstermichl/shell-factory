@@ -1,9 +1,5 @@
 import { LinkedCondition } from './linked-condition.mjs';
 import { Condition } from './condition.mjs';
-import {
-    convertToString,
-    ConvertToStringError,
-} from '../../helpers/string.mjs';
 
 /**
  * Serves as a container which holds one or more conditions.
@@ -41,7 +37,7 @@ export class Conditions {
      */
     constructor(condition: Condition, ...linkedConditions: LinkedCondition[]);
     constructor(condition: unknown, ...linkedConditions: LinkedCondition[]) {
-        this._condition = Conditions._conditionFromString(condition as string);
+        this._condition = Condition.fromString(condition as string);
 
         /* Make sure all linked conditions are actually linked conditions. */
         linkedConditions.forEach((linkedCondition) => {
@@ -99,7 +95,7 @@ export class Conditions {
             );
         } else {
             /* Make sure the provided condition is valid. */
-            const condition = Conditions._conditionFromString(arg as string);
+            const condition = Condition.fromString(arg as string);
             conditions = new Conditions(condition);
         }
         return conditions;
@@ -167,31 +163,5 @@ export class Conditions {
             equal = this.conditions.every((condition, index) =>  condition.equal(conditions.conditions[index]));
         }
         return equal;
-    }
-
-    /**
-     * Creates a Condition object out of a string.
-     *
-     * @param condition Condition string.
-     * @returns Condition object.
-     */
-    private static _conditionFromString(condition: string): Condition;
-    /**
-     * Creates a Condition object out of a Condition object. (Does.
-     * nothing. This signature exists just to make the function callable
-     * with a Condition object without throwing a compiler error).
-     *
-     * @param condition Condition object.
-     * @returns Condition object.
-     */
-    private static _conditionFromString(condition: Condition): Condition;
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    private static _conditionFromString(condition: any): Condition {
-        return (condition instanceof Condition) ? condition : new Condition(convertToString(condition, (e: ConvertToStringError) => {
-            switch(e) {
-                case ConvertToStringError.EmptyValue: throw new Error('No condition provided');
-                case ConvertToStringError.InvalidType: throw new Error('Invalid condition type');
-            }
-        }));
     }
 }
