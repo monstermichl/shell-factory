@@ -32,11 +32,9 @@ describe('WrapBlock tests', () => {
 
         describe('failed', () => {
             it('No opening statement', () => {
-                try {
-                    new WrapBlockHelper('');
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Missing opening statement');
-                }
+                expect(function() {
+                    new WrapBlockHelper('')
+                }).to.throw('Missing opening statement');
             });
         });
     });

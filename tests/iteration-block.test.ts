@@ -59,35 +59,27 @@ describe('IterationBlock tests', () => {
 
         describe('failed', () => {
             it('undefined keyword', () => {
-                try {
-                    new IterationBlockHelper(undefined as any, '$variable', [1, 2]);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Missing keyword');
-                }
+                expect(function() {
+                    new IterationBlockHelper(undefined as any, '$variable', [1, 2])
+                }).to.throw('Missing keyword');
             });
 
             it('undefined variable', () => {
-                try {
-                    new IterationBlockHelper(KEYWORD, undefined as any, [1, 2]);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Missing variable');
-                }
+                expect(function() {
+                    new IterationBlockHelper(KEYWORD, undefined as any, [1, 2])
+                }).to.throw('Missing variable');
             });
 
             it('empty values', () => {
-                try {
-                    new IterationBlockHelper(KEYWORD, '$variable', []);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Missing values');
-                }
+                expect(function() {
+                    new IterationBlockHelper(KEYWORD, '$variable', [])
+                }).to.throw('Missing values');
             });
 
             it('invalid value', () => {
-                try {
-                    new IterationBlockHelper(KEYWORD, '$variable', [{}]);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Invalid iteration value provided');
-                }
+                expect(function() {
+                    new IterationBlockHelper(KEYWORD, '$variable', [{}])
+                }).to.throw('Invalid iteration value provided');
             });
         });
     });

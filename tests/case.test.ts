@@ -60,19 +60,15 @@ describe('Case tests', () => {
 
         describe('failed', () => {
             it('undefined value', () => {
-                try {
-                    new Case(undefined as any);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Missing value');
-                }
+                expect(function() {
+                    new Case(undefined as any)
+                }).to.throw('Missing value');
             });
 
             it('add to last case but no last case exists', () => {
-                try {
-                    new Case('$variable').addContent('echo "Test"');
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('No cases to which content could be added');
-                }
+                expect(function() {
+                    new Case('$variable').addContent('echo "Test"')
+                }).to.throw('No cases to which content could be added');
             });
         });
     });

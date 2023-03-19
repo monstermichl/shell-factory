@@ -8,11 +8,9 @@ describe('LinkedCondition tests', () => {
     describe('consructor', () => {
         describe('failed', () => {
             it('invalid link', () => {
-                try {
-                    new LinkedCondition(5, '1 -eq 1');
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Invalid condition link provided');
-                }
+                expect(function() {
+                    new LinkedCondition(5, '1 -eq 1')
+                }).to.throw('Invalid condition link provided');
             });
         });
     });

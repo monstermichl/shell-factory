@@ -304,11 +304,9 @@ describe('Block tests', () => {
 
         describe('failed', () => {
             it('add neither Statement nor Block content', () => {
-                try {
-                    new BlockHelper().addContent({} as any);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Added content is neither a Statement nor a Block');
-                }
+                expect(function() {
+                    new BlockHelper().addContent({} as any)
+                }).to.throw('Added content is neither a Statement nor a Block');
             });
         });
     });
@@ -490,19 +488,15 @@ describe('Block tests', () => {
 
         describe('failed', () => {
             it('no ID or pattern provided', () => {
-                try {
-                    new BlockHelper().removeContent(undefined as any);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('No ID or pattern provided');
-                }
+                expect(function() {
+                    new BlockHelper().removeContent(undefined as any)
+                }).to.throw('No ID or pattern provided');
             });
 
             it('invalid ID or pattern type', () => {
-                try {
-                    new BlockHelper().removeContent({} as any);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Invalid ID or pattern type');
-                }
+                expect(function() {
+                    new BlockHelper().removeContent({} as any)
+                }).to.throw('Invalid ID or pattern type');
             });
         });
     });

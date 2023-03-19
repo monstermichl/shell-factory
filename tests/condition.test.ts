@@ -42,19 +42,15 @@ describe('Condition tests', () => {
 
         describe('failed', () => {
             it('create empty condition', () => {
-                try {
+                expect(function() {
                     new Condition('');
-                } catch (e: unknown) {
-                    expect((e as Error).message).to.be.equal('No condition provided');
-                }
+                }).to.throw('No condition provided');
             });
 
             it('no or invalid condition provided', () => {
-                try {
+                expect(function() {
                     new Condition({} as any);
-                } catch (e: unknown) {
-                    expect((e as Error).message).to.be.equal('No or invalid condition provided');
-                }
+                }).to.throw('No or invalid condition provided');
             });
         });
     });

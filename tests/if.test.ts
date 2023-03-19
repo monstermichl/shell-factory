@@ -66,14 +66,12 @@ describe('If tests', () => {
             });
 
             it('If covers condition', () => {
-                try {
-                    const condition = '1 -eq 1';
-                    const ifBlock = new If(condition);
+                const condition = '1 -eq 1';
+                const ifBlock = new If(condition);
 
-                    ifBlock.elseIf(condition);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Condition already covered by "if"');
-                }
+                expect(function() {
+                    ifBlock.elseIf(condition)
+                }).to.throw('Condition already covered by "if"');
             });
         });
     });

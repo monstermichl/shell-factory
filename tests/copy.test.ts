@@ -143,43 +143,33 @@ describe('copy tests', () => {
 
         describe('failed', () => {
             it('no source object provided', () => {
-                try {
-                    copyOver({}, null as any);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('No source object provided');
-                }
+                expect(function() {
+                    copyOver({}, null as any)
+                }).to.throw('No source object provided');
             });
 
             it('no target object provided', () => {
-                try {
-                    copyOver(null as any, {});
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('No target object provided');
-                }
+                expect(function() {
+                    copyOver(null as any, {})
+                }).to.throw('No target object provided');
             });
 
             it('source is neither an object nor an array', () => {
-                try {
-                    copyOver({}, 1 as any);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Source is neither an object nor an array');
-                }
+                expect(function() {
+                    copyOver({}, 1 as any)
+                }).to.throw('Source is neither an object nor an array');
             });
 
             it('target is neither an object nor an array', () => {
-                try {
-                    copyOver(1 as any, {});
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Target is neither an object nor an array');
-                }
+                expect(function() {
+                    copyOver(1 as any, {})
+                }).to.throw('Target is neither an object nor an array');
             });
 
             it('source and target type do not match', () => {
-                try {
-                    copyOver([], {});
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Source and target type do not match');
-                }
+                expect(function() {
+                    copyOver([], {})
+                }).to.throw('Source and target type do not match');
             });
         });
     });

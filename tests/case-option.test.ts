@@ -37,11 +37,9 @@ describe('CaseOption tests', () => {
 
         describe('failed', () => {
             it('undefined pattern', () => {
-                try {
-                    new CaseOption(undefined as any);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Missing pattern');
-                }
+                expect(function() {
+                    new CaseOption(undefined as any)
+                }).to.throw('Missing pattern');
             });
         });
     });

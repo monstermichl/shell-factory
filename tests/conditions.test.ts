@@ -22,11 +22,9 @@ describe('Conditions tests', () => {
 
         describe('failed', () => {
             it('undefined condition', () => {
-                try {
-                    new Conditions(undefined as any);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('No condition provided');
-                }
+                expect(function() {
+                    new Conditions(undefined as any)
+                }).to.throw('No condition provided');
             });
         });
     });
@@ -60,11 +58,9 @@ describe('Conditions tests', () => {
 
         describe('failed', () => {
             it('undefined input', () => {
-                try {
-                    Conditions.convert(undefined as any);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('No condition provided');
-                }
+                expect(function() {
+                    Conditions.convert(undefined as any)
+                }).to.throw('No condition provided');
             });
         });
     });

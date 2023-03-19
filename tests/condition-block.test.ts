@@ -124,19 +124,15 @@ describe('ConditionBlock tests', () => {
 
         describe('failed', () => {
             it('missing condition', () => {
-                try {
-                    new ConditionBlockHelper('', BracketType.None, '1 -eq 1', 'then');
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Missing condition');
-                }
+                expect(function() {
+                    new ConditionBlockHelper('', BracketType.None, '1 -eq 1', 'then')
+                }).to.throw('Missing condition');
             });
 
             it('missing block-start keyword', () => {
-                try {
-                    new ConditionBlockHelper('if', BracketType.None, '1 -eq 1', '');
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Missing block-start keyword');
-                }
+                expect(function() {
+                    new ConditionBlockHelper('if', BracketType.None, '1 -eq 1', '')
+                }).to.throw('Missing block-start keyword');
             });
         });
     });

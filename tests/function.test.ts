@@ -67,43 +67,33 @@ describe('Function tests', () => {
 
         describe('failed', () => {
             it('undefined name', () => {
-                try {
-                    new Function('');
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Missing function name');
-                }
+                expect(function() {
+                    new Function('')
+                }).to.throw('Missing function name');
             });
 
             it('invalid name', () => {
-                try {
-                    new Function('echo function');
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Invalid function name');
-                }
+                expect(function() {
+                    new Function('echo function')
+                }).to.throw('Invalid function name');
             });
 
             it('undefined parameter name', () => {
-                try {
-                    new Function('_exit', 'echo "Test"', ['']);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('No parameter name provided');
-                }
+                expect(function() {
+                    new Function('_exit', 'echo "Test"', [''])
+                }).to.throw('No parameter name provided');
             });
 
             it('invalid parameter type', () => {
-                try {
-                    new Function('_exit', 'echo "Test"', ([1] as unknown[]) as string[]);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Parameter 0 is neither a string nor a Parameter class instance');
-                }
+                expect(function() {
+                    new Function('_exit', 'echo "Test"', ([1] as unknown[]) as string[])
+                }).to.throw('Parameter 0 is neither a string nor a Parameter class instance');
             });
 
             it('invalid parameter type 2', () => {
-                try {
-                    new Parameter(6 as any);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Parameter name is not a string');
-                }
+                expect(function() {
+                    new Parameter(6 as any)
+                }).to.throw('Parameter name is not a string');
             });
         });
     });
@@ -125,11 +115,9 @@ describe('Function tests', () => {
 
         describe('failed', () => {
             it('with invalid parameter type', () => {
-                try {
-                    new Function('test').call(undefined as any);
-                } catch (e: any) {
-                    expect((e as Error).message).to.be.equal('Parameter is neither string nor number nor boolean');
-                }
+                expect(function() {
+                    new Function('test').call(undefined as any)
+                }).to.throw('Parameter is neither string nor number nor boolean');
             });
         });
     });
