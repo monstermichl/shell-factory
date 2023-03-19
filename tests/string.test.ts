@@ -32,6 +32,16 @@ describe('string tests', () => {
                 const value = 'value 2"';
                 expect(wrapInQuotes(value)).to.be.equal(`"${value}"`);
             });
+
+            it('quotes differ', () => {
+                const value = '\'value 2"';
+                expect(wrapInQuotes(value)).to.be.equal(`'${value}'`);
+            });
+
+            it('already quoted string', () => {
+                const value = '"value 2"';
+                expect(wrapInQuotes(value)).to.be.equal(`${value}`);
+            });
         });
 
         describe('failed', () => {

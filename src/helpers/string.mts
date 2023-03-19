@@ -29,7 +29,7 @@ export function wrapInQuotes(s: string, force?: boolean): string {
     if (s.match(/\s+/) || force) {
         const quoteRegex = /('|`|")/;
         const foundStartQuote = s.match(new RegExp(`^${quoteRegex.source}`))?.[0]; /* Check if string has start-quote. */
-        const foundEndQuote = s.match(new RegExp(`${quoteRegex.source}$`))?.[0]; /* Check if string has end-quote. */
+        const foundEndQuote = s.match(new RegExp(`(?!=\\\\)${quoteRegex.source}$`))?.[0]; /* Check if string has end-quote. */
         let setStartQuote = foundStartQuote;
         let setEndQuote = foundEndQuote;
 
@@ -41,6 +41,12 @@ export function wrapInQuotes(s: string, force?: boolean): string {
             setEndQuote = foundStartQuote;
         } else if (!foundStartQuote && foundEndQuote) { /* If no start-quote but end-quote was found, use end-quote as start-quote. */
             setStartQuote = foundEndQuote;
+        } else if (foundStartQuote !== foundEndQuote) { /* If quotes differ use start-quote as end-quote. */
+            setEndQuote = foundStartQuote;
+        } else {
+            /* String already has both quotes. */
+            setStartQuote = '';
+            setEndQuote = '';
         }
         s = `${setStartQuote}${s}${setEndQuote}`;
     }
