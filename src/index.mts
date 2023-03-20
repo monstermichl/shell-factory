@@ -1,5 +1,8 @@
 export { Base } from './base/base.mjs';
 export { Block } from './base/block.mjs';
+export { WrapBlock } from './blocks/wrap-block.mjs';
+export { ConditionBlock } from './blocks/condition-block.mjs';
+export { IterationBlock } from './blocks/iteration-block.mjs';
 export { Statement } from './base/statement.mjs';
 export { MetaData } from './base/base.mjs';
 export {
