@@ -29,7 +29,7 @@ echo "Hello Statement" # Statement class example
 ```
 
 ### If
-If-statements control the further code execution flow. The If-class adds the possibility to add all required else-if (+ else) branches via chaining as shown in the example.
+If-statements control the further code execution flow. The If-class adds the possibility to add all required else-if (+ else) branches via chaining as shown in the example. *NICE-TO-KNOW: The If-class also supports dis-/enabling testing (the brackets in the statement) by using the dontTest-, respectively test-getter.*
 
 ```typescript
 new Script([
@@ -59,7 +59,7 @@ fi
 ```
 
 ### While
-While-loops execute the content in their body as long as the condition is fulfilled.
+While-loops execute the content in their body as long as the condition is fulfilled. *NICE-TO-KNOW: The While-class also supports dis-/enabling testing (the brackets in the statement) by using the dontTest-, respectively test-getter.*
 
 ```typescript
 new Script([
@@ -82,6 +82,24 @@ while [ 1 ]; do
   echo $input
   sleep 1
 done
+```
+
+The While-class additonally supports reading from an input file directly into a command (e.g. read) by using the *read*-method. *CAUTION: if read is used, testing (the brackets in the while-statement) will be disabled automatically.*
+
+```typescript
+new Script([
+    new While('read -r line', [
+        'echo $line',
+    ]).read('what-do-you-want-to-say.txt'),
+]).dump();
+```
+
+```sh
+#!/bin/sh
+
+while read -r line; do
+  echo $line
+done < what-do-you-want-to-say.txt
 ```
 
 ### For
