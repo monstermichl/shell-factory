@@ -1,10 +1,16 @@
 import { randomUUID } from 'crypto';
 
+/**
+ * Base class meta-data container.
+ */
 export class MetaData {
     id: string;
     comment: string;
 }
 
+/**
+ * Acts as the base class for all Bourne Shell components.
+ */
 export abstract class Base {
     private _id: string;
     private _comment: string;

@@ -4,6 +4,9 @@ import { Statement } from './statement.mjs';
 export type StatementOrBlock = Statement | Block;
 export type StatementOrBlockOrString = StatementOrBlock | string;
 
+/**
+ * Internal helper class for ID/statement-pattern evaluation.
+ */
 class IdOrPatternEvaluationResult {
     isId: boolean;
     regex: RegExp;

@@ -1,3 +1,5 @@
+export { Base } from './base/base.mjs';
+export { Block } from './base/block.mjs';
 export { Statement } from './base/statement.mjs';
 export { MetaData } from './base/base.mjs';
 export {
