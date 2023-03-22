@@ -11,13 +11,13 @@ describe('Statement tests', () => {
                 const s = 'echo "test"';
                 const statement = new Statement(s);
 
-                expect(statement.value).to.be.equal(s);
+                expect(statement.statement).to.be.equal(s);
             });
 
             it('get undefined', () => {
                 const statement = new Statement();
 
-                expect(statement.value).to.be.equal('');
+                expect(statement.statement).to.be.equal('');
             });
         });
 
@@ -41,7 +41,7 @@ describe('Statement tests', () => {
 
                 expect(statement.chain.length).to.be.equal(1);
                 expect(statement.chain[0].type).to.be.equal(ChainType.Read);
-                expect((statement.chain[0].target as Statement)?.value).to.be.equal(source);
+                expect((statement.chain[0].target as Statement)?.statement).to.be.equal(source);
             });
 
             it('instance of Statement', () => {
@@ -89,7 +89,7 @@ describe('Statement tests', () => {
 
                 expect(statement.chain.length).to.be.equal(1);
                 expect(statement.chain[0].type).to.be.equal(ChainType.Write);
-                expect((statement.chain[0].target as Statement)?.value).to.be.equal(target);
+                expect((statement.chain[0].target as Statement)?.statement).to.be.equal(target);
             });
         });
     });
@@ -105,7 +105,7 @@ describe('Statement tests', () => {
 
                 expect(statement.chain.length).to.be.equal(1);
                 expect(statement.chain[0].type).to.be.equal(ChainType.Append);
-                expect((statement.chain[0].target as Statement)?.value).to.be.equal(target);
+                expect((statement.chain[0].target as Statement)?.statement).to.be.equal(target);
             });
         });
     });
@@ -121,7 +121,7 @@ describe('Statement tests', () => {
 
                 expect(statement.chain.length).to.be.equal(1);
                 expect(statement.chain[0].type).to.be.equal(ChainType.Pipe);
-                expect((statement.chain[0].target as Statement)?.value).to.be.equal(target);
+                expect((statement.chain[0].target as Statement)?.statement).to.be.equal(target);
             });
         });
     });

@@ -43,7 +43,7 @@ export class Statement extends Base implements IChainable {
      */
     constructor(statement?: string) {
         super();
-        this.value = statement || '';
+        this.statement = statement || '';
     }
 
     /**
@@ -51,18 +51,45 @@ export class Statement extends Base implements IChainable {
      *
      * @returns The Statement value.
      */
-    public get value(): string {
+    public get statement(): string {
         return this._statement;
     }
 
     /**
      * Sets the Statement value.
      */
-    public set value(value: string) {
+    public set statement(value: string) {
         if (typeof value !== 'string') {
             throw new Error('Invalid Statement value type provided');
         }
         this._statement = value;
+    }
+
+    /**
+     * Returns the complete Statement chain.
+     *
+     * @returns The Statement value.
+     */
+    public get value(): string {
+        let s = this.statement;
+
+        /* Handle operation (read, write, append, pipe, ...). */
+        this.chain.forEach((element) => {
+            const { type, target } = element;
+            let operator;
+
+            /* Decide which operator string to use. */
+            switch(type) {
+                case ChainType.Read: operator = '<'; break;
+                case ChainType.Write: operator = '>'; break;
+                case ChainType.Append: operator = '>>'; break;
+                case ChainType.Pipe: operator = '|'; break;
+
+                default: throw new Error('Unsupported operator');
+            }
+            s += ` ${operator} ${target.statement}`;
+        });
+        return s;
     }
 
     /**
@@ -240,7 +267,7 @@ export class Statement extends Base implements IChainable {
      * @returns The current instance.
      */
     private _addChainElement(chainType: ChainType, convertible: unknown, description: string): this {
-        if (!this.value) {
+        if (!this.statement) {
             throw new Error('An empty statement cannot be chained');
         }
         const statement = this._convertToStatement(convertible, description);

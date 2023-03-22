@@ -173,7 +173,7 @@ export class Script extends Block {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     constructor(content?: any) {
         super(content);
-        this.setInterpreter(this._interpreter.value);
+        this.setInterpreter(this._interpreter.statement);
     }
 
     /**
@@ -352,11 +352,11 @@ export class Script extends Block {
                 if (!checkValue(indentBeforeComment)) {
                     indentBeforeComment = Script._DEFAULT_COMMENT_INDENT;
                 }
-                s += `${' '.repeat((checkValue(format.indent) ? format.indent : commonIndent) * indentFactor)}${this._resolveChain(value)}`;
+                s += `${' '.repeat((checkValue(format.indent) ? format.indent : commonIndent) * indentFactor)}${value.value}`;
 
                 /* Add comment behind line. */
                 if (value.comment) {
-                    s += `${' '.repeat(value.value ? indentBeforeComment : 0)}# ${value.comment}`;
+                    s += `${' '.repeat(value.statement ? indentBeforeComment : 0)}# ${value.comment}`;
                 }
                 s += '\n';
             } else {
@@ -398,32 +398,5 @@ export class Script extends Block {
         copyOver(correctedConfig, config || {}, true);
 
         return correctedConfig;
-    }
-
-    private _resolveChain(statement: Statement): string {
-        let s = '';
-
-        /* Chains are only supported for Statements at the moment. */
-        if (statement instanceof Statement) {
-            s = statement.value;
-
-            /* Handle operation (read, write, append, pipe, ...). */
-            statement.chain.forEach((element) => {
-                const { type, target } = element;
-                let operator;
-
-                /* Decide which operator string to use. */
-                switch(type) {
-                    case ChainType.Read: operator = '<'; break;
-                    case ChainType.Write: operator = '>'; break;
-                    case ChainType.Append: operator = '>>'; break;
-                    case ChainType.Pipe: operator = '|'; break;
-
-                    default: throw new Error('Unsupported operator');
-                }
-                s += ` ${operator} ${target.value}`;
-            });
-        }
-        return s;
     }
 }
