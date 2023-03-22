@@ -301,27 +301,27 @@ export abstract class ConditionBlock extends WrapBlock {
      * 
      * @param source File to read from.
      */
-    public override read(source: string): this;
+    public override read(source?: string): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
      */
-    public override read(source: number): this;
+    public override read(source?: number): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
      */
-    public override read(source: boolean): this;
+    public override read(source?: boolean): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
      */
-    public override read(source: Base): this;
+    public override read(source?: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public override read(source: any): this {
+    public override read(source?: any): this {
         super.read(source);
 
         /* If test has not been overwritten, dis-/enable it. */
