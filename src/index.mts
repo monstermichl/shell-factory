@@ -24,6 +24,7 @@ export {
 export { ElseIf } from './components/flow/if/else-if.mjs';
 export { Else } from './components/flow/if/else.mjs';
 export { While } from './components/flow/while/while.mjs';
+export { Until } from './components/flow/until/until.mjs';
 export { For } from './components/flow/for/for.mjs';
 export { Select } from './components/select/select.mjs';
 export { Case } from './components/flow/case/case.mjs';

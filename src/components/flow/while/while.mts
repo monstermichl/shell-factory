@@ -256,7 +256,7 @@ export class While extends ConditionBlock {
      * While constructor.
      *
      * @param conditions While conditions.
-     * @param content While-block content.
+     * @param content    While-block content.
      */
     constructor(conditions: Conditions, content?: StatementOrBlockOrString[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
