@@ -1,6 +1,6 @@
 {
   "name": "shell-factory",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Typescript ESM module to dynamically build Bourne Shell scripts",
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
@@ -26,7 +26,8 @@
     "example:dump-config": "npm run build && node ./examples/example-dump-config.js",
     "example:add": "npm run build && node ./examples/example-add.js",
     "example:remove": "npm run build && node ./examples/example-remove.js",
-    "example:alter": "npm run build && node ./examples/example-alter.js"
+    "example:alter": "npm run build && node ./examples/example-alter.js",
+    "example:operations": "npm run build && node ./examples/example-operations.js"
   },
   "author": "monstermichl",
   "license": "MIT",
