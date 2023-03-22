@@ -10,7 +10,8 @@ import {
     LinkedCondition,
 } from '../components/condition/linked-condition.mjs';
 import { Condition } from '../components/condition/condition.mjs';
-import { ChainType } from '../base/base.mjs';
+import { ChainType } from '../base/statement.mjs';
+import { IChainable } from '../interfaces/chainable.mjs';
 
 /**
  * ConditionBlock bracket type.
@@ -25,7 +26,7 @@ export enum BracketType {
  * Serves as the base for all blocks that require to handle conditions
  * (e.g., If, While, ...).
  */
-export abstract class ConditionBlock extends WrapBlock {
+export abstract class ConditionBlock extends WrapBlock implements IChainable {
     protected _conditions: Conditions;
 
     private _testOverwritten: boolean;
@@ -297,47 +298,159 @@ export abstract class ConditionBlock extends WrapBlock {
     }
 
     /**
-     * Read from file.
+     * Read from source.
      * 
      * @param source File to read from.
      * @returns The current instance.
      */
-    public override read(source: string): this;
+    public read(source: string): this;
     /**
-     * Read from file.
+     * Read from source.
      * 
      * @param source File to read from.
      * @returns The current instance.
      */
-    public override read(source: number): this;
+    public read(source: number): this;
     /**
-     * Read from file.
+     * Read from source.
      * 
      * @param source File to read from.
      * @returns The current instance.
      */
-    public override read(source: boolean): this;
+    public read(source: boolean): this;
     /**
-     * Read from file.
+     * Read from source.
      * 
      * @param source File to read from.
      * @returns The current instance.
      */
-    public override read(source: Statement): this;
+    public read(source: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public override read(source: any): this {
-        super.read(source);
+    public read(source: any): this {
+        if (this.closingStatement) {
+            this.closingStatement.read(source);
 
-        /* If test has not been overwritten, dis-/enable it. */
-        if (!this._testOverwritten) {
-            /* Disable testing if first chain element is of read-type. */
-            if (this.chain.length && (this.chain[0].type === ChainType.Read)) {
-                /* Disable testing. */
-                this._test(false);
-            } else {
-                /* Enable testing. */
-                this._test(true);
+            /* If test has not been overwritten, dis-/enable it. */
+            if (!this._testOverwritten) {
+                const chain = this.closingStatement.chain;
+
+                /* Disable testing if first chain element is of read-type. */
+                if (chain.length && (chain[0].type === ChainType.Read)) {
+                    /* Disable testing. */
+                    this._test(false);
+                } else {
+                    /* Enable testing. */
+                    this._test(true);
+                }
             }
+        }
+        return this;
+    }
+
+    /**
+     * Write to target.
+     * 
+     * @param target Target to write to.
+     * @returns The current instance.
+     */
+    public write(target: string): this;
+    /**
+     * Write to target.
+     * 
+     * @param target Target to write to.
+     * @returns The current instance.
+     */
+    public write(target: number): this;
+    /**
+     * Write to target.
+     * 
+     * @param target Target to write to.
+     * @returns The current instance.
+     */
+    public write(target: boolean): this;
+    /**
+     * Write to target.
+     * 
+     * @param target Target to write to.
+     * @returns The current instance.
+     */
+    public write(target: Statement): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public write(target: any): this {
+        if (this.closingStatement) {
+            this.closingStatement.write(target);
+        }
+        return this;
+    }
+
+    /**
+     * Append to target.
+     * 
+     * @param target Target to append to.
+     * @returns The current instance.
+     */
+    public append(target: string): this;
+    /**
+     * Append to target.
+     * 
+     * @param target Target to append to.
+     * @returns The current instance.
+     */
+    public append(target: number): this;
+    /**
+     * Append to target.
+     * 
+     * @param target Target to append to.
+     * @returns The current instance.
+     */
+    public append(target: boolean): this;
+    /**
+     * Append to target.
+     * 
+     * @param target Target to append to.
+     * @returns The current instance.
+     */
+    public append(target: Statement): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public append(target: any): this {
+        if (this.closingStatement) {
+            this.closingStatement.append(target);
+        }
+        return this;
+    }
+
+    /**
+     * Pipes the output into another command.
+     * 
+     * @param target Command to pipe to.
+     * @returns The current instance.
+     */
+    public pipe(target: string): this;
+    /**
+     * Pipes the output into another command.
+     * 
+     * @param target Command to pipe to.
+     * @returns The current instance.
+     */
+    public pipe(target: number): this;
+    /**
+     * Pipes the output into another command.
+     * 
+     * @param target Command to pipe to.
+     * @returns The current instance.
+     */
+    public pipe(target: boolean): this;
+    /**
+     * Pipes the output into another command.
+     * 
+     * @param target Command to pipe to.
+     * @returns The current instance.
+     */
+    public pipe(target: Statement): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public pipe(target: any): this {
+        if (this.closingStatement) {
+            this.closingStatement.pipe(target);
         }
         return this;
     }
