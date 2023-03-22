@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import {
     Base,
     MetaData,
+    OperationType,
 } from '../src/base/base.mjs';
 import { Statement } from '../src/base/statement.mjs';
 
@@ -81,29 +82,34 @@ describe('Base tests', () => {
                 const source = 'test.txt';
                 const base = new BaseHelper();
 
-                expect(base.operations.read).to.be.undefined;
+                expect(base.operation).to.be.undefined;
                 expect(base.read(source)).to.be.equal(base);
-                expect((base.operations.read as Statement)?.value).to.be.equal(source);
+                expect(base.operation.type).to.be.equal(OperationType.Read);
+                expect((base.operation.target as Statement)?.value).to.be.equal(source);
             });
 
             it('instance of Base', () => {
                 const source = new Statement('test.txt');
                 const base = new BaseHelper();
 
-                expect(base.operations.read).to.be.undefined;
+                expect(base.operation).to.be.undefined;
                 expect(base.read(source)).to.be.equal(base);
-                expect(base.operations.read).to.be.equal(source);
+                expect(base.operation.type).to.be.equal(OperationType.Read);
+                expect(base.operation.target).to.be.equal(source);
             });
 
             it('reset', () => {
                 const source = new Statement('test.txt');
                 const base = new BaseHelper();
 
-                expect(base.operations.read).to.be.undefined;
+                expect(base.operation).to.be.undefined;
+
                 expect(base.read(source)).to.be.equal(base);
-                expect(base.operations.read).to.be.equal(source);
+                expect(base.operation.type).to.be.equal(OperationType.Read);
+                expect(base.operation.target).to.be.equal(source);
+
                 expect(base.read()).to.be.equal(base);
-                expect(base.operations.read).to.be.equal(undefined);
+                expect(base.operation).to.be.equal(undefined);
             });
         });
 
@@ -140,9 +146,9 @@ describe('Base tests', () => {
                 const target = 'test.txt';
                 const base = new BaseHelper();
 
-                expect(base.operations.write).to.be.undefined;
                 expect(base.write(target)).to.be.equal(base);
-                expect((base.operations.write as Statement)?.value).to.be.equal(target);
+                expect(base.operation.type).to.be.equal(OperationType.Write);
+                expect((base.operation.target as Statement)?.value).to.be.equal(target);
             });
         });
     });
@@ -153,9 +159,9 @@ describe('Base tests', () => {
                 const target = 'test.txt';
                 const base = new BaseHelper();
 
-                expect(base.operations.append).to.be.undefined;
                 expect(base.append(target)).to.be.equal(base);
-                expect((base.operations.append as Statement)?.value).to.be.equal(target);
+                expect(base.operation.type).to.be.equal(OperationType.Append);
+                expect((base.operation.target as Statement)?.value).to.be.equal(target);
             });
         });
     });
@@ -166,9 +172,9 @@ describe('Base tests', () => {
                 const target = 'test';
                 const base = new BaseHelper();
 
-                expect(base.operations.pipe).to.be.undefined;
                 expect(base.pipe(target)).to.be.equal(base);
-                expect((base.operations.pipe as Statement)?.value).to.be.equal(target);
+                expect(base.operation.type).to.be.equal(OperationType.Pipe);
+                expect((base.operation.target as Statement)?.value).to.be.equal(target);
             });
         });
     });
