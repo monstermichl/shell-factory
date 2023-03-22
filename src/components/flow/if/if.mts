@@ -80,6 +80,104 @@ export class If extends IfBase {
      * @param condition If-condition.
      * @param statement If-block content.
      */
+    constructor(condition: number, statement?: Statement);
+    /**
+     * If constructor.
+     *
+     * @param condition If-condition.
+     * @param statement If-block content.
+     */
+    constructor(condition: number, statement?: string);
+    /**
+     * If constructor.
+     *
+     * @param condition If-condition.
+     * @param block     If-block content.
+     */
+    constructor(condition: number, block?: Block);
+    /**
+     * If constructor.
+     *
+     * @param condition  If-condition.
+     * @param statements If-block content.
+     */
+    constructor(condition: number, statements?: Statement[]);
+    /**
+     * If constructor.
+     *
+     * @param condition  If-condition.
+     * @param statements If-block content.
+     */
+    constructor(condition: number, statements?: string[]);
+    /**
+     * If constructor.
+     *
+     * @param condition If-condition.
+     * @param blocks    If-block content.
+     */
+    constructor(condition: number, blocks?: Block[]);
+    /**
+     * If constructor.
+     *
+     * @param condition If-condition.
+     * @param statement If-block content.
+     */
+    constructor(condition: number, content?: StatementOrBlockOrString[]);
+    /**
+     * If constructor.
+     *
+     * @param condition If-condition.
+     * @param statement If-block content.
+     */
+    constructor(condition: boolean, statement?: Statement);
+    /**
+     * If constructor.
+     *
+     * @param condition If-condition.
+     * @param statement If-block content.
+     */
+    constructor(condition: boolean, statement?: string);
+    /**
+     * If constructor.
+     *
+     * @param condition If-condition.
+     * @param block     If-block content.
+     */
+    constructor(condition: boolean, block?: Block);
+    /**
+     * If constructor.
+     *
+     * @param condition  If-condition.
+     * @param statements If-block content.
+     */
+    constructor(condition: boolean, statements?: Statement[]);
+    /**
+     * If constructor.
+     *
+     * @param condition  If-condition.
+     * @param statements If-block content.
+     */
+    constructor(condition: boolean, statements?: string[]);
+    /**
+     * If constructor.
+     *
+     * @param condition If-condition.
+     * @param blocks    If-block content.
+     */
+    constructor(condition: boolean, blocks?: Block[]);
+    /**
+     * If constructor.
+     *
+     * @param condition If-condition.
+     * @param statement If-block content.
+     */
+    constructor(condition: boolean, content?: StatementOrBlockOrString[]);
+    /**
+     * If constructor.
+     *
+     * @param condition If-condition.
+     * @param statement If-block content.
+     */
     constructor(condition: Condition, statement?: Statement);
     /**
      * If constructor.
