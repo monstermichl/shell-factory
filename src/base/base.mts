@@ -1,8 +1,4 @@
 import { randomUUID } from 'crypto';
-import {
-    convertToString,
-    ConvertToStringError,
-} from '../helpers/string.mjs';
 
 /**
  * Base class meta-data container.
