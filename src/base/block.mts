@@ -1,4 +1,4 @@
-import { evaluateIdOrPattern } from '../helpers/search.mjs';
+import { evaluateIdOrPattern } from '../helpers/pattern.mjs';
 import { Base } from './base.mjs';
 import { Statement } from './statement.mjs';
 

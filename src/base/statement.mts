@@ -1,7 +1,4 @@
-import {
-    evaluateIdOrPattern,
-    IdOrPatternEvaluationResult,
-} from '../helpers/search.mjs';
+import { evaluateIdOrPattern } from '../helpers/pattern.mjs';
 import {
     convertToString,
     ConvertToStringError,
