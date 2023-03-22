@@ -250,6 +250,95 @@ describe('ConditionBlock tests', () => {
         });
     });
 
+    describe('findInChain', () => {
+        describe('successful', () => {
+            it('pattern', () => {
+                const chainValue1 = 'grep -e "est"';
+                const chainValue2 = 'cut -d" " -f1';
+                const chainValue3 = 'test.txt';
+                const block = new ConditionBlockHelper(
+                    'if',
+                    BracketType.Square,
+                    '1 -eq 1',
+                    'then',
+                    undefined,
+                    'fi',
+                );
+
+                /* Prepare chain. */
+                block
+                    .pipe(chainValue1)
+                    .pipe(chainValue2)
+                    .write(chainValue3);
+                
+                expect(block.chain.length).to.be.equal(3);
+                const found = block.findInChain(/cut/);
+
+                expect(found.length).to.be.equal(1);
+                expect(found[0].target.value).to.be.equal(chainValue2);
+            });
+        });
+    });
+
+    describe('removeFromChain', () => {
+        describe('successful', () => {
+            it('pattern', () => {
+                const chainValue1 = 'grep -e "est"';
+                const chainValue2 = new Statement('cut -d" " -f1');
+                const chainValue3 = 'test.txt';
+                const block = new ConditionBlockHelper(
+                    'if',
+                    BracketType.Square,
+                    '1 -eq 1',
+                    'then',
+                    undefined,
+                    'fi',
+                );
+
+                /* Prepare chain. */
+                block
+                    .pipe(chainValue1)
+                    .pipe(chainValue2)
+                    .write(chainValue3);
+                
+                expect(block.chain.length).to.be.equal(3);
+                expect(block.removeFromChain(chainValue2.id)).to.be.equal(block);
+
+                expect(block.chain.length).to.be.equal(2);
+                expect(block.chain[0].target.value).to.be.equal(chainValue1);
+                expect(block.chain[1].target.value).to.be.equal(chainValue3);
+            });
+        });
+    });
+
+    describe('clearChain', () => {
+        describe('successful', () => {
+            it('clear', () => {
+                const chainValue1 = 'grep -e "est"';
+                const chainValue2 = 'cut -d" " -f1';
+                const chainValue3 = 'test.txt';
+                const block = new ConditionBlockHelper(
+                    'if',
+                    BracketType.Square,
+                    '1 -eq 1',
+                    'then',
+                    undefined,
+                    'fi',
+                );
+
+                /* Prepare chain. */
+                block
+                    .pipe(chainValue1)
+                    .pipe(chainValue2)
+                    .write(chainValue3);
+                
+                expect(block.chain.length).to.be.equal(3);
+                expect(block.clearChain()).to.be.equal(block);
+                expect(block.chain.length).to.be.equal(0);
+            });
+        });
+    });
+
     describe('test', () => {
         describe('successful', () => {
             it('get', () => {

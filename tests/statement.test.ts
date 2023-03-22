@@ -251,8 +251,6 @@ describe('Statement tests', () => {
         });
     });
 
-
-
     describe('removeFromChain', () => {
         describe('successful', () => {
             it('pattern', () => {
