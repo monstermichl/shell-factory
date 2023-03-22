@@ -19,6 +19,7 @@ import {
     WrapBlock,
 } from '../../blocks/wrap-block.mjs';
 import { Select } from '../select/select.mjs';
+import { OperationType } from '../../base/base.mjs';
 
 /**
  * Used to help the Script dump-method to understand, in which
@@ -350,6 +351,29 @@ export class Script extends Block {
                     indentBeforeComment = Script._DEFAULT_COMMENT_INDENT;
                 }
                 s += `${' '.repeat((checkValue(format.indent) ? format.indent : commonIndent) * indentFactor)}${value.value}`;
+
+                /* Handle operation (read, write, append, pipe, ...). */
+                let operation = value.operation;
+                while (operation) {
+                    const { type, target } = operation;
+
+                    /* Operations are only supported for Statements at the moment. */
+                    if (target instanceof Statement) {
+                        let operator;
+
+                        /* Decide which operator string to use. */
+                        switch(type) {
+                            case OperationType.Read: operator = '<'; break;
+                            case OperationType.Write: operator = '>'; break;
+                            case OperationType.Append: operator = '>>'; break;
+                            case OperationType.Pipe: operator = '|'; break;
+    
+                            default: throw new Error('Unsupported operator');
+                        }
+                        s += ` ${operator} ${target.value}`;
+                        operation = target.operation;
+                    }
+                }
 
                 /* Add comment behind line. */
                 if (value.comment) {
