@@ -43,12 +43,12 @@ export abstract class ConditionBlock extends WrapBlock {
 
     public get test(): this {
         this._testOverwritten = true;
-        return this._updateOpeningStatement(true);
+        return this._test(true);
     }
 
     public get dontTest(): this {
         this._testOverwritten = true;
-        return this._updateOpeningStatement(false);
+        return this._test(false);
     }
 
     /**
@@ -300,24 +300,28 @@ export abstract class ConditionBlock extends WrapBlock {
      * Read from file.
      * 
      * @param source File to read from.
+     * @returns The current instance.
      */
     public override read(source?: string): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
+     * @returns The current instance.
      */
     public override read(source?: number): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
+     * @returns The current instance.
      */
     public override read(source?: boolean): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
+     * @returns The current instance.
      */
     public override read(source?: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -328,15 +332,25 @@ export abstract class ConditionBlock extends WrapBlock {
         if (!this._testOverwritten) {
             if (source) {
                 /* Disable testing. */
-                this.dontTest;
+                this._test(false);
             } else {
                 /* Enable testing. */
-                this.test;
+                this._test(true);
             }
         }
         return this;
     }
 
+    /**
+     * Creates the opening statement.
+     *
+     * @param conditionKeyword  Condition keyword (e.g. if).
+     * @param bracketType       Which brackets shall be used.
+     * @param conditions        Conditions to incorporate.
+     * @param blockStartKeyword Block end-keyword (e.g. fi)
+     *
+     * @returns The built opening statement string.
+     */
     private static _buildOpeningStatementString(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string): string {
         if (!conditionKeyword) {
             throw new Error('Missing condition');
@@ -369,6 +383,22 @@ export abstract class ConditionBlock extends WrapBlock {
         return `${conditionKeyword} ${conditionString}; ${blockStartKeyword}`;
     }
 
+    /**
+     * Sets if the condition shall be tested.
+     *
+     * @param test If true the condition is being tested (brackets).
+     * @returns The current instance.
+     */
+    private _test(test: boolean): this {
+        return this._updateOpeningStatement(test);
+    }
+
+    /**
+     * Updates the opening statement based on the test flag.
+     *
+     * @param test If true the condition is being tested (brackets).
+     * @returns The current instance.
+     */
     private _updateOpeningStatement(test: boolean): this {
         this._openingStatement.value = ConditionBlock._buildOpeningStatementString(
             this._conditionKeyword,

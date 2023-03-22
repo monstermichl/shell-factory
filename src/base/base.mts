@@ -75,7 +75,7 @@ export abstract class Base {
      * Attaches a comment to the object.
      *
      * @param comment Comment to set.
-     * @returns The current object.
+     * @returns The current instance.
      */
     public setComment(comment: string): this {
         this._comment = comment;
@@ -85,7 +85,7 @@ export abstract class Base {
     /**
      * Removes the object's comment.
      *
-     * @returns The current object.
+     * @returns The current instance.
      */
     public clearComment(): this {
         this._comment = undefined;
@@ -99,7 +99,7 @@ export abstract class Base {
      * the required calls.
      *
      * @param container MetaData object to fill.
-     * @returns The current object.
+     * @returns The current instance.
      */
     public meta(container: MetaData): this {
         if (container) {
@@ -113,24 +113,28 @@ export abstract class Base {
      * Read from file.
      * 
      * @param source File to read from.
+     * @returns The current instance.
      */
     public read(source?: string): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
+     * @returns The current instance.
      */
     public read(source?: number): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
+     * @returns The current instance.
      */
     public read(source?: boolean): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
+     * @returns The current instance.
      */
     public read(source?: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -143,24 +147,28 @@ export abstract class Base {
      * Write to target.
      * 
      * @param target Target to write to.
+     * @returns The current instance.
      */
     public write(target?: string): this;
     /**
      * Write to target.
      * 
      * @param target Target to write to.
+     * @returns The current instance.
      */
     public write(target?: number): this;
     /**
      * Write to target.
      * 
      * @param target Target to write to.
+     * @returns The current instance.
      */
     public write(target?: boolean): this;
     /**
      * Write to target.
      * 
      * @param target Target to write to.
+     * @returns The current instance.
      */
     public write(target?: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -173,24 +181,28 @@ export abstract class Base {
      * Append to target.
      * 
      * @param target Target to append to.
+     * @returns The current instance.
      */
     public append(target?: string): this;
     /**
      * Append to target.
      * 
      * @param target Target to append to.
+     * @returns The current instance.
      */
     public append(target?: number): this;
     /**
      * Append to target.
      * 
      * @param target Target to append to.
+     * @returns The current instance.
      */
     public append(target?: boolean): this;
     /**
      * Append to target.
      * 
      * @param target Target to append to.
+     * @returns The current instance.
      */
     public append(target?: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -203,30 +215,35 @@ export abstract class Base {
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
+     * @returns The current instance.
      */
     public pipe(target?: string): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
+     * @returns The current instance.
      */
     public pipe(target?: number): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
+     * @returns The current instance.
      */
     public pipe(target?: boolean): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
+     * @returns The current instance.
      */
     public pipe(target?: Base): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
+     * @returns The current instance.
      */
     public pipe(target?: unknown): this {
         this._pipeOutput = this._convertToBase(target, 'target', this._pipePreProcessing);
