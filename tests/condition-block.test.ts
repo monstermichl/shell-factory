@@ -173,21 +173,7 @@ describe('ConditionBlock tests', () => {
 
                 expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
                 expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} ${condition}; ${blockStartKeyword}`);
-                expect((block.raw[2] as Statement).value).to.be.equal(`${blockEndKeyword} < ${file}`);
-            });
-        });
-
-        describe('failed', () => {
-            it('no input file provided', () => {
-                expect(function() {
-                    new ConditionBlockHelper('if', BracketType.Square, '1 -eq 1', 'then', null, 'fi').read('')
-                }).to.throw('No input file provided');
-            });
-
-            it('invalid file path type', () => {
-                expect(function() {
-                    new ConditionBlockHelper('if', BracketType.Square, '1 -eq 1', 'then', null, 'fi').read({} as any)
-                }).to.throw('Invalid file path type');
+                expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
             });
         });
     });

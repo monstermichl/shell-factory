@@ -7,7 +7,21 @@ import { Statement } from '../src/base/statement.mjs';
 
 /* Helper class to instantiate Base. */
 class BaseHelper extends Base {
-    /* Nothing to do. */
+    protected _readPreProcessing(source: string): Base {
+        return new Statement(source);
+    }
+
+    protected _writePreProcessing(target: string): Base {
+        return new Statement(target);
+    }
+
+    protected _appendPreProcessing(target: string): Base {
+        return new Statement(target);
+    }
+
+    protected _pipePreProcessing(target: string): Base {
+        return new Statement(target);
+    }
 }
 
 describe('Base tests', () => {
@@ -57,6 +71,33 @@ describe('Base tests', () => {
                 expect(base.clearComment()).to.be.equal(base);
                 expect(base.meta(metaData)).to.be.equal(base);
                 expect(metaData.comment).to.be.equal(undefined);
+            });
+        });
+    });
+
+    describe('read', () => {
+        describe('successful', () => {
+            it('valid path', () => {
+                const source = 'test.txt';
+                const base = new BaseHelper();
+
+                expect(base.operations.read).to.be.undefined;
+                expect(base.read(source)).to.be.equal(base);
+                expect((base.operations.read as Statement)?.value).to.be.equal(source);
+            });
+        });
+
+        describe('failed', () => {
+            it('no input file provided', () => {
+                expect(function() {
+                    new BaseHelper().read('')
+                }).to.throw('No source provided');
+            });
+
+            it('invalid file path type', () => {
+                expect(function() {
+                    new BaseHelper().read({} as any)
+                }).to.throw('Invalid source type provided');
             });
         });
     });

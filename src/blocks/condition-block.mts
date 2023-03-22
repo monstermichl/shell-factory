@@ -53,47 +53,6 @@ export abstract class ConditionBlock extends WrapBlock {
     }
 
     /**
-     * Read from file into condition block.
-     * 
-     * @param file File to read from.
-     */
-    public read(file: string): this;
-    /**
-     * Read from file into condition block.
-     * 
-     * @param file File to read from.
-     */
-    public read(file: number): this;
-    /**
-     * Read from file into condition block.
-     * 
-     * @param file File to read from.
-     */
-    public read(file: boolean): this;
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public read(file: any): this {
-        /* ConditionBlock can only read input if it has an
-           end-statement to which the read can be attached. */
-        if (this.closingStatement) {
-            /* Make sure the provided file path is valid. */
-            file = convertToString(file, (e: ConvertToStringError) => {
-                switch(e) {
-                    case ConvertToStringError.EmptyValue: throw new Error('No input file provided');
-                    case ConvertToStringError.InvalidType: throw new Error('Invalid file path type');
-                }
-            });
-            file = wrapInQuotes(file); /* If file contains whitespaces and is not between quotes, wrap it. */
-
-            /* Disable testing. */
-            this.dontTest;
-
-            /* Update closing statement. */
-            this.closingStatement.value = `${this._blockEndKeyword} < ${file}`;
-        }
-        return this;
-    }
-
-    /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
@@ -336,6 +295,40 @@ export abstract class ConditionBlock extends WrapBlock {
         this._conditions = conditions;
         this._blockStartKeyword = blockStartKeyword;
         this._blockEndKeyword = blockEndKeyword;
+    }
+
+    /**
+     * Read from file.
+     * 
+     * @param source File to read from.
+     */
+    public override read(source: string): this;
+    /**
+     * Read from file.
+     * 
+     * @param source File to read from.
+     */
+    public override read(source: number): this;
+    /**
+     * Read from file.
+     * 
+     * @param source File to read from.
+     */
+    public override read(source: boolean): this;
+    /**
+     * Read from file.
+     * 
+     * @param source File to read from.
+     */
+    public override read(source: boolean): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public override read(source: any): this {
+        super.read(source);
+
+        /* Disable testing. */
+        this.dontTest;
+
+        return this;
     }
 
     private static _buildOpeningStatementString(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string): string {
