@@ -28,6 +28,7 @@ export enum BracketType {
 export abstract class ConditionBlock extends WrapBlock {
     protected _conditions: Conditions;
 
+    private _testOverwritten: boolean;
     private _conditionKeyword: string;
     private _bracketType: BracketType;
     private _blockStartKeyword: string;
@@ -41,10 +42,12 @@ export abstract class ConditionBlock extends WrapBlock {
     }
 
     public get test(): this {
+        this._testOverwritten = true;
         return this._updateOpeningStatement(true);
     }
 
     public get dontTest(): this {
+        this._testOverwritten = true;
         return this._updateOpeningStatement(false);
     }
 
@@ -321,9 +324,16 @@ export abstract class ConditionBlock extends WrapBlock {
     public override read(source: any): this {
         super.read(source);
 
-        /* Disable testing. */
-        this.dontTest;
-
+        /* If test has not been overwritten, dis-/enable it. */
+        if (this._testOverwritten) {
+            if (source) {
+                /* Disable testing. */
+                this.dontTest;
+            } else {
+                /* Enable testing. */
+                this.test;
+            }
+        }
         return this;
     }
 
