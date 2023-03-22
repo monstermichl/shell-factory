@@ -325,7 +325,7 @@ export abstract class ConditionBlock extends WrapBlock {
         super.read(source);
 
         /* If test has not been overwritten, dis-/enable it. */
-        if (this._testOverwritten) {
+        if (!this._testOverwritten) {
             if (source) {
                 /* Disable testing. */
                 this.dontTest;
