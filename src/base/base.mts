@@ -13,9 +13,9 @@ export class MetaData {
 }
 
 /**
- * Operation type to apply.
+ * Chain type.
  */
-export enum OperationType {
+export enum ChainType {
     Read   = (1 << 0), /* 1 */
     Write  = (1 << 1), /* 2 */
     Append = (1 << 2), /* 4 */
@@ -23,13 +23,13 @@ export enum OperationType {
 }
 
 /**
- * Operation information.
+ * Chain element.
  */
-export class Operation {
-    type: OperationType;
+export class ChainElement {
+    type: ChainType;
     target: Base;
 
-    constructor(type: OperationType, target: Base) {
+    constructor(type: ChainType, target: Base) {
         this.type = type;
         this.target = target;
     }
@@ -39,7 +39,7 @@ export class Operation {
  * Acts as the base class for all Bourne Shell components.
  */
 export abstract class Base {
-    protected _operation: Operation;
+    protected _chain = [] as ChainElement[];
 
     private _id: string;
     private _comment: string;
@@ -66,10 +66,10 @@ export abstract class Base {
     }
 
     /**
-     * Returns a summary of the applied operation.
+     * Returns a summary of the applied chain.
      */
-    public get operation(): Operation {
-        return this._operation;
+    public get chain(): ChainElement[] {
+        return this._chain;
     }
 
     /**
@@ -116,31 +116,31 @@ export abstract class Base {
      * @param source File to read from.
      * @returns The current instance.
      */
-    public read(source?: string): this;
+    public read(source: string): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
      * @returns The current instance.
      */
-    public read(source?: number): this;
+    public read(source: number): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
      * @returns The current instance.
      */
-    public read(source?: boolean): this;
+    public read(source: boolean): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
      * @returns The current instance.
      */
-    public read(source?: Base): this;
+    public read(source: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public read(source?: any): this {
-        return this._setOperation(OperationType.Read, source, 'source', this._readPreProcessing);
+    public read(source: any): this {
+        return this._addChainElement(ChainType.Read, source, 'source', this._readPreProcessing);
     }
 
     /**
@@ -149,31 +149,31 @@ export abstract class Base {
      * @param target Target to write to.
      * @returns The current instance.
      */
-    public write(target?: string): this;
+    public write(target: string): this;
     /**
      * Write to target.
      * 
      * @param target Target to write to.
      * @returns The current instance.
      */
-    public write(target?: number): this;
+    public write(target: number): this;
     /**
      * Write to target.
      * 
      * @param target Target to write to.
      * @returns The current instance.
      */
-    public write(target?: boolean): this;
+    public write(target: boolean): this;
     /**
      * Write to target.
      * 
      * @param target Target to write to.
      * @returns The current instance.
      */
-    public write(target?: Base): this;
+    public write(target: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public write(target?: any): this {
-        return this._setOperation(OperationType.Write, target, 'target', this._writePreProcessing);
+    public write(target: any): this {
+        return this._addChainElement(ChainType.Write, target, 'target', this._writePreProcessing);
     }
 
     /**
@@ -182,31 +182,31 @@ export abstract class Base {
      * @param target Target to append to.
      * @returns The current instance.
      */
-    public append(target?: string): this;
+    public append(target: string): this;
     /**
      * Append to target.
      * 
      * @param target Target to append to.
      * @returns The current instance.
      */
-    public append(target?: number): this;
+    public append(target: number): this;
     /**
      * Append to target.
      * 
      * @param target Target to append to.
      * @returns The current instance.
      */
-    public append(target?: boolean): this;
+    public append(target: boolean): this;
     /**
      * Append to target.
      * 
      * @param target Target to append to.
      * @returns The current instance.
      */
-    public append(target?: Base): this;
+    public append(target: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public append(target?: any): this {
-        return this._setOperation(OperationType.Append, target, 'target', this._appendPreProcessing);
+    public append(target: any): this {
+        return this._addChainElement(ChainType.Append, target, 'target', this._appendPreProcessing);
     }
 
     /**
@@ -215,36 +215,36 @@ export abstract class Base {
      * @param target Command to pipe to.
      * @returns The current instance.
      */
-    public pipe(target?: string): this;
+    public pipe(target: string): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
      * @returns The current instance.
      */
-    public pipe(target?: number): this;
+    public pipe(target: number): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
      * @returns The current instance.
      */
-    public pipe(target?: boolean): this;
+    public pipe(target: boolean): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
      * @returns The current instance.
      */
-    public pipe(target?: Base): this;
+    public pipe(target: Base): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
      * @returns The current instance.
      */
-    public pipe(target?: unknown): this {
-        return this._setOperation(OperationType.Pipe, target, 'target', this._pipePreProcessing);
+    public pipe(target: unknown): this {
+        return this._addChainElement(ChainType.Pipe, target, 'target', this._pipePreProcessing);
     }
 
     /**
@@ -289,10 +289,7 @@ export abstract class Base {
      * @returns Converted convertible object (Base).
      */
     private _convertToBase(convertible: unknown, description: string, convertCallout: (convertible: string) => Base): Base {
-        /* If convertible is null or undefined, set it to undefined. */
-        if ([null, undefined].includes(convertible)) {
-            convertible = undefined;
-        } else if (!(convertible instanceof Base)) {
+        if (!(convertible instanceof Base)) {
             /* Make sure the target is valid. */
             convertible = convertToString(convertible as string, (e: ConvertToStringError) => {
                 switch(e) {
@@ -313,19 +310,20 @@ export abstract class Base {
     /**
      * Sets the _operation property.
      *
-     * @param operationType  Which operation is being set.
+     * @param chainType      Which operation is being set.
      * @param convertible    String, number, boolean or Base to convert.
      * @param description    Convertible description.
      * @param convertCallout Subclass' pre-processing method.
      *
-     * @returns Converted convertible object (Base).
+     * @returns The current instance.
      */
-    private _setOperation(operationType: OperationType, convertible: unknown, description: string, convertCallout: (convertible: string) => Base): this {
+    private _addChainElement(chainType: ChainType, convertible: unknown, description: string, convertCallout: (convertible: string) => Base): this {
         const base = this._convertToBase(convertible, description, convertCallout);
-        this._operation = base ? new Operation(
-            operationType,
+        
+        this._chain.push(new ChainElement(
+            chainType,
             base,
-        ) : undefined;
+        ));
         return this;
     }
 }

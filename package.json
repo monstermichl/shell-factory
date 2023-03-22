@@ -27,7 +27,7 @@
     "example:add": "npm run build && node ./examples/example-add.js",
     "example:remove": "npm run build && node ./examples/example-remove.js",
     "example:alter": "npm run build && node ./examples/example-alter.js",
-    "example:operations": "npm run build && node ./examples/example-operations.js"
+    "example:chain": "npm run build && node ./examples/example-chain.js"
   },
   "author": "monstermichl",
   "license": "MIT",

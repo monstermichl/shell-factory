@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import {
     Base,
     MetaData,
-    OperationType,
+    ChainType,
 } from '../src/base/base.mjs';
 import { Statement } from '../src/base/statement.mjs';
 
@@ -82,34 +82,24 @@ describe('Base tests', () => {
                 const source = 'test.txt';
                 const base = new BaseHelper();
 
-                expect(base.operation).to.be.undefined;
+                expect(base.chain.length).to.be.equal(0);
                 expect(base.read(source)).to.be.equal(base);
-                expect(base.operation.type).to.be.equal(OperationType.Read);
-                expect((base.operation.target as Statement)?.value).to.be.equal(source);
+
+                expect(base.chain.length).to.be.equal(1);
+                expect(base.chain[0].type).to.be.equal(ChainType.Read);
+                expect((base.chain[0].target as Statement)?.value).to.be.equal(source);
             });
 
             it('instance of Base', () => {
                 const source = new Statement('test.txt');
                 const base = new BaseHelper();
 
-                expect(base.operation).to.be.undefined;
+                expect(base.chain.length).to.be.equal(0);
                 expect(base.read(source)).to.be.equal(base);
-                expect(base.operation.type).to.be.equal(OperationType.Read);
-                expect(base.operation.target).to.be.equal(source);
-            });
 
-            it('reset', () => {
-                const source = new Statement('test.txt');
-                const base = new BaseHelper();
-
-                expect(base.operation).to.be.undefined;
-
-                expect(base.read(source)).to.be.equal(base);
-                expect(base.operation.type).to.be.equal(OperationType.Read);
-                expect(base.operation.target).to.be.equal(source);
-
-                expect(base.read()).to.be.equal(base);
-                expect(base.operation).to.be.equal(undefined);
+                expect(base.chain.length).to.be.equal(1);
+                expect(base.chain[0].type).to.be.equal(ChainType.Read);
+                expect(base.chain[0].target).to.be.equal(source);
             });
         });
 
@@ -146,9 +136,12 @@ describe('Base tests', () => {
                 const target = 'test.txt';
                 const base = new BaseHelper();
 
+                expect(base.chain.length).to.be.equal(0);
                 expect(base.write(target)).to.be.equal(base);
-                expect(base.operation.type).to.be.equal(OperationType.Write);
-                expect((base.operation.target as Statement)?.value).to.be.equal(target);
+
+                expect(base.chain.length).to.be.equal(1);
+                expect(base.chain[0].type).to.be.equal(ChainType.Write);
+                expect((base.chain[0].target as Statement)?.value).to.be.equal(target);
             });
         });
     });
@@ -159,9 +152,12 @@ describe('Base tests', () => {
                 const target = 'test.txt';
                 const base = new BaseHelper();
 
+                expect(base.chain.length).to.be.equal(0);
                 expect(base.append(target)).to.be.equal(base);
-                expect(base.operation.type).to.be.equal(OperationType.Append);
-                expect((base.operation.target as Statement)?.value).to.be.equal(target);
+
+                expect(base.chain.length).to.be.equal(1);
+                expect(base.chain[0].type).to.be.equal(ChainType.Append);
+                expect((base.chain[0].target as Statement)?.value).to.be.equal(target);
             });
         });
     });
@@ -172,9 +168,12 @@ describe('Base tests', () => {
                 const target = 'test';
                 const base = new BaseHelper();
 
+                expect(base.chain.length).to.be.equal(0);
                 expect(base.pipe(target)).to.be.equal(base);
-                expect(base.operation.type).to.be.equal(OperationType.Pipe);
-                expect((base.operation.target as Statement)?.value).to.be.equal(target);
+
+                expect(base.chain.length).to.be.equal(1);
+                expect(base.chain[0].type).to.be.equal(ChainType.Pipe);
+                expect((base.chain[0].target as Statement)?.value).to.be.equal(target);
             });
         });
     });
