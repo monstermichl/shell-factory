@@ -205,6 +205,78 @@ describe('ConditionBlock tests', () => {
         //});
     });
 
+    describe('write', () => {
+        describe('successful', () => {
+            it('enable', () => {
+                const conditionKeyword = 'if';
+                const blockStartKeyword = 'then';
+                const condition = '1 -eq 1';
+                const blockEndKeyword = 'fi';
+                const file = 'test.txt';
+                const block = new ConditionBlockHelper(
+                    conditionKeyword,
+                    BracketType.Square,
+                    condition,
+                    blockStartKeyword,
+                    undefined,
+                    blockEndKeyword,
+                ).write(file);
+
+                expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
+                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} [ ${condition} ]; ${blockStartKeyword}`);
+                expect((block.raw[2] as Statement).value).to.be.equal(`${blockEndKeyword} > ${file}`);
+            });
+        });
+    });
+
+    describe('append', () => {
+        describe('successful', () => {
+            it('enable', () => {
+                const conditionKeyword = 'if';
+                const blockStartKeyword = 'then';
+                const condition = '1 -eq 1';
+                const blockEndKeyword = 'fi';
+                const file = 'test.txt';
+                const block = new ConditionBlockHelper(
+                    conditionKeyword,
+                    BracketType.Square,
+                    condition,
+                    blockStartKeyword,
+                    undefined,
+                    blockEndKeyword,
+                ).append(file);
+
+                expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
+                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} [ ${condition} ]; ${blockStartKeyword}`);
+                expect((block.raw[2] as Statement).value).to.be.equal(`${blockEndKeyword} >> ${file}`);
+            });
+        });
+    });
+
+    describe('pipe', () => {
+        describe('successful', () => {
+            it('enable', () => {
+                const conditionKeyword = 'if';
+                const blockStartKeyword = 'then';
+                const condition = '1 -eq 1';
+                const blockEndKeyword = 'fi';
+                const command = 'cat';
+                const block = new ConditionBlockHelper(
+                    conditionKeyword,
+                    BracketType.Square,
+                    condition,
+                    blockStartKeyword,
+                    undefined,
+                    blockEndKeyword,
+                ).pipe(command);
+
+                expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
+                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} [ ${condition} ]; ${blockStartKeyword}`);
+                expect((block.raw[2] as Statement).value).to.be.equal(`${blockEndKeyword} | ${command}`);
+            });
+        });
+    });
+
     describe('test', () => {
         describe('successful', () => {
             it('get', () => {

@@ -327,24 +327,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable {
     public read(source: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public read(source: any): this {
-        if (this.closingStatement) {
-            this.closingStatement.read(source);
-
-            /* If test has not been overwritten, dis-/enable it. */
-            if (!this._testOverwritten) {
-                const chain = this.closingStatement.chain;
-
-                /* Disable testing if first chain element is of read-type. */
-                if (chain.length && (chain[0].type === ChainType.Read)) {
-                    /* Disable testing. */
-                    this._test(false);
-                } else {
-                    /* Enable testing. */
-                    this._test(true);
-                }
-            }
-        }
-        return this;
+        return this._addToChain(source, ChainType.Read);
     }
 
     /**
@@ -377,10 +360,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable {
     public write(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public write(target: any): this {
-        if (this.closingStatement) {
-            this.closingStatement.write(target);
-        }
-        return this;
+        return this._addToChain(target, ChainType.Write);
     }
 
     /**
@@ -413,10 +393,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable {
     public append(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public append(target: any): this {
-        if (this.closingStatement) {
-            this.closingStatement.append(target);
-        }
-        return this;
+        return this._addToChain(target, ChainType.Append);
     }
 
     /**
@@ -449,10 +426,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable {
     public pipe(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public pipe(target: any): this {
-        if (this.closingStatement) {
-            this.closingStatement.pipe(target);
-        }
-        return this;
+        return this._addToChain(target, ChainType.Pipe);
     }
 
     /**
@@ -520,6 +494,41 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable {
             this._conditions,
             this._blockStartKeyword,
         );
+        return this;
+    }
+
+    /**
+     * Internal function to add a new chain statement.
+     *
+     * @param target Statement to add.
+     * @param type   ChainType.
+     *
+     * @returns The current instance.
+     */
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    private _addToChain(target: any, type: ChainType): this {
+        if (this.closingStatement) {
+            switch(type) {
+                case ChainType.Read: this.closingStatement.read(target); break;
+                case ChainType.Write: this.closingStatement.write(target); break;
+                case ChainType.Append: this.closingStatement.append(target); break;
+                case ChainType.Pipe: this.closingStatement.pipe(target); break;
+            }
+
+            /* If test has not been overwritten, dis-/enable it. */
+            if (!this._testOverwritten) {
+                const chain = this.closingStatement.chain;
+
+                /* Disable testing if first chain element is of read-type. */
+                if (chain.length && (chain[0].type === ChainType.Read)) {
+                    /* Disable testing. */
+                    this._test(false);
+                } else {
+                    /* Enable testing. */
+                    this._test(true);
+                }
+            }
+        }
         return this;
     }
 }
