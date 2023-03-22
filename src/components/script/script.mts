@@ -3,7 +3,10 @@ import {
     StatementOrBlock,
     StatementOrBlockOrString,
 } from '../../base/block.mjs';
-import { Statement } from '../../base/statement.mjs';
+import {
+    ChainType,
+    Statement,
+} from '../../base/statement.mjs';
 import { Function } from '../function/function.mjs';
 import { If } from '../flow/if/if.mjs';
 import { While } from '../flow/while/while.mjs';
@@ -19,7 +22,6 @@ import {
     WrapBlock,
 } from '../../blocks/wrap-block.mjs';
 import { Select } from '../select/select.mjs';
-import { ChainType } from '../../base/base.mjs';
 
 /**
  * Used to help the Script dump-method to understand, in which
@@ -350,28 +352,7 @@ export class Script extends Block {
                 if (!checkValue(indentBeforeComment)) {
                     indentBeforeComment = Script._DEFAULT_COMMENT_INDENT;
                 }
-                s += `${' '.repeat((checkValue(format.indent) ? format.indent : commonIndent) * indentFactor)}${value.value}`;
-
-                /* Handle operation (read, write, append, pipe, ...). */
-                value.chain.forEach((element) => {
-                    const { type, target } = element;
-
-                    /* Chains are only supported for Statements at the moment. */
-                    if (target instanceof Statement) {
-                        let operator;
-
-                        /* Decide which operator string to use. */
-                        switch(type) {
-                            case ChainType.Read: operator = '<'; break;
-                            case ChainType.Write: operator = '>'; break;
-                            case ChainType.Append: operator = '>>'; break;
-                            case ChainType.Pipe: operator = '|'; break;
-    
-                            default: throw new Error('Unsupported operator');
-                        }
-                        s += ` ${operator} ${target.value}`;
-                    }
-                });
+                s += `${' '.repeat((checkValue(format.indent) ? format.indent : commonIndent) * indentFactor)}${this._resolveChain(value)}`;
 
                 /* Add comment behind line. */
                 if (value.comment) {
@@ -417,5 +398,32 @@ export class Script extends Block {
         copyOver(correctedConfig, config || {}, true);
 
         return correctedConfig;
+    }
+
+    private _resolveChain(statement: Statement): string {
+        let s = '';
+
+        /* Chains are only supported for Statements at the moment. */
+        if (statement instanceof Statement) {
+            s = statement.value;
+
+            /* Handle operation (read, write, append, pipe, ...). */
+            statement.chain.forEach((element) => {
+                const { type, target } = element;
+                let operator;
+
+                /* Decide which operator string to use. */
+                switch(type) {
+                    case ChainType.Read: operator = '<'; break;
+                    case ChainType.Write: operator = '>'; break;
+                    case ChainType.Append: operator = '>>'; break;
+                    case ChainType.Pipe: operator = '|'; break;
+
+                    default: throw new Error('Unsupported operator');
+                }
+                s += ` ${operator} ${target.value}`;
+            });
+        }
+        return s;
     }
 }
