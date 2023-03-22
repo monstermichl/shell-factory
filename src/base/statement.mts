@@ -121,10 +121,23 @@ export class Statement extends Base implements IChainable {
      * @returns List of found chain elements.
      */
     public findInChain(pattern: RegExp, type?: ChainType): ChainElement[];
+    /**
+     * Finds all elements based on the provided type.
+     * 
+     * @param type Type to look for.
+     * @returns List of found chain elements.
+     */
+    public findInChain(type: ChainType): ChainElement[];
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public findInChain(arg: any, type?: ChainType): ChainElement[] {
+    public findInChain(arg1: any, arg2?: ChainType): ChainElement[] {
+        /* Check if arg1 is ChainType value. */
+        if (ChainType[arg1]) {
+            arg2 = arg1; /* Set arg2 to ChainType value. */
+            arg1 = /.*/; /* Set arg1 to match everything. */
+        }
+
         return this.chain.filter((element) =>
-            element.target.compareIdOrPattern(arg) && (!type || (element.type === type)),
+            element.target.compareIdOrPattern(arg1) && (!arg2 || (element.type === arg2)),
         );
     }
 
@@ -146,12 +159,25 @@ export class Statement extends Base implements IChainable {
      * @returns The current instance.
      */
     public removeFromChain(pattern: RegExp, type?: ChainType): this;
+    /**
+     * Removes all elements based on the provided type.
+     * 
+     * @param type Type to remove.
+     * @returns The current instance.
+     */
+    public removeFromChain(type: ChainType): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public removeFromChain(arg: any, type?: ChainType): this {
+    public removeFromChain(arg1: any, arg2?: ChainType): this {
+        /* Check if arg1 is ChainType value. */
+        if (ChainType[arg1]) {
+            arg2 = arg1; /* Set arg2 to ChainType value. */
+            arg1 = /.*/; /* Set arg1 to match everything. */
+        }
+
         for (let i = this.chain.length - 1; i >= 0; --i) {
             const element = this.chain[i];
 
-            if (element.target.compareIdOrPattern(arg) && (!type || (element.type === type))) {
+            if (element.target.compareIdOrPattern(arg1) && (!arg2 || (element.type === arg2))) {
                 this.chain.splice(i, 1);
             }
         }
@@ -387,13 +413,10 @@ export class Statement extends Base implements IChainable {
     public static compareIdOrPattern(statement: Statement, idOrPattern: RegExp): boolean;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public static compareIdOrPattern(statement: Statement, idOrPattern: any): boolean {
-        const idOrPatternEvaluationResult = evaluateIdOrPattern(idOrPattern);
-
-        if (!(idOrPatternEvaluationResult instanceof IdOrPatternEvaluationResult)) {
-            throw new Error('Invalid ID or pattern evaluation result object');
-        } else if (!(statement instanceof Statement)) {
+        if (!(statement instanceof Statement)) {
             throw new Error('Invalid compare object');
         }
+        const idOrPatternEvaluationResult = evaluateIdOrPattern(idOrPattern);
         const { isId, regex } = idOrPatternEvaluationResult;
 
         return (
