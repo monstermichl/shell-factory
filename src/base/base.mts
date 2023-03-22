@@ -133,19 +133,7 @@ export abstract class Base {
     public read(source: boolean): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public read(source: any): this {
-        /* Convert to Base object if required. */
-        if (!(source instanceof Base)) {
-            /* Make sure the target is valid. */
-            source = convertToString(source as string, (e: ConvertToStringError) => {
-                switch(e) {
-                    case ConvertToStringError.EmptyValue: throw new Error('No source provided');
-                    case ConvertToStringError.InvalidType: throw new Error('Invalid source type provided');
-                }
-            });
-            source = wrapInQuotes(source);
-            source = this._readPreProcessing(source); /* Convert to Base object. */
-        }
-        this._readInput = source;
+        this._readInput = this._convertToBase(source, 'source', this._readPreProcessing);
         return this;
     }
 
@@ -175,19 +163,7 @@ export abstract class Base {
     public write(target: boolean): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public write(target: any): this {
-        /* Convert to Base object if required. */
-        if (!(target instanceof Base)) {
-            /* Make sure the target is valid. */
-            target = convertToString(target as string, (e: ConvertToStringError) => {
-                switch(e) {
-                    case ConvertToStringError.EmptyValue: throw new Error('No target provided');
-                    case ConvertToStringError.InvalidType: throw new Error('Invalid target type provided');
-                }
-            });
-            target = wrapInQuotes(target);
-            target = this._writePreProcessing(target); /* Convert to Base object. */
-        }
-        this._writeOutput = target;
+        this._writeOutput = this._convertToBase(target, 'target', this._writePreProcessing);
         return this;
     }
 
@@ -217,19 +193,7 @@ export abstract class Base {
     public append(target: boolean): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public append(target: any): this {
-        /* Convert to Base object if required. */
-        if (!(target instanceof Base)) {
-            /* Make sure the target is valid. */
-            target = convertToString(target as string, (e: ConvertToStringError) => {
-                switch(e) {
-                    case ConvertToStringError.EmptyValue: throw new Error('No target provided');
-                    case ConvertToStringError.InvalidType: throw new Error('Invalid target type provided');
-                }
-            });
-            target = wrapInQuotes(target);
-            target = this._readPreProcessing(target); /* Convert to Base object. */
-        }
-        this._appendOutput = target;
+        this._appendOutput = this._convertToBase(target, 'target', this._appendPreProcessing);
         return this;
     }
 
@@ -263,24 +227,7 @@ export abstract class Base {
      * @param target Command to pipe to.
      */
     public pipe(target: unknown): this {
-        /* Convert to Base object if required. */
-        if (!(target instanceof Base)) {
-            /* Make sure the target is valid. */
-            target = convertToString(target as string, (e: ConvertToStringError) => {
-                switch(e) {
-                    case ConvertToStringError.EmptyValue: throw new Error('No target provided');
-                    case ConvertToStringError.InvalidType: throw new Error('Invalid target type provided');
-                }
-            });
-            target = wrapInQuotes(target as string);
-            target = this._pipePreProcessing(target as string); /* Convert to Base object. */
-        }
-
-        /* Make sure a Base object has been provided. */
-        if (!(target instanceof Base)) {
-            throw new Error('Invalid target provided');
-        }
-        this._pipeOutput = target;
+        this._pipeOutput = this._convertToBase(target, 'target', this._pipePreProcessing);
         return this;
     }
 
@@ -315,4 +262,33 @@ export abstract class Base {
      * @returns Converted target object.
      */
     protected abstract _pipePreProcessing(target: string): Base;
+
+    /**
+     * Converts string, number, boolean or Base to Base.
+     *
+     * @param convertible    String, number, boolean or Base to convert.
+     * @param convertCallout Subclass' pre-processing method.
+     *
+     * @returns Converted convertible object (Base).
+     */
+    private _convertToBase(convertible: unknown, description: string, convertCallout: (convertible: string) => Base): Base {
+        /* Convert to Base object if required. */
+        if (!(convertible instanceof Base)) {
+            /* Make sure the target is valid. */
+            convertible = convertToString(convertible as string, (e: ConvertToStringError) => {
+                switch(e) {
+                    case ConvertToStringError.EmptyValue: throw new Error(`No ${description} provided`);
+                    case ConvertToStringError.InvalidType: throw new Error(`Invalid ${description} type provided`);
+                }
+            });
+            convertible = wrapInQuotes(convertible as string);
+            convertible = convertCallout.call(this, convertible);
+            
+            /* Make sure conversion was successful. */
+            if (!(convertible instanceof Base)) {
+                throw new Error('Conversion failed');
+            }
+        }
+        return convertible as Base;
+    }
 }
