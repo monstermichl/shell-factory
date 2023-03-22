@@ -1,8 +1,6 @@
 import { expect } from 'chai';
-import {
-    ChainType,
-    Statement,
-} from '../src/base/statement.mjs';
+import { Statement } from '../src/base/statement.mjs';
+import { ChainType } from '../src/interfaces/chainable.mjs';
 
 describe('Statement tests', () => {
     describe('value', () => {

@@ -3,39 +3,20 @@ import {
     convertToString,
     ConvertToStringError,
 } from '../helpers/string.mjs';
-import { IChainable } from '../interfaces/chainable.mjs';
+import {
+    ChainElement,
+    ChainType,
+    IChainable,
+} from '../interfaces/chainable.mjs';
 import { Base } from './base.mjs';
-
-/**
- * Chain type.
- */
-export enum ChainType {
-    Read   = (1 << 0), /* 1 */
-    Write  = (1 << 1), /* 2 */
-    Append = (1 << 2), /* 4 */
-    Pipe   = (1 << 3), /* 8 */
-}
-
-/**
- * Chain element.
- */
-export class ChainElement {
-    type: ChainType;
-    target: Statement;
-
-    constructor(type: ChainType, target: Statement) {
-        this.type = type;
-        this.target = target;
-    }
-}
 
 /**
  * Represents the most basic element in a script. It literally
  * just contains a statement which is printed.
  */
-export class Statement extends Base implements IChainable {
+export class Statement extends Base implements IChainable<Statement> {
     protected _statement: string;
-    protected _chain = [] as ChainElement[];
+    protected _chain = [] as ChainElement<Statement>[];
 
     /**
      * Statement constructor.
@@ -96,99 +77,8 @@ export class Statement extends Base implements IChainable {
     /**
      * Returns a the applied chain.
      */
-    public get chain(): ChainElement[] {
+    public get chain(): ChainElement<Statement>[] {
         return this._chain;
-    }
-
-    /**
-     * Finds all elements based on the provided ID or pattern in the chain.
-     * 
-     * @param idOrPattern Content ID or Statement pattern.
-     * @param type        If provided, the type must also match.
-     *
-     * @returns List of found chain elements.
-     */
-    public findInChain(idOrPattern: string, type?: ChainType): ChainElement[];
-    /**
-     * Finds all elements based on the provided ID or pattern in the chain.
-     * 
-     * @param pattern Content ID or Statement pattern.
-     * @param type    If provided, the type must also match.
-     *
-     * @returns List of found chain elements.
-     */
-    public findInChain(pattern: RegExp, type?: ChainType): ChainElement[];
-    /**
-     * Finds all elements based on the provided type.
-     * 
-     * @param type Type to look for.
-     * @returns List of found chain elements.
-     */
-    public findInChain(type: ChainType): ChainElement[];
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public findInChain(arg1: any, arg2?: ChainType): ChainElement[] {
-        /* Check if arg1 is ChainType value. */
-        if (ChainType[arg1]) {
-            arg2 = arg1; /* Set arg2 to ChainType value. */
-            arg1 = /.*/; /* Set arg1 to match everything. */
-        }
-
-        return this.chain.filter((element) =>
-            element.target.compareIdOrPattern(arg1) && (!arg2 || (element.type === arg2)),
-        );
-    }
-
-    /**
-     * Removes all elements based on the provided ID or pattern from the chain.
-     * 
-     * @param idOrPattern Content ID or Statement pattern.
-     * @param type        If provided, the type must also match.
-     *
-     * @returns The current instance.
-     */
-    public removeFromChain(idOrPattern: string, type?: ChainType): this;
-    /**
-     * Removes all elements based on the provided ID or pattern from the chain.
-     * 
-     * @param pattern Content ID or Statement pattern.
-     * @param type    If provided, the type must also match.
-     *
-     * @returns The current instance.
-     */
-    public removeFromChain(pattern: RegExp, type?: ChainType): this;
-    /**
-     * Removes all elements based on the provided type.
-     * 
-     * @param type Type to remove.
-     * @returns The current instance.
-     */
-    public removeFromChain(type: ChainType): this;
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public removeFromChain(arg1: any, arg2?: ChainType): this {
-        /* Check if arg1 is ChainType value. */
-        if (ChainType[arg1]) {
-            arg2 = arg1; /* Set arg2 to ChainType value. */
-            arg1 = /.*/; /* Set arg1 to match everything. */
-        }
-
-        for (let i = this.chain.length - 1; i >= 0; --i) {
-            const element = this.chain[i];
-
-            if (element.target.compareIdOrPattern(arg1) && (!arg2 || (element.type === arg2))) {
-                this.chain.splice(i, 1);
-            }
-        }
-        return this;
-    }
-
-    /**
-     * Clears the whole chain.
-     *
-     * @returns The current instance.
-     */
-    public clearChain(): this {
-        this._chain = [];
-        return this;
     }
 
     /**
@@ -321,6 +211,97 @@ export class Statement extends Base implements IChainable {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public pipe(target: any): this {
         return this._addChainElement(ChainType.Pipe, target, 'target');
+    }
+
+    /**
+     * Finds all elements based on the provided ID or pattern in the chain.
+     * 
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param type        If provided, the type must also match.
+     *
+     * @returns List of found chain elements.
+     */
+    public findInChain(idOrPattern: string, type?: ChainType): ChainElement<Statement>[];
+    /**
+     * Finds all elements based on the provided ID or pattern in the chain.
+     * 
+     * @param pattern Content ID or Statement pattern.
+     * @param type    If provided, the type must also match.
+     *
+     * @returns List of found chain elements.
+     */
+    public findInChain(pattern: RegExp, type?: ChainType): ChainElement<Statement>[];
+    /**
+     * Finds all elements based on the provided type.
+     * 
+     * @param type Type to look for.
+     * @returns List of found chain elements.
+     */
+    public findInChain(type: ChainType): ChainElement<Statement>[];
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public findInChain(arg1: any, arg2?: ChainType): ChainElement<Statement>[] {
+        /* Check if arg1 is ChainType value. */
+        if (ChainType[arg1]) {
+            arg2 = arg1; /* Set arg2 to ChainType value. */
+            arg1 = /.*/; /* Set arg1 to match everything. */
+        }
+
+        return this.chain.filter((element) =>
+            element.target.compareIdOrPattern(arg1) && (!arg2 || (element.type === arg2)),
+        );
+    }
+
+    /**
+     * Removes all elements based on the provided ID or pattern from the chain.
+     * 
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param type        If provided, the type must also match.
+     *
+     * @returns The current instance.
+     */
+    public removeFromChain(idOrPattern: string, type?: ChainType): this;
+    /**
+     * Removes all elements based on the provided ID or pattern from the chain.
+     * 
+     * @param pattern Content ID or Statement pattern.
+     * @param type    If provided, the type must also match.
+     *
+     * @returns The current instance.
+     */
+    public removeFromChain(pattern: RegExp, type?: ChainType): this;
+    /**
+     * Removes all elements based on the provided type.
+     * 
+     * @param type Type to remove.
+     * @returns The current instance.
+     */
+    public removeFromChain(type: ChainType): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public removeFromChain(arg1: any, arg2?: ChainType): this {
+        /* Check if arg1 is ChainType value. */
+        if (ChainType[arg1]) {
+            arg2 = arg1; /* Set arg2 to ChainType value. */
+            arg1 = /.*/; /* Set arg1 to match everything. */
+        }
+
+        for (let i = this.chain.length - 1; i >= 0; --i) {
+            const element = this.chain[i];
+
+            if (element.target.compareIdOrPattern(arg1) && (!arg2 || (element.type === arg2))) {
+                this.chain.splice(i, 1);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Clears the whole chain.
+     *
+     * @returns The current instance.
+     */
+    public clearChain(): this {
+        this._chain = [];
+        return this;
     }
 
     /**
