@@ -15,23 +15,33 @@ export class MetaData {
 }
 
 /**
- * Operations summary.
+ * Operation type to apply.
  */
-export class Operations {
-    read: Base;
-    write: Base;
-    append: Base;
-    pipe: Base;
+export enum OperationType {
+    Read   = (1 << 0), /* 1 */
+    Write  = (1 << 1), /* 2 */
+    Append = (1 << 2), /* 4 */
+    Pipe   = (1 << 3), /* 8 */
+}
+
+/**
+ * Operation information.
+ */
+export class Operation {
+    type: OperationType;
+    target: Base;
+
+    constructor(type: OperationType, target: Base) {
+        this.type = type;
+        this.target = target;
+    }
 }
 
 /**
  * Acts as the base class for all Bourne Shell components.
  */
 export abstract class Base {
-    protected _readInput: Base;
-    protected _writeOutput: Base;
-    protected _appendOutput: Base;
-    protected _pipeOutput: Base;
+    protected _operation: Operation;
 
     private _id: string;
     private _comment: string;
@@ -58,17 +68,10 @@ export abstract class Base {
     }
 
     /**
-     * Returns a summary of the operations used.
+     * Returns a summary of the applied operation.
      */
-    public get operations(): Operations {
-        const operations = new Operations();
-
-        operations.read = this._readInput;
-        operations.write = this._writeOutput;
-        operations.append = this._appendOutput;
-        operations.pipe = this._pipeOutput;
-
-        return operations;
+    public get operation(): Operation {
+        return this._operation;
     }
 
     /**
@@ -139,8 +142,7 @@ export abstract class Base {
     public read(source?: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public read(source?: any): this {
-        this._readInput = this._convertToBase(source, 'source', this._readPreProcessing);
-        return this;
+        return this._setOperation(OperationType.Read, source, 'source', this._readPreProcessing);
     }
 
     /**
@@ -173,8 +175,7 @@ export abstract class Base {
     public write(target?: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public write(target?: any): this {
-        this._writeOutput = this._convertToBase(target, 'target', this._writePreProcessing);
-        return this;
+        return this._setOperation(OperationType.Write, target, 'target', this._writePreProcessing);
     }
 
     /**
@@ -207,8 +208,7 @@ export abstract class Base {
     public append(target?: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public append(target?: any): this {
-        this._appendOutput = this._convertToBase(target, 'target', this._appendPreProcessing);
-        return this;
+        return this._setOperation(OperationType.Append, target, 'target', this._appendPreProcessing);
     }
 
     /**
@@ -246,8 +246,7 @@ export abstract class Base {
      * @returns The current instance.
      */
     public pipe(target?: unknown): this {
-        this._pipeOutput = this._convertToBase(target, 'target', this._pipePreProcessing);
-        return this;
+        return this._setOperation(OperationType.Pipe, target, 'target', this._pipePreProcessing);
     }
 
     /**
@@ -286,6 +285,7 @@ export abstract class Base {
      * Converts string, number, boolean or Base to Base.
      *
      * @param convertible    String, number, boolean or Base to convert.
+     * @param description    Convertible description.
      * @param convertCallout Subclass' pre-processing method.
      *
      * @returns Converted convertible object (Base).
@@ -310,5 +310,24 @@ export abstract class Base {
             }
         }
         return convertible as Base;
+    }
+
+    /**
+     * Sets the _operation property.
+     *
+     * @param operationType  Which operation is being set.
+     * @param convertible    String, number, boolean or Base to convert.
+     * @param description    Convertible description.
+     * @param convertCallout Subclass' pre-processing method.
+     *
+     * @returns Converted convertible object (Base).
+     */
+    private _setOperation(operationType: OperationType, convertible: unknown, description: string, convertCallout: (convertible: string) => Base): this {
+        const base = this._convertToBase(convertible, description, convertCallout);
+        this._operation = base ? new Operation(
+            operationType,
+            base,
+        ) : undefined;
+        return this;
     }
 }

@@ -326,8 +326,6 @@ export abstract class ConditionBlock extends WrapBlock {
     public override read(source?: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public override read(source?: any): this {
-        super.read(source);
-
         /* If test has not been overwritten, dis-/enable it. */
         if (!this._testOverwritten) {
             if (source) {
@@ -338,7 +336,7 @@ export abstract class ConditionBlock extends WrapBlock {
                 this._test(true);
             }
         }
-        return this;
+        return super.read(source);
     }
 
     /**
