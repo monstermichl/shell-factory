@@ -27,7 +27,11 @@
     "example:add": "npm run build && node ./examples/example-add.js",
     "example:remove": "npm run build && node ./examples/example-remove.js",
     "example:alter": "npm run build && node ./examples/example-alter.js",
-    "example:chain": "npm run build && node ./examples/example-chain.js"
+    "example:chain": "npm run build && node ./examples/example-chain.js",
+    "example:read": "npm run build && node ./examples/example-read.js",
+    "example:write": "npm run build && node ./examples/example-write.js",
+    "example:append": "npm run build && node ./examples/example-append.js",
+    "example:pipe": "npm run build && node ./examples/example-pipe.js"
   },
   "author": "monstermichl",
   "license": "MIT",
