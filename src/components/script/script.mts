@@ -3,10 +3,7 @@ import {
     StatementOrBlock,
     StatementOrBlockOrString,
 } from '../../base/block.mjs';
-import {
-    ChainType,
-    Statement,
-} from '../../base/statement.mjs';
+import { Statement } from '../../base/statement.mjs';
 import { Function } from '../function/function.mjs';
 import { If } from '../flow/if/if.mjs';
 import { While } from '../flow/while/while.mjs';
