@@ -10,7 +10,6 @@ import {
     LinkedCondition,
 } from '../components/condition/linked-condition.mjs';
 import { Condition } from '../components/condition/condition.mjs';
-import { Base } from '../base/base.mjs';
 
 /**
  * ConditionBlock bracket type.
