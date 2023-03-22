@@ -94,6 +94,17 @@ describe('Base tests', () => {
                 expect(base.read(source)).to.be.equal(base);
                 expect(base.operations.read).to.be.equal(source);
             });
+
+            it('reset', () => {
+                const source = new Statement('test.txt');
+                const base = new BaseHelper();
+
+                expect(base.operations.read).to.be.undefined;
+                expect(base.read(source)).to.be.equal(base);
+                expect(base.operations.read).to.be.equal(source);
+                expect(base.read()).to.be.equal(base);
+                expect(base.operations.read).to.be.equal(undefined);
+            });
         });
 
         describe('failed', () => {

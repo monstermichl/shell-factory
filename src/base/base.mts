@@ -114,27 +114,27 @@ export abstract class Base {
      * 
      * @param source File to read from.
      */
-    public read(source: string): this;
+    public read(source?: string): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
      */
-    public read(source: number): this;
+    public read(source?: number): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
      */
-    public read(source: boolean): this;
+    public read(source?: boolean): this;
     /**
      * Read from file.
      * 
      * @param source File to read from.
      */
-    public read(source: Base): this;
+    public read(source?: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public read(source: any): this {
+    public read(source?: any): this {
         this._readInput = this._convertToBase(source, 'source', this._readPreProcessing);
         return this;
     }
@@ -144,27 +144,27 @@ export abstract class Base {
      * 
      * @param target Target to write to.
      */
-    public write(target: string): this;
+    public write(target?: string): this;
     /**
      * Write to target.
      * 
      * @param target Target to write to.
      */
-    public write(target: number): this;
+    public write(target?: number): this;
     /**
      * Write to target.
      * 
      * @param target Target to write to.
      */
-    public write(target: boolean): this;
+    public write(target?: boolean): this;
     /**
      * Write to target.
      * 
      * @param target Target to write to.
      */
-    public write(target: Base): this;
+    public write(target?: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public write(target: any): this {
+    public write(target?: any): this {
         this._writeOutput = this._convertToBase(target, 'target', this._writePreProcessing);
         return this;
     }
@@ -174,27 +174,27 @@ export abstract class Base {
      * 
      * @param target Target to append to.
      */
-    public append(target: string): this;
+    public append(target?: string): this;
     /**
      * Append to target.
      * 
      * @param target Target to append to.
      */
-    public append(target: number): this;
+    public append(target?: number): this;
     /**
      * Append to target.
      * 
      * @param target Target to append to.
      */
-    public append(target: boolean): this;
+    public append(target?: boolean): this;
     /**
      * Append to target.
      * 
      * @param target Target to append to.
      */
-    public append(target: Base): this;
+    public append(target?: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public append(target: any): this {
+    public append(target?: any): this {
         this._appendOutput = this._convertToBase(target, 'target', this._appendPreProcessing);
         return this;
     }
@@ -204,31 +204,31 @@ export abstract class Base {
      * 
      * @param target Command to pipe to.
      */
-    public pipe(target: string): this;
+    public pipe(target?: string): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
      */
-    public pipe(target: number): this;
+    public pipe(target?: number): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
      */
-    public pipe(target: boolean): this;
+    public pipe(target?: boolean): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
      */
-    public pipe(target: Base): this;
+    public pipe(target?: Base): this;
     /**
      * Pipes the output into another command.
      * 
      * @param target Command to pipe to.
      */
-    public pipe(target: unknown): this {
+    public pipe(target?: unknown): this {
         this._pipeOutput = this._convertToBase(target, 'target', this._pipePreProcessing);
         return this;
     }
@@ -274,8 +274,10 @@ export abstract class Base {
      * @returns Converted convertible object (Base).
      */
     private _convertToBase(convertible: unknown, description: string, convertCallout: (convertible: string) => Base): Base {
-        /* Convert to Base object if required. */
-        if (!(convertible instanceof Base)) {
+        /* If convertible is null or undefined, set it to undefined. */
+        if ([null, undefined].includes(convertible)) {
+            convertible = undefined;
+        } else if (!(convertible instanceof Base)) {
             /* Make sure the target is valid. */
             convertible = convertToString(convertible as string, (e: ConvertToStringError) => {
                 switch(e) {
