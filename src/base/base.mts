@@ -61,12 +61,14 @@ export abstract class Base {
      * Returns a summary of the operations used.
      */
     public get operations(): Operations {
-        return {
-            read: this._readInput,
-            write: this._writeOutput,
-            append: this._appendOutput,
-            pipe: this._pipeOutput,
-        };
+        const operations = new Operations();
+
+        operations.read = this._readInput;
+        operations.write = this._writeOutput;
+        operations.append = this._appendOutput;
+        operations.pipe = this._pipeOutput;
+
+        return operations;
     }
 
     /**
@@ -130,7 +132,7 @@ export abstract class Base {
      * 
      * @param source File to read from.
      */
-    public read(source: boolean): this;
+    public read(source: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public read(source: any): this {
         this._readInput = this._convertToBase(source, 'source', this._readPreProcessing);
@@ -160,7 +162,7 @@ export abstract class Base {
      * 
      * @param target Target to write to.
      */
-    public write(target: boolean): this;
+    public write(target: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public write(target: any): this {
         this._writeOutput = this._convertToBase(target, 'target', this._writePreProcessing);
@@ -190,7 +192,7 @@ export abstract class Base {
      * 
      * @param target Target to append to.
      */
-    public append(target: boolean): this;
+    public append(target: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public append(target: any): this {
         this._appendOutput = this._convertToBase(target, 'target', this._appendPreProcessing);

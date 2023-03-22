@@ -10,11 +10,7 @@ import {
     LinkedCondition,
 } from '../components/condition/linked-condition.mjs';
 import { Condition } from '../components/condition/condition.mjs';
-import {
-    ConvertToStringError,
-    convertToString,
-    wrapInQuotes,
-} from '../helpers/string.mjs';
+import { Base } from '../base/base.mjs';
 
 /**
  * ConditionBlock bracket type.
@@ -320,7 +316,7 @@ export abstract class ConditionBlock extends WrapBlock {
      * 
      * @param source File to read from.
      */
-    public override read(source: boolean): this;
+    public override read(source: Base): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public override read(source: any): this {
         super.read(source);
