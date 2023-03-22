@@ -84,22 +84,30 @@ while [ 1 ]; do
 done
 ```
 
-The While-class additonally supports reading from an input file directly into a command (e.g. read) by using the *read*-method. *CAUTION: if read is used, testing (the brackets in the while-statement) will be disabled automatically.*
+### Until
+Until-loops execute the content in their body until the condition is fulfilled. *NICE-TO-KNOW: The Until-class also supports dis-/enabling testing (the brackets in the statement) by using the dontTest-, respectively test-getter.*
 
 ```typescript
 new Script([
-    new While('read -r line', [
-        'echo $line',
-    ]).read('what-do-you-want-to-say.txt'),
+    'input=0',
+    new Until(false, [
+        'input=$(expr $input + 1)',
+        'echo $input',
+        'sleep 1',
+    ]),
 ]).dump();
 ```
 
 ```sh
 #!/bin/sh
 
-while read -r line; do
-  echo $line
-done < what-do-you-want-to-say.txt
+input=0
+
+until [ 0 ]; do
+  input=$(expr $input + 1)
+  echo $input
+  sleep 1
+done
 ```
 
 ### For
@@ -240,8 +248,91 @@ else
 fi
 ```
 
+## Operations
+Statements and ConditionBlocks support applying operations in a chained manner to provide you with an comprehensive command combination option. At this point, the following operations are supported.
+
+### Read
+Reads content from a file into the Statement or ConditionBlock. *NOTICE: If testing has not been explicitely set on the ConditionBlock (e.g. If, While, Until, ...), testing gets disabled automatically (see example).*
+
+```typescript
+new Script([
+    new While('read -r line', [
+        'echo "$line"',
+    ]).read('input.txt'),
+
+    new Statement('cat').read('test.txt'),
+]).dump({
+    detailed: { while: { newlinesAfter: 1 } }
+});
+```
+
+```sh
+#!/bin/sh
+
+while read -r line; do
+  echo "$line"
+done < input.txt
+
+cat < test.txt
+```
+
+### Write
+Writes content to a file. *NOTICE: An existing file gets overwritten.*
+
+```typescript
+new Script([
+    new Statement('echo "File content"').write('test.txt'),
+]).dump();
+```
+
+```sh
+#!/bin/sh
+
+echo "File content > test.txt
+```
+
+### Append
+Appends content to a file.
+
+```typescript
+const file = 'test.txt';
+const script = new Script([
+    new Statement('echo "File content"').write(file),
+    new Statement('echo "Additional content"').append(file),
+]).dump();
+
+console.log(script);
+```
+
+```sh
+#!/bin/sh
+
+echo "File content" > test.txt
+echo "Additional content" >> test.txt
+```
+
+### Pipe
+Pipes the output of a command into another command.
+
+```typescript
+new Script([
+    new Statement('cat test.txt')
+        .pipe('grep -e "hello"')
+        .pipe('cut -d" " -f0')
+        .write('test2.txt')
+        .setComment('Nice chain!'),
+]).dump();
+```
+
+```sh
+#!/bin/sh
+
+cat test.txt | grep -e "hello" | cut -d" " -f0 > test2.txt # Nice chain!
+```
+
 ## Formatting
 How scripts are dumped can be configured separatelly. Either by setting the config directly on the Script instance or by passing it to the dump-method.
+
 ```typescript
 const spacyConfig = {
     detailed: {
