@@ -32,3 +32,4 @@ export {
     Parameter,
     Function,
 } from './components/function/function.mjs';
+export { IChainable } from './interfaces/chainable.mjs';
