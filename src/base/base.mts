@@ -302,7 +302,6 @@ export abstract class Base {
                     case ConvertToStringError.InvalidType: throw new Error(`Invalid ${description} type provided`);
                 }
             });
-            convertible = wrapInQuotes(convertible as string);
             convertible = convertCallout.call(this, convertible);
             
             /* Make sure conversion was successful. */
