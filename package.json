@@ -19,7 +19,7 @@
     "example:statement": "npm run build && node ./examples/example-statement.js",
     "example:if": "npm run build && node ./examples/example-if.js",
     "example:while": "npm run build && node ./examples/example-while.js",
-    "example:while-read": "npm run build && node ./examples/example-while-read.js",
+    "example:until": "npm run build && node ./examples/example-until.js",
     "example:for": "npm run build && node ./examples/example-for.js",
     "example:select": "npm run build && node ./examples/example-select.js",
     "example:case": "npm run build && node ./examples/example-case.js",

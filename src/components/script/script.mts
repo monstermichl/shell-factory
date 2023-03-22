@@ -7,6 +7,7 @@ import { Statement } from '../../base/statement.mjs';
 import { Function } from '../function/function.mjs';
 import { If } from '../flow/if/if.mjs';
 import { While } from '../flow/while/while.mjs';
+import { Until } from '../flow/until/until.mjs';
 import { Case } from '../flow/case/case.mjs';
 import { CaseOption } from '../flow/case/case-option.mjs';
 import { ElseIf } from '../flow/if/else-if.mjs';
@@ -34,10 +35,11 @@ enum ContextFlags {
     ElseIf     = 1 <<  4, /*   16 */
     Else       = 1 <<  5, /*   32 */
     While      = 1 <<  6, /*   64 */
-    For        = 1 <<  7, /*  128 */
-    Case       = 1 <<  8, /*  256 */
-    CaseOption = 1 <<  9, /*  512 */
-    Select     = 1 << 10, /* 1024 */
+    Until      = 1 <<  7, /*  128 */
+    For        = 1 <<  8, /*  256 */
+    Case       = 1 <<  9, /*  512 */
+    CaseOption = 1 << 10, /* 1024 */
+    Select     = 1 << 11, /* 2048 */
 }
 
 /**
@@ -61,6 +63,7 @@ export type Config = {
         elseIf?: Format;
         else?: Format;
         while?: Format;
+        until?: Format;
         for?: Format;
         select?: Format;
         case?: Format;
@@ -116,6 +119,7 @@ export class Script extends Block {
             function: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
             if: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
             while: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
+            until: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
             for: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
             select: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
             case: { newlinesBefore: Script._DEFAULT_NEW_LINES_BEFORE_FLOW_BLOCKS },
@@ -310,6 +314,9 @@ export class Script extends Block {
             } else if (value instanceof While) {
                 format = config?.detailed?.while;
                 contextFlags |= ContextFlags.While;
+            } else if (value instanceof Until) {
+                format = config?.detailed?.until;
+                contextFlags |= ContextFlags.Until;
             } else if (value instanceof Select) {
                 format = config?.detailed?.select;
                 contextFlags |= ContextFlags.Select;

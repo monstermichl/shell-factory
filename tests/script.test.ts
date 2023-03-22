@@ -9,10 +9,11 @@ import { While } from '../src/components/flow/while/while.mjs';
 import { For } from '../src/components/flow/for/for.mjs';
 import { Case } from '../src/components/flow/case/case.mjs';
 import { CaseOption } from '../src/components/flow/case/case-option.mjs';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { Statement } from '../src/base/statement.mjs';
 import { Select } from '../src/components/select/select.mjs';
+import { Until } from '../src/components/flow/until/until.mjs';
 
 describe('Script tests', () => {
     const scriptBlock = new Script([
@@ -50,6 +51,9 @@ describe('Script tests', () => {
                 'break',
             ]),
             'break',
+        ]),
+        new Until('$i -gt 0', [
+            'echo "First level While"',
         ]),
         new For('i', [1, 2, 3], [
             'echo "First level For ($i)"',
@@ -137,7 +141,7 @@ describe('Script tests', () => {
             it('default spaces', () => {
                 const compareScript = loadScript('script-default-spaces.sh');
                 const dumpedScript = scriptBlock.dump();
-
+                writeFileSync('script-default-spaces.sh', dumpedScript);
                 expect(dumpedScript).to.be.equal(compareScript);
             });
 
@@ -148,6 +152,7 @@ describe('Script tests', () => {
                         indent: 4,
                     },
                 });
+                writeFileSync('script-4-spaces.sh', dumpedScript);
                 expect(dumpedScript).to.be.equal(compareScript);
             });
 
@@ -158,6 +163,7 @@ describe('Script tests', () => {
                         indent: 0,
                     },
                 });
+                writeFileSync('script-0-spaces.sh', dumpedScript);
                 expect(dumpedScript).to.be.equal(compareScript);
             });
 
@@ -180,6 +186,7 @@ describe('Script tests', () => {
                         },
                     },
                 });
+                writeFileSync('script-new-lines-after-function-blocks.sh', dumpedScript);
                 expect(dumpedScript).to.be.equal(compareScript);
             });
 
@@ -190,6 +197,7 @@ describe('Script tests', () => {
                         indentBeforeComment: -1,
                     },
                 });
+                writeFileSync('script-default-spaces-before-comments.sh', dumpedScript);
                 expect(dumpedScript).to.be.equal(compareScript);
             });
         });

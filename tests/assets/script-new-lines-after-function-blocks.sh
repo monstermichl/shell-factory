@@ -50,6 +50,10 @@ while [ $i -gt 0 ]; do
   break
 done
 
+until [ $i -gt 0 ]; do
+  echo "First level While"
+done
+
 # This is a for-loop
 for i in 1 2 3; do
   echo "First level For ($i)"
