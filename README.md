@@ -249,7 +249,7 @@ fi
 ```
 
 ## Operations
-Statements and ConditionBlocks support the appliance of operations in a chained manner to provide you with a comprehensive command combination option. At this point, the following operations are supported.
+Statements and ConditionBlocks support the appliance of operations in a chained manner to provide you with a comprehensive command combination option. At this point, the following operations are supported. *Further modification can be accomplished by using the findInChain-, removeFromChain- and clearChain-methods or getting the chain content via the chain-getter.*
 
 ### Read
 Reads content from a file into the Statement or ConditionBlock. *NOTICE: If testing has not been explicitely set on the ConditionBlock (e.g. If, While, Until, ...), testing gets disabled automatically (see example).*
