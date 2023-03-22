@@ -85,6 +85,15 @@ describe('Base tests', () => {
                 expect(base.read(source)).to.be.equal(base);
                 expect((base.operations.read as Statement)?.value).to.be.equal(source);
             });
+
+            it('instance of Base', () => {
+                const source = new Statement('test.txt');
+                const base = new BaseHelper();
+
+                expect(base.operations.read).to.be.undefined;
+                expect(base.read(source)).to.be.equal(base);
+                expect(base.operations.read).to.be.equal(source);
+            });
         });
 
         describe('failed', () => {
@@ -98,6 +107,57 @@ describe('Base tests', () => {
                 expect(function() {
                     new BaseHelper().read({} as any)
                 }).to.throw('Invalid source type provided');
+            });
+
+            it('invalid conversion', () => {
+                class InvalidBaseHelper extends BaseHelper {
+                    protected override _readPreProcessing(_: string): Base {
+                        return {} as Base;
+                    }
+                }
+
+                expect(function() {
+                    new InvalidBaseHelper().read('test.txt')
+                }).to.throw('Conversion failed');
+            });
+        });
+    });
+
+    describe('write', () => {
+        describe('successful', () => {
+            it('valid path', () => {
+                const target = 'test.txt';
+                const base = new BaseHelper();
+
+                expect(base.operations.write).to.be.undefined;
+                expect(base.write(target)).to.be.equal(base);
+                expect((base.operations.write as Statement)?.value).to.be.equal(target);
+            });
+        });
+    });
+
+    describe('append', () => {
+        describe('successful', () => {
+            it('valid path', () => {
+                const target = 'test.txt';
+                const base = new BaseHelper();
+
+                expect(base.operations.append).to.be.undefined;
+                expect(base.append(target)).to.be.equal(base);
+                expect((base.operations.append as Statement)?.value).to.be.equal(target);
+            });
+        });
+    });
+
+    describe('pipe', () => {
+        describe('successful', () => {
+            it('valid path', () => {
+                const target = 'test';
+                const base = new BaseHelper();
+
+                expect(base.operations.pipe).to.be.undefined;
+                expect(base.pipe(target)).to.be.equal(base);
+                expect((base.operations.pipe as Statement)?.value).to.be.equal(target);
             });
         });
     });
