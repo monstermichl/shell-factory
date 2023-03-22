@@ -104,6 +104,71 @@ export class Statement extends Base implements IChainable {
     }
 
     /**
+     * Finds all elements based on the provided ID or pattern in the chain.
+     * 
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param type        If provided, the type must also match.
+     *
+     * @returns List of found chain elements.
+     */
+    public findInChain(idOrPattern: string, type?: ChainType): ChainElement[];
+    /**
+     * Finds all elements based on the provided ID or pattern in the chain.
+     * 
+     * @param pattern Content ID or Statement pattern.
+     * @param type    If provided, the type must also match.
+     *
+     * @returns List of found chain elements.
+     */
+    public findInChain(pattern: RegExp, type?: ChainType): ChainElement[];
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public findInChain(arg: any, type?: ChainType): ChainElement[] {
+        return this.chain.filter((element) =>
+            element.target.compareIdOrPattern(arg) && (!type || (element.type === type)),
+        );
+    }
+
+    /**
+     * Removes all elements based on the provided ID or pattern from the chain.
+     * 
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param type        If provided, the type must also match.
+     *
+     * @returns The current instance.
+     */
+    public removeFromChain(idOrPattern: string, type?: ChainType): this;
+    /**
+     * Removes all elements based on the provided ID or pattern from the chain.
+     * 
+     * @param pattern Content ID or Statement pattern.
+     * @param type    If provided, the type must also match.
+     *
+     * @returns The current instance.
+     */
+    public removeFromChain(pattern: RegExp, type?: ChainType): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public removeFromChain(arg: any, type?: ChainType): this {
+        for (let i = this.chain.length - 1; i >= 0; --i) {
+            const element = this.chain[i];
+
+            if (element.target.compareIdOrPattern(arg) && (!type || (element.type === type))) {
+                this.chain.splice(i, 1);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Clears the whole chain.
+     *
+     * @returns The current instance.
+     */
+    public clearChain(): this {
+        this._chain = [];
+        return this;
+    }
+
+    /**
      * Read from source.
      * 
      * @param source Source to read from.
@@ -281,6 +346,25 @@ export class Statement extends Base implements IChainable {
             statement,
         ));
         return this;
+    }
+
+    /**
+     * Checks if a Statement matches an ID or a pattern.
+     *
+     * @param idOrPattern ID or pattern to match against.
+     * @returns True if the ID or pattern matched.
+     */
+    public compareIdOrPattern(idOrPattern: string): boolean;
+    /**
+     * Checks if a Statement matches an ID or a pattern.
+     *
+     * @param idOrPattern ID or pattern to match against.
+     * @returns True if the ID or pattern matched.
+     */
+    public compareIdOrPattern(idOrPattern: RegExp): boolean;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public compareIdOrPattern(idOrPattern: any): boolean {
+        return Statement.compareIdOrPattern(this, idOrPattern);
     }
 
     /**
