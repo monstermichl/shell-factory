@@ -283,7 +283,7 @@ export class Function extends WrapBlock {
 
             /* Add parameters to internal array and to content. */
             parameters.forEach((parameter: Parameter, index) => {
-                const mappingString = `${parameter.value}=$${index + 1}`; /* Create parameter mapping. */
+                const mappingString = `${parameter.statement}=$${index + 1}`; /* Create parameter mapping. */
                 mappedParameters.push(mappingString);
 
             });

@@ -1,4 +1,8 @@
 import {
+    evaluateIdOrPattern,
+    IdOrPatternEvaluationResult,
+} from '../helpers/search.mjs';
+import {
     convertToString,
     ConvertToStringError,
 } from '../helpers/string.mjs';
@@ -277,5 +281,40 @@ export class Statement extends Base implements IChainable {
             statement,
         ));
         return this;
+    }
+
+    /**
+     * Checks if a Statement matches an ID or a pattern.
+     *
+     * @param statement   StatementOrBlock to compare a ID or pattern with.
+     * @param idOrPattern ID or pattern to match against.
+     *
+     * @returns True if the ID or pattern matched.
+     */
+    public static compareIdOrPattern(statement: Statement, idOrPattern: string): boolean;
+    /**
+     * Checks if a Statement matches an ID or a pattern.
+     *
+     * @param statement   StatementOrBlock to compare a ID or pattern with.
+     * @param idOrPattern ID or pattern to match against.
+     *
+     * @returns True if the ID or pattern matched.
+     */
+    public static compareIdOrPattern(statement: Statement, idOrPattern: RegExp): boolean;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public static compareIdOrPattern(statement: Statement, idOrPattern: any): boolean {
+        const idOrPatternEvaluationResult = evaluateIdOrPattern(idOrPattern);
+
+        if (!(idOrPatternEvaluationResult instanceof IdOrPatternEvaluationResult)) {
+            throw new Error('Invalid ID or pattern evaluation result object');
+        } else if (!(statement instanceof Statement)) {
+            throw new Error('Invalid compare object');
+        }
+        const { isId, regex } = idOrPatternEvaluationResult;
+
+        return (
+            (isId && !!statement.id.match(regex)) ||
+            (!isId && !!statement.value.match(regex))
+        );
     }
 }

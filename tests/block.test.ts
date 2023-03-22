@@ -489,13 +489,17 @@ describe('Block tests', () => {
         describe('failed', () => {
             it('no ID or pattern provided', () => {
                 expect(function() {
-                    new BlockHelper().removeContent(undefined as any)
+                    new BlockHelper([
+                        'echo "Hello World"',
+                    ]).removeContent(undefined as any)
                 }).to.throw('No ID or pattern provided');
             });
 
             it('invalid ID or pattern type', () => {
                 expect(function() {
-                    new BlockHelper().removeContent({} as any)
+                    new BlockHelper([
+                        'echo "Hello World"',
+                    ]).removeContent({} as any)
                 }).to.throw('Invalid ID or pattern type');
             });
         });

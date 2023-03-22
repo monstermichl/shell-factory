@@ -514,7 +514,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable {
      * @returns The current instance.
      */
     private _updateOpeningStatement(test: boolean): this {
-        this._openingStatement.value = ConditionBlock._buildOpeningStatementString(
+        this._openingStatement.statement = ConditionBlock._buildOpeningStatementString(
             this._conditionKeyword,
             test ? this._bracketType : BracketType.None,
             this._conditions,
