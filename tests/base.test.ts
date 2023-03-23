@@ -10,6 +10,13 @@ class BaseHelper extends Base {
     /* Nothing to do. */
 }
 
+/* Helper class to instantiate Statement. */
+class StatementHelper extends Statement {
+    public get value(): string {
+        return this.statement;
+    }
+}
+
 describe('Base tests', () => {
     describe('id', () => {
         describe('successful', () => {
@@ -24,7 +31,7 @@ describe('Base tests', () => {
     describe('meta', () => {
         describe('successful', () => {
             it('get', () => {
-                const statement = new Statement();
+                const statement = new StatementHelper();
                 const metaData = new MetaData();
                 
                 expect(statement.meta(metaData)).to.be.equal(statement);

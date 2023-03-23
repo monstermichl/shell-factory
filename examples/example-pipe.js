@@ -1,10 +1,10 @@
 import {
     Script,
-    Statement,
+    Command,
 } from '../dist/index.mjs';
 
 const script = new Script([
-    new Statement('cat test.txt')
+    new Command('cat test.txt')
         .pipe('grep -e "hello"')
         .pipe('cut -d" " -f0')
         .write('test2.txt')

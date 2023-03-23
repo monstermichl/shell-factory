@@ -9,13 +9,13 @@ npm install shell-factory
 ## Components
 Each shell-script is built with the Script-class which serves as the container for all building blocks. At this point, the following building-blocks are supported (*the output of the following examples was provided by console.log. It is not dumped to the console or any file automatically. This is shown in the first example but for readability reasons avoided in the other ones.*).
 
-### Statement
-A statement represents a single line of code. It can be a string or an instance of the Statement class. Usually, a simple string is sufficient. However, the Statement class inherits from the Base class which offers additional functionalities like having an ID for later adjustment or adding comments which will be added to the generated code.
+### Command
+A command represents a single line of code. It can be a string or an instance of the Command class. Usually, a simple string is sufficient. However, the Command class inherits from the Statement class which offers additional functionalities like having an ID for later adjustment or adding comments which will be added to the generated code. For further modification commands also can be chained with several operators (see [Operations](##operations)).
 
 ```typescript
 const script = new Script([
     'echo "Hello World"',
-    new Statement('echo "Hello Statement"').setComment('Statement class example'),
+    new Command('echo "Hello Command"').setComment('Command class example'),
 ]).dump();
 
 console.log(script);
@@ -25,7 +25,7 @@ console.log(script);
 #!/bin/sh
 
 echo "Hello World"
-echo "Hello Statement" # Statement class example
+echo "Hello Command" # Command class example
 ```
 
 ### If
@@ -210,13 +210,13 @@ hello_world() {
 hello_world
 ```
 
-The Function class additionally provides the *call*-method to return a function-call Statement with the provided parameters.
+The Function class additionally provides the *call*-method to return a function-call Command with the provided parameters.
 ```typescript
 const exitFunc = new Function('exit_function', [
     new If('"$2" != ""', [
         'echo "$2"',
     ]),
-    new Statement('exit $1').setComment('Exiting with the provided error-code.'),
+    new Command('exit $1').setComment('Exiting with the provided error-code.'),
 ]);
 const script = new Script([
     exitFunc,
@@ -249,10 +249,10 @@ fi
 ```
 
 ## Operations
-Statements and ConditionBlocks support the appliance of operations in a chained manner to provide you with a comprehensive command combination option. At this point, the following operations are supported. *Further modification can be accomplished by using the findInChain-, removeFromChain- and clearChain-methods or getting the chain content via the chain-getter.*
+Commands and ConditionBlocks support the appliance of operations in a chained manner to provide you with a comprehensive command combination option. At this point, the following operations are supported. *Further modification can be accomplished by using the findInChain-, removeFromChain- and clearChain-methods or getting the chain content via the chain-getter.*
 
 ### Read
-Reads content from a file into the Statement or ConditionBlock. *NOTICE: If testing has not been explicitely set on the ConditionBlock (e.g. If, While, Until, ...), testing gets disabled automatically (see example).*
+Reads content from a file into the Command or ConditionBlock. *NOTICE: If testing has not been explicitely set on the ConditionBlock (e.g. If, While, Until, ...), testing gets disabled automatically (see example).*
 
 ```typescript
 new Script([
@@ -260,7 +260,7 @@ new Script([
         'echo "$line"',
     ]).read('input.txt'),
 
-    new Statement('cat').read('test.txt'),
+    new Command('cat').read('test.txt'),
 ]).dump({
     detailed: { while: { newlinesAfter: 1 } }
 });
@@ -281,7 +281,7 @@ Writes content to a file. *NOTICE: An existing file gets overwritten.*
 
 ```typescript
 new Script([
-    new Statement('echo "File content"').write('test.txt'),
+    new Command('echo "File content"').write('test.txt'),
 ]).dump();
 ```
 
@@ -297,8 +297,8 @@ Appends content to a file.
 ```typescript
 const file = 'test.txt';
 const script = new Script([
-    new Statement('echo "File content"').write(file),
-    new Statement('echo "Additional content"').append(file),
+    new Command('echo "File content"').write(file),
+    new Command('echo "Additional content"').append(file),
 ]).dump();
 
 console.log(script);
@@ -316,7 +316,7 @@ Pipes the output of a command into another command.
 
 ```typescript
 new Script([
-    new Statement('cat test.txt')
+    new Command('cat test.txt')
         .pipe('grep -e "hello"')
         .pipe('cut -d" " -f0')
         .write('test2.txt')
@@ -339,19 +339,19 @@ const spacyConfig = {
         for: {
             newlinesAfter: 2,
         },
-        statement: {
+        command: {
             newlinesBefore: 1,
             indentBeforeComment: 6,
         },
     }
-} as Config;
+};
 
 const script = new Script([
     new For('i', [1, 2, 3], [
-        new Statement('echo "Iteration $i"').setComment('Far away comment.'),
+        new Command('echo "Iteration $i"').setComment('Far away comment.'),
     ]),
     'echo "First statement"',
-    new Statement('echo "Second statement"').setComment('Another far, far away comment.'),
+    new Command('echo "Second statement"').setComment('Another far away comment.'),
     'echo "Third statement"',
 ]).dump(spacyConfig);
 ```
@@ -411,14 +411,14 @@ fi
 ```
 
 ### Remove
-Blocks and Statements can removed from their parent block (e.g. Script) via their ID or a statement pattern using the *removeContent* method.
+Blocks and Statements can be removed from their parent block (e.g. Script) via their ID or a statement pattern using the *removeContent* method.
 
 ```typescript
 const script = new Script([
-    new Statement().setComment('First line of this script'),
+    new Command().setComment('First line of this script'),
     'echo "Is this going to be removed?"',
     'echo "Will this also be removed?"',
-    new Statement().setComment('Last line of this script'),
+    new Command().setComment('Last line of this script'),
 ]);
 
 /* Dump the original script. */
@@ -453,7 +453,7 @@ Blocks and Statements can altered by retrieving them via their ID or a statement
 ```typescript
 const meta = new MetaData(); /* MetaData container. */
 const script = new Script([
-    new Statement('echo "Hello"')
+    new Command('echo "Hello"')
         .setComment('This might be altered at the next dump')
         .meta(meta), /* Get the Statement's meta-data. */
 ]);

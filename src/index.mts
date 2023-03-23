@@ -10,6 +10,9 @@ export {
 export {
     Statement,
 } from './base/statement.mjs';
+export {
+    Command,
+} from './base/command.mjs';
 export { MetaData } from './base/base.mjs';
 export {
     Config,

@@ -20,6 +20,7 @@ import {
     WrapBlock,
 } from '../../blocks/wrap-block.mjs';
 import { Select } from '../select/select.mjs';
+import { Command } from '../../base/command.mjs';
 
 /**
  * Used to help the Script dump-method to understand, in which
@@ -69,6 +70,7 @@ export type Config = {
         case?: Format;
         caseOption?: Format;
         statement?: Format;
+        command?: Format;
         interpreter?: Omit<Format, 'newlinesBefore'>;
     }
 };
@@ -88,6 +90,10 @@ export class Interpreter extends Statement {
         /* Removes the shebang from the provided interpreter and assigns it. */
         super(interpreter);
         this._path = cleanedPath;
+    }
+
+    public get value(): string {
+        return this.statement;
     }
 
     public get path(): string {
@@ -297,6 +303,8 @@ export class Script extends Block {
             } else if ((value instanceof OpeningStatement) || (value instanceof ClosingStatement)) {
                 /* Nothing to do. Ignore special formatting for now. */
                 format = config?.detailed?.statement;
+            } else if (value instanceof Command) {
+                format = config?.detailed?.command;
             } else if (value instanceof Statement) {
                 format = config?.detailed?.statement;
             /* Blocks */

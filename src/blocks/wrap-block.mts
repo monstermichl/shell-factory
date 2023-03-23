@@ -3,13 +3,14 @@ import {
     StatementOrBlock,
     StatementOrBlockOrString,
 } from '../base/block.mjs';
+import { Command } from '../base/command.mjs';
 import { Statement } from '../base/statement.mjs';
 
-export class OpeningStatement extends Statement {
+export class OpeningStatement extends Command {
     /* Nothing to do. */
 }
 
-export class ClosingStatement extends Statement {
+export class ClosingStatement extends Command {
     /* Nothing to do. */
 }
 
@@ -28,8 +29,8 @@ export class Body extends Block {
  */
 export abstract class WrapBlock extends Block {
     protected _body = new Body();
-    protected _openingStatement: Statement;
-    protected _closingStatement: Statement | null;
+    protected _openingStatement: OpeningStatement;
+    protected _closingStatement: ClosingStatement | null;
 
     /**
      * WrapBlock constructor.
@@ -110,14 +111,14 @@ export abstract class WrapBlock extends Block {
     /**
      * Returns the opening Statement.
      */
-    public get openingStatement(): Statement {
+    public get openingStatement(): OpeningStatement {
         return this._openingStatement;
     }
 
     /**
      * Returns the closing Statement (could be null).
      */
-    public get closingStatement(): Statement | null {
+    public get closingStatement(): ClosingStatement | null {
         return this._closingStatement;
     }
 

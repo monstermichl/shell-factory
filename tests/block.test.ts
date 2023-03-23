@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { MetaData } from '../src/base/base.mjs';
 import { Block } from '../src/base/block.mjs';
-import { Statement } from '../src/base/statement.mjs';
+import { Command } from '../src/base/command.mjs';
 
 /* Helper class to instantiate Block. */
 class BlockHelper extends Block {
@@ -19,11 +19,11 @@ describe('Block tests', () => {
                 const content = block.content;
 
                 expect(content.length).to.be.equal(1);
-                expect((content[0] as Statement).value).to.be.equal(statement);
+                expect((content[0] as Command).value).to.be.equal(statement);
             });
 
-            it('get Statement content', () => {
-                const statement = new Statement('echo 123');
+            it('get Command content', () => {
+                const statement = new Command('echo 123');
                 const block = new BlockHelper(statement);
                 const content = block.content;
 
@@ -47,14 +47,14 @@ describe('Block tests', () => {
 
                 expect(content.length).to.be.equal(2);
                 content.forEach((value, index) => {
-                    expect((value as Statement).value).to.be.equal(statements[index]);
+                    expect((value as Command).value).to.be.equal(statements[index]);
                 });
             });
 
             it('get Statements content', () => {
                 const statements = [
-                    new Statement('echo 123'),
-                    new Statement('echo 456'),
+                    new Command('echo 123'),
+                    new Command('echo 456'),
                 ];
                 const block = new BlockHelper(statements);
                 const content = block.content;
@@ -79,9 +79,9 @@ describe('Block tests', () => {
                 });
             });
 
-            it('get Statement or Blocks or String content', () => {
+            it('get Command or Blocks or String content', () => {
                 const statements = [
-                    new Statement('echo 123'),
+                    new Command('echo 123'),
                     new BlockHelper('echo 456'),
                     'echo 789',
                 ];
@@ -91,7 +91,7 @@ describe('Block tests', () => {
                 expect(content.length).to.be.equal(3);
                 expect(content[0]).to.be.equal(statements[0]);
                 expect(content[1]).to.be.equal(statements[1]);
-                expect((content[2] as Statement).value).to.be.equal(statements[2]);
+                expect((content[2] as Command).value).to.be.equal(statements[2]);
             });
 
             it('get undefined content', () => {
@@ -111,11 +111,11 @@ describe('Block tests', () => {
                 const content = block.raw;
 
                 expect(content.length).to.be.equal(1);
-                expect((content[0] as Statement).value).to.be.equal(statement);
+                expect((content[0] as Command).value).to.be.equal(statement);
             });
 
-            it('get raw Statement content', () => {
-                const statement = new Statement('echo 123');
+            it('get raw Command content', () => {
+                const statement = new Command('echo 123');
                 const block = new BlockHelper(statement);
                 const content = block.raw;
 
@@ -139,14 +139,14 @@ describe('Block tests', () => {
 
                 expect(content.length).to.be.equal(2);
                 content.forEach((value, index) => {
-                    expect((value as Statement).value).to.be.equal(statements[index]);
+                    expect((value as Command).value).to.be.equal(statements[index]);
                 });
             });
 
             it('get raw Statements content', () => {
                 const statements = [
-                    new Statement('echo 123'),
-                    new Statement('echo 456'),
+                    new Command('echo 123'),
+                    new Command('echo 456'),
                 ];
                 const block = new BlockHelper(statements);
                 const content = block.raw;
@@ -171,9 +171,9 @@ describe('Block tests', () => {
                 });
             });
 
-            it('get raw Statement or Blocks or String content', () => {
+            it('get raw Command or Blocks or String content', () => {
                 const statements = [
-                    new Statement('echo 123'),
+                    new Command('echo 123'),
                     new BlockHelper('echo 456'),
                     'echo 789',
                 ];
@@ -183,7 +183,7 @@ describe('Block tests', () => {
                 expect(content.length).to.be.equal(3);
                 expect(content[0]).to.be.equal(statements[0]);
                 expect(content[1]).to.be.equal(statements[1]);
-                expect((content[2] as Statement).value).to.be.equal(statements[2]);
+                expect((content[2] as Command).value).to.be.equal(statements[2]);
             });
 
             it('get raw undefined content', () => {
@@ -205,11 +205,11 @@ describe('Block tests', () => {
                 const content = block.content;
 
                 expect(content.length).to.be.equal(1);
-                expect((content[0] as Statement).value).to.be.equal(statement);
+                expect((content[0] as Command).value).to.be.equal(statement);
             });
 
-            it('add Statement content', () => {
-                const statement = new Statement('echo 123');
+            it('add Command content', () => {
+                const statement = new Command('echo 123');
                 const block = new BlockHelper();
 
                 block.addContent(statement);
@@ -239,14 +239,14 @@ describe('Block tests', () => {
 
                 expect(content.length).to.be.equal(2);
                 content.forEach((value, index) => {
-                    expect((value as Statement).value).to.be.equal(statements[index]);
+                    expect((value as Command).value).to.be.equal(statements[index]);
                 });
             });
 
             it('add Statements content', () => {
                 const statements = [
-                    new Statement('echo 123'),
-                    new Statement('echo 456'),
+                    new Command('echo 123'),
+                    new Command('echo 456'),
                 ];
                 const block = new BlockHelper();
 
@@ -275,9 +275,9 @@ describe('Block tests', () => {
                 });
             });
 
-            it('add Statement or Blocks or String content', () => {
+            it('add Command or Blocks or String content', () => {
                 const statements = [
-                    new Statement('echo 123'),
+                    new Command('echo 123'),
                     new BlockHelper('echo 456'),
                     'echo 789',
                 ];
@@ -289,7 +289,7 @@ describe('Block tests', () => {
                 expect(content.length).to.be.equal(3);
                 expect(content[0]).to.be.equal(statements[0]);
                 expect(content[1]).to.be.equal(statements[1]);
-                expect((content[2] as Statement).value).to.be.equal(statements[2]);
+                expect((content[2] as Command).value).to.be.equal(statements[2]);
             });
 
             it('add undefined content', () => {
@@ -303,7 +303,7 @@ describe('Block tests', () => {
         });
 
         describe('failed', () => {
-            it('add neither Statement nor Block content', () => {
+            it('add neither Command nor Block content', () => {
                 expect(function() {
                     new BlockHelper().addContent({} as any)
                 }).to.throw('Added content is neither a Statement nor a Block');
@@ -321,11 +321,11 @@ describe('Block tests', () => {
                 const content = block.content;
 
                 expect(content.length).to.be.equal(1);
-                expect((content[0] as Statement).value).to.be.equal(statement);
+                expect((content[0] as Command).value).to.be.equal(statement);
             });
 
-            it('insert Statement content', () => {
-                const statement = new Statement('echo 123');
+            it('insert Command content', () => {
+                const statement = new Command('echo 123');
                 const block = new BlockHelper();
 
                 block.insertContent(0, statement);
@@ -355,14 +355,14 @@ describe('Block tests', () => {
 
                 expect(content.length).to.be.equal(2);
                 content.forEach((value, index) => {
-                    expect((value as Statement).value).to.be.equal(statements[index]);
+                    expect((value as Command).value).to.be.equal(statements[index]);
                 });
             });
 
             it('insert Statements content', () => {
                 const statements = [
-                    new Statement('echo 123'),
-                    new Statement('echo 456'),
+                    new Command('echo 123'),
+                    new Command('echo 456'),
                 ];
                 const block = new BlockHelper();
 
@@ -391,9 +391,9 @@ describe('Block tests', () => {
                 });
             });
 
-            it('insert Statement or Blocks or String content', () => {
+            it('insert Command or Blocks or String content', () => {
                 const statements = [
-                    new Statement('echo 123'),
+                    new Command('echo 123'),
                     new BlockHelper('echo 456'),
                     'echo 789',
                 ];
@@ -405,7 +405,7 @@ describe('Block tests', () => {
                 expect(content.length).to.be.equal(3);
                 expect(content[0]).to.be.equal(statements[0]);
                 expect(content[1]).to.be.equal(statements[1]);
-                expect((content[2] as Statement).value).to.be.equal(statements[2]);
+                expect((content[2] as Command).value).to.be.equal(statements[2]);
             });
 
             it('insert undefined content', () => {
@@ -425,7 +425,7 @@ describe('Block tests', () => {
                 const content = block.content;
 
                 expect(content.length).to.be.equal(1);
-                expect((content[0] as Statement).value).to.be.equal(statement);
+                expect((content[0] as Command).value).to.be.equal(statement);
             });
 
             it('insert outside of range negative', () => {
@@ -436,7 +436,7 @@ describe('Block tests', () => {
                 const content = block.content;
 
                 expect(content.length).to.be.equal(1);
-                expect((content[0] as Statement).value).to.be.equal(statement);
+                expect((content[0] as Command).value).to.be.equal(statement);
             });
         });
     });
@@ -446,7 +446,7 @@ describe('Block tests', () => {
             it('non recursive', () => {
                 const metaData = new MetaData();
                 const block = new BlockHelper([
-                    new Statement('echo "Simple statement"').meta(metaData),
+                    new Command('echo "Simple statement"').meta(metaData),
                 ]);
 
                 expect(block.content?.length).to.be.equal(1);
@@ -459,7 +459,7 @@ describe('Block tests', () => {
                 const block = new BlockHelper([
                     new BlockHelper([
                         new BlockHelper([
-                            new Statement('echo "Nested statement"').meta(metaData),
+                            new Command('echo "Nested statement"').meta(metaData),
                         ]),
                     ]),
                 ]);
@@ -477,7 +477,7 @@ describe('Block tests', () => {
                 const echoOutput = 'Simple statement';
                 const metaData = new MetaData();
                 const block = new BlockHelper([
-                    new Statement(`echo "${echoOutput}"`).meta(metaData),
+                    new Command(`echo "${echoOutput}"`).meta(metaData),
                 ]);
 
                 expect(block.content?.length).to.be.equal(1);
@@ -509,7 +509,7 @@ describe('Block tests', () => {
         describe('successful', () => {
             it('non recursive', () => {
                 const metaData = new MetaData();
-                const statement = new Statement('echo "Simple statement"').meta(metaData);
+                const statement = new Command('echo "Simple statement"').meta(metaData);
                 const block = new BlockHelper([
                     statement,
                 ]);
@@ -524,7 +524,7 @@ describe('Block tests', () => {
 
             it('recursive', () => {
                 const metaData = new MetaData();
-                const statement = new Statement('echo "Simple statement"').meta(metaData);
+                const statement = new Command('echo "Simple statement"').meta(metaData);
                 const block = new BlockHelper([
                     new BlockHelper([
                         new BlockHelper([

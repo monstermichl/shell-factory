@@ -14,10 +14,11 @@ import { join } from 'path';
 import { Statement } from '../src/base/statement.mjs';
 import { Select } from '../src/components/select/select.mjs';
 import { Until } from '../src/components/flow/until/until.mjs';
+import { Command } from '../src/base/command.mjs';
 
 describe('Script tests', () => {
     const scriptBlock = new Script([
-        new Statement().setComment('Script start'),
+        new Command().setComment('Script start'),
         new Function('func1', [
             'echo "First level Function"',
             new Function('func2', [
@@ -36,7 +37,7 @@ describe('Script tests', () => {
                 ]).elseIf('4 -eq 4', [
                     'echo "Third level If-ElseIf"',
                 ]).else([
-                    new Statement('echo "Third level If-Else"').setComment('I have no idea how I got here.'),
+                    new Command('echo "Third level If-Else"').setComment('I have no idea how I got here.'),
                 ]),
             ]),
         ]),

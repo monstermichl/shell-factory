@@ -1,6 +1,6 @@
 import {
     Script,
-    Statement,
+    Command,
     While,
 } from '../dist/index.mjs';
 
@@ -9,7 +9,7 @@ const script = new Script([
         'echo "$line"',
     ]).read('input.txt'),
 
-    new Statement('cat').read('test.txt'),
+    new Command('cat').read('test.txt'),
 ]).dump({
     detailed: { while: { newlinesAfter: 1 } }
 });

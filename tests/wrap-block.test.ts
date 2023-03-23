@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { MetaData } from '../src/base/base.mjs';
+import { Command } from '../src/base/command.mjs';
 import { Statement } from '../src/base/statement.mjs';
 import { WrapBlock } from '../src/blocks/wrap-block.mjs';
 
@@ -55,7 +56,7 @@ describe('WrapBlock tests', () => {
         describe('successful', () => {
             it('non recursive', () => {
                 const metaData = new MetaData();
-                const statement = new Statement('echo "Simple statement"').meta(metaData);
+                const statement = new Command('echo "Simple statement"').meta(metaData);
                 const block = new WrapBlockHelper('if', [
                     statement,
                 ]);
@@ -75,7 +76,7 @@ describe('WrapBlock tests', () => {
             it('non recursive', () => {
                 const metaData = new MetaData();
                 const block = new WrapBlockHelper('if', [
-                    new Statement('echo "Simple statement"').meta(metaData),
+                    new Command('echo "Simple statement"').meta(metaData),
                 ]);
 
                 expect(block.content?.length).to.be.equal(1);

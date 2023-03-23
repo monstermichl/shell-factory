@@ -15,6 +15,7 @@ import {
     ChainType,
     IChainable,
 } from '../interfaces/chainable.mjs';
+import { Command } from '../base/command.mjs';
 
 /**
  * ConditionBlock bracket type.
@@ -29,7 +30,7 @@ export enum BracketType {
  * Serves as the base for all blocks that require to handle conditions
  * (e.g., If, While, ...).
  */
-export abstract class ConditionBlock extends WrapBlock implements IChainable<Statement> {
+export abstract class ConditionBlock extends WrapBlock implements IChainable<Command> {
     protected _conditions: Conditions;
 
     private _testOverwritten: boolean;
@@ -303,7 +304,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Sta
     /**
      * Returns a the applied chain.
      */
-    public get chain(): ChainElement<Statement>[] {
+    public get chain(): ChainElement<Command>[] {
         return this.closingStatement?.chain;
     }
 
@@ -447,7 +448,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Sta
      *
      * @returns List of found chain elements.
      */
-    public findInChain(idOrPattern: string, type?: ChainType): ChainElement<Statement>[];
+    public findInChain(idOrPattern: string, type?: ChainType): ChainElement<Command>[];
     /**
      * Finds all elements based on the provided ID or pattern in the chain.
      * 
@@ -456,16 +457,16 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Sta
      *
      * @returns List of found chain elements.
      */
-    public findInChain(pattern: RegExp, type?: ChainType): ChainElement<Statement>[];
+    public findInChain(pattern: RegExp, type?: ChainType): ChainElement<Command>[];
     /**
      * Finds all elements based on the provided type.
      * 
      * @param type Type to look for.
      * @returns List of found chain elements.
      */
-    public findInChain(type: ChainType): ChainElement<Statement>[];
+    public findInChain(type: ChainType): ChainElement<Command>[];
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public findInChain(arg1: any, arg2?: ChainType): ChainElement<Statement>[] {
+    public findInChain(arg1: any, arg2?: ChainType): ChainElement<Command>[] {
         return this.closingStatement?.findInChain(arg1, arg2);
     }
 

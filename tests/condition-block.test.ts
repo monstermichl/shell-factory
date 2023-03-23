@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { Command } from '../src/base/command.mjs';
 import { Statement } from '../src/base/statement.mjs';
 import {
     ConditionBlock,
@@ -284,7 +285,7 @@ describe('ConditionBlock tests', () => {
         describe('successful', () => {
             it('pattern', () => {
                 const chainValue1 = 'grep -e "est"';
-                const chainValue2 = new Statement('cut -d" " -f1');
+                const chainValue2 = new Command('cut -d" " -f1');
                 const chainValue3 = 'test.txt';
                 const block = new ConditionBlockHelper(
                     'if',

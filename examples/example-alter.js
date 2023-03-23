@@ -1,12 +1,12 @@
 import {
-    Statement,
+    Command,
     Script,
     MetaData,
 } from '../dist/index.mjs';
 
 const meta = new MetaData(); /* MetaData container. */
 const script = new Script([
-    new Statement('echo "Hello"')
+    new Command('echo "Hello"')
         .setComment('This might be altered at the next dump')
         .meta(meta), /* Get the Statement's meta-data. */
 ]);

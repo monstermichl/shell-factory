@@ -1,6 +1,6 @@
 {
   "name": "shell-factory",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Typescript ESM module to dynamically build Bourne Shell scripts",
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
@@ -16,7 +16,7 @@
     "example2": "npm run build && node ./examples/example2.js",
     "example:function": "npm run build && node ./examples/example-function.js",
     "example:function-call": "npm run build && node ./examples/example-function-call.js",
-    "example:statement": "npm run build && node ./examples/example-statement.js",
+    "example:command": "npm run build && node ./examples/example-command.js",
     "example:if": "npm run build && node ./examples/example-if.js",
     "example:while": "npm run build && node ./examples/example-while.js",
     "example:until": "npm run build && node ./examples/example-until.js",

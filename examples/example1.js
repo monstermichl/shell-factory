@@ -11,7 +11,7 @@ import {
     Function,
     Case,
     CaseOption,
-    Statement,
+    Command,
 } from '../dist/index.mjs';
 
 const script = new Script([
@@ -29,7 +29,7 @@ const script = new Script([
         ]),
     ])?.elseIf('1 -eq 2', [
         new For('i', [1, 2, 3], [
-            new Statement('echo "bye bye world"').setComment('This is a Statement'),
+            new Command('echo "bye bye world"').setComment('This is a Statement'),
             new For('j', [5, 4, 3], [
                 'echo "nested for"',
                 'echo "$j works"',

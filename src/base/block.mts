@@ -1,5 +1,6 @@
 import { evaluateIdOrPattern } from '../helpers/pattern.mjs';
 import { Base } from './base.mjs';
+import { Command } from './command.mjs';
 import { Statement } from './statement.mjs';
 
 export type StatementOrBlock = Statement | Block;
@@ -551,9 +552,9 @@ export abstract class Block extends Base {
             contentTyped = ((!(content instanceof Array)) ? [content] : [...content]) as StatementOrBlockOrString[];
 
             contentTyped?.forEach((contentPart: unknown, index: number) => {
-                /* Map each string to a new Statement object. */
+                /* Map each string to a new Command object. */
                 if (typeof contentPart === 'string') {
-                    contentTyped[index] = new Statement(contentPart);
+                    contentTyped[index] = new Command(contentPart);
                 }
 
                 /* Make sure, the added content is a Statement or a Block. */

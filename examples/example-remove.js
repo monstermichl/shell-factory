@@ -1,13 +1,13 @@
 import {
-    Statement,
+    Command,
     Script,
 } from '../dist/index.mjs';
 
 const script = new Script([
-    new Statement().setComment('First line of this script'),
+    new Command().setComment('First line of this script'),
     'echo "Is this going to be removed?"',
     'echo "Will this also be removed?"',
-    new Statement().setComment('Last line of this script'),
+    new Command().setComment('Last line of this script'),
 ]);
 
 /* Dump the original script. */

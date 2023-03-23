@@ -9,12 +9,13 @@ import {
     ConvertToStringError,
     wrapInQuotes,
 } from '../../helpers/string.mjs';
+import { Command } from '../../base/command.mjs';
 
 type StringOrParameter = string | Parameter;
 type StringOrNumberOrBoolean = string | number | boolean;
 
 /**
- * Represents a function-parameter.
+ * Represents a function-parameter. TODO: Use Variable class instead.
  */
 export class Parameter extends Statement {
     constructor(name: string) {
@@ -28,6 +29,10 @@ export class Parameter extends Statement {
         }
         const nameCleaned = name.replace(/\s+/, '_'); /* Replace whitepspaces with underline. */
         super(nameCleaned);
+    }
+
+    public get value(): string {
+        return this.statement;
     }
 }
 
@@ -351,6 +356,6 @@ export class Function extends WrapBlock {
 
             return wrapInQuotes(parameter); /* Wrap parameter in quotes if necessary. */
         });
-        return new Statement(`${this.name} ${parameters.join(' ')}`);
+        return new Command(`${this.name} ${parameters.join(' ')}`);
     }
 }
