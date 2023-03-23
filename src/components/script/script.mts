@@ -296,6 +296,7 @@ export class Script extends Block {
                 format = config?.detailed?.interpreter;
             } else if ((value instanceof OpeningStatement) || (value instanceof ClosingStatement)) {
                 /* Nothing to do. Ignore special formatting for now. */
+                format = config?.detailed?.statement;
             } else if (value instanceof Statement) {
                 format = config?.detailed?.statement;
             /* Blocks */
@@ -333,6 +334,11 @@ export class Script extends Block {
                 indentAddition = 1;
                 format = Script.defaultConfig.common;
             }
+            
+            /* Make sure there's a format. */
+            if (!format) {
+                format = config.common;
+            }
 
             /* Add newlines before statement or block. */
             if (format?.newlinesBefore > 0) {
@@ -349,7 +355,6 @@ export class Script extends Block {
             }
 
             if (value instanceof Statement) {
-                const format = config.detailed?.statement || config.common;
                 let indentBeforeComment = format?.indentBeforeComment;
                 
                 /* Correct comment-indent if necessary. */
