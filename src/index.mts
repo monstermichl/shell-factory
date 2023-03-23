@@ -6,7 +6,7 @@ export { IterationBlock } from './blocks/iteration-block.mjs';
 export {
     ChainType,
     ChainElement,
-} from '../src/interfaces/chainable.mjs';
+} from './interfaces/chainable.mjs';
 export {
     Statement,
 } from './base/statement.mjs';
