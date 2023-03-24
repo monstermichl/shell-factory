@@ -1,6 +1,6 @@
 {
   "name": "shell-factory",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Typescript ESM module to dynamically build Bourne Shell scripts",
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
