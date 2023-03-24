@@ -2,6 +2,7 @@ import {
     convertToString,
     ConvertToStringError,
 } from '../../helpers/string.mjs';
+import { Statement } from '../../index.mjs';
 
 /**
  * Represents a condition.
@@ -73,6 +74,12 @@ export class Condition {
     }
 
     /**
+     * Converts a Statement to a condition string.
+     *
+     * @param condition Condition string.
+     */
+    private static _convertToConditionString(condition: Statement): string;
+    /**
      * Converts a string to a condition string.
      *
      * @param condition Condition string.
@@ -102,6 +109,8 @@ export class Condition {
             condition = (condition !== 0) ? oneString : zeroString;
         } else if (typeof condition === 'boolean') {
             condition = condition ? oneString : zeroString;
+        } else if (condition instanceof Statement) {
+            condition = condition.value;
         }
 
         return convertToString(condition, (e: ConvertToStringError) => {

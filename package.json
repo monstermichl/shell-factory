@@ -31,7 +31,8 @@
     "example:read": "npm run build && node ./examples/example-read.js",
     "example:write": "npm run build && node ./examples/example-write.js",
     "example:append": "npm run build && node ./examples/example-append.js",
-    "example:pipe": "npm run build && node ./examples/example-pipe.js"
+    "example:pipe": "npm run build && node ./examples/example-pipe.js",
+    "example:variable": "npm run build && node ./examples/example-variable.js"
   },
   "author": "monstermichl",
   "license": "MIT",

@@ -7,12 +7,16 @@ export {
     ChainType,
     ChainElement,
 } from './interfaces/chainable.mjs';
+export { Statement } from './base/statement.mjs';
+export { Command } from './base/command.mjs';
 export {
-    Statement,
-} from './base/statement.mjs';
+    StringVariable,
+    StringVariable as StrVar,
+} from './variables/string-variable.mjs';
 export {
-    Command,
-} from './base/command.mjs';
+    NumberVariable,
+    NumberVariable as NumVar,
+} from './variables/number-variable.mjs';
 export { MetaData } from './base/base.mjs';
 export {
     Config,
