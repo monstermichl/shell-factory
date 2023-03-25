@@ -15,7 +15,7 @@ class VariableHelper extends Variable {
     protected _buildCompareString(compareOperator: number, value: string): string {
         let returnValue;
 
-        switch (compareOperator) {
+        switch(compareOperator) {
             case 0: returnValue = ''; break; /* No compare string. */
             case -1: returnValue = {} as string; break; /* Invalid return type. */
             default: returnValue = `${this.value} = ${value}`; break; /* Valid. */
