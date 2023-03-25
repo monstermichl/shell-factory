@@ -99,7 +99,7 @@ export class StringVariable extends Variable<StringCompareOptions> {
      *
      * @returns Compare Statement.
      */
-    public isEmpty(): Statement {
+    public get isEmpty(): Statement {
         return this._compare(StringCompareOptions.Empty);
     }
 
@@ -108,7 +108,7 @@ export class StringVariable extends Variable<StringCompareOptions> {
      *
      * @returns Compare Statement.
      */
-    public isNotEmpty(): Statement {
+    public get isNotEmpty(): Statement {
         return this._compare(StringCompareOptions.NotEmpty);
     }
 
@@ -117,7 +117,7 @@ export class StringVariable extends Variable<StringCompareOptions> {
      *
      * @returns Length evaluation Statement.
      */
-    public length(): Statement {
+    public get length(): Statement {
         return new StatementHelper(`$\{#${this.name}}`);
     }
 
@@ -152,7 +152,7 @@ export class StringVariable extends Variable<StringCompareOptions> {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public append(value?: any): Statement {
         value = this._convertValueToString(value);
-        return new StatementHelper(`${this.value}${value}`);
+        return new StatementHelper(`"${this.value}${value}"`);
     }
 
     /**
@@ -182,7 +182,7 @@ export class StringVariable extends Variable<StringCompareOptions> {
      *
      * @returns Remove-substring Statement.
      */
-    public removeFront(pattern?: Statement, lazy?: boolean): Statement;
+    public removeFront(pattern?: string, lazy?: boolean): Statement;
     /**
      * Removes the front of the variable string based on the provided pattern.
      *
@@ -196,7 +196,7 @@ export class StringVariable extends Variable<StringCompareOptions> {
      *
      * @returns Remove-substring Statement.
      */
-    public removeFront(pattern?: Statement, lazy?: boolean): Statement;
+    public removeFront(pattern?: number, lazy?: boolean): Statement;
     /**
      * Removes the front of the variable string based on the provided pattern.
      *
@@ -210,11 +210,11 @@ export class StringVariable extends Variable<StringCompareOptions> {
      *
      * @returns Remove-substring Statement.
      */
-    public removeFront(pattern?: Statement, lazy?: boolean): Statement;
+    public removeFront(pattern?: boolean, lazy?: boolean): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public removeFront(pattern?: any, lazy=true): Statement {
         pattern = this._convertValueToString(pattern);
-        return new StatementHelper(`${this.value}#${!lazy ? '#' : ''}${pattern}`);
+        return new StatementHelper(`"${this.value}#${!lazy ? '#' : ''}${pattern}"`);
     }
 
     /**
@@ -244,7 +244,7 @@ export class StringVariable extends Variable<StringCompareOptions> {
      *
      * @returns Remove-substring Statement.
      */
-    public removeBack(pattern?: Statement, lazy?: boolean): Statement;
+    public removeBack(pattern?: string, lazy?: boolean): Statement;
     /**
      * Removes the back of the variable string based on the provided pattern.
      *
@@ -258,7 +258,7 @@ export class StringVariable extends Variable<StringCompareOptions> {
      *
      * @returns Remove-substring Statement.
      */
-    public removeBack(pattern?: Statement, lazy?: boolean): Statement;
+    public removeBack(pattern?: number, lazy?: boolean): Statement;
     /**
      * Removes the back of the variable string based on the provided pattern.
      *
@@ -272,11 +272,11 @@ export class StringVariable extends Variable<StringCompareOptions> {
      *
      * @returns Remove-substring Statement.
      */
-    public removeBack(pattern?: Statement, lazy?: boolean): Statement;
+    public removeBack(pattern?: boolean, lazy?: boolean): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public removeBack(pattern?: any, lazy=true): Statement {
         pattern = this._convertValueToString(pattern);
-        return new StatementHelper(`${this.value}%${!lazy ? '%' : ''}${pattern}`);
+        return new StatementHelper(`"${this.value}%${!lazy ? '%' : ''}${pattern}"`);
     }
 
     /**
@@ -404,7 +404,7 @@ export class StringVariable extends Variable<StringCompareOptions> {
         searchValue = this._convertValueToString(searchValue);
         replaceValue = this._convertValueToString(replaceValue);
 
-        return new StatementHelper(`${this.value}/${all ? '/' : ''}${replaceValue}`);
+        return new StatementHelper(`"${this.value}/${all ? '/' : ''}${searchValue}/${replaceValue}"`);
     }
 
     /**
@@ -423,7 +423,7 @@ export class StringVariable extends Variable<StringCompareOptions> {
             /* If value null or undefined, return an empty string. */
             if ([null, undefined].includes(value)) {
                 result = '';
-            } else if (Number.isNaN(value)) {
+            } else if (!Number.isInteger(value)) {
                 throw new Error('Value is not a number');
             } else if (value < 0) {
                 throw new Error('Invalid value');
@@ -433,7 +433,7 @@ export class StringVariable extends Variable<StringCompareOptions> {
         const startString = convertValue(start);
         const lengthString = convertValue(length);
 
-        return new StatementHelper(`$\{${this.name}:${startString}${lengthString}}`);
+        return new StatementHelper(`"$\{${this.name}:${startString}:${lengthString}}"`);
     }
 
     /**
