@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { randomUUID } from 'crypto';
 import { Statement } from '../src/base/statement.mjs';
 
 /* Helper class to instantiate Statement. */
@@ -9,13 +10,31 @@ class StatementHelper extends Statement {
 }
 
 describe('Statement tests', () => {
+    describe('constructor', () => {
+        describe('successful', () => {
+            it('string value', () => {
+                const value = 'echo "test"';
+                const statement = new StatementHelper(value);
+
+                expect(statement.value).to.be.equal(value);
+            });
+
+            it('value from Statement', () => {
+                const value = new StatementHelper('echo "test"');
+                const statement = new StatementHelper(value);
+
+                expect(statement.value).to.be.equal(value.value);
+            });
+        });
+    });
+
     describe('value', () => {
         describe('successful', () => {
             it('get', () => {
-                const s = 'echo "test"';
-                const statement = new StatementHelper(s);
+                const value = 'echo "test"';
+                const statement = new StatementHelper(value);
 
-                expect(statement.value).to.be.equal(s);
+                expect(statement.value).to.be.equal(value);
             });
 
             it('get undefined', () => {
@@ -26,16 +45,42 @@ describe('Statement tests', () => {
         });
 
         describe('failed', () => {
-            it('set invalid type', () => {
+            it('invalid Statement value type provided', () => {
                 expect(function() {
-                    new StatementHelper(4 as any)
+                    new StatementHelper({} as any);
                 }).to.throw('Invalid Statement value type provided');
+            });
+
+            it('number is not allowed as Statement value', () => {
+                expect(function() {
+                    new StatementHelper(4 as any);
+                }).to.throw('Number is not allowed as Statement value');
             });
         });
     });
 
     describe('compareIdOrPattern', () => {
-        describe('successful', () => {
+        describe('failed', () => {
+            it('id (instance)', () => {
+                const statement = new StatementHelper();
+
+                expect(statement.compareIdOrPattern(statement.id)).to.be.true;
+            });
+
+            it('id (static)', () => {
+                const statement = new StatementHelper();
+
+                expect(StatementHelper.compareIdOrPattern(statement, statement.id)).to.be.true;
+            });
+
+            it('pattern (static)', () => {
+                const statement = new StatementHelper('echo "test"');
+
+                expect(StatementHelper.compareIdOrPattern(statement, statement.value)).to.be.true;
+            });
+        });
+
+        describe('failed', () => {
             it('invalid compare object', () => {
                 expect(function() {
                     StatementHelper.compareIdOrPattern({} as any, /.+/);

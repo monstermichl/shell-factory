@@ -1,4 +1,9 @@
 import { evaluateIdOrPattern } from '../helpers/pattern.mjs';
+import {
+    convertToString,
+    ConvertToStringError,
+    isNumber,
+} from '../helpers/string.mjs';
 import { Base } from './base.mjs';
 
 /**
@@ -13,7 +18,21 @@ export abstract class Statement extends Base {
      *
      * @param statement Statement value.
      */
-    constructor(statement?: string) {
+    constructor(statement?: string);
+    /**
+     * Statement constructor.
+     *
+     * @param statement Statement value.
+     */
+    constructor(statement?: Statement);
+    /**
+     * Statement constructor.
+     *
+     * @param statement Statement value.
+     */
+    constructor(statement?: boolean);
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    constructor(statement?: any) {
         super();
         this.statement = statement || '';
     }
@@ -30,9 +49,22 @@ export abstract class Statement extends Base {
     /**
      * Sets the Statement value.
      */
-    public set statement(value: string) {
-        if (typeof value !== 'string') {
-            throw new Error('Invalid Statement value type provided');
+    public set statement(value: string | Statement | number) {
+        /* If statement was provided, use its value. */
+        if (value instanceof Statement) {
+            value = value.value;
+        } else {
+            /* Make sure, Statement is convertible to string. */
+            value = convertToString(value as string, (e: ConvertToStringError) => {
+                switch(e) {
+                    case ConvertToStringError.InvalidType: throw new Error('Invalid Statement value type provided');
+                }
+            }, { emptyAllowed: true });
+            
+            /* Integer only is not allowed since it's not an executable. */
+            if (isNumber(value)) {
+                throw new Error('Number is not allowed as Statement value');
+            }
         }
         this._statement = value;
     }
