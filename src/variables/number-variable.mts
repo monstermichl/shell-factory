@@ -1,6 +1,6 @@
 import { Statement } from '../base/statement.mjs';
 import { Variable } from '../base/variable.mjs';
-import { wrapInQuotes } from '../helpers/string.mjs';
+import { isNumber } from '../helpers/string.mjs';
 
 /**
  * Possible number operations.
@@ -359,7 +359,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
     public divide(value: Statement): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public divide(value: any): Statement {
-        if (Number.isInteger(value) && value == 0) {
+        if (isNumber(value) && value == 0) {
             throw new Error('Division by 0 is not a good idea');
         }
         return this._arithmetic(this.value, '/', value || 1);
