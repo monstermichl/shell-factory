@@ -1,8 +1,8 @@
+import { Statement } from '../../base/statement.mjs';
 import {
     convertToString,
     ConvertToStringError,
 } from '../../helpers/string.mjs';
-import { Statement } from '../../index.mjs';
 
 /**
  * Represents a condition.
