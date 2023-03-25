@@ -19,7 +19,7 @@ class StatementHelper extends Statement {
 /**
  * Serves as the base for all kind of variable types.
  */
-export abstract class Variable<CompareOptions extends number> extends Statement {
+export abstract class Variable extends Statement {
     private _local: boolean;
     private _defined = false;
 
@@ -139,7 +139,7 @@ export abstract class Variable<CompareOptions extends number> extends Statement 
      *
      * @returns Compare Statement.
      */
-    protected abstract _buildCompareString(compareOperator: CompareOptions, value: string): string;
+    protected abstract _buildCompareString(compareOperator: number, value: string): string;
 
     /**
      * Converts the provided value to a string and passes it the the subclass'
@@ -225,12 +225,13 @@ export abstract class Variable<CompareOptions extends number> extends Statement 
      * Creates a compare Statement with the help of the subclass' _buildCompareString
      * method.
      *
-     * @param compareOperator CompareOption provided by the subclass.
+     * @param compareOperator Number provided by the subclass forwarded to _buildCompareString
+     *                        to decide what to do with the value.
      * @param value           Value to compare with.
      *
      * @returns Compare Statement.
      */
-    protected _compare(compareOperator: CompareOptions, value?: string): Statement {
+    protected _compare(compareOperator: number, value?: string): Statement {
         /* Let subclass convert the value to what's needed. */
         value = this._convertValueInternal(value);
 

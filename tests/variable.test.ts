@@ -3,7 +3,7 @@ import { Statement } from '../src/base/statement.mjs';
 import { Variable } from '../src/base/variable.mjs';
 
 /* Helper class to instantiate Variable. */
-class VariableHelper extends Variable<number> {
+class VariableHelper extends Variable {
     public compare(compareOperator: number, value?: string): Statement {
         return this._compare(compareOperator, value);
     }

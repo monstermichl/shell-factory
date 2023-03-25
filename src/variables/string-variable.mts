@@ -27,7 +27,7 @@ class StatementHelper extends Statement {
 /**
  * Represents a Bourne Shell string variable.
  */
-export class StringVariable extends Variable<StringCompareOptions> {
+export class StringVariable extends Variable {
     /**
      * Checks if the variable value and the provided value are equal.
      *

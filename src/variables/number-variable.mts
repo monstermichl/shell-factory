@@ -29,7 +29,7 @@ class StatementHelper extends Statement {
 /**
  * Represents a Bourne Shell number variable.
  */
-export class NumberVariable extends Variable<NumberCompareOptions> {
+export class NumberVariable extends Variable {
     /**
      * Checks if the variable value and the provided value are equal.
      *
