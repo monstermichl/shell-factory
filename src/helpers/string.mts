@@ -119,3 +119,14 @@ export function convertToString(arg: any, errorCallback?: ConvertToStringErrorCa
     }
     return arg;
 }
+
+/**
+ * Checks if a string is a number.
+ *
+ * @param s String to check.
+ * @returns If s is not a string or not a number,
+ *          false is being returned.
+ */
+export function isNumber(s: unknown): boolean {
+    return !!`${s}`.match(/^\d+(\.\d+)?$/);
+}

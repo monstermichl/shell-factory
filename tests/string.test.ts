@@ -3,6 +3,7 @@ import {
     wrapInQuotes,
     convertToString,
     ConvertToStringError,
+    isNumber,
 } from '../src/helpers/string.mjs';
 
 describe('string tests', () => {
@@ -75,6 +76,30 @@ describe('string tests', () => {
                 convertToString('', (e: ConvertToStringError) => {
                     expect(e).to.be.equal(ConvertToStringError.EmptyValue);
                 });
+            });
+        });
+    });
+
+    describe('isNumber', () => {
+        describe('successful', () => {
+            it('integer', () => {
+                expect(isNumber(3)).to.be.true;
+            });
+
+            it('float', () => {
+                expect(isNumber(4.1)).to.be.true;
+            });
+
+            it('string number', () => {
+                expect(isNumber('3')).to.be.true;
+            });
+
+            it('not number string', () => {
+                expect(isNumber('asdf')).to.be.false;
+            });
+
+            it('undefined', () => {
+                expect(isNumber(undefined)).to.be.false;
             });
         });
     });
