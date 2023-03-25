@@ -1,5 +1,5 @@
 import { Statement } from '../base/statement.mjs';
-import { VariableBase } from '../base/variable-base.mjs';
+import { Variable } from '../base/variable.mjs';
 import { wrapInQuotes } from '../helpers/string.mjs';
 
 /**
@@ -29,7 +29,7 @@ class StatementHelper extends Statement {
 /**
  * Represents a Bourne Shell number variable.
  */
-export class NumberVariable extends VariableBase<NumberCompareOptions> {
+export class NumberVariable extends Variable<NumberCompareOptions> {
     /**
      * Checks if the variable value and the provided value are equal.
      *

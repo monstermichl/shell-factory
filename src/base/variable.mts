@@ -19,7 +19,7 @@ class StatementHelper extends Statement {
 /**
  * Serves as the base for all kind of variable types.
  */
-export abstract class VariableBase<CompareOptions extends number> extends Statement {
+export abstract class Variable<CompareOptions extends number> extends Statement {
     private _local: boolean;
     private _defined = false;
 
