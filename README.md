@@ -28,6 +28,59 @@ echo "Hello World"
 echo "Hello Command" # Command class example
 ```
 
+### Variable
+At this point two types of Variables are supported. *StringVariable* (or *StrVar*) and *NumberVariable* (or *NumVar*). They inherit from the *Variable* class and offer a variety or functions based on their type to help you use them comfortably. Each of the functions returns a new Statement instance which can be added as content or passed to other functions which accept Statemnts as their inputs. *NICE-TO-KNOW: If a variable is set as local, the first time the set-method is called, the assinment statement is preceded with the "local" keyword.*
+
+The example might seem intimidating at first glance as some of the concepts like *If* or *While* have not been discussed yet. Don't worry, just focus on the *Variable* operations to understand, how they work and how they can be combined. The rest will become clear later on (or intuitionally).
+
+```typescript
+new Script([
+    stringVariable.set(),  /* Initialize string variable. */
+    numberVariable.set(0), /* Initialze the number variable. */
+
+    /* Loop while number variable is less than 5. */
+    new While(numberVariable.isLess(5), [
+
+        /* If string variable is empty, set it to 'Hello'. */
+        new If(stringVariable.isEqual(), [
+            stringVariable.set('Hello'),
+
+        /* If number variable is 1, append ' again' to string variable. */
+        ]).elseIf(numberVariable.isEqual(1), [
+            stringVariable.set(stringVariable.append(' again')),
+
+        /* Ever other time, append ' and again' to the string variable. */
+        ]).else([
+            stringVariable.set(stringVariable.append(' and again')),
+        ]),
+        /* Print the string variable to console. */
+        `echo "${stringVariable.value}"`,
+
+        /* Increment the number variable by 1. */
+        numberVariable.set(numberVariable.increment()),
+    ]),
+]).dump();
+```
+
+```sh
+#!/bin/sh
+
+string=""
+number=0
+
+while [ ${number} -lt 5 ]; do
+  if [ "${string}" = "" ]; then
+    string="Hello"
+  elif [ ${number} -eq 1 ]; then
+    string="${string} again"
+  else
+    string="${string} and again"
+  fi
+  echo "${string}"
+  number=`expr ${number} + 1`
+done
+```
+
 ### If
 If-statements control the further code execution flow. The If-class adds the possibility to add all required else-if (+ else) branches via chaining as shown in the example. *NICE-TO-KNOW: The If-class also supports dis-/enabling testing (the brackets in the statement) by using the dontTest-, respectively test-getter.*
 
