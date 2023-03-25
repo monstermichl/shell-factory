@@ -31,10 +31,18 @@ export abstract class Variable<CompareOptions extends number> extends Statement 
      */
     constructor(name: string, local?: boolean) {
         if (typeof name !== 'string') {
-            throw new Error('Invalid Variable name type provided');
+            throw new Error('Invalid variable name type provided');
         }
+        /* Trim whitespaces and replace possible substitution characters. */
+        name = name.trim().replace(/^\$\{?/, '').replace(/\}$/, '');
+
+        /* Make sure, variable name is valid. */
+        if (!name.match(/^[_\w]+$/)) {
+            throw new Error('Invalid variable name provided');
+        }
+
         /* Replace possible substitution characters. */
-        super(name.trim().replace(/^\$\{?/, '').replace(/\}$/, ''));
+        super(name);
         this._local = !!local;
     }
 

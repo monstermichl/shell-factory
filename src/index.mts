@@ -42,8 +42,5 @@ export { For } from './components/flow/for/for.mjs';
 export { Select } from './components/select/select.mjs';
 export { Case } from './components/flow/case/case.mjs';
 export { CaseOption } from './components/flow/case/case-option.mjs';
-export {
-    Parameter,
-    Function,
-} from './components/function/function.mjs';
+export { Function } from './components/function/function.mjs';
 export { IChainable } from './interfaces/chainable.mjs';

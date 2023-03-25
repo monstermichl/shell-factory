@@ -10,38 +10,18 @@ import {
     wrapInQuotes,
 } from '../../helpers/string.mjs';
 import { Command } from '../../base/command.mjs';
+import { Variable } from '../../base/variable.mjs';
+import { StringVariable } from '../../index.mjs';
 
-type StringOrParameter = string | Parameter;
+type StringOrParameter = string | Variable<number>;
 type StringOrNumberOrBoolean = string | number | boolean;
-
-/**
- * Represents a function-parameter. TODO: Use Variable class instead.
- */
-export class Parameter extends Statement {
-    constructor(name: string) {
-        if (typeof name !== 'string') {
-            throw new Error('Parameter name is not a string');
-        }
-        name = name.trim();
-
-        if (!name) {
-            throw new Error('No parameter name provided');
-        }
-        const nameCleaned = name.replace(/\s+/, '_'); /* Replace whitepspaces with underline. */
-        super(nameCleaned);
-    }
-
-    public get value(): string {
-        return this.statement;
-    }
-}
 
 /**
  * Represents a Bourne Shell function-block.
  */
 export class Function extends WrapBlock {
     private _name: string;
-    private _parameters = [] as Parameter[];
+    private _parameters = [] as Variable<number>[];
 
     /**
      * Function constructor.
@@ -122,7 +102,7 @@ export class Function extends WrapBlock {
      *                   parameters (e.g. $1, $2, ...) will be mapped to function
      *                   internal variables.
      */
-    public constructor(name: string, statement?: Statement, parameters?: Parameter[]);
+    public constructor(name: string, statement?: Statement, parameters?: Variable<number>[]);
     /**
      * Function constructor.
      *
@@ -132,7 +112,7 @@ export class Function extends WrapBlock {
      *                   parameters (e.g. $1, $2, ...) will be mapped to function
      *                   internal variables.
      */
-    public constructor(name: string, statement?: string, parameters?: Parameter[]);
+    public constructor(name: string, statement?: string, parameters?: Variable<number>[]);
     /**
      * Function constructor.
      *
@@ -142,7 +122,7 @@ export class Function extends WrapBlock {
      *                   parameters (e.g. $1, $2, ...) will be mapped to function
      *                   internal variables.
      */
-    public constructor(name: string, block?: Block, parameters?: Parameter[]);
+    public constructor(name: string, block?: Block, parameters?: Variable<number>[]);
     /**
      * Function constructor.
      *
@@ -152,7 +132,7 @@ export class Function extends WrapBlock {
      *                   parameters (e.g. $1, $2, ...) will be mapped to function
      *                   internal variables.
      */
-    public constructor(name: string, statements?: Statement[], parameters?: Parameter[]);
+    public constructor(name: string, statements?: Statement[], parameters?: Variable<number>[]);
     /**
      * Function constructor.
      *
@@ -162,7 +142,7 @@ export class Function extends WrapBlock {
      *                   parameters (e.g. $1, $2, ...) will be mapped to function
      *                   internal variables.
      */
-    public constructor(name: string, statements?: string[], parameters?: Parameter[]);
+    public constructor(name: string, statements?: string[], parameters?: Variable<number>[]);
     /**
      * Function constructor.
      *
@@ -172,7 +152,7 @@ export class Function extends WrapBlock {
      *                   parameters (e.g. $1, $2, ...) will be mapped to function
      *                   internal variables.
      */
-    public constructor(name: string, blocks?: Block[], parameters?: Parameter[]);
+    public constructor(name: string, blocks?: Block[], parameters?: Variable<number>[]);
     /**
      * Function constructor.
      *
@@ -182,7 +162,7 @@ export class Function extends WrapBlock {
      *                   parameters (e.g. $1, $2, ...) will be mapped to function
      *                   internal variables.
      */
-    public constructor(name: string, content?: StatementOrBlockOrString[], parameters?: Parameter[]);
+    public constructor(name: string, content?: StatementOrBlockOrString[], parameters?: Variable<number>[]);
     /**
      * Function constructor.
      *
@@ -259,7 +239,7 @@ export class Function extends WrapBlock {
         name = convertToString(name, (e: ConvertToStringError) => {
             switch(e) {
                 case ConvertToStringError.EmptyValue: throw new Error('Missing function name');
-                case ConvertToStringError.InvalidType: throw new Error('Invalid function name type');
+                case ConvertToStringError.InvalidType: throw new Error('Invalid function name type provided');
             }
         });
 
@@ -267,7 +247,6 @@ export class Function extends WrapBlock {
         if (!name.match(/^(_|[a-zA-^])+\w+$/)) {
             throw new Error('Invalid function name');
         }
-        const mappedParameters = [] as string[];
 
         /* If parameters are provided, add the to the content. */
         if (parameters instanceof Array)
@@ -278,28 +257,23 @@ export class Function extends WrapBlock {
             /* Map all string parameters to Parameter class. */
             parameters = parameters.map((parameter, index) => {
                 if (typeof parameter === 'string') {
-                    /* Convert to Parameter. */
-                    parameter = new Parameter(parameter);
-                } else if (!(parameter instanceof Parameter)) {
-                    throw new Error(`Parameter ${index} is neither a string nor a Parameter class instance`);
+                    /* Convert to StringVariable and make sure it's local. */
+                    parameter = new StringVariable(parameter, true);
+                } else if (!(parameter instanceof Variable<number>)) {
+                    throw new Error(`Parameter ${index} is neither a string nor a Variable class instance`);
                 }
                 return parameter;
             });
 
-            /* Add parameters to internal array and to content. */
-            parameters.forEach((parameter: Parameter, index) => {
-                const mappingString = `${parameter.statement}=$${index + 1}`; /* Create parameter mapping. */
-                mappedParameters.push(mappingString);
-
-            });
-            content.splice(0, 0, ...mappedParameters); /* Insert parameter mappings before function content. */
+            /* Insert parameters before function content. */
+            content.splice(0, 0, ...parameters.map((variable: Variable<number>, index) => variable.set(`$${index + 1}`)));
         } else {
             parameters = [];
         }
         super(`${name}() {`, content, '}');
 
         this._name = name;
-        this._parameters.push(...(parameters as Parameter[]));
+        this._parameters.push(...(parameters as Variable<number>[]));
     }
 
     /**
@@ -312,7 +286,7 @@ export class Function extends WrapBlock {
     /**
      * Returns the function parameters.
      */
-    public get parameters(): Parameter[] {
+    public get parameters(): Variable<number>[] {
         return [...this._parameters];
     }
 

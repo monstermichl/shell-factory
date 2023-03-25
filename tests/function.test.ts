@@ -1,9 +1,7 @@
-import {
-    Function,
-    Parameter,
-} from '../src/components/function/function.mjs';
+import { Function } from '../src/components/function/function.mjs';
 import { expect } from 'chai';
 import { Statement } from '../src/base/statement.mjs';
+import { StringVariable } from '../src/index.mjs';
 
 describe('Function tests', () => {
     describe('constructor', () => {
@@ -31,13 +29,13 @@ describe('Function tests', () => {
 
                     expect(functionBlock.raw.length).to.be.equal(3);;
                     expect(functionBlock.content.length).to.be.equal(3);
-                    expect((functionBlock.content[0] as Statement).value).to.be.equal(`${firstParameter}=$1`);
-                    expect((functionBlock.content[1] as Statement).value).to.be.equal(`${secondParameter}=$2`);
+                    expect((functionBlock.content[0] as Statement).value).to.be.equal(`local ${firstParameter}="$1"`);
+                    expect((functionBlock.content[1] as Statement).value).to.be.equal(`local ${secondParameter}="$2"`);
                     expect((functionBlock.content[2] as Statement).value).to.be.equal(content);
 
                     expect(functionBlock.parameters.length).to.be.equal(2);
-                    expect(functionBlock.parameters[0].value).to.be.equal(firstParameter);
-                    expect(functionBlock.parameters[1].value).to.be.equal(secondParameter);
+                    expect(functionBlock.parameters[0].value).to.be.equal(`$\{${firstParameter}}`);
+                    expect(functionBlock.parameters[1].value).to.be.equal(`$\{${secondParameter}}`);
                 });
             });
 
@@ -48,52 +46,52 @@ describe('Function tests', () => {
                     const firstParameter = 'a';
                     const secondParameter = 'b';
                     const functionBlock = new Function(name, content, [
-                        new Parameter(firstParameter),
-                        new Parameter(secondParameter),
+                        new StringVariable(firstParameter),
+                        new StringVariable(secondParameter),
                     ]);
 
                     expect(functionBlock.raw.length).to.be.equal(3);;
                     expect(functionBlock.content.length).to.be.equal(3);
-                    expect((functionBlock.content[0] as Statement).value).to.be.equal(`${firstParameter}=$1`);
-                    expect((functionBlock.content[1] as Statement).value).to.be.equal(`${secondParameter}=$2`);
+                    expect((functionBlock.content[0] as Statement).value).to.be.equal(`${firstParameter}="$1"`);
+                    expect((functionBlock.content[1] as Statement).value).to.be.equal(`${secondParameter}="$2"`);
                     expect((functionBlock.content[2] as Statement).value).to.be.equal(content[0]);
 
                     expect(functionBlock.parameters.length).to.be.equal(2);
-                    expect(functionBlock.parameters[0].value).to.be.equal(firstParameter);
-                    expect(functionBlock.parameters[1].value).to.be.equal(secondParameter);
+                    expect(functionBlock.parameters[0].value).to.be.equal(`$\{${firstParameter}}`);
+                    expect(functionBlock.parameters[1].value).to.be.equal(`$\{${secondParameter}}`);
                 });
             });
         });
 
         describe('failed', () => {
-            it('undefined name', () => {
+            it('missing function name', () => {
                 expect(function() {
-                    new Function('')
+                    new Function('');
                 }).to.throw('Missing function name');
+            });
+
+            it('invalid function name type', () => {
+                expect(function() {
+                    new Function({} as any);
+                }).to.throw('Invalid function name type provided');
             });
 
             it('invalid name', () => {
                 expect(function() {
-                    new Function('echo function')
+                    new Function('echo function');
                 }).to.throw('Invalid function name');
             });
 
             it('undefined parameter name', () => {
                 expect(function() {
-                    new Function('_exit', 'echo "Test"', [''])
-                }).to.throw('No parameter name provided');
+                    new Function('_exit', 'echo "Test"', ['']);
+                }).to.throw('Invalid variable name provided');
             });
 
             it('invalid parameter type', () => {
                 expect(function() {
-                    new Function('_exit', 'echo "Test"', ([1] as unknown[]) as string[])
-                }).to.throw('Parameter 0 is neither a string nor a Parameter class instance');
-            });
-
-            it('invalid parameter type 2', () => {
-                expect(function() {
-                    new Parameter(6 as any)
-                }).to.throw('Parameter name is not a string');
+                    new Function('_exit', 'echo "Test"', ([1] as unknown[]) as string[]);
+                }).to.throw('Parameter 0 is neither a string nor a Variable class instance');
             });
         });
     });
