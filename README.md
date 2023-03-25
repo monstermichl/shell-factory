@@ -29,7 +29,7 @@ echo "Hello Command" # Command class example
 ```
 
 ### Variable
-At this point two types of Variables are supported. *StringVariable* (or *StrVar*) and *NumberVariable* (or *NumVar*). They inherit from the *Variable* class and offer a variety or functions based on their type to help you use them comfortably. Each of the functions returns a new Statement instance which can be added as content or passed to other functions which accept Statemnts as their inputs. *NICE-TO-KNOW: If a variable is set as local, the first time the set-method is called, the assinment statement is preceded with the "local" keyword.*
+At this point two types of Variables are supported. *StringVariable* (or *StrVar*) and *NumberVariable* (or *NumVar*). They inherit from the *Variable* class and offer a variety or functions based on their type to support you with using variables comfortably. Each of the functions returns a new Statement instance which can be added as content directly or passed to other functions which accept Statements as their inputs. *NICE-TO-KNOW: If a variable is set as local, the first time the set-method is being called, the assignment statement is preceded with the "local" keyword.*
 
 The example might seem intimidating at first glance as some of the concepts like *If* or *While* have not been discussed yet. Don't worry, just focus on the *Variable* operations to understand, how they work and how they can be combined. The rest will become clear later on (or intuitionally).
 

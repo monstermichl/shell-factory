@@ -531,7 +531,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
         let startBracket = '';
         let stopBracket = '';
 
-        switch (bracketType) {
+        switch(bracketType) {
             case BracketType.Square:
                 startBracket = '[';
                 stopBracket = ']';
