@@ -59,8 +59,8 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      */
     public isEqual(value: boolean): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isEqual(value?: any): Statement {
-        return this._compare(NumberCompareOptions.Equal, value);
+    public isEqual(value: any): Statement {
+        return this._compare(NumberCompareOptions.Equal, value || 0);
     }
 
     /**
@@ -93,7 +93,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
     public isNotEqual(value: boolean): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public isNotEqual(value: any): Statement {
-        return this._compare(NumberCompareOptions.NotEqual, value);
+        return this._compare(NumberCompareOptions.NotEqual, value || 0);
     }
 
     /**
@@ -125,8 +125,8 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      */
     public isLess(value: boolean): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isLess(value?: any): Statement {
-        return this._compare(NumberCompareOptions.Less, value);
+    public isLess(value: any): Statement {
+        return this._compare(NumberCompareOptions.Less, value || 0);
     }
 
     /**
@@ -159,7 +159,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
     public isLessOrEqual(value: boolean): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public isLessOrEqual(value: any): Statement {
-        return this._compare(NumberCompareOptions.LessOrEqual, value);
+        return this._compare(NumberCompareOptions.LessOrEqual, value || 0);
     }
 
     /**
@@ -192,7 +192,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
     public isGreater(value: boolean): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public isGreater(value: any): Statement {
-        return this._compare(NumberCompareOptions.Greater, value);
+        return this._compare(NumberCompareOptions.Greater, value || 0);
     }
 
     /**
@@ -225,7 +225,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
     public isGreaterOrEqual(value: boolean): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public isGreaterOrEqual(value: any): Statement {
-        return this._compare(NumberCompareOptions.GreateOrEqual, value);
+        return this._compare(NumberCompareOptions.GreateOrEqual, value || 0);
     }
 
     /**
@@ -236,7 +236,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Add Statement.
      */
-    public add(value?: number): Statement;
+    public add(value: number): Statement;
     /**
      * Adds the specified value to the variable.
      *
@@ -245,7 +245,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Add Statement.
      */
-    public add(value?: string): Statement;
+    public add(value: string): Statement;
     /**
      * Adds the specified value to the variable.
      *
@@ -254,9 +254,9 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Add Statement.
      */
-    public add(value?: Statement): Statement;
+    public add(value: Statement): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public add(value?: any): Statement {
+    public add(value: any): Statement {
         return this._arithmetic(this.value, '+', value || 0);
     }
 
@@ -268,7 +268,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Subtract Statement.
      */
-    public subtract(value?: number): Statement;
+    public subtract(value: number): Statement;
     /**
      * Subtracts the specified value from the variable.
      *
@@ -277,7 +277,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Subtract Statement.
      */
-    public subtract(value?: string): Statement;
+    public subtract(value: string): Statement;
     /**
      * Subtracts the specified value from the variable.
      *
@@ -286,10 +286,10 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Subtract Statement.
      */
-    public subtract(value?: Statement): Statement;
+    public subtract(value: Statement): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public subtract(value?: any): Statement {
-        return this._arithmetic(this.value, '+', value || 0);
+    public subtract(value: any): Statement {
+        return this._arithmetic(this.value, '-', value || 0);
     }
 
     /**
@@ -301,7 +301,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Multiply Statement.
      */
-    public multiply(value?: number): Statement;
+    public multiply(value: number): Statement;
     /**
      * Multiplies the variable with the provided value.
      *
@@ -311,7 +311,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Multiply Statement.
      */
-    public multiply(value?: string): Statement;
+    public multiply(value: string): Statement;
     /**
      * Multiplies the variable with the provided value.
      *
@@ -321,9 +321,9 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Multiply Statement.
      */
-    public multiply(value?: Statement): Statement;
+    public multiply(value: Statement): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public multiply(value?: any): Statement {
+    public multiply(value: any): Statement {
         return this._arithmetic(this.value, '*', value || 0);
     }
 
@@ -336,7 +336,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Divide Statement.
      */
-    public divide(value?: number): Statement;
+    public divide(value: number): Statement;
     /**
      * Divides the variable by the provided value.
      *
@@ -346,7 +346,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Divide Statement.
      */
-    public divide(value?: string): Statement;
+    public divide(value: string): Statement;
     /**
      * Divides the variable by the provided value.
      *
@@ -356,9 +356,9 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Divide Statement.
      */
-    public divide(value?: Statement): Statement;
+    public divide(value: Statement): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public divide(value?: any): Statement {
+    public divide(value: any): Statement {
         if (Number.isInteger(value) && value == 0) {
             throw new Error('Division by 0 is not a good idea');
         }
@@ -373,7 +373,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Modulo Statement.
      */
-    public modulo(value?: number): Statement;
+    public modulo(value: number): Statement;
     /**
      * Calculates the modulo of the variable with the provided value.
      *
@@ -382,7 +382,7 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Modulo Statement.
      */
-    public modulo(value?: string): Statement;
+    public modulo(value: string): Statement;
     /**
      * Calculates the modulo of the variable with the provided value.
      *
@@ -391,9 +391,9 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      *
      * @returns Modulo Statement.
      */
-    public modulo(value?: Statement): Statement;
+    public modulo(value: Statement): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public modulo(value?: any): Statement {
+    public modulo(value: any): Statement {
         return this._arithmetic(this.value, '%', value || 1);
     }
 
@@ -465,14 +465,14 @@ export class NumberVariable extends Variable<NumberCompareOptions> {
      * @returns Compare Statement.
      */
     protected _buildCompareString(compareOperator: NumberCompareOptions, value: string): string {
-        const preparedVariable = wrapInQuotes(this.value, true);
+        const preparedVariable = this.value;
         let compareString: string;
 
         switch(compareOperator) {
             case NumberCompareOptions.Equal: compareString = `${preparedVariable} -eq ${value}`; break;
             case NumberCompareOptions.NotEqual: compareString = `${preparedVariable} -ne ${value}`; break;
             case NumberCompareOptions.Less: compareString = `${preparedVariable} -lt ${value}`; break;
-            case NumberCompareOptions.LessOrEqual: compareString = `${preparedVariable} -lt ${value}`; break;
+            case NumberCompareOptions.LessOrEqual: compareString = `${preparedVariable} -le ${value}`; break;
             case NumberCompareOptions.Greater: compareString = `${preparedVariable} -gt ${value}`; break;
             case NumberCompareOptions.GreateOrEqual: compareString = `${preparedVariable} -ge ${value}`; break;
         }

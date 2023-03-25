@@ -1,13 +1,5 @@
 import { expect } from 'chai';
-import { Statement } from '../src/base/statement.mjs';
 import { StringVariable } from '../src/variables/string-variable.mjs';
-
-/* Helper class to instantiate Statement. */
-class StatementHelper extends Statement {
-    public get value(): string {
-        return this.statement;
-    }
-}
 
 describe('StringVariable tests', () => {
     describe('isEqual', () => {
