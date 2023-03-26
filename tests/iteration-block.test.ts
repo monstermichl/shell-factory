@@ -26,6 +26,8 @@ describe('IterationBlock tests', () => {
 
                 expect(whileBlock.content.length).to.be.equal(1);
                 expect((whileBlock.content[0] as Statement).value).to.be.equal(content);
+
+                expect(whileBlock.variable.name).to.be.equal(variable);
             });
 
             it('construct with variable without dollar sign', () => {
