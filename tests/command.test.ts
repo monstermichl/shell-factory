@@ -1,8 +1,21 @@
 import { expect } from 'chai';
 import { Command } from '../src/base/command.mjs';
+import { Statement } from '../src/base/statement.mjs';
 import { ChainType } from '../src/interfaces/chainable.mjs';
 
-describe('Statement tests', () => {
+/**
+ * Helper class to instantiate a simple Statement.
+ */
+class StatementHelper extends Statement {
+    /**
+     * Returns the statement.
+     */
+    public get value(): string {
+        return this.statement;
+    }
+}
+
+describe('Command tests', () => {
     describe('value', () => {
         describe('successful', () => {
             it('get read chained', () => {
@@ -75,7 +88,7 @@ describe('Statement tests', () => {
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(source);
             });
 
-            it('instance of Statement', () => {
+            it('instance of Command', () => {
                 const source = new Command('test.txt');
                 const statement = new Command('echo "hello"');
 
@@ -85,6 +98,18 @@ describe('Statement tests', () => {
                 expect(statement.chain.length).to.be.equal(1);
                 expect(statement.chain[0].type).to.be.equal(ChainType.Read);
                 expect(statement.chain[0].target).to.be.equal(source);
+            });
+
+            it('instance of Statement', () => {
+                const source = new StatementHelper('test.txt');
+                const statement = new Command('echo "hello"');
+
+                expect(statement.chain.length).to.be.equal(0);
+                expect(statement.read(source)).to.be.equal(statement);
+
+                expect(statement.chain.length).to.be.equal(1);
+                expect(statement.chain[0].type).to.be.equal(ChainType.Read);
+                expect(statement.chain[0].target.value).to.be.equal(source.value);
             });
         });
 
