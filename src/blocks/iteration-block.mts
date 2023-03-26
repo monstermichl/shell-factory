@@ -573,6 +573,7 @@ export abstract class IterationBlock extends WrapBlock {
             throw new Error('Missing values');
         }
         super(`${keyword} ${(variable as Variable).name} in ${values}; do`, content, 'done');
+        this._variable = variable;
     }
 
     /**
