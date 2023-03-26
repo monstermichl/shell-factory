@@ -32,7 +32,9 @@
     "example:write": "npm run build && node ./examples/example-write.js",
     "example:append": "npm run build && node ./examples/example-append.js",
     "example:pipe": "npm run build && node ./examples/example-pipe.js",
-    "example:variable": "npm run build && node ./examples/example-variable.js"
+    "example:variable": "npm run build && node ./examples/example-variable.js",
+    "example:and": "npm run build && node ./examples/example-and.js",
+    "example:or": "npm run build && node ./examples/example-or.js",
   },
   "author": "monstermichl",
   "license": "MIT",

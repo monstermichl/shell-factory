@@ -383,6 +383,56 @@ new Script([
 cat test.txt | grep -e "hello" | cut -d" " -f0 > test2.txt # Nice chain!
 ```
 
+### And
+Connects two commands with a logical AND. In case of a ConditionBlock instance, this operation adds a new AND-connected condition. *NICE-TO-KNOW: This operation can also be applied to standalone Condition-class instances.*
+
+```typescript
+new Script([
+    new Command('echo "File content"')
+        .pipe('grep -o -e "content"')
+        .and('echo "ok"'),
+
+    new If('1 -eq 1').and('2 -eq 2').addContent([
+        'echo "What a useless comparison"',
+    ]),
+]).dump();
+```
+
+```sh
+#!/bin/sh
+
+echo "File content" | grep -o -e "content" && echo "ok"
+
+if [ 1 -eq 1 -a 2 -eq 2 ]; then
+  echo "What a useless comparison"
+fi
+```
+
+### Or
+Connects two commands with a logical OR. In case of a ConditionBlock instance, this operation adds a new OR-connected condition. *NICE-TO-KNOW: This operation can also be applied to standalone Condition-class instances.*
+
+```typescript
+new Script([
+    new Command('echo "File content"')
+        .pipe('grep -o -e "content"')
+        .or('echo "nevermind"'),
+
+    new If('1 -eq 1').or('2 -eq 2').addContent([
+        'echo "What a useless comparison"',
+    ]),
+]).dump();
+```
+
+```sh
+#!/bin/sh
+
+echo "File content" | grep -o -e "content" || echo "nevermind"
+
+if [ 1 -eq 1 -o 2 -eq 2 ]; then
+  echo "What a useless comparison"
+fi
+```
+
 ## Formatting
 How scripts are dumped can be configured separatelly. Either by setting the config directly on the Script instance or by passing it to the dump-method.
 
