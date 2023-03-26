@@ -104,7 +104,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * @param statement         ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, condition: Condition, blockStartKeyword: string, statement?: Statement, blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, statement?: Statement, blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
@@ -114,7 +114,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * @param statement         ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, condition: Condition, blockStartKeyword: string, statement?: string, blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, statement?: string, blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
@@ -124,7 +124,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * @param block             ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, condition: Condition, blockStartKeyword: string, block?: Block, blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, block?: Block, blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
@@ -134,7 +134,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * @param statements        ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, condition: Condition, blockStartKeyword: string, statements?: Statement[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, statements?: Statement[], blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
@@ -144,7 +144,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * @param statements        ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, condition: Condition, blockStartKeyword: string, statements?: string[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, statements?: string[], blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
@@ -154,7 +154,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * @param blocks            ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, condition: Condition, blockStartKeyword: string, blocks?: Block[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, blocks?: Block[], blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
@@ -164,7 +164,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * @param content           ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, condition: Condition, blockStartKeyword: string, content?: StatementOrBlockOrString[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, content?: StatementOrBlockOrString[], blockEndKeyword?: string);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     protected constructor(conditionKeyword: string, arg: any, blockStartKeyword: string, content?: any, blockEndKeyword?: string) {
         const condition = Condition.fromString(arg);
