@@ -60,11 +60,6 @@ export abstract class Statement extends Base {
                     case ConvertToStringError.InvalidType: throw new Error('Invalid Statement value type provided');
                 }
             }, { emptyAllowed: true });
-            
-            /* Integer only is not allowed since it's not an executable. */
-            if (isNumber(value)) {
-                throw new Error('Number is not allowed as Statement value');
-            }
         }
         this._statement = value;
     }

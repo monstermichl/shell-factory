@@ -5,11 +5,39 @@ import {
 } from '../../helpers/string.mjs';
 
 /**
+ * Condition chain link type.
+ */
+enum ConditionChainLink {
+    And,
+    Or,
+}
+
+/**
+ * Condition chain element.
+ */
+class ConditionChainElement {
+    type: ConditionChainLink;
+    target: Condition;
+
+    constructor(type: ConditionChainLink, target: Condition) {
+        this.type = type;
+        this.target = target;
+    }
+}
+
+/**
  * Represents a condition.
  */
-export class Condition {
-    protected _condition: string;
+export class Condition extends Statement {
+    protected _chain = [] as ConditionChainElement[];
+    private _test = true;
 
+    /**
+     * Condition constructor.
+     *
+     * @param condition Condition Statement.
+     */
+    constructor(condition: Statement);
     /**
      * Condition constructor.
      *
@@ -32,14 +60,111 @@ export class Condition {
     constructor(condition: number);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     constructor(condition: any) {
-        this._condition = Condition._convertToConditionString(condition);
+        const conditionString = Condition._convertToConditionString(condition);
+
+        super(conditionString);
     }
 
     /**
-     * Returns the condition string.
+     * Returns the full condition string.
+     *
+     * @returns The full condition string.
      */
     public get value(): string {
-        return this._condition;
+        return this._getValue(this.test);
+    }
+
+    /**
+     * Returns the original condition string.
+     * 
+     * @returns The original condition string.
+     */
+    public get condition(): string {
+        return this.statement;
+    }
+
+    /**
+     * Returns if the condition gets tested.
+     *
+     * @returns True if the gets tested.
+     */
+    public get test(): boolean {
+        return this._test;
+    }
+
+    /**
+     * Sets if the condition shall be tested.
+     *
+     * @param test Sets if the condition shall be tested.
+     */
+    public set test(test: boolean) {
+        this._test = !!test;
+    }
+
+    /**
+     * Adds a new and-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public and(condition: Condition): this;
+    /**
+     * Adds a new and-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public and(condition: string): this;
+    /**
+     * Adds a new and-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public and(condition: boolean): this;
+    /**
+     * Adds a new and-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public and(condition: number): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public and(condition: any): this {
+        return this._addToChain(ConditionChainLink.And, condition);
+    }
+
+    /**
+     * Adds a new or-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public or(condition: Condition): this;
+    /**
+     * Adds a new or-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public or(condition: string): this;
+    /**
+     * Adds a new or-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public or(condition: boolean): this;
+    /**
+     * Adds a new or-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public or(condition: number): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public or(condition: any): this {
+        return this._addToChain(ConditionChainLink.Or, condition);
     }
 
     /**
@@ -119,5 +244,60 @@ export class Condition {
                 case ConvertToStringError.InvalidType: throw new Error('Invalid condition type');
             }
         });
+    }
+
+    /**
+     * Returns the full condition string.
+     *
+     * @param test Specifies if condition shall be tested.
+     * @returns The full condition string.
+     */
+    protected _getValue(test: boolean): string {
+        let conditionString = `${test ? '[ ' : ''}${this.condition}`; /* If tested, surround with brackets. */
+
+        /* Add linked conditions. */
+        this._chain.forEach((element) => {
+            conditionString += ` ${element.type === ConditionChainLink.And ? '-a' : '-o'} ${element.target._getValue(false)}`;
+        });
+        return `${conditionString}${test ? ' ]' : ''}`;  /* If tested, surround with brackets. */
+    }
+
+    /**
+     * Adds a new connected condition to the condition chain.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    private _addToChain(linkType: ConditionChainLink, condition: Condition): this;
+    /**
+     * Adds a new connected condition to the condition chain.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    private _addToChain(linkType: ConditionChainLink, condition: string): this;
+    /**
+     * Adds a new connected condition to the condition chain.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    private _addToChain(linkType: ConditionChainLink, condition: boolean): this;
+    /**
+     * Adds a new connected condition to the condition chain.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    private _addToChain(linkType: ConditionChainLink, condition: number): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    private _addToChain(linkType: ConditionChainLink, condition: any): this {
+        this._chain.push(new ConditionChainElement(
+            linkType,
+            new Condition(
+                Condition._convertToConditionString(condition),
+            ),
+        ));
+        return this;
     }
 }

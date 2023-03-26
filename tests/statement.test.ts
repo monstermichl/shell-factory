@@ -50,12 +50,6 @@ describe('Statement tests', () => {
                     new StatementHelper({} as any);
                 }).to.throw('Invalid Statement value type provided');
             });
-
-            it('number is not allowed as Statement value', () => {
-                expect(function() {
-                    new StatementHelper(4 as any);
-                }).to.throw('Number is not allowed as Statement value');
-            });
         });
     });
 
