@@ -9,6 +9,7 @@ export {
 } from './interfaces/chainable.mjs';
 export { Statement } from './base/statement.mjs';
 export { Command } from './base/command.mjs';
+export { Variable } from './base/variable.mjs';
 export {
     StringVariable,
     StringVariable as StrVar,
