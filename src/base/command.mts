@@ -12,6 +12,7 @@ import {
     LogicalConnectType,
 } from '../interfaces/logically-connectable.mjs';
 import { OperationalConnectType } from '../interfaces/operationally-connectable.mjs';
+import { isAnyConnectType } from '../helpers/connect.mjs';
 
 /**
  * Represents a shell command. Commands provide the ability to be
@@ -291,8 +292,8 @@ export class Command extends Statement implements IChainable<OperationalConnectT
     public findInChain(type: OperationalConnectType | LogicalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[];
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public findInChain(arg1: any, arg2?: OperationalConnectType | LogicalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[] {
-        /* Check if arg1 is ConnectType or LogicalConnectType value. */
-        if (this._isAnyConnectType(arg1)) {
+        /* Check if arg1 is a OperationalConnectType or LogicalConnectType value. */
+        if (isAnyConnectType(arg1)) {
             arg2 = arg1; /* Set arg2 to type value. */
             arg1 = /.*/; /* Set arg1 to match everything. */
         }
@@ -329,8 +330,8 @@ export class Command extends Statement implements IChainable<OperationalConnectT
     public removeFromChain(type: OperationalConnectType | LogicalConnectType): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public removeFromChain(arg1: any, arg2?: OperationalConnectType | LogicalConnectType): this {
-        /* Check if arg1 is ConnectType or LogicalConnectType value. */
-        if (this._isAnyConnectType(arg1)) {
+        /* Check if arg1 is a OperationalConnectType or LogicalConnectType value. */
+        if (isAnyConnectType(arg1)) {
             arg2 = arg1; /* Set arg2 to type value. */
             arg1 = /.*/; /* Set arg1 to match everything. */
         }
@@ -353,18 +354,6 @@ export class Command extends Statement implements IChainable<OperationalConnectT
     public clearChain(): this {
         this._chain = [];
         return this;
-    }
-
-    /**
-     * Checks if the provided argument is a LogicalConnectType or
-     * a ConnectType value.
-     *
-     * @param arg Value to check.
-     * @returns True if valid value.
-     */
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    private _isAnyConnectType(arg: any): boolean {
-        return (Object.values(OperationalConnectType).includes(arg) || Object.values(LogicalConnectType).includes(arg));
     }
 
     /**

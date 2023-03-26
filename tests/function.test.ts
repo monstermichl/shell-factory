@@ -1,7 +1,7 @@
 import { Function } from '../src/components/function/function.mjs';
 import { expect } from 'chai';
 import { Statement } from '../src/base/statement.mjs';
-import { StringVariable } from '../src/index.mjs';
+import { StringVariable } from '../src/variables/string-variable.mjs';
 
 describe('Function tests', () => {
     describe('constructor', () => {

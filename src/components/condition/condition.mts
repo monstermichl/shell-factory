@@ -1,36 +1,24 @@
 import { Statement } from '../../base/statement.mjs';
+import { isAnyConnectType } from '../../helpers/connect.mjs';
 import {
     convertToString,
     ConvertToStringError,
 } from '../../helpers/string.mjs';
+import {
+    ChainElement,
+    IChainable,
+} from '../../interfaces/chainable.mjs';
 import { IConditionable } from '../../interfaces/conditionable.mjs';
-
-/**
- * Condition chain link type.
- */
-enum ConditionChainLink {
-    And,
-    Or,
-}
-
-/**
- * Condition chain element.
- */
-class ConditionChainElement {
-    type: ConditionChainLink;
-    target: Condition;
-
-    constructor(type: ConditionChainLink, target: Condition) {
-        this.type = type;
-        this.target = target;
-    }
-}
+import {
+    LogicalConnectType,
+    ILogicallyConnectable,
+} from '../../interfaces/logically-connectable.mjs';
 
 /**
  * Represents a condition.
  */
-export class Condition extends Statement implements IConditionable {
-    protected _chain = [] as ConditionChainElement[];
+export class Condition extends Statement implements IConditionable, ILogicallyConnectable, IChainable<LogicalConnectType, Condition> {
+    protected _chain = [] as ChainElement<LogicalConnectType, Condition>[];
     private _test = true;
 
     /**
@@ -85,6 +73,13 @@ export class Condition extends Statement implements IConditionable {
     }
 
     /**
+     * Returns the applied chain.
+     */
+    public get chain(): ChainElement<LogicalConnectType, Condition>[] {
+        return this._chain;
+    }
+
+    /**
      * Returns if the condition gets tested.
      *
      * @returns True if the gets tested.
@@ -133,7 +128,7 @@ export class Condition extends Statement implements IConditionable {
     public and(condition: number): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public and(condition: any): this {
-        return this._addToChain(ConditionChainLink.And, condition);
+        return this._addToChain(LogicalConnectType.And, condition);
     }
 
     /**
@@ -166,7 +161,98 @@ export class Condition extends Statement implements IConditionable {
     public or(condition: number): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public or(condition: any): this {
-        return this._addToChain(ConditionChainLink.Or, condition);
+        return this._addToChain(LogicalConnectType.Or, condition);
+    }
+
+    /**
+     * Finds all elements based on the provided ID or pattern in the chain.
+     * 
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param type        If provided, the type must also match.
+     *
+     * @returns List of found chain elements.
+     */
+    public findInChain(idOrPattern: string, type?: LogicalConnectType): ChainElement<LogicalConnectType, Condition>[];
+    /**
+     * Finds all elements based on the provided ID or pattern in the chain.
+     * 
+     * @param pattern Content ID or Statement pattern.
+     * @param type    If provided, the type must also match.
+     *
+     * @returns List of found chain elements.
+     */
+    public findInChain(pattern: RegExp, type?: LogicalConnectType): ChainElement<LogicalConnectType, Condition>[];
+    /**
+     * Finds all elements based on the provided type.
+     * 
+     * @param type Type to look for.
+     * @returns List of found chain elements.
+     */
+    public findInChain(type: LogicalConnectType): ChainElement<LogicalConnectType, Condition>[];
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public findInChain(arg1: any, arg2?: LogicalConnectType): ChainElement<LogicalConnectType, Condition>[] {
+        /* Check if arg1 is a OperationalConnectType or LogicalConnectType value. */
+        if (isAnyConnectType(arg1)) {
+            arg2 = arg1; /* Set arg2 to type value. */
+            arg1 = /.*/; /* Set arg1 to match everything. */
+        }
+
+        return this.chain.filter((element) =>
+            element.target.compareIdOrPattern(arg1) && (!arg2 || (element.type === arg2)),
+        );
+    }
+
+    /**
+     * Removes all elements based on the provided ID or pattern from the chain.
+     * 
+     * @param idOrPattern Content ID or Statement pattern.
+     * @param type        If provided, the type must also match.
+     *
+     * @returns The current instance.
+     */
+    public removeFromChain(idOrPattern: string, type?: LogicalConnectType): this;
+    /**
+     * Removes all elements based on the provided ID or pattern from the chain.
+     * 
+     * @param pattern Content ID or Statement pattern.
+     * @param type    If provided, the type must also match.
+     *
+     * @returns The current instance.
+     */
+    public removeFromChain(pattern: RegExp, type?: LogicalConnectType): this;
+    /**
+     * Removes all elements based on the provided type.
+     * 
+     * @param type Type to remove.
+     * @returns The current instance.
+     */
+    public removeFromChain(type: LogicalConnectType): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public removeFromChain(arg1: any, arg2?: LogicalConnectType): this {
+        /* Check if arg1 is a OperationalConnectType or LogicalConnectType value. */
+        if (isAnyConnectType(arg1)) {
+            arg2 = arg1; /* Set arg2 to type value. */
+            arg1 = /.*/; /* Set arg1 to match everything. */
+        }
+
+        for (let i = this.chain.length - 1; i >= 0; --i) {
+            const element = this.chain[i];
+
+            if (element.target.compareIdOrPattern(arg1) && (!arg2 || (element.type === arg2))) {
+                this.chain.splice(i, 1);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Clears the whole chain.
+     *
+     * @returns The current instance.
+     */
+    public clearChain(): this {
+        this._chain = [];
+        return this;
     }
 
     /**
@@ -266,7 +352,7 @@ export class Condition extends Statement implements IConditionable {
 
         /* Add linked conditions. */
         this._chain.forEach((element) => {
-            conditionString += ` ${element.type === ConditionChainLink.And ? '-a' : '-o'} ${element.target._getValue(false)}`;
+            conditionString += ` ${element.type === LogicalConnectType.And ? '-a' : '-o'} ${element.target._getValue(false)}`;
         });
         return `${conditionString}${test ? ' ]' : ''}`;  /* If tested, surround with brackets. */
     }
@@ -277,31 +363,31 @@ export class Condition extends Statement implements IConditionable {
      * @param condition Condition to add.
      * @returns The current instance.
      */
-    private _addToChain(linkType: ConditionChainLink, condition: Condition): this;
+    private _addToChain(linkType: LogicalConnectType, condition: Condition): this;
     /**
      * Adds a new connected condition to the condition chain.
      *
      * @param condition Condition to add.
      * @returns The current instance.
      */
-    private _addToChain(linkType: ConditionChainLink, condition: string): this;
+    private _addToChain(linkType: LogicalConnectType, condition: string): this;
     /**
      * Adds a new connected condition to the condition chain.
      *
      * @param condition Condition to add.
      * @returns The current instance.
      */
-    private _addToChain(linkType: ConditionChainLink, condition: boolean): this;
+    private _addToChain(linkType: LogicalConnectType, condition: boolean): this;
     /**
      * Adds a new connected condition to the condition chain.
      *
      * @param condition Condition to add.
      * @returns The current instance.
      */
-    private _addToChain(linkType: ConditionChainLink, condition: number): this;
+    private _addToChain(linkType: LogicalConnectType, condition: number): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    private _addToChain(linkType: ConditionChainLink, condition: any): this {
-        this._chain.push(new ConditionChainElement(
+    private _addToChain(linkType: LogicalConnectType, condition: any): this {
+        this._chain.push(new ChainElement(
             linkType,
             new Condition(
                 Condition._convertToConditionString(condition),

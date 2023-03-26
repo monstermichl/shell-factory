@@ -11,7 +11,7 @@ import {
 } from '../../helpers/string.mjs';
 import { Command } from '../../base/command.mjs';
 import { Variable } from '../../base/variable.mjs';
-import { StringVariable } from '../../index.mjs';
+import { StringVariable } from '../../variables/string-variable.mjs';
 
 type StringOrVariable = string | Variable;
 type StringOrNumberOrBoolean = string | number | boolean;
