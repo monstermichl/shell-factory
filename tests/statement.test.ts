@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { randomUUID } from 'crypto';
 import { Statement } from '../src/base/statement.mjs';
 
 /* Helper class to instantiate Statement. */
