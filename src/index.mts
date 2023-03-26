@@ -4,7 +4,7 @@ export { WrapBlock } from './blocks/wrap-block.mjs';
 export { ConditionBlock } from './blocks/condition-block.mjs';
 export { IterationBlock } from './blocks/iteration-block.mjs';
 export {
-    ChainType,
+    IChainable,
     ChainElement,
 } from './interfaces/chainable.mjs';
 export { Statement } from './base/statement.mjs';
@@ -39,4 +39,3 @@ export { Select } from './components/select/select.mjs';
 export { Case } from './components/flow/case/case.mjs';
 export { CaseOption } from './components/flow/case/case-option.mjs';
 export { Function } from './components/function/function.mjs';
-export { IChainable } from './interfaces/chainable.mjs';

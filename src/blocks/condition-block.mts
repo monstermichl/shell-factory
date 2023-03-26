@@ -7,17 +7,21 @@ import {
 import { Condition } from '../components/condition/condition.mjs';
 import {
     ChainElement,
-    ChainType,
     IChainable,
 } from '../interfaces/chainable.mjs';
 import { Command } from '../base/command.mjs';
 import { IConditionable } from '../interfaces/conditionable.mjs';
+import {
+    LogicalConnectType,
+    ILogicallyConnectable,
+} from '../interfaces/logically-connectable.mjs';
+import { ConnectType } from '../interfaces/connectable.mjs';
 
 /**
  * Serves as the base for all blocks that require to handle conditions
  * (e.g., If, While, ...).
  */
-export abstract class ConditionBlock extends WrapBlock implements IChainable<Command>, IConditionable {
+export abstract class ConditionBlock extends WrapBlock implements IChainable<ConnectType | LogicalConnectType, Command>, IConditionable, ILogicallyConnectable {
     protected _condition: Condition;
 
     private _testOverwritten: boolean;
@@ -188,7 +192,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
     /**
      * Returns a the applied chain.
      */
-    public get chain(): ChainElement<Command>[] {
+    public get chain(): ChainElement<ConnectType | LogicalConnectType, Command>[] {
         return this.closingStatement?.chain;
     }
 
@@ -309,7 +313,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
     public read(source: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public read(source: any): this {
-        return this._addToChain(source, ChainType.Read);
+        return this._addToChain(source, ConnectType.Read);
     }
 
     /**
@@ -342,7 +346,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
     public write(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public write(target: any): this {
-        return this._addToChain(target, ChainType.Write);
+        return this._addToChain(target, ConnectType.Write);
     }
 
     /**
@@ -375,7 +379,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
     public append(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public append(target: any): this {
-        return this._addToChain(target, ChainType.Append);
+        return this._addToChain(target, ConnectType.Append);
     }
 
     /**
@@ -408,7 +412,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
     public pipe(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public pipe(target: any): this {
-        return this._addToChain(target, ChainType.Pipe);
+        return this._addToChain(target, ConnectType.Pipe);
     }
 
     /**
@@ -419,7 +423,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      *
      * @returns List of found chain elements.
      */
-    public findInChain(idOrPattern: string, type?: ChainType): ChainElement<Command>[];
+    public findInChain(idOrPattern: string, type?: ConnectType): ChainElement<ConnectType | LogicalConnectType, Command>[];
     /**
      * Finds all elements based on the provided ID or pattern in the chain.
      * 
@@ -428,16 +432,16 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      *
      * @returns List of found chain elements.
      */
-    public findInChain(pattern: RegExp, type?: ChainType): ChainElement<Command>[];
+    public findInChain(pattern: RegExp, type?: ConnectType): ChainElement<ConnectType | LogicalConnectType, Command>[];
     /**
      * Finds all elements based on the provided type.
      * 
      * @param type Type to look for.
      * @returns List of found chain elements.
      */
-    public findInChain(type: ChainType): ChainElement<Command>[];
+    public findInChain(type: ConnectType): ChainElement<ConnectType | LogicalConnectType, Command>[];
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public findInChain(arg1: any, arg2?: ChainType): ChainElement<Command>[] {
+    public findInChain(arg1: any, arg2?: ConnectType): ChainElement<ConnectType | LogicalConnectType, Command>[] {
         return this.closingStatement?.findInChain(arg1, arg2);
     }
 
@@ -450,7 +454,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      *
      * @returns The current instance.
      */
-    public removeFromChain(idOrPattern: string, type?: ChainType): this;
+    public removeFromChain(idOrPattern: string, type?: ConnectType): this;
     /**
      * Removes all elements based on the provided ID or pattern from the chain.
      * 
@@ -459,16 +463,16 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      *
      * @returns The current instance.
      */
-    public removeFromChain(pattern: RegExp, type?: ChainType): this;
+    public removeFromChain(pattern: RegExp, type?: ConnectType): this;
     /**
      * Removes all elements based on the provided type.
      * 
      * @param type Type to remove.
      * @returns The current instance.
      */
-    public removeFromChain(type: ChainType): this;
+    public removeFromChain(type: ConnectType): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public removeFromChain(arg1: any, arg2?: ChainType): this {
+    public removeFromChain(arg1: any, arg2?: ConnectType): this {
         this.closingStatement?.removeFromChain(arg1, arg2);
         return this;
     }
@@ -542,13 +546,13 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * @returns The current instance.
      */
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    private _addToChain(target: any, type: ChainType): this {
+    private _addToChain(target: any, type: ConnectType): this {
         if (this.closingStatement) {
             switch(type) {
-                case ChainType.Read: this.closingStatement.read(target); break;
-                case ChainType.Write: this.closingStatement.write(target); break;
-                case ChainType.Append: this.closingStatement.append(target); break;
-                case ChainType.Pipe: this.closingStatement.pipe(target); break;
+                case ConnectType.Read: this.closingStatement.read(target); break;
+                case ConnectType.Write: this.closingStatement.write(target); break;
+                case ConnectType.Append: this.closingStatement.append(target); break;
+                case ConnectType.Pipe: this.closingStatement.pipe(target); break;
             }
 
             /* If test has not been overwritten, dis-/enable it. */
@@ -556,7 +560,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
                 const chain = this.closingStatement.chain;
 
                 /* Disable testing if first chain element is of read-type. */
-                if (chain.length && (chain[0].type === ChainType.Read)) {
+                if (chain.length && (chain[0].type === ConnectType.Read)) {
                     /* Disable testing. */
                     this._test(false);
                 } else {
