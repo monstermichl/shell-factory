@@ -3,12 +3,8 @@ import {
     Block,
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
-import {
-    ConditionBlock,
-    BracketType,
-} from '../../../blocks/condition-block.mjs';
+import { ConditionBlock } from '../../../blocks/condition-block.mjs';
 import { Condition } from '../../condition/condition.mjs';
-import { Conditions } from '../../condition/conditions.mjs';
 
 /**
  * Represents a Bourne Shell until-block.
@@ -210,57 +206,8 @@ export class Until extends ConditionBlock {
      * @param content   Until-block content.
      */
     constructor(condition: Condition, content?: StatementOrBlockOrString[]);
-    /**
-     * Until constructor.
-     *
-     * @param conditions Until conditions.
-     * @param statement  Until-block content.
-     */
-    constructor(conditions: Conditions, statement?: Statement);
-    /**
-     * Until constructor.
-     *
-     * @param conditions Until conditions.
-     * @param statement  Until-block content.
-     */
-    constructor(conditions: Conditions, statement?: string);
-    /**
-     * Until constructor.
-     *
-     * @param conditions Until conditions.
-     * @param block      Until-block content.
-     */
-    constructor(conditions: Conditions, block?: Block);
-    /**
-     * Until constructor.
-     *
-     * @param conditions Until conditions.
-     * @param statements Until-block content.
-     */
-    constructor(conditions: Conditions, statements?: Statement[]);
-    /**
-     * Until constructor.
-     *
-     * @param conditions Until conditions.
-     * @param statements Until-block content.
-     */
-    constructor(conditions: Conditions, statements?: string[]);
-    /**
-     * Until constructor.
-     *
-     * @param conditions Until conditions.
-     * @param blocks     Until-block content.
-     */
-    constructor(conditions: Conditions, blocks?: Block[]);
-    /**
-     * Until constructor.
-     *
-     * @param conditions Until conditions.
-     * @param content    Until-block content.
-     */
-    constructor(conditions: Conditions, content?: StatementOrBlockOrString[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     constructor(condition: any, content?: any) {
-        super('until', BracketType.Square, condition, 'do', content, 'done');
+        super('until', condition, 'do', content, 'done');
     }
 }

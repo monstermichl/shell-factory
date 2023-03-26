@@ -1,4 +1,5 @@
 import { expect } from 'chai';
+import { Command } from '../src/base/command.mjs';
 import { Condition } from '../src/components/condition/condition.mjs';
 
 describe('Condition tests', () => {
@@ -70,17 +71,15 @@ describe('Condition tests', () => {
         describe('successful', () => {
             it('set test', () => {
                 const s = '1 -eq 1';
-                const condition = new Condition(s);
+                const condition = new Condition(s).setTest(true);
 
-                condition.test = true;
                 expect(condition.value).to.equal(`[ ${s} ]`);
             });
 
             it('set don\'t test', () => {
                 const s = '1 -eq 1';
-                const condition = new Condition(s);
+                const condition = new Condition(s).setTest(false);
 
-                condition.test = false;
                 expect(condition.value).to.equal(s);
             });
         });
@@ -130,6 +129,31 @@ describe('Condition tests', () => {
                 const condition1 = new Condition('1 -eq 1');
 
                 expect(condition1.equal(undefined as any)).to.be.equal(false);
+            });
+        });
+    });
+
+    describe('fromString', () => {
+        describe('successful', () => {
+            it('string condition', () => {
+                const condition1 = '1 -eq 1';
+                const condition = Condition.fromString(condition1);
+
+                expect(condition.value).to.equal(`[ ${condition1} ]`);
+            });
+
+            it('condition from Statement instance', () => {
+                const condition1 = new Command('1 -eq 1');
+                const condition = Condition.fromString(condition1);
+
+                expect(condition.value).to.equal(`[ ${condition1.value} ]`);
+            });
+
+            it('condition from Condition instance', () => {
+                const condition1 = new Condition('1 -eq 1');
+                const condition = Condition.fromString(condition1);
+
+                expect(condition.value).to.equal(condition1.value);
             });
         });
     });

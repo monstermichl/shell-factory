@@ -3,6 +3,7 @@ import {
     convertToString,
     ConvertToStringError,
 } from '../../helpers/string.mjs';
+import { IConditionable } from '../../interfaces/conditionable.mjs';
 
 /**
  * Condition chain link type.
@@ -28,7 +29,7 @@ class ConditionChainElement {
 /**
  * Represents a condition.
  */
-export class Condition extends Statement {
+export class Condition extends Statement implements IConditionable {
     protected _chain = [] as ConditionChainElement[];
     private _test = true;
 
@@ -71,7 +72,7 @@ export class Condition extends Statement {
      * @returns The full condition string.
      */
     public get value(): string {
-        return this._getValue(this.test);
+        return this._getValue(this.getTest());
     }
 
     /**
@@ -88,7 +89,7 @@ export class Condition extends Statement {
      *
      * @returns True if the gets tested.
      */
-    public get test(): boolean {
+    public getTest(): boolean {
         return this._test;
     }
 
@@ -97,8 +98,9 @@ export class Condition extends Statement {
      *
      * @param test Sets if the condition shall be tested.
      */
-    public set test(test: boolean) {
+    public setTest(test: boolean): this {
         this._test = !!test;
+        return this;
     }
 
     /**
@@ -184,6 +186,13 @@ export class Condition extends Statement {
      * @returns Condition object.
      */
     public static fromString(condition: string): Condition;
+    /**
+     * Creates a Condition object out of a Statement.
+     *
+     * @param condition Condition Statement.
+     * @returns Condition object.
+     */
+    public static fromString(condition: Statement): Condition;
     /**
      * Creates a Condition object out of a Condition object. (Does.
      * nothing. This signature exists just to make the function callable

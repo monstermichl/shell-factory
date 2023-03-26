@@ -1,20 +1,13 @@
 import { expect } from 'chai';
 import { Command } from '../src/base/command.mjs';
 import { Statement } from '../src/base/statement.mjs';
-import {
-    ConditionBlock,
-    BracketType,
-} from '../src/blocks/condition-block.mjs';
-import { Conditions } from '../src/components/condition/conditions.mjs';
-import {
-    Link,
-    LinkedCondition,
-} from '../src/components/condition/linked-condition.mjs';
+import { ConditionBlock } from '../src/blocks/condition-block.mjs';
+import { Condition } from '../src/components/condition/condition.mjs';
 
 /* Helper class to instantiate ConditionBlock. */
 class ConditionBlockHelper extends ConditionBlock {
-    constructor(conditionKeyword: string, bracketType: BracketType, condition: any, blockStartKeyword: string, content?: any, blockEndKeyword?: string) {
-        super(conditionKeyword, bracketType, condition, blockStartKeyword, content, blockEndKeyword);
+    constructor(conditionKeyword: string, condition: any, blockStartKeyword: string, content?: any, blockEndKeyword?: string) {
+        super(conditionKeyword, condition, blockStartKeyword, content, blockEndKeyword);
     }
 }
 
@@ -28,7 +21,6 @@ describe('ConditionBlock tests', () => {
                 const blockEndKeyword = 'fi';
                 const block = new ConditionBlockHelper(
                     conditionKeyword,
-                    BracketType.Square,
                     condition,
                     blockStartKeyword,
                     undefined,
@@ -40,44 +32,6 @@ describe('ConditionBlock tests', () => {
                 expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
             });
 
-            it('construct if with round brackets', () => {
-                const conditionKeyword = 'if';
-                const blockStartKeyword = 'then';
-                const condition = '1 -eq 1';
-                const blockEndKeyword = 'fi';
-                const block = new ConditionBlockHelper(
-                    conditionKeyword,
-                    BracketType.Round,
-                    condition,
-                    blockStartKeyword,
-                    undefined,
-                    blockEndKeyword,
-                );
-
-                expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
-                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} ( ${condition} ); ${blockStartKeyword}`);
-                expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
-            });
-
-            it('construct if without brackets', () => {
-                const conditionKeyword = 'if';
-                const blockStartKeyword = 'then';
-                const condition = '1 -eq 1';
-                const blockEndKeyword = 'fi';
-                const block = new ConditionBlockHelper(
-                    conditionKeyword,
-                    BracketType.None,
-                    condition,
-                    blockStartKeyword,
-                    undefined,
-                    blockEndKeyword,
-                );
-
-                expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
-                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} ${condition}; ${blockStartKeyword}`);
-                expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
-            });
-
             it('construct if with multiple and-connected conditions', () => {
                 const conditionKeyword = 'if';
                 const blockStartKeyword = 'then';
@@ -86,8 +40,7 @@ describe('ConditionBlock tests', () => {
                 const blockEndKeyword = 'fi';
                 const block = new ConditionBlockHelper(
                     conditionKeyword,
-                    BracketType.Square,
-                    new Conditions(condition1, new LinkedCondition(Link.And, condition2)),
+                    new Condition(condition1).and(condition2),
                     blockStartKeyword,
                     undefined,
                     blockEndKeyword,
@@ -95,7 +48,7 @@ describe('ConditionBlock tests', () => {
 
                 expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
                 expect((block.raw[0] as Statement).value).to.be.equal(
-                    `${conditionKeyword} [ ${condition1} ] && [ ${condition2} ]; ${blockStartKeyword}`
+                    `${conditionKeyword} [ ${condition1} -a ${condition2} ]; ${blockStartKeyword}`
                 );
                 expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
             });
@@ -108,8 +61,7 @@ describe('ConditionBlock tests', () => {
                 const blockEndKeyword = 'fi';
                 const block = new ConditionBlockHelper(
                     conditionKeyword,
-                    BracketType.Square,
-                    new Conditions(condition1, new LinkedCondition(Link.Or, condition2)),
+                    new Condition(condition1).or(condition2),
                     blockStartKeyword,
                     undefined,
                     blockEndKeyword,
@@ -117,23 +69,35 @@ describe('ConditionBlock tests', () => {
 
                 expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
                 expect((block.raw[0] as Statement).value).to.be.equal(
-                    `${conditionKeyword} [ ${condition1} ] || [ ${condition2} ]; ${blockStartKeyword}`
+                    `${conditionKeyword} [ ${condition1} -o ${condition2} ]; ${blockStartKeyword}`
                 );
                 expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
             });
         });
 
         describe('failed', () => {
-            it('missing condition', () => {
+            it('missing condition keyword', () => {
                 expect(function() {
-                    new ConditionBlockHelper('', BracketType.None, '1 -eq 1', 'then')
-                }).to.throw('Missing condition');
+                    new ConditionBlockHelper('', '1 -eq 1', 'then')
+                }).to.throw('Missing condition keyword');
+            });
+
+            it('invalid condition keyword type provided', () => {
+                expect(function() {
+                    new ConditionBlockHelper({} as any, '1 -eq 1', 'then')
+                }).to.throw('Invalid condition keyword type provided');
             });
 
             it('missing block-start keyword', () => {
                 expect(function() {
-                    new ConditionBlockHelper('if', BracketType.None, '1 -eq 1', '')
+                    new ConditionBlockHelper('if', '1 -eq 1', '')
                 }).to.throw('Missing block-start keyword');
+            });
+
+            it('invalid block-start keyword type provided', () => {
+                expect(function() {
+                    new ConditionBlockHelper('if', '1 -eq 1', {} as any)
+                }).to.throw('Invalid block-start keyword type provided');
             });
         });
     });
@@ -144,13 +108,12 @@ describe('ConditionBlock tests', () => {
                 const condition = '1 -eq 1';
                 const block = new ConditionBlockHelper(
                     'if',
-                    BracketType.Square,
                     condition,
                     'then',
                     undefined,
                     'fi',
                 );
-                expect(block.conditions.condition.value).to.be.equal(condition);
+                expect(block.condition.value).to.be.equal(`[ ${condition} ]`);
             });
         });
     });
@@ -165,7 +128,6 @@ describe('ConditionBlock tests', () => {
                 const file = 'test.txt';
                 const block = new ConditionBlockHelper(
                     conditionKeyword,
-                    BracketType.Square,
                     condition,
                     blockStartKeyword,
                     undefined,
@@ -189,7 +151,6 @@ describe('ConditionBlock tests', () => {
                 const file = 'test.txt';
                 const block = new ConditionBlockHelper(
                     conditionKeyword,
-                    BracketType.Square,
                     condition,
                     blockStartKeyword,
                     undefined,
@@ -213,7 +174,6 @@ describe('ConditionBlock tests', () => {
                 const file = 'test.txt';
                 const block = new ConditionBlockHelper(
                     conditionKeyword,
-                    BracketType.Square,
                     condition,
                     blockStartKeyword,
                     undefined,
@@ -237,7 +197,6 @@ describe('ConditionBlock tests', () => {
                 const command = 'cat';
                 const block = new ConditionBlockHelper(
                     conditionKeyword,
-                    BracketType.Square,
                     condition,
                     blockStartKeyword,
                     undefined,
@@ -259,7 +218,6 @@ describe('ConditionBlock tests', () => {
                 const chainValue3 = 'test.txt';
                 const block = new ConditionBlockHelper(
                     'if',
-                    BracketType.Square,
                     '1 -eq 1',
                     'then',
                     undefined,
@@ -289,7 +247,6 @@ describe('ConditionBlock tests', () => {
                 const chainValue3 = 'test.txt';
                 const block = new ConditionBlockHelper(
                     'if',
-                    BracketType.Square,
                     '1 -eq 1',
                     'then',
                     undefined,
@@ -320,7 +277,6 @@ describe('ConditionBlock tests', () => {
                 const chainValue3 = 'test.txt';
                 const block = new ConditionBlockHelper(
                     'if',
-                    BracketType.Square,
                     '1 -eq 1',
                     'then',
                     undefined,
@@ -340,7 +296,7 @@ describe('ConditionBlock tests', () => {
         });
     });
 
-    describe('test', () => {
+    describe('setTest', () => {
         describe('successful', () => {
             it('get', () => {
                 const conditionKeyword = 'if';
@@ -349,22 +305,77 @@ describe('ConditionBlock tests', () => {
                 const blockEndKeyword = 'fi';
                 const block = new ConditionBlockHelper(
                     conditionKeyword,
-                    BracketType.Square,
                     condition,
                     blockStartKeyword,
                     undefined,
                     blockEndKeyword,
                 )
-                block.dontTest; /* Deactivate testing. */
+                block.setTest(false); /* Deactivate testing. */
+                expect(block.getTest()).to.be.false;
 
                 expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
 
                 expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} ${condition}; ${blockStartKeyword}`);
                 expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
 
-                block.test; /* Activate testing. */
+                block.setTest(true); /* Activate testing. */
+                expect(block.getTest()).to.be.true;
 
                 expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} [ ${condition} ]; ${blockStartKeyword}`);
+                expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
+            });
+        });
+    });
+
+    describe('and', () => {
+        describe('successful', () => {
+            it('add condition', () => {
+                const conditionKeyword = 'if';
+                const blockStartKeyword = 'then';
+                const condition1 = '1 -eq 1';
+                const condition2 = '2 -eq 2';
+                const blockEndKeyword = 'fi';
+                const block = new ConditionBlockHelper(
+                    conditionKeyword,
+                    condition1,
+                    blockStartKeyword,
+                    undefined,
+                    blockEndKeyword,
+                )
+                expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
+                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} [ ${condition1} ]; ${blockStartKeyword}`);
+
+                /* Add additional condition. */
+                expect(block.and(condition2)).to.be.equal(block);
+
+                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} [ ${condition1} -a ${condition2} ]; ${blockStartKeyword}`);
+                expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
+            });
+        });
+    });
+
+    describe('and', () => {
+        describe('successful', () => {
+            it('add condition', () => {
+                const conditionKeyword = 'if';
+                const blockStartKeyword = 'then';
+                const condition1 = '1 -eq 1';
+                const condition2 = '2 -eq 2';
+                const blockEndKeyword = 'fi';
+                const block = new ConditionBlockHelper(
+                    conditionKeyword,
+                    condition1,
+                    blockStartKeyword,
+                    undefined,
+                    blockEndKeyword,
+                )
+                expect(block.raw.length).to.be.equal(3); /* Start-condition statement, body, end-condition statement. */
+                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} [ ${condition1} ]; ${blockStartKeyword}`);
+
+                /* Add additional condition. */
+                expect(block.or(condition2)).to.be.equal(block);
+
+                expect((block.raw[0] as Statement).value).to.be.equal(`${conditionKeyword} [ ${condition1} -o ${condition2} ]; ${blockStartKeyword}`);
                 expect((block.raw[2] as Statement).value).to.be.equal(blockEndKeyword);
             });
         });

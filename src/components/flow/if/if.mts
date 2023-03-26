@@ -7,7 +7,6 @@ import {
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
 import { Condition } from '../../condition/condition.mjs';
-import { Conditions } from '../../condition/conditions.mjs';
 
 /**
  * Represents a summary of the parts of an if-block.
@@ -221,55 +220,6 @@ export class If extends IfBase {
      * @param content   If-block content.
      */
     constructor(condition: Condition, content?: StatementOrBlockOrString[]);
-    /**
-     * If constructor.
-     *
-     * @param conditions If-conditions.
-     * @param statement  If-block content.
-     */
-    constructor(conditions: Conditions, statement?: Statement);
-    /**
-     * If constructor.
-     *
-     * @param conditions If-conditions.
-     * @param statement  If-block content.
-     */
-    constructor(conditions: Conditions, statement?: string);
-    /**
-     * If constructor.
-     *
-     * @param conditions If-conditions.
-     * @param block      If-block content.
-     */
-    constructor(conditions: Conditions, block?: Block);
-    /**
-     * If constructor.
-     *
-     * @param conditions If-conditions.
-     * @param statements If-block content.
-     */
-    constructor(conditions: Conditions, statements?: Statement[]);
-    /**
-     * If constructor.
-     *
-     * @param conditions If-conditions.
-     * @param statements If-block content.
-     */
-    constructor(conditions: Conditions, statements?: string[]);
-    /**
-     * If constructor.
-     *
-     * @param conditions If-conditions.
-     * @param blocks     If-block content.
-     */
-    constructor(conditions: Conditions, blocks?: Block[]);
-    /**
-     * If constructor.
-     *
-     * @param conditions If-conditions.
-     * @param content    If-block content.
-     */
-    constructor(conditions: Conditions, content?: StatementOrBlockOrString[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     constructor(condition: any, content?: any) {
         super('if', condition, content, 'fi');
@@ -442,96 +392,21 @@ export class If extends IfBase {
      * @returns If successful, the current class is returned. Otherwise, null is returned.
      */
     public elseIf(condition: Condition, content?: StatementOrBlockOrString[], replace?: boolean): this;
-    /**
-     * Adds an else-if branch to the if-block.
-     *
-     * @param conditions Else-if-conditions.
-     * @param statement  Else-if-block content.
-     * @param replace    If conditions already exist and replace is set to true
-     *                   the else-if-block's content will be replaced.
-     * 
-     * @returns If successful, the current class is returned. Otherwise, null is returned.
-     */
-    public elseIf(conditions: Conditions, statement?: Statement, replace?: boolean): this;
-    /**
-     * Adds an else-if branch to the if-block.
-     *
-     * @param conditions Else-if-conditions.
-     * @param statement  Else-if-block content.
-     * @param replace    If conditions already exist and replace is set to true
-     *                   the else-if-block's content will be replaced.
-     * 
-     * @returns If successful, the current class is returned. Otherwise, null is returned.
-     */
-    public elseIf(conditions: Conditions, statement?: string, replace?: boolean): this;
-    /**
-     * Adds an else-if branch to the if-block.
-     *
-     * @param conditions Else-if-conditions.
-     * @param block      Else-if-block content.
-     * @param replace    If conditions already exist and replace is set to true
-     *                   the else-if-block's content will be replaced.
-     * 
-     * @returns If successful, the current class is returned. Otherwise, null is returned.
-     */
-    public elseIf(conditions: Conditions, block?: Block, replace?: boolean): this;
-    /**
-     * Adds an else-if branch to the if-block.
-     *
-     * @param conditions Else-if-conditions.
-     * @param statements Else-if-block content.
-     * @param replace    If conditions already exist and replace is set to true
-     *                   the else-if-block's content will be replaced.
-     * 
-     * @returns If successful, the current class is returned. Otherwise, null is returned.
-     */
-    public elseIf(conditions: Conditions, content?: Statement[], replace?: boolean): this;
-    /**
-     * Adds an else-if branch to the if-block.
-     *
-     * @param conditions Else-if-conditions.
-     * @param statements Else-if-block content.
-     * @param replace    If conditions already exist and replace is set to true
-     *                   the else-if-block's content will be replaced.
-     * 
-     * @returns If successful, the current class is returned. Otherwise, null is returned.
-     */
-    public elseIf(conditions: Conditions, statements?: string[], replace?: boolean): this;
-    /**
-     * Adds an else-if branch to the if-block.
-     *
-     * @param conditions Else-if-conditions.
-     * @param block      Else-if-block content.
-     * @param replace    If conditions already exist and replace is set to true
-     *                   the else-if-block's content will be replaced.
-     * 
-     * @returns If successful, the current class is returned. Otherwise, null is returned.
-     */
-    public elseIf(conditions: Conditions, block?: Block[], replace?: boolean): this;
-    /**
-     * Adds an else-if branch to the if-block.
-     *
-     * @param conditions Else-if-conditions.
-     * @param content    Else-if-block content.
-     * @param replace    If conditions already exist and replace is set to true
-     *                   the else-if-block's content will be replaced.
-     * 
-     * @returns If successful, the current class is returned. Otherwise, null is returned.
-     */
-    public elseIf(conditions: Conditions, content?: StatementOrBlockOrString[], replace?: boolean): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public elseIf(arg: any, content?: any, replace=false): this {
+        const condition = Condition.fromString(arg);
+        
         /* Only continue if If-condition doesn't cover provided condition. */
-        if (this.conditions.equal(arg)) {
+        if (this.condition.equal(condition)) {
             throw new Error('Condition already covered by "if"');
         }
         let ok = true;
-        let elseIf = this._elseIfs.find((value) => value.conditions.equal(arg));
-
+        let elseIf = this._elseIfs.find((value) => value.condition.equal(condition));
+        
         if (!elseIf) {
             let insertIndex = -1;
 
-            elseIf = new ElseIf(arg, content); /* Create new else-if entry and add the reference to content. */
+            elseIf = new ElseIf(condition, content); /* Create new else-if entry and add the reference to content. */
             this._elseIfs.push(elseIf);
 
             /* Make sure, to push else-if before else. */

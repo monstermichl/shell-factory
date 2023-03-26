@@ -121,8 +121,8 @@ describe('If tests', () => {
 
                 expect(parts.if).to.be.equal(ifBlock);
                 expect(parts.elseIfs?.length).to.be.equal(2);
-                expect(parts.elseIfs![0].conditions.condition.value).to.be.equal(condition2);
-                expect(parts.elseIfs![1].conditions.condition.value).to.be.equal(condition3);
+                expect(parts.elseIfs![0].condition.value).to.be.equal(`[ ${condition2} ]`);
+                expect(parts.elseIfs![1].condition.value).to.be.equal(`[ ${condition3} ]`);
                 expect(parts.else).to.be.equal(undefined);
             });
 
