@@ -1,14 +1,14 @@
 /**
  * Connect type.
  */
-export enum ConnectType {
+export enum OperationalConnectType {
     Read   = 'read',
     Write  = 'write',
     Append = 'append',
     Pipe   = 'pipe',
 }
 
-export interface IConnectable {
+export interface IOperationallyConnectable {
     /**
      * Read from source.
      * 

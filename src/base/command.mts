@@ -11,14 +11,14 @@ import {
     ILogicallyConnectable,
     LogicalConnectType,
 } from '../interfaces/logically-connectable.mjs';
-import { ConnectType } from '../interfaces/connectable.mjs';
+import { OperationalConnectType } from '../interfaces/operationally-connectable.mjs';
 
 /**
  * Represents a shell command. Commands provide the ability to be
  * combined with other commands.
  */
-export class Command extends Statement implements IChainable<ConnectType | LogicalConnectType, Command>, ILogicallyConnectable {
-    protected _chain = [] as ChainElement<ConnectType | LogicalConnectType, Command>[];
+export class Command extends Statement implements IChainable<OperationalConnectType | LogicalConnectType, Command>, ILogicallyConnectable {
+    protected _chain = [] as ChainElement<OperationalConnectType | LogicalConnectType, Command>[];
 
     /**
      * Statement constructor.
@@ -45,10 +45,10 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
 
             /* Decide which operator string to use. */
             switch(type) {
-                case ConnectType.Read: operator = '<'; break;
-                case ConnectType.Write: operator = '>'; break;
-                case ConnectType.Append: operator = '>>'; break;
-                case ConnectType.Pipe: operator = '|'; break;
+                case OperationalConnectType.Read: operator = '<'; break;
+                case OperationalConnectType.Write: operator = '>'; break;
+                case OperationalConnectType.Append: operator = '>>'; break;
+                case OperationalConnectType.Pipe: operator = '|'; break;
                 case LogicalConnectType.And: operator = '&&'; break;
                 case LogicalConnectType.Or: operator = '||'; break;
 
@@ -62,7 +62,7 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
     /**
      * Returns the applied chain.
      */
-    public get chain(): ChainElement<ConnectType | LogicalConnectType, Command>[] {
+    public get chain(): ChainElement<OperationalConnectType | LogicalConnectType, Command>[] {
         return this._chain;
     }
 
@@ -96,7 +96,7 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
     public read(source: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public read(source: any): this {
-        return this._addChainElement(ConnectType.Read, source, 'source');
+        return this._addChainElement(OperationalConnectType.Read, source, 'source');
     }
 
     /**
@@ -129,7 +129,7 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
     public write(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public write(target: any): this {
-        return this._addChainElement(ConnectType.Write, target, 'target');
+        return this._addChainElement(OperationalConnectType.Write, target, 'target');
     }
 
     /**
@@ -162,7 +162,7 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
     public append(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public append(target: any): this {
-        return this._addChainElement(ConnectType.Append, target, 'target');
+        return this._addChainElement(OperationalConnectType.Append, target, 'target');
     }
 
     /**
@@ -195,7 +195,7 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
     public pipe(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public pipe(target: any): this {
-        return this._addChainElement(ConnectType.Pipe, target, 'target');
+        return this._addChainElement(OperationalConnectType.Pipe, target, 'target');
     }
 
     /**
@@ -272,7 +272,7 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
      *
      * @returns List of found chain elements.
      */
-    public findInChain(idOrPattern: string, type?: ConnectType | LogicalConnectType): ChainElement<ConnectType | LogicalConnectType, Command>[];
+    public findInChain(idOrPattern: string, type?: OperationalConnectType | LogicalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[];
     /**
      * Finds all elements based on the provided ID or pattern in the chain.
      * 
@@ -281,16 +281,16 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
      *
      * @returns List of found chain elements.
      */
-    public findInChain(pattern: RegExp, type?: ConnectType | LogicalConnectType): ChainElement<ConnectType | LogicalConnectType, Command>[];
+    public findInChain(pattern: RegExp, type?: OperationalConnectType | LogicalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[];
     /**
      * Finds all elements based on the provided type.
      * 
      * @param type Type to look for.
      * @returns List of found chain elements.
      */
-    public findInChain(type: ConnectType | LogicalConnectType): ChainElement<ConnectType | LogicalConnectType, Command>[];
+    public findInChain(type: OperationalConnectType | LogicalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[];
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public findInChain(arg1: any, arg2?: ConnectType | LogicalConnectType): ChainElement<ConnectType | LogicalConnectType, Command>[] {
+    public findInChain(arg1: any, arg2?: OperationalConnectType | LogicalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[] {
         /* Check if arg1 is ConnectType or LogicalConnectType value. */
         if (this._isAnyConnectType(arg1)) {
             arg2 = arg1; /* Set arg2 to type value. */
@@ -310,7 +310,7 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
      *
      * @returns The current instance.
      */
-    public removeFromChain(idOrPattern: string, type?: ConnectType | LogicalConnectType): this;
+    public removeFromChain(idOrPattern: string, type?: OperationalConnectType | LogicalConnectType): this;
     /**
      * Removes all elements based on the provided ID or pattern from the chain.
      * 
@@ -319,16 +319,16 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
      *
      * @returns The current instance.
      */
-    public removeFromChain(pattern: RegExp, type?: ConnectType | LogicalConnectType): this;
+    public removeFromChain(pattern: RegExp, type?: OperationalConnectType | LogicalConnectType): this;
     /**
      * Removes all elements based on the provided type.
      * 
      * @param type Type to remove.
      * @returns The current instance.
      */
-    public removeFromChain(type: ConnectType | LogicalConnectType): this;
+    public removeFromChain(type: OperationalConnectType | LogicalConnectType): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public removeFromChain(arg1: any, arg2?: ConnectType | LogicalConnectType): this {
+    public removeFromChain(arg1: any, arg2?: OperationalConnectType | LogicalConnectType): this {
         /* Check if arg1 is ConnectType or LogicalConnectType value. */
         if (this._isAnyConnectType(arg1)) {
             arg2 = arg1; /* Set arg2 to type value. */
@@ -364,7 +364,7 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
      */
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     private _isAnyConnectType(arg: any): boolean {
-        return (Object.values(ConnectType).includes(arg) || Object.values(LogicalConnectType).includes(arg));
+        return (Object.values(OperationalConnectType).includes(arg) || Object.values(LogicalConnectType).includes(arg));
     }
 
     /**
@@ -406,7 +406,7 @@ export class Command extends Statement implements IChainable<ConnectType | Logic
      *
      * @returns The current instance.
      */
-    private _addChainElement(chainType: ConnectType | LogicalConnectType, convertible: unknown, description: string): this {
+    private _addChainElement(chainType: OperationalConnectType | LogicalConnectType, convertible: unknown, description: string): this {
         if (!this.statement) {
             throw new Error('An empty statement cannot be chained');
         }

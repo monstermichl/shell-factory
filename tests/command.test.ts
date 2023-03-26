@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { Command } from '../src/base/command.mjs';
 import { Statement } from '../src/base/statement.mjs';
-import { ConnectType } from '../src/interfaces/connectable.mjs';
 import { LogicalConnectType } from '../src/interfaces/logically-connectable.mjs';
+import { OperationalConnectType } from '../src/interfaces/operationally-connectable.mjs';
 
 /**
  * Helper class to instantiate a simple Statement.
@@ -66,7 +66,7 @@ describe('Command tests', () => {
                 const statement = new Command('echo "Hello World")').write('test.txt');
 
                 expect(statement.chain.length).to.be.equal(1);
-                statement.chain[0].type = 'nevermind' as ConnectType; /* Set invalid type. */
+                statement.chain[0].type = 'nevermind' as OperationalConnectType; /* Set invalid type. */
 
                 expect(function() {
                     statement.value;
@@ -85,7 +85,7 @@ describe('Command tests', () => {
                 expect(statement.read(source)).to.be.equal(statement);
 
                 expect(statement.chain.length).to.be.equal(1);
-                expect(statement.chain[0].type).to.be.equal(ConnectType.Read);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Read);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(source);
 
                 expect(statement.value).to.be.equal(`${statement.statement} < ${source}`);
@@ -99,7 +99,7 @@ describe('Command tests', () => {
                 expect(statement.read(source)).to.be.equal(statement);
 
                 expect(statement.chain.length).to.be.equal(1);
-                expect(statement.chain[0].type).to.be.equal(ConnectType.Read);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Read);
                 expect(statement.chain[0].target).to.be.equal(source);
             });
 
@@ -111,7 +111,7 @@ describe('Command tests', () => {
                 expect(statement.read(source)).to.be.equal(statement);
 
                 expect(statement.chain.length).to.be.equal(1);
-                expect(statement.chain[0].type).to.be.equal(ConnectType.Read);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Read);
                 expect(statement.chain[0].target.value).to.be.equal(source.value);
             });
         });
@@ -147,7 +147,7 @@ describe('Command tests', () => {
                 expect(statement.write(target)).to.be.equal(statement);
 
                 expect(statement.chain.length).to.be.equal(1);
-                expect(statement.chain[0].type).to.be.equal(ConnectType.Write);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Write);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
 
                 expect(statement.value).to.be.equal(`${statement.statement} > ${target}`);
@@ -165,7 +165,7 @@ describe('Command tests', () => {
                 expect(statement.append(target)).to.be.equal(statement);
 
                 expect(statement.chain.length).to.be.equal(1);
-                expect(statement.chain[0].type).to.be.equal(ConnectType.Append);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Append);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
 
                 expect(statement.value).to.be.equal(`${statement.statement} >> ${target}`);
@@ -183,7 +183,7 @@ describe('Command tests', () => {
                 expect(statement.pipe(target)).to.be.equal(statement);
 
                 expect(statement.chain.length).to.be.equal(1);
-                expect(statement.chain[0].type).to.be.equal(ConnectType.Pipe);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Pipe);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
 
                 expect(statement.value).to.be.equal(`${statement.statement} | ${target}`);
@@ -263,7 +263,7 @@ describe('Command tests', () => {
                     .write(chainValue3);
                 
                 expect(statement.chain.length).to.be.equal(3);
-                const found = statement.findInChain(/.*/, ConnectType.Pipe);
+                const found = statement.findInChain(/.*/, OperationalConnectType.Pipe);
 
                 expect(found.length).to.be.equal(2);
                 expect(found[0].target.value).to.be.equal(chainValue1);
@@ -284,7 +284,7 @@ describe('Command tests', () => {
                     .write(chainValue3);
                 
                 expect(statement.chain.length).to.be.equal(3);
-                const found = statement.findInChain(ConnectType.Write);
+                const found = statement.findInChain(OperationalConnectType.Write);
 
                 expect(found.length).to.be.equal(1);
                 expect(found[0].target.value).to.be.equal(chainValue3);
@@ -339,7 +339,7 @@ describe('Command tests', () => {
                     .write(chainValue3);
                 
                     expect(statement.chain.length).to.be.equal(3);
-                    expect(statement.removeFromChain(/.+/, ConnectType.Pipe)).to.be.equal(statement);
+                    expect(statement.removeFromChain(/.+/, OperationalConnectType.Pipe)).to.be.equal(statement);
     
                     expect(statement.chain.length).to.be.equal(1);
                     expect(statement.chain[0].target.value).to.be.equal(chainValue3);
@@ -359,7 +359,7 @@ describe('Command tests', () => {
                     .write(chainValue3);
                 
                     expect(statement.chain.length).to.be.equal(3);
-                    expect(statement.removeFromChain(ConnectType.Pipe)).to.be.equal(statement);
+                    expect(statement.removeFromChain(OperationalConnectType.Pipe)).to.be.equal(statement);
     
                     expect(statement.chain.length).to.be.equal(1);
                     expect(statement.chain[0].target.value).to.be.equal(chainValue3);
