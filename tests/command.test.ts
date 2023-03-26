@@ -86,6 +86,8 @@ describe('Command tests', () => {
                 expect(statement.chain.length).to.be.equal(1);
                 expect(statement.chain[0].type).to.be.equal(ChainType.Read);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(source);
+
+                expect(statement.value).to.be.equal(`${statement.statement} < ${source}`);
             });
 
             it('instance of Command', () => {
@@ -146,6 +148,8 @@ describe('Command tests', () => {
                 expect(statement.chain.length).to.be.equal(1);
                 expect(statement.chain[0].type).to.be.equal(ChainType.Write);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
+
+                expect(statement.value).to.be.equal(`${statement.statement} > ${target}`);
             });
         });
     });
@@ -162,6 +166,8 @@ describe('Command tests', () => {
                 expect(statement.chain.length).to.be.equal(1);
                 expect(statement.chain[0].type).to.be.equal(ChainType.Append);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
+
+                expect(statement.value).to.be.equal(`${statement.statement} >> ${target}`);
             });
         });
     });
@@ -178,6 +184,44 @@ describe('Command tests', () => {
                 expect(statement.chain.length).to.be.equal(1);
                 expect(statement.chain[0].type).to.be.equal(ChainType.Pipe);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
+
+                expect(statement.value).to.be.equal(`${statement.statement} | ${target}`);
+            });
+        });
+    });
+
+    describe('and', () => {
+        describe('successful', () => {
+            it('valid path', () => {
+                const target = 'test';
+                const statement = new Command('echo "hello"');
+
+                expect(statement.chain.length).to.be.equal(0);
+                expect(statement.and(target)).to.be.equal(statement);
+
+                expect(statement.chain.length).to.be.equal(1);
+                expect(statement.chain[0].type).to.be.equal(ChainType.And);
+                expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
+
+                expect(statement.value).to.be.equal(`${statement.statement} && ${target}`);
+            });
+        });
+    });
+
+    describe('or', () => {
+        describe('successful', () => {
+            it('valid path', () => {
+                const target = 'test';
+                const statement = new Command('echo "hello"');
+
+                expect(statement.chain.length).to.be.equal(0);
+                expect(statement.or(target)).to.be.equal(statement);
+
+                expect(statement.chain.length).to.be.equal(1);
+                expect(statement.chain[0].type).to.be.equal(ChainType.Or);
+                expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
+
+                expect(statement.value).to.be.equal(`${statement.statement} || ${target}`);
             });
         });
     });

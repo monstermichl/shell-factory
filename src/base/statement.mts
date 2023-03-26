@@ -2,7 +2,6 @@ import { evaluateIdOrPattern } from '../helpers/pattern.mjs';
 import {
     convertToString,
     ConvertToStringError,
-    isNumber,
 } from '../helpers/string.mjs';
 import { Base } from './base.mjs';
 

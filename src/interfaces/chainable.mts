@@ -2,10 +2,12 @@
  * Chain type.
  */
 export enum ChainType {
-    Read   = (1 << 0), /* 1 */
-    Write  = (1 << 1), /* 2 */
-    Append = (1 << 2), /* 4 */
-    Pipe   = (1 << 3), /* 8 */
+    Read   = (1 << 0), /*  1 */
+    Write  = (1 << 1), /*  2 */
+    Append = (1 << 2), /*  4 */
+    Pipe   = (1 << 3), /*  8 */
+    And    = (1 << 4), /* 16 */
+    Or     = (1 << 5), /* 32 */
 }
 
 /**
@@ -114,6 +116,64 @@ export interface IChainable<T> {
      * @returns The current instance.
      */
     pipe(target: boolean): this;
+
+    /**
+     * Logically and-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    and(target: unknown): this;
+    /**
+     * Logically and-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    and(target: string): this;
+    /**
+     * Logically and-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    and(target: boolean): this;
+    /**
+     * Logically and-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    and(target: number): this;
+
+    /**
+     * Logically or-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    or(target: unknown): this;
+    /**
+     * Logically or-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    or(target: string): this;
+    /**
+     * Logically or-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    or(target: boolean): this;
+    /**
+     * Logically or-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    or(target: number): this;
 
     /**
      * Finds all elements based on the provided ID or pattern in the chain.

@@ -45,6 +45,8 @@ export class Command extends Statement implements IChainable<Command> {
                 case ChainType.Write: operator = '>'; break;
                 case ChainType.Append: operator = '>>'; break;
                 case ChainType.Pipe: operator = '|'; break;
+                case ChainType.And: operator = '&&'; break;
+                case ChainType.Or: operator = '||'; break;
 
                 default: throw new Error('Unsupported operator');
             }
@@ -190,6 +192,72 @@ export class Command extends Statement implements IChainable<Command> {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public pipe(target: any): this {
         return this._addChainElement(ChainType.Pipe, target, 'target');
+    }
+
+    /**
+     * Logically and-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    and(target: string): this;
+    /**
+     * Logically and-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    and(target: boolean): this;
+    /**
+     * Logically and-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    and(target: number): this;
+    /**
+     * Logically and-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    and(target: Statement): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    and(target: any): this {
+        return this._addChainElement(ChainType.And, target, 'target');
+    }
+
+    /**
+     * Logically or-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    or(target: string): this;
+    /**
+     * Logically or-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    or(target: boolean): this;
+    /**
+     * Logically or-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    or(target: number): this;
+    /**
+     * Logically or-connects the result to another command.
+     * 
+     * @param target Command to connect to.
+     * @returns The current instance.
+     */
+    or(target: Statement): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    or(target: any): this {
+        return this._addChainElement(ChainType.Or, target, 'target');
     }
 
     /**
