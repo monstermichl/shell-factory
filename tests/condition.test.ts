@@ -109,6 +109,62 @@ describe('Condition tests', () => {
         });
     });
 
+    describe('findInChain', () => {
+        describe('successful', () => {
+            it('pattern', () => {
+                const condition1 = new Condition('2 -eq 2');
+                const condition2 = new Condition('1 -eq 1');
+                const condition3 = new Condition('3 -ne 0');
+                const condition = new Condition(condition1);
+
+                /* Prepare chain. */
+                expect(condition
+                    .and(condition2)
+                    .or(condition3)
+                ).to.be.equal(condition);
+                
+                expect(condition.chain.length).to.be.equal(2);
+                const found = condition.findInChain(condition2.statement);
+
+                expect(found.length).to.be.equal(1);
+                expect(found[0].target.value).to.be.equal(condition2.value);
+            });
+        });
+    });
+
+    describe('removeFromChain', () => {
+        describe('successful', () => {
+            it('pattern', () => {
+                const condition1 = new Condition('2 -eq 2');
+                const condition2 = new Condition('1 -eq 1');
+                const condition = new Condition(condition1);
+
+                /* Prepare chain. */
+                expect(condition.and(condition2)).to.be.equal(condition);
+                
+                expect(condition.chain.length).to.be.equal(1);
+                expect(condition.removeFromChain(condition2.statement)).to.be.equal(condition);
+
+                expect(condition.chain.length).to.be.equal(0);
+            });
+        });
+    });
+
+    describe('clearChain', () => {
+        describe('successful', () => {
+            it('clear', () => {
+                const condition = new Condition('2 -eq 2');
+
+                /* Prepare chain. */
+                expect(condition.and('1 -eq 1')).to.be.equal(condition);
+                
+                expect(condition.chain.length).to.be.equal(1);
+                expect(condition.clearChain()).to.be.equal(condition);
+                expect(condition.chain.length).to.be.equal(0);
+            });
+        });
+    });
+
     describe('equal', () => {
         describe('successful', () => {
             it('equal', () => {
