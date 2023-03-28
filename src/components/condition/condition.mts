@@ -49,7 +49,7 @@ export class Condition extends Statement implements IConditionable, ILogicallyCo
     constructor(condition: number);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     constructor(condition: any) {
-        const conditionString = Condition._convertToConditionString(condition);
+        const conditionString = (condition instanceof Condition) ? condition.statement : Condition._convertToConditionString(condition);
 
         super(conditionString);
     }
@@ -389,9 +389,7 @@ export class Condition extends Statement implements IConditionable, ILogicallyCo
     private _addToChain(linkType: LogicalConnectType, condition: any): this {
         this._chain.push(new ChainElement(
             linkType,
-            new Condition(
-                Condition._convertToConditionString(condition),
-            ),
+            Condition.fromString(condition),
         ));
         return this;
     }
