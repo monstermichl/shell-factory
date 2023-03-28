@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { Command } from '../src/base/command.mjs';
 import { Condition } from '../src/components/condition/condition.mjs';
+import { LogicalConnectType } from '../src/interfaces/logically-connectable.mjs';
 
 describe('Condition tests', () => {
     describe('constructor', () => {
@@ -129,6 +130,44 @@ describe('Condition tests', () => {
                 expect(found.length).to.be.equal(1);
                 expect(found[0].target.value).to.be.equal(condition2.value);
             });
+
+            it('pattern with type', () => {
+                const condition1 = new Condition('2 -eq 2');
+                const condition2 = new Condition('1 -eq 1');
+                const condition3 = new Condition('3 -ne 0');
+                const condition = new Condition(condition1);
+
+                /* Prepare chain. */
+                expect(condition
+                    .and(condition2)
+                    .or(condition3)
+                ).to.be.equal(condition);
+                
+                expect(condition.chain.length).to.be.equal(2);
+                const found = condition.findInChain(/.*/, LogicalConnectType.And);
+
+                expect(found.length).to.be.equal(1);
+                expect(found[0].target.value).to.be.equal(condition2.value);
+            });
+
+            it('only type', () => {
+                const condition1 = new Condition('2 -eq 2');
+                const condition2 = new Condition('1 -eq 1');
+                const condition3 = new Condition('3 -ne 0');
+                const condition = new Condition(condition1);
+
+                /* Prepare chain. */
+                expect(condition
+                    .and(condition2)
+                    .or(condition3)
+                ).to.be.equal(condition);
+                
+                expect(condition.chain.length).to.be.equal(2);
+                const found = condition.findInChain(LogicalConnectType.Or);
+
+                expect(found.length).to.be.equal(1);
+                expect(found[0].target.value).to.be.equal(condition3.value);
+            });
         });
     });
 
@@ -146,6 +185,45 @@ describe('Condition tests', () => {
                 expect(condition.removeFromChain(condition2.statement)).to.be.equal(condition);
 
                 expect(condition.chain.length).to.be.equal(0);
+            });
+
+
+            it('pattern with type', () => {
+                const condition1 = new Condition('2 -eq 2');
+                const condition2 = new Condition('1 -eq 1');
+                const condition3 = new Condition('3 -ne 0');
+                const condition = new Condition(condition1);
+
+                /* Prepare chain. */
+                expect(condition
+                    .and(condition2)
+                    .or(condition3)
+                ).to.be.equal(condition);
+                
+                expect(condition.chain.length).to.be.equal(2);
+                expect(condition.removeFromChain(/.*/, LogicalConnectType.And)).to.be.equal(condition);
+
+                expect(condition.chain.length).to.be.equal(1);
+                expect(condition.chain[0].target.value).to.be.equal(condition3.value);
+            });
+
+            it('only type', () => {
+                const condition1 = new Condition('2 -eq 2');
+                const condition2 = new Condition('1 -eq 1');
+                const condition3 = new Condition('3 -ne 0');
+                const condition = new Condition(condition1);
+
+                /* Prepare chain. */
+                expect(condition
+                    .and(condition2)
+                    .or(condition3)
+                ).to.be.equal(condition);
+                
+                expect(condition.chain.length).to.be.equal(2);
+                expect(condition.removeFromChain(LogicalConnectType.Or)).to.be.equal(condition);
+
+                expect(condition.chain.length).to.be.equal(1);
+                expect(condition.chain[0].target.value).to.be.equal(condition2.value);
             });
         });
     });
