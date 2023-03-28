@@ -29,6 +29,12 @@ export abstract class Statement extends Base {
      *
      * @param statement Statement value.
      */
+    constructor(statement?: number);
+    /**
+     * Statement constructor.
+     *
+     * @param statement Statement value.
+     */
     constructor(statement?: boolean);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     constructor(statement?: any) {
@@ -49,18 +55,7 @@ export abstract class Statement extends Base {
      * Sets the Statement value.
      */
     public set statement(value: string | Statement | number) {
-        /* If statement was provided, use its value. */
-        if (value instanceof Statement) {
-            value = value.value;
-        } else {
-            /* Make sure, Statement is convertible to string. */
-            value = convertToString(value as string, (e: ConvertToStringError) => {
-                switch(e) {
-                    case ConvertToStringError.InvalidType: throw new Error('Invalid Statement value type provided');
-                }
-            }, { emptyAllowed: true });
-        }
-        this._statement = value;
+        this._statement = Statement.convert(value as string);
     }
 
     /**
@@ -120,5 +115,52 @@ export abstract class Statement extends Base {
             (isId && !!statement.id.match(regex)) ||
             (!isId && !!statement.value.match(regex))
         );
+    }
+
+    /**
+     * Converts a statement string to a string (does nothing, just for
+     * the purpose of being callable with a string).
+     *
+     * @param statement Statement value.
+     * @returns Statement string.
+     */
+    public static convert(statement?: string): string;
+    /**
+     * Converts a statement instance to a string.
+     *
+     * @param statement Statement instance.
+     * @returns Statement string.
+     */
+    public static convert(statement?: Statement): string;
+    /**
+     * Converts a number to a string.
+     *
+     * @param statement Number.
+     * @returns Statement string.
+     */
+    public static convert(statement?: number): string;
+    /**
+     * Converts a boolean to a string.
+     *
+     * @param statement Boolean.
+     * @returns Statement string.
+     */
+    public static convert(statement?: boolean): string;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public static convert(statement?: any): string {
+        let value: string;
+
+        /* If statement was provided, use its value. */
+        if (statement instanceof Statement) {
+            value = statement.value;
+        } else {
+            /* Make sure, Statement is convertible to string. */
+            value = convertToString(statement as string, (e: ConvertToStringError) => {
+                switch(e) {
+                    case ConvertToStringError.InvalidType: throw new Error('Invalid Statement value type provided');
+                }
+            }, { emptyAllowed: true });
+        }
+        return value;
     }
 }

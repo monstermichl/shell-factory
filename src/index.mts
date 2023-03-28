@@ -41,3 +41,10 @@ export { Select } from './components/select/select.mjs';
 export { Case } from './components/flow/case/case.mjs';
 export { CaseOption } from './components/flow/case/case-option.mjs';
 export { Function } from './components/function/function.mjs';
+export {
+    Subshell,
+    SubshellStatement,
+    SubshellBlock,
+} from './components/subshell/subshell.mjs';
+export { EvalSubshellStatement } from './components/subshell/eval-subshell-statement.mjs';
+export { EvalSubshellBlock } from './components/subshell/eval-subshell-block.mjs';

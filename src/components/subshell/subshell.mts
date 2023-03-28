@@ -1,0 +1,173 @@
+import { Statement } from '../../base/statement.mjs';
+import {
+    Block,
+    StatementOrBlockOrString,
+} from '../../base/block.mjs';
+import { EvalSubshellBlock } from './eval-subshell-block.mjs';
+import { IEvaluable } from '../../interfaces/evaluable.mjs';
+import { SubshellBaseBlock } from './subshell-base-block.mjs';
+import { EvalSubshellStatement } from './eval-subshell-statement.mjs';
+import { SubshellBaseStatement } from './subshell-base-statement.mjs';
+
+/**
+ * Represents a subshell block.
+ */
+export class SubshellBlock extends SubshellBaseBlock implements IEvaluable {
+    /**
+     * SubshellBlock constructor.
+     *
+     * @param block Subshell content.
+     */
+    public constructor(block: Block);
+    /**
+     * SubshellBlock constructor.
+     *
+     * @param statements Subshell content.
+     */
+    public constructor(statements: Statement[]);
+    /**
+     * SubshellBlock constructor.
+     *
+     * @param statements Subshell content.
+     */
+    public constructor(statements: string[]);
+    /**
+     * SubshellBlock constructor.
+     *
+     * @param blocks Subshell content.
+     */
+    public constructor(blocks: Block[]);
+    /**
+     * SubshellBlock constructor.
+     *
+     * @param content Subshell content.
+     */
+    public constructor(content: StatementOrBlockOrString[]);
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public constructor(content: any) {
+        super('', content);
+    }
+
+    /**
+     * Returns a new evaluation-subshell with the content of the subshell.
+     *
+     * @returns New EvalSubshell instance.
+     */
+    public eval(): EvalSubshellBlock {
+        return new EvalSubshellBlock(this.content);
+    }
+}
+
+/**
+ * Represents a subshell statement.
+ */
+export class SubshellStatement extends SubshellBaseStatement implements IEvaluable {
+    /**
+     * SubshellStatement constructor.
+     *
+     * @param statement Subshell value.
+     */
+    constructor(statement: string);
+    /**
+     * SubshellStatement constructor.
+     *
+     * @param statement     Subshell value.
+     */
+    constructor(statement: Statement);
+    /**
+     * SubshellStatement constructor.
+     *
+     * @param statement Subshell value.
+     */
+    constructor(statement: number);
+    /**
+     * SubshellStatement constructor.
+     *
+     * @param statement Subshell value.
+     */
+    constructor(statement: boolean);
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public constructor(statement: any) {
+        super('', statement);
+    }
+
+    public eval(): EvalSubshellStatement {
+        return new EvalSubshellStatement(this._content);
+    }
+}
+
+/**
+ * Creates a block subshell.
+ *
+ * @param block Subshell content.
+ * @returns SubshellBlock instance.
+ */
+export function Subshell(block: Block): SubshellBlock;
+/**
+ * Creates a block subshell.
+ *
+ * @param statements Subshell content.
+ * @returns SubshellBlock instance.
+ */
+export function Subshell(statements: Statement[]): SubshellBlock;
+/**
+ * Creates a block subshell.
+ *
+ * @param statements Subshell content.
+ * @returns SubshellBlock instance.
+ */
+export function Subshell(statements: string[]): SubshellBlock;
+/**
+ * Creates a block subshell.
+ *
+ * @param blocks Subshell content.
+ * @returns SubshellBlock instance.
+ */
+export function Subshell(blocks: Block[]): SubshellBlock;
+/**
+ * Creates a block subshell.
+ *
+ * @param content Subshell content.
+ * @returns SubshellBlock instance.
+ */
+export function Subshell(content: StatementOrBlockOrString[]): SubshellBlock;
+/**
+ * Creates a statement subshell.
+ *
+ * @param statement Subshell content.
+ * @returns SubshellStatement instance.
+ */
+export function Subshell(statement: string): SubshellStatement;
+/**
+ * Creates a statement subshell.
+ *
+ * @param statement Subshell content.
+ * @returns SubshellStatement instance.
+ */
+export function Subshell(statement: Statement): SubshellStatement;
+/**
+ * Creates a statement subshell.
+ *
+ * @param statement Subshell content.
+ * @returns SubshellStatement instance.
+ */
+export function Subshell(statement: number): SubshellStatement;
+/**
+ * Creates a statement subshell.
+ *
+ * @param statement Subshell content.
+ * @returns SubshellStatement instance.
+ */
+export function Subshell(statement: boolean): SubshellStatement;
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+export function Subshell(content: any): SubshellBlock | SubshellStatement {
+    let subshell;
+
+    if ((content instanceof Block) || (content instanceof Array)) {
+        /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+        subshell = new SubshellBlock(content as any);
+    } else {
+        subshell = new SubshellStatement(content);
+    }
+    return subshell;
+}
