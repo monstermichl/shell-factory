@@ -132,21 +132,21 @@ describe('NumberVariable tests', () => {
                 const addValue = 3;
                 const variable = new NumberVariable(name);
 
-                expect(variable.add(addValue).value).to.be.equal(`\`expr $\{${name}} + ${addValue}\``);
+                expect(variable.add(addValue).value).to.be.equal(`$(expr $\{${name}} + ${addValue})`);
             });
 
             it('empty value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.add('').value).to.be.equal(`\`expr $\{${name}} + 0\``);
+                expect(variable.add('').value).to.be.equal(`$(expr $\{${name}} + 0)`);
             });
 
             it('undefined value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.add(undefined as any).value).to.be.equal(`\`expr $\{${name}} + 0\``);
+                expect(variable.add(undefined as any).value).to.be.equal(`$(expr $\{${name}} + 0)`);
             });
         });
 
@@ -166,14 +166,14 @@ describe('NumberVariable tests', () => {
                 const subtractValue = 3;
                 const variable = new NumberVariable(name);
 
-                expect(variable.subtract(subtractValue).value).to.be.equal(`\`expr $\{${name}} - ${subtractValue}\``);
+                expect(variable.subtract(subtractValue).value).to.be.equal(`$(expr $\{${name}} - ${subtractValue})`);
             });
 
             it('undefined value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.subtract(undefined as any).value).to.be.equal(`\`expr $\{${name}} - 0\``);
+                expect(variable.subtract(undefined as any).value).to.be.equal(`$(expr $\{${name}} - 0)`);
             });
         });
     });
@@ -185,14 +185,14 @@ describe('NumberVariable tests', () => {
                 const multiplyValue = 3;
                 const variable = new NumberVariable(name);
 
-                expect(variable.multiply(multiplyValue).value).to.be.equal(`\`expr $\{${name}} * ${multiplyValue}\``);
+                expect(variable.multiply(multiplyValue).value).to.be.equal(`$(expr $\{${name}} * ${multiplyValue})`);
             });
 
             it('undefined value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.multiply(undefined as any).value).to.be.equal(`\`expr $\{${name}} * 0\``);
+                expect(variable.multiply(undefined as any).value).to.be.equal(`$(expr $\{${name}} * 0)`);
             });
         });
     });
@@ -204,14 +204,14 @@ describe('NumberVariable tests', () => {
                 const multiplyValue = 3;
                 const variable = new NumberVariable(name);
 
-                expect(variable.divide(multiplyValue).value).to.be.equal(`\`expr $\{${name}} / ${multiplyValue}\``);
+                expect(variable.divide(multiplyValue).value).to.be.equal(`$(expr $\{${name}} / ${multiplyValue})`);
             });
 
             it('undefined value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.divide(undefined as any).value).to.be.equal(`\`expr $\{${name}} / 1\``);
+                expect(variable.divide(undefined as any).value).to.be.equal(`$(expr $\{${name}} / 1)`);
             });
         });
 
@@ -231,14 +231,14 @@ describe('NumberVariable tests', () => {
                 const moduloValue = 4;
                 const variable = new NumberVariable(name);
 
-                expect(variable.modulo(moduloValue).value).to.be.equal(`\`expr $\{${name}} % ${moduloValue}\``);
+                expect(variable.modulo(moduloValue).value).to.be.equal(`$(expr $\{${name}} % ${moduloValue})`);
             });
 
             it('undefined value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.modulo(undefined as any).value).to.be.equal(`\`expr $\{${name}} % 1\``);
+                expect(variable.modulo(undefined as any).value).to.be.equal(`$(expr $\{${name}} % 1)`);
             });
         });
     });
@@ -249,7 +249,7 @@ describe('NumberVariable tests', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.increment().value).to.be.equal(`\`expr $\{${name}} + 1\``);
+                expect(variable.increment().value).to.be.equal(`$(expr $\{${name}} + 1)`);
             });
         });
     });
@@ -260,7 +260,7 @@ describe('NumberVariable tests', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.decrement().value).to.be.equal(`\`expr $\{${name}} - 1\``);
+                expect(variable.decrement().value).to.be.equal(`$(expr $\{${name}} - 1)`);
             });
         });
     });

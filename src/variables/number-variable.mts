@@ -1,6 +1,7 @@
 import { Statement } from '../base/statement.mjs';
 import { Variable } from '../base/variable.mjs';
 import { isNumber } from '../helpers/string.mjs';
+import { Subshell } from '../components/subshell/subshell.mjs';
 
 /**
  * Possible number operations.
@@ -456,7 +457,7 @@ export class NumberVariable extends Variable {
     }
 
     /**
-     * Creates the compare string based on the compare operator, the 
+     * Creates the compare string based on the compare operator, the
      * value and the variable.
      *
      * @param compareOperator Specifies how the values shall be compared.
@@ -496,7 +497,7 @@ export class NumberVariable extends Variable {
      * @param leftSide  Left-side operand.
      * @param operator  Operator.
      * @param rightSide Right-side operand.
-     * 
+     *
      * @returns Operation Statement.
      */
     private _arithmetic(leftSide: number, operator: string, rightSide: string): Statement;
@@ -506,7 +507,7 @@ export class NumberVariable extends Variable {
      * @param leftSide  Left-side operand.
      * @param operator  Operator.
      * @param rightSide Right-side operand.
-     * 
+     *
      * @returns Operation Statement.
      */
     private _arithmetic(leftSide: string, operator: string, rightSide: number): Statement;
@@ -516,7 +517,7 @@ export class NumberVariable extends Variable {
      * @param leftSide  Left-side operand.
      * @param operator  Operator.
      * @param rightSide Right-side operand.
-     * 
+     *
      * @returns Operation Statement.
      */
     private _arithmetic(leftSide: number, operator: string, rightSide: number): Statement;
@@ -526,7 +527,7 @@ export class NumberVariable extends Variable {
      * @param leftSide  Left-side operand.
      * @param operator  Operator.
      * @param rightSide Right-side operand.
-     * 
+     *
      * @returns Operation Statement.
      */
     private _arithmetic(leftSide: string, operator: string, rightSide: string): Statement;
@@ -543,6 +544,6 @@ export class NumberVariable extends Variable {
         } else if (!checkType(typeof operator)) {
             throwTypeError('operator');
         }
-        return new StatementHelper(`\`expr ${leftSide} ${operator} ${rightSide}\``);
+        return new StatementHelper(Subshell.call(`expr ${leftSide} ${operator} ${rightSide}`).eval());
     }
 }
