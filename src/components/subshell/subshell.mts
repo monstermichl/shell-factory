@@ -242,6 +242,6 @@ export class Subshell {
     public static eval(statement: boolean): EvalSubshellStatement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public static eval(content: any): EvalSubshellBlock | EvalSubshellStatement {
-        return Subshell.call(content);
+        return Subshell.call(content).eval();
     }
 }
