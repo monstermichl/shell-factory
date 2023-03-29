@@ -27,7 +27,7 @@ export abstract class Variable extends Statement {
      * VariableBase constructor.
      *
      * @param name  Variable name.
-     * @param local Specifis if the variable is a local variable.
+     * @param local Specifies if the variable is a local variable.
      */
     constructor(name: string, local?: boolean) {
         if (typeof name !== 'string') {
@@ -64,7 +64,7 @@ export abstract class Variable extends Statement {
 
     /**
      * Returns the variable including the ${...} brackets.
-     * 
+     *
      * @returns Variable with ${...} brackets.
      */
     public get value(): string {
@@ -75,7 +75,7 @@ export abstract class Variable extends Statement {
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
      * front.
-     * 
+     *
      * @param value Value to set. Must be a Statement, string, number or boolean.
      * @returns Assignment statement.
      */
@@ -84,7 +84,7 @@ export abstract class Variable extends Statement {
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
      * front.
-     * 
+     *
      * @param value Value to set. Must be a Statement, string, number or boolean.
      * @returns Assignment statement.
      */
@@ -93,7 +93,7 @@ export abstract class Variable extends Statement {
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
      * front.
-     * 
+     *
      * @param value Value to set. Must be a Statement, string, number or boolean.
      * @returns Assignment statement.
      */
@@ -102,7 +102,7 @@ export abstract class Variable extends Statement {
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
      * front.
-     * 
+     *
      * @param value Value to set. Must be a Statement, string, number or boolean.
      * @returns Assignment statement.
      */
@@ -131,7 +131,7 @@ export abstract class Variable extends Statement {
      */
     protected abstract _convertValue(value?: string): string;
     /**
-     * Creates the compare string based on the compare operator, the 
+     * Creates the compare string based on the compare operator, the
      * value and the variable.
      *
      * @param compareOperator Specifies how the values shall be compared.
