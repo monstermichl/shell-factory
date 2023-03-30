@@ -52,7 +52,7 @@ export abstract class WrapBlock extends Block {
      * WrapBlock constructor.
      *
      * @param openingStatement WrapBlock opening statement.
-     * @param statement        WrapBlock content.
+     * @param block            WrapBlock content.
      * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, block?: Block, closingStatement?: string);
@@ -60,7 +60,7 @@ export abstract class WrapBlock extends Block {
      * WrapBlock constructor.
      *
      * @param openingStatement WrapBlock opening statement.
-     * @param statement        WrapBlock content.
+     * @param statements       WrapBlock content.
      * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, statements?: Statement[], closingStatement?: string);
@@ -68,7 +68,7 @@ export abstract class WrapBlock extends Block {
      * WrapBlock constructor.
      *
      * @param openingStatement WrapBlock opening statement.
-     * @param statement        WrapBlock content.
+     * @param statements       WrapBlock content.
      * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, statements?: string[], closingStatement?: string);
@@ -76,7 +76,7 @@ export abstract class WrapBlock extends Block {
      * WrapBlock constructor.
      *
      * @param openingStatement WrapBlock opening statement.
-     * @param statement        WrapBlock content.
+     * @param blocks           WrapBlock content.
      * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, blocks?: Block[], closingStatement?: string);
@@ -84,7 +84,7 @@ export abstract class WrapBlock extends Block {
      * WrapBlock constructor.
      *
      * @param openingStatement WrapBlock opening statement.
-     * @param statement        WrapBlock content.
+     * @param content          WrapBlock content.
      * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, content?: StatementOrBlockOrString[], closingStatement?: string);
@@ -263,7 +263,7 @@ export abstract class WrapBlock extends Block {
 
     /**
      * Removes all entries based on the provided ID or Statement pattern from the block's body.
-     * 
+     *
      * @param idOrPattern Content ID or Statement pattern.
      * @param recursive   The id will also be searched in all sub-blocks.
      *
@@ -272,7 +272,7 @@ export abstract class WrapBlock extends Block {
     public override removeContent(idOrPattern: string, recursive?: boolean): this;
     /**
      * Removes all entries based on the provided ID or Statement pattern from the block's body.
-     * 
+     *
      * @param pattern   Content ID or Statement pattern.
      * @param recursive The id will also be searched in all sub-blocks.
      *
@@ -288,7 +288,7 @@ export abstract class WrapBlock extends Block {
     /**
      * Searches all entries based on the provided ID or Statement pattern in the
      * block's body.
-     * 
+     *
      * @param idOrPattern Content ID or Statement pattern.
      * @param recursive   The id will also be searched in all sub-blocks.
      *
@@ -298,7 +298,7 @@ export abstract class WrapBlock extends Block {
     /**
      * Searches all entries based on the provided ID or Statement pattern in the
      * block's body.
-     * 
+     *
      * @param pattern   Content ID or Statement pattern.
      * @param recursive The id will also be searched in all sub-blocks.
      *

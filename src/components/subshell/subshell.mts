@@ -4,97 +4,9 @@ import {
     StatementOrBlockOrString,
 } from '../../base/block.mjs';
 import { EvalSubshellBlock } from './eval-subshell-block.mjs';
-import { IEvaluable } from '../../interfaces/evaluable.mjs';
-import { SubshellBaseBlock } from './subshell-base-block.mjs';
 import { EvalSubshellStatement } from './eval-subshell-statement.mjs';
-import { SubshellBaseStatement } from './subshell-base-statement.mjs';
-
-/**
- * Represents a subshell block.
- */
-export class SubshellBlock extends SubshellBaseBlock implements IEvaluable {
-    /**
-     * SubshellBlock constructor.
-     *
-     * @param block Subshell content.
-     */
-    public constructor(block: Block);
-    /**
-     * SubshellBlock constructor.
-     *
-     * @param statements Subshell content.
-     */
-    public constructor(statements: Statement[]);
-    /**
-     * SubshellBlock constructor.
-     *
-     * @param statements Subshell content.
-     */
-    public constructor(statements: string[]);
-    /**
-     * SubshellBlock constructor.
-     *
-     * @param blocks Subshell content.
-     */
-    public constructor(blocks: Block[]);
-    /**
-     * SubshellBlock constructor.
-     *
-     * @param content Subshell content.
-     */
-    public constructor(content: StatementOrBlockOrString[]);
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public constructor(content: any) {
-        super('', content);
-    }
-
-    /**
-     * Returns a new evaluation-subshell with the content of the subshell.
-     *
-     * @returns New EvalSubshell instance.
-     */
-    public eval(): EvalSubshellBlock {
-        return new EvalSubshellBlock(this.content);
-    }
-}
-
-/**
- * Represents a subshell statement.
- */
-export class SubshellStatement extends SubshellBaseStatement implements IEvaluable {
-    /**
-     * SubshellStatement constructor.
-     *
-     * @param statement Subshell value.
-     */
-    constructor(statement: string);
-    /**
-     * SubshellStatement constructor.
-     *
-     * @param statement     Subshell value.
-     */
-    constructor(statement: Statement);
-    /**
-     * SubshellStatement constructor.
-     *
-     * @param statement Subshell value.
-     */
-    constructor(statement: number);
-    /**
-     * SubshellStatement constructor.
-     *
-     * @param statement Subshell value.
-     */
-    constructor(statement: boolean);
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public constructor(statement: any) {
-        super('', statement);
-    }
-
-    public eval(): EvalSubshellStatement {
-        return new EvalSubshellStatement(this._content);
-    }
-}
+import { SubshellStatement } from './subshell-statement.mjs';
+import { SubshellBlock } from './subshell-block.mjs';
 
 export class Subshell {
     private constructor() {

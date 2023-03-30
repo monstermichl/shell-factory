@@ -13,12 +13,19 @@ import {
 } from '../interfaces/logically-connectable.mjs';
 import { OperationalConnectType } from '../interfaces/operationally-connectable.mjs';
 import { isAnyConnectType } from '../helpers/connect.mjs';
+import { ISubshellable } from '../interfaces/subshellable.mjs';
+import { IEvaluable } from '../interfaces/evaluable.mjs';
+import { EvalSubshellStatement } from '../components/subshell/eval-subshell-statement.mjs';
+import { SubshellStatement } from '../components/subshell/subshell-statement.mjs';
 
 /**
  * Represents a shell command. Commands provide the ability to be
  * combined with other commands.
  */
-export class Command extends Statement implements IChainable<OperationalConnectType | LogicalConnectType, Command>, ILogicallyConnectable {
+export class Command extends Statement implements IChainable<OperationalConnectType | LogicalConnectType, Command>,
+                                                  ILogicallyConnectable,
+                                                  ISubshellable,
+                                                  IEvaluable {
     protected _chain = [] as ChainElement<OperationalConnectType | LogicalConnectType, Command>[];
 
     /**
@@ -69,28 +76,28 @@ export class Command extends Statement implements IChainable<OperationalConnectT
 
     /**
      * Read from source.
-     * 
+     *
      * @param source Source to read from.
      * @returns The current instance.
      */
     public read(source: string): this;
     /**
      * Read from source.
-     * 
+     *
      * @param source Source to read from.
      * @returns The current instance.
      */
     public read(source: number): this;
     /**
      * Read from source.
-     * 
+     *
      * @param source Source to read from.
      * @returns The current instance.
      */
     public read(source: boolean): this;
     /**
      * Read from source.
-     * 
+     *
      * @param source Source to read from.
      * @returns The current instance.
      */
@@ -102,28 +109,28 @@ export class Command extends Statement implements IChainable<OperationalConnectT
 
     /**
      * Write to target.
-     * 
+     *
      * @param target Target to write to.
      * @returns The current instance.
      */
     public write(target: string): this;
     /**
      * Write to target.
-     * 
+     *
      * @param target Target to write to.
      * @returns The current instance.
      */
     public write(target: number): this;
     /**
      * Write to target.
-     * 
+     *
      * @param target Target to write to.
      * @returns The current instance.
      */
     public write(target: boolean): this;
     /**
      * Write to target.
-     * 
+     *
      * @param target Target to write to.
      * @returns The current instance.
      */
@@ -135,28 +142,28 @@ export class Command extends Statement implements IChainable<OperationalConnectT
 
     /**
      * Append to target.
-     * 
+     *
      * @param target Target to append to.
      * @returns The current instance.
      */
     public append(target: string): this;
     /**
      * Append to target.
-     * 
+     *
      * @param target Target to append to.
      * @returns The current instance.
      */
     public append(target: number): this;
     /**
      * Append to target.
-     * 
+     *
      * @param target Target to append to.
      * @returns The current instance.
      */
     public append(target: boolean): this;
     /**
      * Append to target.
-     * 
+     *
      * @param target Target to append to.
      * @returns The current instance.
      */
@@ -168,28 +175,28 @@ export class Command extends Statement implements IChainable<OperationalConnectT
 
     /**
      * Pipes the output into another command.
-     * 
+     *
      * @param target Command to pipe to.
      * @returns The current instance.
      */
     public pipe(target: string): this;
     /**
      * Pipes the output into another command.
-     * 
+     *
      * @param target Command to pipe to.
      * @returns The current instance.
      */
     public pipe(target: number): this;
     /**
      * Pipes the output into another command.
-     * 
+     *
      * @param target Command to pipe to.
      * @returns The current instance.
      */
     public pipe(target: boolean): this;
     /**
      * Pipes the output into another command.
-     * 
+     *
      * @param target Command to pipe to.
      * @returns The current instance.
      */
@@ -201,73 +208,73 @@ export class Command extends Statement implements IChainable<OperationalConnectT
 
     /**
      * Logically and-connects the result to another command.
-     * 
+     *
      * @param target Command to connect to.
      * @returns The current instance.
      */
-    and(target: string): this;
+    public and(target: string): this;
     /**
      * Logically and-connects the result to another command.
-     * 
+     *
      * @param target Command to connect to.
      * @returns The current instance.
      */
-    and(target: boolean): this;
+    public and(target: boolean): this;
     /**
      * Logically and-connects the result to another command.
-     * 
+     *
      * @param target Command to connect to.
      * @returns The current instance.
      */
-    and(target: number): this;
+    public and(target: number): this;
     /**
      * Logically and-connects the result to another command.
-     * 
+     *
      * @param target Command to connect to.
      * @returns The current instance.
      */
-    and(target: Statement): this;
+    public and(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    and(target: any): this {
+    public and(target: any): this {
         return this._addChainElement(LogicalConnectType.And, target, 'target');
     }
 
     /**
      * Logically or-connects the result to another command.
-     * 
+     *
      * @param target Command to connect to.
      * @returns The current instance.
      */
-    or(target: string): this;
+    public or(target: string): this;
     /**
      * Logically or-connects the result to another command.
-     * 
+     *
      * @param target Command to connect to.
      * @returns The current instance.
      */
-    or(target: boolean): this;
+    public or(target: boolean): this;
     /**
      * Logically or-connects the result to another command.
-     * 
+     *
      * @param target Command to connect to.
      * @returns The current instance.
      */
-    or(target: number): this;
+    public or(target: number): this;
     /**
      * Logically or-connects the result to another command.
-     * 
+     *
      * @param target Command to connect to.
      * @returns The current instance.
      */
-    or(target: Statement): this;
+    public or(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    or(target: any): this {
+    public or(target: any): this {
         return this._addChainElement(LogicalConnectType.Or, target, 'target');
     }
 
     /**
      * Finds all elements based on the provided ID or pattern in the chain.
-     * 
+     *
      * @param idOrPattern Content ID or Statement pattern.
      * @param type        If provided, the type must also match.
      *
@@ -276,7 +283,7 @@ export class Command extends Statement implements IChainable<OperationalConnectT
     public findInChain(idOrPattern: string, type?: OperationalConnectType | LogicalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[];
     /**
      * Finds all elements based on the provided ID or pattern in the chain.
-     * 
+     *
      * @param pattern Content ID or Statement pattern.
      * @param type    If provided, the type must also match.
      *
@@ -285,7 +292,7 @@ export class Command extends Statement implements IChainable<OperationalConnectT
     public findInChain(pattern: RegExp, type?: OperationalConnectType | LogicalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[];
     /**
      * Finds all elements based on the provided type.
-     * 
+     *
      * @param type Type to look for.
      * @returns List of found chain elements.
      */
@@ -305,7 +312,7 @@ export class Command extends Statement implements IChainable<OperationalConnectT
 
     /**
      * Removes all elements based on the provided ID or pattern from the chain.
-     * 
+     *
      * @param idOrPattern Content ID or Statement pattern.
      * @param type        If provided, the type must also match.
      *
@@ -314,7 +321,7 @@ export class Command extends Statement implements IChainable<OperationalConnectT
     public removeFromChain(idOrPattern: string, type?: OperationalConnectType | LogicalConnectType): this;
     /**
      * Removes all elements based on the provided ID or pattern from the chain.
-     * 
+     *
      * @param pattern Content ID or Statement pattern.
      * @param type    If provided, the type must also match.
      *
@@ -323,7 +330,7 @@ export class Command extends Statement implements IChainable<OperationalConnectT
     public removeFromChain(pattern: RegExp, type?: OperationalConnectType | LogicalConnectType): this;
     /**
      * Removes all elements based on the provided type.
-     * 
+     *
      * @param type Type to remove.
      * @returns The current instance.
      */
@@ -354,6 +361,24 @@ export class Command extends Statement implements IChainable<OperationalConnectT
     public clearChain(): this {
         this._chain = [];
         return this;
+    }
+
+    /**
+     * Returns the command in a subshell statement.
+     *
+     * @returns A new SubshellStatement instance.
+     */
+    public subshell(): SubshellStatement {
+        return new SubshellStatement(this);
+    }
+
+    /**
+     * Returns the command in an evaluation-subshell statement.
+     *
+     * @returns A new EvalSubshellStatement instance.
+     */
+    eval(): EvalSubshellStatement {
+        return this.subshell().eval();
     }
 
     /**

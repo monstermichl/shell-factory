@@ -3,7 +3,6 @@ import {
     Block,
     StatementOrBlockOrString,
 } from '../base/block.mjs';
-import { WrapBlock } from './wrap-block.mjs';
 import {
     convertToString,
     ConvertToStringError,
@@ -11,13 +10,14 @@ import {
 } from '../helpers/string.mjs';
 import { Variable } from '../base/variable.mjs';
 import { StringVariable } from '../variables/string-variable.mjs';
+import { SubshellableWrapBlock } from './subshellable-wrap-block.mjs';
 
 export type StringOrNumberOrBoolean = string | number | boolean;
 
 /**
  * Serves as the base for all blocks that iterate a list (e.g., For, Select, ...).
  */
-export abstract class IterationBlock extends WrapBlock {
+export abstract class IterationBlock extends SubshellableWrapBlock {
     private _variable: StringVariable;
 
     /**

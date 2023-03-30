@@ -227,6 +227,26 @@ describe('Command tests', () => {
         });
     });
 
+    describe('subshell', () => {
+        describe('successful', () => {
+            it('check result', () => {
+                const command = new Command('echo "hello"');
+
+                expect(command.subshell().value).to.be.equal(`(${command.value})`);
+            });
+        });
+    });
+
+    describe('eval', () => {
+        describe('successful', () => {
+            it('check result', () => {
+                const command = new Command('echo "hello"');
+
+                expect(command.eval().value).to.be.equal(`$(${command.value})`);
+            });
+        });
+    });
+
     describe('findInChain', () => {
         describe('successful', () => {
             it('pattern', () => {
