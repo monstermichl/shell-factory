@@ -1,4 +1,3 @@
-import { IfBase } from './if-base.mjs';
 import { ElseIf } from './else-if.mjs';
 import { Else } from './else.mjs';
 import { Statement } from '../../../base/statement.mjs';
@@ -7,6 +6,7 @@ import {
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
 import { Condition } from '../../condition/condition.mjs';
+import { SubshellableConditionBlock } from '../../../blocks/subshellable-condition-block.mjs';
 
 /**
  * Represents a summary of the parts of an if-block.
@@ -20,7 +20,7 @@ export type IfParts = {
 /**
  * Represents a Bourne Shell if-block.
  */
-export class If extends IfBase {
+export class If extends SubshellableConditionBlock {
     private _elseIfs: ElseIf[] = [];
     private _else: Else;
 
@@ -222,7 +222,7 @@ export class If extends IfBase {
     constructor(condition: Condition, content?: StatementOrBlockOrString[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     constructor(condition: any, content?: any) {
-        super('if', condition, content, 'fi');
+        super('if', condition, 'then', content, 'fi');
     }
 
     /**

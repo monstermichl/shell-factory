@@ -3,13 +3,13 @@ import {
     Block,
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
-import { ConditionBlock } from '../../../blocks/condition-block.mjs';
 import { Condition } from '../../condition/condition.mjs';
+import { SubshellableConditionBlock } from '../../../blocks/subshellable-condition-block.mjs';
 
 /**
  * Represents a Bourne Shell while-block.
  */
-export class While extends ConditionBlock {
+export class While extends SubshellableConditionBlock {
     /**
      * While constructor.
      *

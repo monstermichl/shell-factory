@@ -1,15 +1,15 @@
-import { IfBase } from './if-base.mjs';
 import { Statement } from '../../../base/statement.mjs';
 import {
     Block,
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
 import { Condition } from '../../condition/condition.mjs';
+import { ConditionBlock } from '../../../blocks/condition-block.mjs';
 
 /**
  * Represents a Bourne Shell elif-block.
  */
-export class ElseIf extends IfBase {
+export class ElseIf extends ConditionBlock {
     /**
      * ElseIf constructor.
      *
@@ -110,6 +110,6 @@ export class ElseIf extends IfBase {
     constructor(condition: Condition, content?: StatementOrBlockOrString[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     constructor(condition: any, content?: any) {
-        super('elif', condition, content);
+        super('elif', condition, 'then', content);
     }
 }

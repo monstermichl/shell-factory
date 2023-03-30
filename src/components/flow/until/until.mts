@@ -3,13 +3,13 @@ import {
     Block,
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
-import { ConditionBlock } from '../../../blocks/condition-block.mjs';
 import { Condition } from '../../condition/condition.mjs';
+import { SubshellableConditionBlock } from '../../../blocks/subshellable-condition-block.mjs';
 
 /**
  * Represents a Bourne Shell until-block.
  */
-export class Until extends ConditionBlock {
+export class Until extends SubshellableConditionBlock {
     /**
      * Until constructor.
      *
