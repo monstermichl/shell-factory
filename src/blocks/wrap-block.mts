@@ -6,7 +6,19 @@ import {
 import { Command } from '../base/command.mjs';
 import { Statement } from '../base/statement.mjs';
 
-export class OpeningStatement extends Command {
+/**
+ * Helper class to instantiate a simple Statement.
+ */
+class StatementHelper extends Statement {
+    /**
+     * Returns the statement.
+     */
+    public get value(): string {
+        return this.statement;
+    }
+}
+
+export class OpeningStatement extends StatementHelper {
     /* Nothing to do. */
 }
 
