@@ -3,7 +3,7 @@ import { Statement } from '../../base/statement.mjs';
 /**
  * Represents the subshell statement base.
  */
-export class SubshellBaseStatement extends Statement {
+export abstract class SubshellBaseStatement extends Statement {
     protected _content: string;
 
     /**

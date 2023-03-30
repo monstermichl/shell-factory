@@ -8,7 +8,7 @@ import {
 /**
  * Represents the subshell block base.
  */
-export class SubshellBaseBlock extends WrapBlock {
+export abstract class SubshellBaseBlock extends WrapBlock {
     /**
      * SubshellBaseBlock constructor.
      *
