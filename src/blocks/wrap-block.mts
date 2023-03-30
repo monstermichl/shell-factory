@@ -44,6 +44,8 @@ export abstract class WrapBlock extends Block {
     protected _openingStatement: OpeningStatement;
     protected _closingStatement: ClosingStatement | null;
 
+    private _trueStatement = new StatementHelper('true').setComment('Placeholder statement');
+
     /**
      * WrapBlock constructor.
      *
@@ -294,7 +296,7 @@ export abstract class WrapBlock extends Block {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public override removeContent(arg: any, recursive=false): this {
         this._body.removeContent(arg, recursive);
-        return this;
+        return this._checkBody();
     }
 
     /**
@@ -387,7 +389,7 @@ export abstract class WrapBlock extends Block {
     protected _insertBodyContent(position: number, content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     protected _insertBodyContent(position: number, content: any): this | null {
-        return this._body.insertContent(position, content) ? this : null;
+        return this._body.insertContent(position, content) ? this._checkBody() : null;
     }
 
     /**
@@ -441,6 +443,23 @@ export abstract class WrapBlock extends Block {
     protected _addBodyContent(content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     protected _addBodyContent(content: any): this | null {
-        return this._body.addContent(content) ? this : null;
+        return this._body.addContent(content) ? this._checkBody() : null;
+    }
+
+    /**
+     * If the body is empty, a true-statement is added to make sure that interpreter
+     * can interpret it correctly.
+     *
+     * @returns The current instance.
+     */
+    private _checkBody(): this {
+        /* If body doesn't contain content, add a placeholder statement. */
+        if (!this._body.content.length) {
+            this._body.addContent(this._trueStatement);
+        } else {
+            /* If the body contains content, remove the placeholder statement. */
+            this._body.removeContent(this._trueStatement.id);
+        }
+        return this;
     }
 }

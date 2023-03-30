@@ -81,7 +81,8 @@ describe('WrapBlock tests', () => {
 
                 expect(block.content?.length).to.be.equal(1);
                 expect(block.removeContent(metaData.id)).to.be.equal(block);
-                expect(block.content.length).to.be.equal(0);
+                expect(block.content.length).to.be.equal(1);
+                expect((block.content[0] as Statement).value).to.be.equal(`true`);
             });
         });
     });
