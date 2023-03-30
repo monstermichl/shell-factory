@@ -7,8 +7,17 @@ export {
     IChainable,
     ChainElement,
 } from './interfaces/chainable.mjs';
-export { OperationalConnectType } from './interfaces/operationally-connectable.mjs';
-export { LogicalConnectType } from './interfaces/logically-connectable.mjs';
+export { ISubshellable } from  './interfaces/subshellable.mjs';
+export { IEvaluable } from  './interfaces/evaluable.mjs';
+export { IConditionable } from  './interfaces/conditionable.mjs';
+export {
+    OperationalConnectType,
+    IOperationallyConnectable,
+} from './interfaces/operationally-connectable.mjs';
+export {
+    LogicalConnectType,
+    ILogicallyConnectable,
+} from './interfaces/logically-connectable.mjs';
 export { Statement } from './base/statement.mjs';
 export { Command } from './base/command.mjs';
 export { Variable } from './base/variable.mjs';
