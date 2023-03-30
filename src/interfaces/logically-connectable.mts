@@ -6,6 +6,10 @@ export enum LogicalConnectType {
     Or = 'or',
 }
 
+/**
+ * A class that implements this interface can be chained
+ * via "and" and "or".
+ */
 export interface ILogicallyConnectable {
     /**
      * Logically and-connects the result to another command.

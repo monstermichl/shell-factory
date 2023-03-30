@@ -1,3 +1,7 @@
+/**
+ * A class that implements this interface can be tested
+ * and chained via "and" and "or".
+ */
 export interface IConditionable {
     /**
      * Returns the original condition string.

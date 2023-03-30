@@ -13,6 +13,10 @@ export class ChainElement<LinkType extends string, ElementType extends Statement
     }
 }
 
+/**
+ * A class that implements this interface handles a chain for linking
+ * several statements.
+ */
 export interface IChainable<LinkType extends string, ElementType extends Statement> {
     /**
      * Returns the applied chain.

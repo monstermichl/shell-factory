@@ -8,6 +8,10 @@ export enum OperationalConnectType {
     Pipe   = 'pipe',
 }
 
+/**
+ * A class that implements this interface can be chained
+ * via "read", "write", "append" and "pipe".
+ */
 export interface IOperationallyConnectable {
     /**
      * Read from source.
