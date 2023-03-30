@@ -9,6 +9,7 @@ import { SubshellStatement } from './subshell-statement.mjs';
 import { SubshellBlock } from './subshell-block.mjs';
 
 export class Subshell {
+    /* c8 ignore next 3 */
     private constructor() {
         /* Nothing to do. Just hide the constructor. */
     }
