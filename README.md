@@ -433,6 +433,44 @@ if [ 1 -eq 1 -o 2 -eq 2 ]; then
 fi
 ```
 
+### Subshell/Evaluation
+Many Statement- and Block-types support subshelling/evaluation, meaning, the Statement or Block can be ran in a subshell and - in case of evaluation - its value directly be used. If a Statement or Block does not support subshelling/evaluation directly, it can be tried to pass the object to the *Subshell.call* or *Subshell.eval* method.
+
+```typescript
+const variable = new StringVariable('response');
+new Script([
+    'read -p "What\'s your name? " name',
+
+    variable.set(
+        new If('"$name" != ""', [
+            'echo "Hello $name"',
+        ]).eval(),
+    ),
+
+    new If(variable.isEmpty, [
+        variable.set(Subshell.eval('echo "I don\'t understand"')),
+    ]),
+
+    `echo "${variable.value}"`,
+]).dump();
+```
+
+```sh
+#!/bin/sh
+
+read -p "What's your name? " name
+response=$(
+  if [ "$name" != "" ]; then
+    echo "Hello $name"
+  fi
+)
+
+if [ -z "${response}" ]; then
+  response="$(echo "I don't understand")"
+fi
+echo "${response}"
+```
+
 ## Formatting
 How scripts are dumped can be configured separatelly. Either by setting the config directly on the Script instance or by passing it to the dump-method.
 

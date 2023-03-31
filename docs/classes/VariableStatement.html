@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Statement | shell-factory</title><meta name="description" content="Documentation for shell-factory"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>VariableStatement | shell-factory</title><meta name="description" content="Documentation for shell-factory"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script async src="../assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -13,26 +13,25 @@
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb">
 <li><a href="../modules.html">shell-factory</a></li>
-<li><a href="Statement.html">Statement</a></li></ul>
-<h1>Class Statement<code class="tsd-tag ts-flagAbstract">Abstract</code> </h1></div>
+<li><a href="VariableStatement.html">VariableStatement</a></li></ul>
+<h1>Class VariableStatement</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>It serves as the base for all kind of statements in
-a script.</p>
+<div class="tsd-comment tsd-typography"><p>Helper class to instantiate a simple Statement
+which allows subshelling and evaluation..</p>
 </div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
-<li><a href="Base.html" class="tsd-signature-type" data-tsd-kind="Class">Base</a>
+<li><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a>
 <ul class="tsd-hierarchy">
-<li><span class="target">Statement</span>
+<li><span class="target">VariableStatement</span></li></ul></li></ul></section>
+<section class="tsd-panel">
+<h4>Implements</h4>
 <ul class="tsd-hierarchy">
-<li><a href="Command.html" class="tsd-signature-type" data-tsd-kind="Class">Command</a></li>
-<li><a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></li>
-<li><a href="Variable.html" class="tsd-signature-type" data-tsd-kind="Class">Variable</a></li>
-<li><a href="Interpreter.html" class="tsd-signature-type" data-tsd-kind="Class">Interpreter</a></li>
-<li><a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></li></ul></li></ul></li></ul></section><aside class="tsd-sources">
+<li><a href="../interfaces/ISubshellable.html" class="tsd-signature-type" data-tsd-kind="Interface">ISubshellable</a></li>
+<li><a href="../interfaces/IEvaluable.html" class="tsd-signature-type" data-tsd-kind="Interface">IEvaluable</a></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L12">base/statement.mts:12</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/variable.mts#L20">base/variable.mts:20</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -40,34 +39,36 @@ a script.</p>
 <div class="tsd-accordion-details">
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Constructors</h3>
-<div class="tsd-index-list"><a href="Statement.html#constructor" class="tsd-index-link tsd-kind-constructor tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#4D7FFF" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-512-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-512-text"></path></svg><span>constructor</span></a>
+<div class="tsd-index-list"><a href="VariableStatement.html#constructor" class="tsd-index-link tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#4D7FFF" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-512-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-512-text"></path></svg><span>constructor</span></a>
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Properties</h3>
-<div class="tsd-index-list"><a href="Statement.html#_statement" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF984D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-1024-path"></rect><path d="M9.354 16V7.24H12.174C12.99 7.24 13.638 7.476 14.118 7.948C14.606 8.412 14.85 9.036 14.85 9.82C14.85 10.604 14.606 11.232 14.118 11.704C13.638 12.168 12.99 12.4 12.174 12.4H10.434V16H9.354ZM10.434 11.428H12.174C12.646 11.428 13.022 11.284 13.302 10.996C13.59 10.7 13.734 10.308 13.734 9.82C13.734 9.324 13.59 8.932 13.302 8.644C13.022 8.356 12.646 8.212 12.174 8.212H10.434V11.428Z" fill="var(--color-text)" id="icon-1024-text"></path></svg><span>_statement</span></a>
+<div class="tsd-index-list"><a href="VariableStatement.html#_statement" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF984D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-1024-path"></rect><path d="M9.354 16V7.24H12.174C12.99 7.24 13.638 7.476 14.118 7.948C14.606 8.412 14.85 9.036 14.85 9.82C14.85 10.604 14.606 11.232 14.118 11.704C13.638 12.168 12.99 12.4 12.174 12.4H10.434V16H9.354ZM10.434 11.428H12.174C12.646 11.428 13.022 11.284 13.302 10.996C13.59 10.7 13.734 10.308 13.734 9.82C13.734 9.324 13.59 8.932 13.302 8.644C13.022 8.356 12.646 8.212 12.174 8.212H10.434V11.428Z" fill="var(--color-text)" id="icon-1024-text"></path></svg><span>_statement</span></a>
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Accessors</h3>
-<div class="tsd-index-list"><a href="Statement.html#comment" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4D4D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-262144-path"></rect><path d="M8.85 16L11.13 7.24H12.582L14.85 16H13.758L13.182 13.672H10.53L9.954 16H8.85ZM10.746 12.76H12.954L12.282 10.06C12.154 9.548 12.054 9.12 11.982 8.776C11.91 8.432 11.866 8.208 11.85 8.104C11.834 8.208 11.79 8.432 11.718 8.776C11.646 9.12 11.546 9.544 11.418 10.048L10.746 12.76Z" fill="var(--color-text)" id="icon-262144-text"></path></svg><span>comment</span></a>
-<a href="Statement.html#id" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>id</span></a>
-<a href="Statement.html#statement" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>statement</span></a>
-<a href="Statement.html#value" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>value</span></a>
+<div class="tsd-index-list"><a href="VariableStatement.html#comment" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4D4D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-262144-path"></rect><path d="M8.85 16L11.13 7.24H12.582L14.85 16H13.758L13.182 13.672H10.53L9.954 16H8.85ZM10.746 12.76H12.954L12.282 10.06C12.154 9.548 12.054 9.12 11.982 8.776C11.91 8.432 11.866 8.208 11.85 8.104C11.834 8.208 11.79 8.432 11.718 8.776C11.646 9.12 11.546 9.544 11.418 10.048L10.746 12.76Z" fill="var(--color-text)" id="icon-262144-text"></path></svg><span>comment</span></a>
+<a href="VariableStatement.html#id" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>id</span></a>
+<a href="VariableStatement.html#statement" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>statement</span></a>
+<a href="VariableStatement.html#value" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>value</span></a>
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Methods</h3>
-<div class="tsd-index-list"><a href="Statement.html#clearComment" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-2048-path"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)" id="icon-2048-text"></path></svg><span>clear<wbr/>Comment</span></a>
-<a href="Statement.html#compareIdOrPattern" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</span></a>
-<a href="Statement.html#meta" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>meta</span></a>
-<a href="Statement.html#setComment" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Comment</span></a>
-<a href="Statement.html#compareIdOrPattern-3" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</span></a>
-<a href="Statement.html#convert" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>convert</span></a>
+<div class="tsd-index-list"><a href="VariableStatement.html#clearComment" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-2048-path"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)" id="icon-2048-text"></path></svg><span>clear<wbr/>Comment</span></a>
+<a href="VariableStatement.html#compareIdOrPattern" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</span></a>
+<a href="VariableStatement.html#eval" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>eval</span></a>
+<a href="VariableStatement.html#meta" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>meta</span></a>
+<a href="VariableStatement.html#setComment" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>set<wbr/>Comment</span></a>
+<a href="VariableStatement.html#subshell" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>subshell</span></a>
+<a href="VariableStatement.html#compareIdOrPattern-3" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</span></a>
+<a href="VariableStatement.html#convert" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>convert</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Constructors</h2>
-<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class"><a id="constructor" class="tsd-anchor"></a>
+<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><a id="constructor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
-<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_Statement">new <wbr/>Statement<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#constructor.new_Statement" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_VariableStatement">new <wbr/>Variable<wbr/>Statement<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a><a href="#constructor.new_VariableStatement" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Statement constructor.</p>
 </div>
@@ -78,11 +79,11 @@ a script.</p>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> statement: <span class="tsd-signature-type">string</span></h5>
 <div class="tsd-comment tsd-typography"><p>Statement value.</p>
 </div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
-<p>Overrides <a href="Base.html">Base</a>.<a href="Base.html#constructor">constructor</a></p>
+<h4 class="tsd-returns-title">Returns <a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#constructor">constructor</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L20">base/statement.mts:20</a></li></ul></aside></li>
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_Statement-1">new <wbr/>Statement<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#constructor.new_Statement-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_VariableStatement-1">new <wbr/>Variable<wbr/>Statement<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a><a href="#constructor.new_VariableStatement-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Statement constructor.</p>
 </div>
@@ -93,11 +94,11 @@ a script.</p>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> statement: <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h5>
 <div class="tsd-comment tsd-typography"><p>Statement value.</p>
 </div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
-<p>Overrides Base.constructor</p>
+<h4 class="tsd-returns-title">Returns <a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#constructor">constructor</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L26">base/statement.mts:26</a></li></ul></aside></li>
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_Statement-2">new <wbr/>Statement<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#constructor.new_Statement-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_VariableStatement-2">new <wbr/>Variable<wbr/>Statement<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a><a href="#constructor.new_VariableStatement-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Statement constructor.</p>
 </div>
@@ -108,11 +109,11 @@ a script.</p>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> statement: <span class="tsd-signature-type">number</span></h5>
 <div class="tsd-comment tsd-typography"><p>Statement value.</p>
 </div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
-<p>Overrides Base.constructor</p>
+<h4 class="tsd-returns-title">Returns <a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#constructor">constructor</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L32">base/statement.mts:32</a></li></ul></aside></li>
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_Statement-3">new <wbr/>Statement<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#constructor.new_Statement-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_VariableStatement-3">new <wbr/>Variable<wbr/>Statement<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a><a href="#constructor.new_VariableStatement-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Statement constructor.</p>
 </div>
@@ -123,15 +124,16 @@ a script.</p>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> statement: <span class="tsd-signature-type">boolean</span></h5>
 <div class="tsd-comment tsd-typography"><p>Statement value.</p>
 </div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
-<p>Overrides Base.constructor</p>
+<h4 class="tsd-returns-title">Returns <a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#constructor">constructor</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L38">base/statement.mts:38</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
-<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="_statement" class="tsd-anchor"></a>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="_statement" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_statement</span><a href="#_statement" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">_statement<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#_statement">_statement</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L13">base/statement.mts:13</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
@@ -144,7 +146,7 @@ a script.</p>
 <div class="tsd-comment tsd-typography"><p>Returns the object&#39;s comment.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
-<p>Inherited from Base.comment</p>
+<p>Inherited from Statement.comment</p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/base.mts#L35">base/base.mts:35</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a id="id" class="tsd-anchor"></a>
@@ -155,12 +157,12 @@ a script.</p>
 <div class="tsd-comment tsd-typography"><p>Returns the object&#39;s ID.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
-<p>Inherited from Base.id</p>
+<p>Inherited from Statement.id</p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/base.mts#L28">base/base.mts:28</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="statement" class="tsd-anchor"></a>
+<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a id="statement" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>statement</span><a href="#statement" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature" id="statement.statement-1"><span class="tsd-signature-symbol">get</span> statement<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Returns the Statement value.</p>
@@ -168,6 +170,7 @@ a script.</p>
 <h3>Returns</h3><p>The Statement value.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<p>Inherited from Statement.statement</p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L50">base/statement.mts:50</a></li></ul></aside></li>
 <li class="tsd-signature" id="statement.statement-2"><span class="tsd-signature-symbol">set</span> statement<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
@@ -180,39 +183,38 @@ a script.</p>
 <li>
 <h5>value: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Inherited from Statement.statement</p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L57">base/statement.mts:57</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="value" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagAbstract">Abstract</code> <span>value</span><a href="#value" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<h3 class="tsd-anchor-link"><span>value</span><a href="#value" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
 <li class="tsd-signature" id="value.value-1"><span class="tsd-signature-symbol">get</span> value<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Returns the Statement&#39;s value. This function must be
-implemented by a subclass.</p>
-
-<h3>Returns</h3><p>The Statement value.</p>
+<div class="tsd-comment tsd-typography"><p>Returns the statement.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<p>Overrides Statement.value</p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L67">base/statement.mts:67</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/variable.mts#L24">base/variable.mts:24</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="clearComment" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>clear<wbr/>Comment</span><a href="#clearComment" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-<li class="tsd-signature tsd-anchor-link" id="clearComment.clearComment-1">clear<wbr/>Comment<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#clearComment.clearComment-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="clearComment.clearComment-1">clear<wbr/>Comment<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a><a href="#clearComment.clearComment-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Removes the object&#39;s comment.</p>
 
 <h3>Returns</h3><p>The current instance.</p>
 </div>
-<h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
-<p>Inherited from <a href="Base.html">Base</a>.<a href="Base.html#clearComment">clearComment</a></p>
+<h4 class="tsd-returns-title">Returns <a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#clearComment">clearComment</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/base.mts#L55">base/base.mts:55</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="compareIdOrPattern" class="tsd-anchor"></a>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="compareIdOrPattern" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</span><a href="#compareIdOrPattern" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="compareIdOrPattern.compareIdOrPattern-1">compare<wbr/>Id<wbr/>Or<wbr/>Pattern<span class="tsd-signature-symbol">(</span>idOrPattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#compareIdOrPattern.compareIdOrPattern-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if a Statement matches an ID or a pattern.</p>
@@ -227,6 +229,7 @@ implemented by a subclass.</p>
 <div class="tsd-comment tsd-typography"><p>ID or pattern to match against.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#compareIdOrPattern">compareIdOrPattern</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L75">base/statement.mts:75</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="compareIdOrPattern.compareIdOrPattern-2">compare<wbr/>Id<wbr/>Or<wbr/>Pattern<span class="tsd-signature-symbol">(</span>idOrPattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#compareIdOrPattern.compareIdOrPattern-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
@@ -243,12 +246,26 @@ implemented by a subclass.</p>
 <div class="tsd-comment tsd-typography"><p>ID or pattern to match against.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#compareIdOrPattern">compareIdOrPattern</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L82">base/statement.mts:82</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="eval" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>eval</span><a href="#eval" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="eval.eval-1">eval<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="EvalSubshellStatement.html" class="tsd-signature-type" data-tsd-kind="Class">EvalSubshellStatement</a><a href="#eval.eval-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Returns the statement in an evaluation-subshell statement.</p>
+
+<h3>Returns</h3><p>A new EvalSubshellStatement instance.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="EvalSubshellStatement.html" class="tsd-signature-type" data-tsd-kind="Class">EvalSubshellStatement</a></h4><aside class="tsd-sources">
+<p>Implementation of <a href="../interfaces/IEvaluable.html">IEvaluable</a>.<a href="../interfaces/IEvaluable.html#eval">eval</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/variable.mts#L42">base/variable.mts:42</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="meta" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>meta</span><a href="#meta" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-<li class="tsd-signature tsd-anchor-link" id="meta.meta-1">meta<span class="tsd-signature-symbol">(</span>container<span class="tsd-signature-symbol">: </span><a href="MetaData.html" class="tsd-signature-type" data-tsd-kind="Class">MetaData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#meta.meta-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="meta.meta-1">meta<span class="tsd-signature-symbol">(</span>container<span class="tsd-signature-symbol">: </span><a href="MetaData.html" class="tsd-signature-type" data-tsd-kind="Class">MetaData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a><a href="#meta.meta-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Fills the provided MetaData-struct with data. It&#39;s
 done this way to get the meta-data of a newly
@@ -264,14 +281,14 @@ the required calls.</p>
 <h5>container: <a href="MetaData.html" class="tsd-signature-type" data-tsd-kind="Class">MetaData</a></h5>
 <div class="tsd-comment tsd-typography"><p>MetaData object to fill.</p>
 </div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
-<p>Inherited from <a href="Base.html">Base</a>.<a href="Base.html#meta">meta</a></p>
+<h4 class="tsd-returns-title">Returns <a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#meta">meta</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/base.mts#L69">base/base.mts:69</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="setComment" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Comment</span><a href="#setComment" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-<li class="tsd-signature tsd-anchor-link" id="setComment.setComment-1">set<wbr/>Comment<span class="tsd-signature-symbol">(</span>comment<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#setComment.setComment-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="setComment.setComment-1">set<wbr/>Comment<span class="tsd-signature-symbol">(</span>comment<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a><a href="#setComment.setComment-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Attaches a comment to the object.</p>
 
@@ -284,13 +301,26 @@ the required calls.</p>
 <h5>comment: <span class="tsd-signature-type">string</span></h5>
 <div class="tsd-comment tsd-typography"><p>Comment to set.</p>
 </div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
-<p>Inherited from <a href="Base.html">Base</a>.<a href="Base.html#setComment">setComment</a></p>
+<h4 class="tsd-returns-title">Returns <a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#setComment">setComment</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/base.mts#L45">base/base.mts:45</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="compareIdOrPattern-3" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</span><a href="#compareIdOrPattern-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="subshell" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>subshell</span><a href="#subshell" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="subshell.subshell-1">subshell<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="SubshellStatement.html" class="tsd-signature-type" data-tsd-kind="Class">SubshellStatement</a><a href="#subshell.subshell-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Returns the statement in a subshell statement.</p>
+
+<h3>Returns</h3><p>A new SubshellStatement instance.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="SubshellStatement.html" class="tsd-signature-type" data-tsd-kind="Class">SubshellStatement</a></h4><aside class="tsd-sources">
+<p>Implementation of <a href="../interfaces/ISubshellable.html">ISubshellable</a>.<a href="../interfaces/ISubshellable.html#subshell">subshell</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/variable.mts#L33">base/variable.mts:33</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="compareIdOrPattern-3" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</span><a href="#compareIdOrPattern-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="compareIdOrPattern-3.compareIdOrPattern-4">compare<wbr/>Id<wbr/>Or<wbr/>Pattern<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a>, idOrPattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#compareIdOrPattern-3.compareIdOrPattern-4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if a Statement matches an ID or a pattern.</p>
@@ -309,6 +339,7 @@ the required calls.</p>
 <div class="tsd-comment tsd-typography"><p>ID or pattern to match against.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#compareIdOrPattern-3">compareIdOrPattern</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L96">base/statement.mts:96</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="compareIdOrPattern-3.compareIdOrPattern-5">compare<wbr/>Id<wbr/>Or<wbr/>Pattern<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a>, idOrPattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#compareIdOrPattern-3.compareIdOrPattern-5" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
@@ -329,11 +360,12 @@ the required calls.</p>
 <div class="tsd-comment tsd-typography"><p>ID or pattern to match against.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#compareIdOrPattern-3">compareIdOrPattern</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L105">base/statement.mts:105</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="convert" class="tsd-anchor"></a>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="convert" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>convert</span><a href="#convert" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
-<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="convert.convert-1">convert<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#convert.convert-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Converts a statement string to a string (does nothing, just for
@@ -349,6 +381,7 @@ the purpose of being callable with a string).</p>
 <div class="tsd-comment tsd-typography"><p>Statement value.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#convert">convert</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L127">base/statement.mts:127</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="convert.convert-2">convert<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#convert.convert-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
@@ -365,6 +398,7 @@ the purpose of being callable with a string).</p>
 <div class="tsd-comment tsd-typography"><p>Statement instance.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#convert">convert</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L134">base/statement.mts:134</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="convert.convert-3">convert<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#convert.convert-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
@@ -381,6 +415,7 @@ the purpose of being callable with a string).</p>
 <div class="tsd-comment tsd-typography"><p>Number.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#convert">convert</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L141">base/statement.mts:141</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="convert.convert-4">convert<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#convert.convert-4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
@@ -397,6 +432,7 @@ the purpose of being callable with a string).</p>
 <div class="tsd-comment tsd-typography"><p>Boolean.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<p>Inherited from <a href="Statement.html">Statement</a>.<a href="Statement.html#convert">convert</a></p>
 <ul>
 <li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/9d74d0f/src/base/statement.mts#L148">base/statement.mts:148</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -422,20 +458,22 @@ the purpose of being callable with a string).</p>
 <ul></ul></li></ul></div></details></nav>
 <nav class="tsd-navigation secondary menu-sticky">
 <ul>
-<li class="current tsd-kind-class"><a href="Statement.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-class)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-128-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-128-text"></path></svg><span>Statement</span></a>
+<li class="current tsd-kind-class"><a href="VariableStatement.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-class)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-128-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-128-text"></path></svg><span>Variable<wbr/>Statement</span></a>
 <ul>
-<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="Statement.html#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-512-path"></use><use href="#icon-512-text"></use></svg>constructor</a></li>
-<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="Statement.html#_statement" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_statement</a></li>
-<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="Statement.html#comment" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>comment</a></li>
-<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="Statement.html#id" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>id</a></li>
-<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="Statement.html#statement" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>statement</a></li>
-<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="Statement.html#value" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>value</a></li>
-<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="Statement.html#clearComment" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>clear<wbr/>Comment</a></li>
-<li class="tsd-kind-method tsd-parent-kind-class"><a href="Statement.html#compareIdOrPattern" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</a></li>
-<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="Statement.html#meta" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>meta</a></li>
-<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="Statement.html#setComment" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Comment</a></li>
-<li class="tsd-kind-method tsd-parent-kind-class"><a href="Statement.html#compareIdOrPattern-3" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</a></li>
-<li class="tsd-kind-method tsd-parent-kind-class"><a href="Statement.html#convert" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>convert</a></li></ul></li></ul></nav></div></div>
+<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><a href="VariableStatement.html#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-512-path"></use><use href="#icon-512-text"></use></svg>constructor</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a href="VariableStatement.html#_statement" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_statement</a></li>
+<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="VariableStatement.html#comment" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>comment</a></li>
+<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="VariableStatement.html#id" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>id</a></li>
+<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="VariableStatement.html#statement" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>statement</a></li>
+<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="VariableStatement.html#value" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>value</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="VariableStatement.html#clearComment" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>clear<wbr/>Comment</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="VariableStatement.html#compareIdOrPattern" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="VariableStatement.html#eval" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>eval</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="VariableStatement.html#meta" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>meta</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="VariableStatement.html#setComment" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>set<wbr/>Comment</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="VariableStatement.html#subshell" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>subshell</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="VariableStatement.html#compareIdOrPattern-3" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="VariableStatement.html#convert" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>convert</a></li></ul></li></ul></nav></div></div>
 <div class="container tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
 <div class="overlay"></div><script src="../assets/main.js"></script></body></html>
