@@ -126,13 +126,37 @@ describe('Variable tests', () => {
                 expect((setBlock.raw[2] as Statement).value).to.be.equal(')');
             });
         });
+    });
 
-        describe('failed', () => {
-            it('invalid value type provided', () => {
-                expect(function() {
-                    new VariableHelper('hello').set({} as any);
-                }).to.throw('Invalid value type provided');
+    describe('subshell', () => {
+        describe('successful', () => {
+            it('string value', () => {
+                const value = 'echo "test"';
+                const name = 'helper';
+                const variable = new VariableHelper(name);
+
+                expect(variable.set(value).subshell().value).to.be.equal(`(${name}=${value})`);
             });
+        });
+    });
+
+    describe('eval', () => {
+        describe('successful', () => {
+            it('string value', () => {
+                const value = 'echo "test"';
+                const name = 'helper';
+                const variable = new VariableHelper(name);
+
+                expect(variable.set(value).eval().value).to.be.equal(`$(${name}=${value})`);
+            });
+        });
+    });
+
+    describe('failed', () => {
+        it('invalid value type provided', () => {
+            expect(function() {
+                new VariableHelper('hello').set({} as any);
+            }).to.throw('Invalid value type provided');
         });
     });
 

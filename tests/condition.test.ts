@@ -267,6 +267,28 @@ describe('Condition tests', () => {
         });
     });
 
+    describe('subshell', () => {
+        describe('successful', () => {
+            it('string value', () => {
+                const conditionValue = '1 -eq 1';
+                const condition = new Condition(conditionValue);
+
+                expect(condition.subshell().value).to.be.equal(`([ ${conditionValue} ])`);
+            });
+        });
+    });
+
+    describe('eval', () => {
+        describe('successful', () => {
+            it('string value', () => {
+                const conditionValue = '1 -eq 1';
+                const condition = new Condition(conditionValue);
+
+                expect(condition.eval().value).to.be.equal(`$([ ${conditionValue} ])`);
+            });
+        });
+    });
+
     describe('fromString', () => {
         describe('successful', () => {
             it('string condition', () => {
