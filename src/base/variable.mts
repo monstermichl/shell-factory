@@ -1,7 +1,9 @@
+import { EvalSubshellBlock } from '../components/subshell/eval-subshell-block.mjs';
 import {
     convertToString,
     ConvertToStringError,
 } from '../helpers/string.mjs';
+import { Block } from './block.mjs';
 import { Statement } from './statement.mjs';
 
 /**
@@ -13,6 +15,16 @@ class StatementHelper extends Statement {
      */
     public get value(): string {
         return this.statement;
+    }
+}
+
+/**
+ * Helper class to instantiate a simple Block.
+ */
+export class VariableSetBlock extends Block {
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public constructor(content?: any) {
+        super(content);
     }
 }
 
@@ -76,7 +88,7 @@ export abstract class Variable extends Statement {
      * first time and it's a local variable, the local keyword is put in
      * front.
      *
-     * @param value Value to set. Must be a Statement, string, number or boolean.
+     * @param value Statement to set as value.
      * @returns Assignment statement.
      */
     public set(value?: Statement): Statement;
@@ -85,7 +97,7 @@ export abstract class Variable extends Statement {
      * first time and it's a local variable, the local keyword is put in
      * front.
      *
-     * @param value Value to set. Must be a Statement, string, number or boolean.
+     * @param value String to set as value.
      * @returns Assignment statement.
      */
     public set(value?: string): Statement;
@@ -94,7 +106,7 @@ export abstract class Variable extends Statement {
      * first time and it's a local variable, the local keyword is put in
      * front.
      *
-     * @param value Value to set. Must be a Statement, string, number or boolean.
+     * @param value Number to set as value.
      * @returns Assignment statement.
      */
     public set(value?: number): Statement;
@@ -103,23 +115,44 @@ export abstract class Variable extends Statement {
      * first time and it's a local variable, the local keyword is put in
      * front.
      *
-     * @param value Value to set. Must be a Statement, string, number or boolean.
+     * @param value Boolean to set as value.
      * @returns Assignment statement.
      */
     public set(value?: boolean): Statement;
+    /**
+     * Creates an assignment-statement. If the variable is assigned the
+     * first time and it's a local variable, the local keyword is put in
+     * front.
+     *
+     * @param value Block to set as value.
+     * @returns Assignment statement.
+     */
+    public set(value?: EvalSubshellBlock): Block;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public set(value?: any): Statement {
-        /* Convert value to string. */
-        value = this._convertValueInternal(value);
-
+    public set(value?: any): Statement | Block {
         /* If the variable has not been initialize and is local,
            prepend the 'local' keyword. */
         let prefix = '';
         if (this._local && !this._defined) {
             prefix = 'local ';
-            this._defined = true;
         }
-        return new StatementHelper(`${prefix}${this.name}=${value}`);
+        const assign = (value: string) => new StatementHelper(`${prefix}${this.name}=${value}`);
+
+        /* If value is instance of EvalSubshellBlock create a
+           new Block whereat the block's first statement is the
+           assign statement. */
+        if (value instanceof EvalSubshellBlock) {
+            value = new VariableSetBlock([
+                assign(value.openingStatement.value),
+                ...value.raw.slice(1),
+            ]);
+        } else {
+            /* Convert value to string. */
+            value = this._convertValueInternal(value);
+            value = assign(value);
+        }
+        this._defined = true;
+        return value;
     }
 
     /**
