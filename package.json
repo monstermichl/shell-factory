@@ -35,6 +35,7 @@
     "example:variable": "npm run build && node ./examples/example-variable.js",
     "example:and": "npm run build && node ./examples/example-and.js",
     "example:or": "npm run build && node ./examples/example-or.js",
+    "example:subshell": "npm run build && node ./examples/example-subshell.js",
   },
   "author": "monstermichl",
   "license": "MIT",
