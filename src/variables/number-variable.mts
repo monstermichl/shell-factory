@@ -1,5 +1,8 @@
 import { Statement } from '../base/statement.mjs';
-import { Variable } from '../base/variable.mjs';
+import {
+    Variable,
+    VariableStatement,
+} from '../base/variable.mjs';
 import { isNumber } from '../helpers/string.mjs';
 import { Subshell } from '../components/subshell/subshell.mjs';
 
@@ -13,18 +16,6 @@ enum NumberCompareOptions {
     LessOrEqual,
     Greater,
     GreateOrEqual,
-}
-
-/**
- * Helper class to instantiate a simple Statement.
- */
-class StatementHelper extends Statement {
-    /**
-     * Returns the statement.
-     */
-    public get value(): string {
-        return this.statement;
-    }
 }
 
 /**
@@ -544,6 +535,6 @@ export class NumberVariable extends Variable {
         } else if (!checkType(typeof operator)) {
             throwTypeError('operator');
         }
-        return new StatementHelper(Subshell.call(`expr ${leftSide} ${operator} ${rightSide}`).eval());
+        return new VariableStatement(Subshell.call(`expr ${leftSide} ${operator} ${rightSide}`).eval());
     }
 }

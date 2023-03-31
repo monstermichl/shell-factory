@@ -3,25 +3,93 @@ import {
     convertToString,
     ConvertToStringError,
 } from '../helpers/string.mjs';
-import { Block } from './block.mjs';
+import { ISubshellable } from '../interfaces/subshellable.mjs';
+import { IEvaluable } from '../interfaces/evaluable.mjs';
+import {
+    Block,
+    StatementOrBlockOrString,
+} from './block.mjs';
 import { Statement } from './statement.mjs';
+import { SubshellStatement } from '../components/subshell/subshell-statement.mjs';
+import { EvalSubshellStatement } from '../components/subshell/eval-subshell-statement.mjs';
 
 /**
- * Helper class to instantiate a simple Statement.
+ * Helper class to instantiate a simple Statement
+ * which allows subshelling and evaluation..
  */
-class StatementHelper extends Statement {
+export class VariableStatement extends Statement implements ISubshellable, IEvaluable {
     /**
      * Returns the statement.
      */
     public get value(): string {
         return this.statement;
     }
+
+    /**
+     * Returns the statement in a subshell statement.
+     *
+     * @returns A new SubshellStatement instance.
+     */
+    public subshell(): SubshellStatement {
+        return new SubshellStatement(this);
+    }
+
+    /**
+     * Returns the statement in an evaluation-subshell statement.
+     *
+     * @returns A new EvalSubshellStatement instance.
+     */
+    eval(): EvalSubshellStatement {
+        return this.subshell().eval();
+    }
 }
 
 /**
  * Helper class to instantiate a simple Block.
  */
-export class VariableSetBlock extends Block {
+export class VariableBlock extends Block {
+    /**
+     * Block constructor.
+     *
+     * @param statement Block content.
+     */
+    public constructor(statement?: Statement);
+    /**
+     * Block constructor.
+     *
+     * @param statement Block content.
+     */
+    public constructor(statement?: string);
+    /**
+     * Block constructor.
+     *
+     * @param block Block content.
+     */
+    public constructor(block?: Block);
+    /**
+     * Block constructor.
+     *
+     * @param statements Block content.
+     */
+    public constructor(statements?: Statement[]);
+    /**
+     * Block constructor.
+     *
+     * @param statements Block content.
+     */
+    public constructor(statements?: string[]);
+    /**
+     * Block constructor.
+     *
+     * @param blocks Block content.
+     */
+    public constructor(blocks?: Block[]);
+    /**
+     * Block constructor.
+     *
+     * @param content Block content.
+     */
+    public constructor(content?: StatementOrBlockOrString[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public constructor(content?: any) {
         super(content);
@@ -91,7 +159,7 @@ export abstract class Variable extends Statement {
      * @param value Statement to set as value.
      * @returns Assignment statement.
      */
-    public set(value?: Statement): Statement;
+    public set(value?: Statement): VariableStatement;
     /**
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
@@ -100,7 +168,7 @@ export abstract class Variable extends Statement {
      * @param value String to set as value.
      * @returns Assignment statement.
      */
-    public set(value?: string): Statement;
+    public set(value?: string): VariableStatement;
     /**
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
@@ -109,7 +177,7 @@ export abstract class Variable extends Statement {
      * @param value Number to set as value.
      * @returns Assignment statement.
      */
-    public set(value?: number): Statement;
+    public set(value?: number): VariableStatement;
     /**
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
@@ -118,7 +186,7 @@ export abstract class Variable extends Statement {
      * @param value Boolean to set as value.
      * @returns Assignment statement.
      */
-    public set(value?: boolean): Statement;
+    public set(value?: boolean): VariableStatement;
     /**
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
@@ -127,22 +195,22 @@ export abstract class Variable extends Statement {
      * @param value Block to set as value.
      * @returns Assignment statement.
      */
-    public set(value?: EvalSubshellBlock): Block;
+    public set(value?: EvalSubshellBlock): VariableBlock;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public set(value?: any): Statement | Block {
+    public set(value?: any): VariableStatement | VariableBlock {
         /* If the variable has not been initialize and is local,
            prepend the 'local' keyword. */
         let prefix = '';
         if (this._local && !this._defined) {
             prefix = 'local ';
         }
-        const assign = (value: string) => new StatementHelper(`${prefix}${this.name}=${value}`);
+        const assign = (value: string) => new VariableStatement(`${prefix}${this.name}=${value}`);
 
         /* If value is instance of EvalSubshellBlock create a
            new Block whereat the block's first statement is the
            assign statement. */
         if (value instanceof EvalSubshellBlock) {
-            value = new VariableSetBlock([
+            value = new VariableBlock([
                 assign(value.openingStatement.value),
                 ...value.raw.slice(1),
             ]);
@@ -264,7 +332,7 @@ export abstract class Variable extends Statement {
      *
      * @returns Compare Statement.
      */
-    protected _compare(compareOperator: number, value?: string): Statement {
+    protected _compare(compareOperator: number, value?: string): VariableStatement {
         /* Let subclass convert the value to what's needed. */
         value = this._convertValueInternal(value);
 
@@ -279,6 +347,6 @@ export abstract class Variable extends Statement {
         } else if (typeof compareString !== 'string') {
             throw new Error('Returned compare value is not a string');
         }
-        return new StatementHelper(compareString);
+        return new VariableStatement(compareString);
     }
 }

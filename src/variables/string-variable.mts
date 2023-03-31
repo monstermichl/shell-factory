@@ -1,5 +1,8 @@
 import { Statement } from '../base/statement.mjs';
-import { Variable } from '../base/variable.mjs';
+import {
+    Variable,
+    VariableStatement,
+} from '../base/variable.mjs';
 import { wrapInQuotes } from '../helpers/string.mjs';
 import { Subshell } from '../components/subshell/subshell.mjs';
 
@@ -11,18 +14,6 @@ enum StringCompareOptions {
     NotEqual,
     Empty,
     NotEmpty,
-}
-
-/**
- * Helper class to instantiate a simple Statement.
- */
-class StatementHelper extends Statement {
-    /**
-     * Returns the statement.
-     */
-    public get value(): string {
-        return this.statement;
-    }
 }
 
 /**
@@ -119,7 +110,7 @@ export class StringVariable extends Variable {
      * @returns Length evaluation Statement.
      */
     public get length(): Statement {
-        return new StatementHelper(
+        return new VariableStatement(
             Subshell.eval(`expr length "${this.value}"`),
         );
     }
@@ -155,7 +146,7 @@ export class StringVariable extends Variable {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public append(value?: any): Statement {
         value = this._convertValueToString(value);
-        return new StatementHelper(`${this.value}${value}`);
+        return new VariableStatement(`${this.value}${value}`);
     }
 
     /**
@@ -345,7 +336,7 @@ export class StringVariable extends Variable {
 
         /* Echo string value into sed to perform replacement. TODO: Use different
            separator if string contains slash. */
-        return new StatementHelper(
+        return new VariableStatement(
             Subshell.eval(`echo "${this.value}" | sed "s/${searchValue}/${replaceValue}/${all ? 'g': ''}"`),
         );
     }
@@ -388,7 +379,7 @@ export class StringVariable extends Variable {
         start++;
 
         /* FYI: There might be a better solution than using expr. */
-        return new StatementHelper(Subshell.eval(`expr substr "${this.value}" ${start} ${lengthString}`));
+        return new VariableStatement(Subshell.eval(`expr substr "${this.value}" ${start} ${lengthString}`));
     }
 
     /**
