@@ -4,6 +4,8 @@ import {
     convertToString,
     ConvertToStringError,
 } from '../../helpers/string.mjs';
+import { ISubshellable } from '../../interfaces/subshellable.mjs';
+import { IEvaluable } from '../../interfaces/evaluable.mjs';
 import {
     ChainElement,
     IChainable,
@@ -13,11 +15,17 @@ import {
     LogicalConnectType,
     ILogicallyConnectable,
 } from '../../interfaces/logically-connectable.mjs';
+import { EvalSubshellStatement } from '../subshell/eval-subshell-statement.mjs';
+import { SubshellStatement } from '../subshell/subshell-statement.mjs';
 
 /**
  * Represents a condition.
  */
-export class Condition extends Statement implements IConditionable, ILogicallyConnectable, IChainable<LogicalConnectType, Condition> {
+export class Condition extends Statement implements IConditionable,
+                                                    ILogicallyConnectable,
+                                                    IChainable<LogicalConnectType, Condition>,
+                                                    ISubshellable,
+                                                    IEvaluable {
     protected _chain = [] as ChainElement<LogicalConnectType, Condition>[];
     private _test = true;
 
@@ -263,6 +271,24 @@ export class Condition extends Statement implements IConditionable, ILogicallyCo
      */
     public equal(condition: Condition): boolean {
         return condition?.value === this.value;
+    }
+
+    /**
+     * Returns the statement in a subshell statement.
+     *
+     * @returns A new SubshellStatement instance.
+     */
+    public subshell(): SubshellStatement {
+        return new SubshellStatement(this);
+    }
+
+    /**
+     * Returns the statement in an evaluation-subshell statement.
+     *
+     * @returns A new EvalSubshellStatement instance.
+     */
+    eval(): EvalSubshellStatement {
+        return this.subshell().eval();
     }
 
     /**
