@@ -5,6 +5,7 @@ import {
 } from '../base/variable.mjs';
 import { wrapInQuotes } from '../helpers/string.mjs';
 import { Subshell } from '../components/subshell/subshell.mjs';
+import { Command } from '../base/command.mjs';
 
 /**
  * Possible string operations.
@@ -84,6 +85,40 @@ export class StringVariable extends Variable {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public isNotEqual(value?: any): Statement {
         return this._compare(StringCompareOptions.NotEqual, value);
+    }
+
+    /**
+     * Checks if the variable value matches the pattern.
+     *
+     * @param value Pattern to match
+     * @returns Pattern statement.
+     */
+    public matches(value?: Statement): Statement;
+    /**
+     * Checks if the variable value matches the pattern.
+     *
+     * @param value Pattern to match
+     * @returns Pattern statement.
+     */
+    public matches(value?: string): Statement;
+    /**
+     * Checks if the variable value matches the pattern.
+     *
+     * @param value Pattern to match
+     * @returns Pattern statement.
+     */
+    public matches(value?: number): Statement;
+    /**
+     * Checks if the variable value matches the pattern.
+     *
+     * @param value Pattern to match
+     * @returns Pattern statement.
+     */
+    public matches(value?: boolean): Statement;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public matches(value?: any): Statement {
+        value = this._convertValueToString(value);
+        return new Command(`echo ${wrapInQuotes(this.value, true)}`).pipe(`grep -q -e ${wrapInQuotes(value, true)}`);
     }
 
     /**

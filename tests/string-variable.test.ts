@@ -41,6 +41,18 @@ describe('StringVariable tests', () => {
         });
     });
 
+    describe('matches', () => {
+        describe('successful', () => {
+            it('string value', () => {
+                const name = 'test';
+                const compareValue = 'world';
+                const variable = new StringVariable(name);
+
+                expect(variable.matches(compareValue).value).to.be.equal(`echo "$\{${name}}" | grep -q -e "${compareValue}"`);
+            });
+        });
+    });
+
     describe('isEmpty', () => {
         describe('successful', () => {
             it('test', () => {
