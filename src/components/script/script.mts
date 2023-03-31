@@ -23,6 +23,10 @@ import { Select } from '../select/select.mjs';
 import { Command } from '../../base/command.mjs';
 import { SubshellBaseBlock } from '../subshell/subshell-base-block.mjs';
 import { SubshellBaseStatement } from '../subshell/subshell-base-statement.mjs';
+import {
+    Variable,
+    VariableBlock,
+} from '../../base/variable.mjs';
 
 /**
  * Used to help the Script dump-method to understand, in which
@@ -74,6 +78,7 @@ export type Config = {
         caseOption?: Format;
         statement?: Format;
         command?: Format;
+        variable?: Format;
         subshell?: Format;
         interpreter?: Omit<Format, 'newlinesBefore'>;
     }
@@ -310,8 +315,8 @@ export class Script extends Block {
                 format = config?.detailed?.statement;
             } else if (value instanceof Command) {
                 format = config?.detailed?.command;
-            } else if (value instanceof Statement) {
-                format = config?.detailed?.statement;
+            } else if ((value instanceof Variable) || (value instanceof VariableBlock)) {
+                format = config?.detailed?.variable;
             /* Blocks */
             } else if (value instanceof Function) {
                 format = config?.detailed?.function;
@@ -343,10 +348,12 @@ export class Script extends Block {
             } else if (value instanceof CaseOption) {
                 format = config?.detailed?.caseOption;
                 contextFlags |= ContextFlags.CaseOption;
-            } else if ((value instanceof SubshellBaseStatement) ||
-                       (value instanceof SubshellBaseBlock)) {
+            } else if ((value instanceof SubshellBaseStatement) || (value instanceof SubshellBaseBlock)) {
                 format = config?.detailed?.subshell;
                 contextFlags |= ContextFlags.Subshell;
+            /* Base types. */
+            } else if (value instanceof Statement) {
+                format = config?.detailed?.statement;
             } else {
                 indentAddition = 1;
                 format = Script.defaultConfig.common;
