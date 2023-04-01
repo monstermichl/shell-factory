@@ -86,7 +86,7 @@ done
 ```
 
 ### If
-If-statements control the further code execution flow. The If-class adds the possibility to add all required else-if (+ else) branches via chaining as shown in the example. *NICE-TO-KNOW: The If-class also supports dis-/enabling testing (the brackets in the statement) by using the dontTest-, respectively test-getter.*
+If-statements control the further code execution flow. The If-class adds the possibility to add all required else-if (+ else) branches via chaining as shown in the example. *NICE-TO-KNOW: The If-class also supports dis-/enabling testing (the brackets in the statement) by using the setTest-method.*
 
 ```typescript
 const script = new Script([
@@ -118,7 +118,7 @@ fi
 ```
 
 ### While
-While-loops execute the content in their body as long as the condition is fulfilled. *NICE-TO-KNOW: The While-class also supports dis-/enabling testing (the brackets in the statement) by using the dontTest-, respectively test-getter.*
+While-loops execute the content in their body as long as the condition is fulfilled. *NICE-TO-KNOW: The While-class also supports dis-/enabling testing (the brackets in the statement) by using the setTest-method.*
 
 ```typescript
 const script = new Script([
@@ -146,7 +146,7 @@ done
 ```
 
 ### Until
-Until-loops execute the content in their body until the condition is fulfilled. *NICE-TO-KNOW: The Until-class also supports dis-/enabling testing (the brackets in the statement) by using the dontTest-, respectively test-getter.*
+Until-loops execute the content in their body until the condition is fulfilled. *NICE-TO-KNOW: The Until-class also supports dis-/enabling testing (the brackets in the statement) by using the setTest-method.*
 
 ```typescript
 const script = new Script([
@@ -174,7 +174,7 @@ done
 ```
 
 ### For
-For-loops iterate over a defined collection of values and provid the current value via the specified variable.
+For-loops iterate over a defined collection of values and provide the current value via the specified variable.
 
 ```typescript
 const script = new Script([
