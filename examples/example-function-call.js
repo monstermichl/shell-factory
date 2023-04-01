@@ -5,6 +5,7 @@ import {
     Command,
 } from '../dist/index.mjs';
 
+/* example-start */
 const exitFunc = new Function('exit_function', [
     new If('"$2" != ""', [
         'echo "$2"',

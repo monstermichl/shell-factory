@@ -3,6 +3,7 @@ import {
     Command,
 } from '../dist/index.mjs';
 
+/* example-start */
 const file = 'test.txt';
 const script = new Script([
     new Command('echo "File content"').write(file),

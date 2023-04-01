@@ -4,6 +4,7 @@ import {
     If,
 } from '../dist/index.mjs';
 
+/* example-start */
 const script = new Script([
     new Command('echo "File content"')
         .pipe('grep -o -e "content"')

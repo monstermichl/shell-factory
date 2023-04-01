@@ -6,6 +6,7 @@ import {
     NumberVariable,
 } from '../dist/index.mjs';
 
+/* example-start */
 const stringVariable = new StringVariable('string');
 const numberVariable = new NumberVariable('number');
 

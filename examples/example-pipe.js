@@ -3,6 +3,7 @@ import {
     Command,
 } from '../dist/index.mjs';
 
+/* example-start */
 const script = new Script([
     new Command('cat test.txt')
         .pipe('grep -e "hello"')

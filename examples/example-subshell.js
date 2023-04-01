@@ -5,9 +5,11 @@ import {
     Subshell,
 } from '../dist/index.mjs';
 
+/* example-start */
 const variable = new StringVariable('response');
 const script = new Script([
     'read -p "What\'s your name? " name',
+
     variable.set(
         new If('"$name" != ""', [
             'echo "Hello $name"',
