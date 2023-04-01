@@ -5,9 +5,8 @@ Shell-factory is a simple yet powerful ESM module that allows you to create Bour
 npm install shell-factory
 ```
 
-
 ## Components
-Each shell-script is built with the Script-class which serves as the container for all building blocks. At this point, the following building-blocks are supported (*the output of the following examples was provided by console.log. It is not dumped to the console or any file automatically. This is shown in the first example but for readability reasons avoided in the other ones.*).
+Each shell-script is built with the Script-class which serves as the container for all building blocks. At this point, the following building-blocks are supported.
 
 ### Command
 A command represents a single line of code. It can be a string or an instance of the Command class. Usually, a simple string is sufficient. However, the Command class inherits from the Statement class which offers additional functionalities like having an ID for later adjustment or adding comments which will be added to the generated code. For further modification commands also can be chained with several operators (see [Operations](#operations)).
@@ -59,6 +58,11 @@ Functions are reusable code blocks which can be called at later points in the sc
 The Function class additionally provides the *call*-method to return a function-call Command with the provided parameters.
 (example:function-call)
 
+### Condition
+Conditions are separate Statement instances which test the passed condition string. Each string or Statement that is passed to a ConditionBlock (e.g., If, While, Until, ...) is converted to a Condition instance. However, they can also exist and be tested on their own. The Condition class additionally provides logical chaining using the *and*- and *or*-method. If you don't want to test the Condition, you can easily disable it using the *setTest*-method.
+
+(example:condition)
+
 ## Operations
 Commands and ConditionBlocks support the appliance of operations in a chained manner to provide you with comprehensive command combination options. At this point, the following operations are supported. *Further modification can be accomplished by using the findInChain-, removeFromChain- and clearChain-methods or getting the chain content via the chain-getter.*
 
@@ -98,7 +102,7 @@ Many Statement- and Block-types support subshelling/evaluation, meaning, the Sta
 (example:subshell)
 
 ## Formatting
-How scripts are dumped can be configured separatelly. Either by setting the config directly on the Script instance or by passing it to the dump-method.
+How scripts are being dumped can be configured separatelly by either setting the config directly on the Script instance via the *config*-setter or by passing it to the *dump*-method. Passing the config to the *dump*-method uses it only temporarily.
 
 (example:dump-config)
 
@@ -114,6 +118,6 @@ Blocks and Statements can be removed from their parent block (e.g. Script) via t
 (example:remove)
 
 ### Alter
-Blocks and Statements can altered by retrieving them via their ID or a statement pattern through their parent block (e.g. Script) with the *findContent* method and altering the returned object(s).
+Blocks and Statements can be altered by retrieving them via their ID or a statement pattern through their parent block (e.g. Script) with the *findContent* method and altering the returned object(s).
 
 (example:alter)
