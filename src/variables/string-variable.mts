@@ -13,6 +13,7 @@ import { Command } from '../base/command.mjs';
 enum StringCompareOptions {
     Equal,
     NotEqual,
+    Match,
     Empty,
     NotEmpty,
 }
@@ -116,9 +117,7 @@ export class StringVariable extends Variable {
      */
     public matches(value?: boolean): Statement;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public matches(value?: any): Statement {
-        value = this._convertValueToString(value);
-        return new Command(`echo ${wrapInQuotes(this.value, true)}`).pipe(`grep -q -e ${wrapInQuotes(value, true)}`);
+        return this._compare(StringCompareOptions.Match, value);
     }
 
     /**
@@ -433,6 +432,15 @@ export class StringVariable extends Variable {
         switch(compareOperator) {
             case StringCompareOptions.Equal: compareString = `${preparedVariable} = ${value}`; break;
             case StringCompareOptions.NotEqual: compareString = `${preparedVariable} != ${value}`; break;
+            case StringCompareOptions.Match: compareString = wrapInQuotes(
+                new Command(
+                    `echo ${wrapInQuotes(this.value, true)}`
+                )
+                    .pipe(`grep -e ${wrapInQuotes(value, true)}`)
+                    .eval()
+                    .value, true
+            );
+                break;
             case StringCompareOptions.Empty: compareString = `-z ${preparedVariable}`; break;
             case StringCompareOptions.NotEmpty: compareString = `-n ${preparedVariable}`; break;
         }
