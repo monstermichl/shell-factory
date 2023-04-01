@@ -503,7 +503,7 @@ echo "${response}"
 ```
 
 ## Formatting
-How scripts are dumped can be configured separatelly. Either by setting the config directly on the Script instance or by passing it to the dump-method.
+How scripts are being dumped can be configured separatelly by either setting the config directly on the Script instance via the *config*-setter or by passing it to the *dump*-method. Passing the config to the *dump*-method uses it only temporarily.
 
 ```typescript
 const spacyConfig = {
@@ -622,7 +622,7 @@ echo "Will this also be removed?"
 ```
 
 ### Alter
-Blocks and Statements can altered by retrieving them via their ID or a statement pattern through their parent block (e.g. Script) with the *findContent* method and altering the returned object(s).
+Blocks and Statements can be altered by retrieving them via their ID or a statement pattern through their parent block (e.g. Script) with the *findContent* method and altering the returned object(s).
 
 ```typescript
 const meta = new MetaData(); /* MetaData container. */
