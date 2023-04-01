@@ -9,7 +9,7 @@
     "build": "npx tsc",
     "test": "npx tsc -p tsconfig-tests.json && npx c8 -r html mocha ./tests-build/tests/*.test.js",
     "test-cleanup": "rm -rf ./tests-build",
-    "test-n-cleanup": "npm run test; npm run testCleanup",
+    "test-n-cleanup": "npm run test; npm run test-cleanup",
     "lint": "npx eslint .",
     "check-coverage": "npm run build && node ./helpers/check-coverage.js",
     "generate-readme": "npm run build && node ./helpers/generate-readme.js",
