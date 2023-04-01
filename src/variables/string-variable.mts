@@ -6,6 +6,7 @@ import {
 import { wrapInQuotes } from '../helpers/string.mjs';
 import { Subshell } from '../components/subshell/subshell.mjs';
 import { Command } from '../base/command.mjs';
+import { Condition } from '../components/condition/condition.mjs';
 
 /**
  * Possible string operations.
@@ -26,32 +27,32 @@ export class StringVariable extends Variable {
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value?: Statement): Statement;
+    public isEqual(value?: Statement): Condition;
     /**
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value?: string): Statement;
+    public isEqual(value?: string): Condition;
     /**
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value?: number): Statement;
+    public isEqual(value?: number): Condition;
     /**
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value?: boolean): Statement;
+    public isEqual(value?: boolean): Condition;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isEqual(value?: any): Statement {
+    public isEqual(value?: any): Condition {
         return this._compare(StringCompareOptions.Equal, value);
     }
 
@@ -59,32 +60,32 @@ export class StringVariable extends Variable {
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value?: Statement): Statement;
+    public isNotEqual(value?: Statement): Condition;
     /**
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value?: string): Statement;
+    public isNotEqual(value?: string): Condition;
     /**
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value?: number): Statement;
+    public isNotEqual(value?: number): Condition;
     /**
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value?: boolean): Statement;
+    public isNotEqual(value?: boolean): Condition;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isNotEqual(value?: any): Statement {
+    public isNotEqual(value?: any): Condition {
         return this._compare(StringCompareOptions.NotEqual, value);
     }
 
@@ -92,49 +93,50 @@ export class StringVariable extends Variable {
      * Checks if the variable value matches the pattern.
      *
      * @param value Pattern to match
-     * @returns Pattern statement.
+     * @returns Condition.
      */
-    public matches(value?: Statement): Statement;
+    public matches(value?: Statement): Condition;
     /**
      * Checks if the variable value matches the pattern.
      *
      * @param value Pattern to match
-     * @returns Pattern statement.
+     * @returns Condition.
      */
-    public matches(value?: string): Statement;
+    public matches(value?: string): Condition;
     /**
      * Checks if the variable value matches the pattern.
      *
      * @param value Pattern to match
-     * @returns Pattern statement.
+     * @returns Condition.
      */
-    public matches(value?: number): Statement;
+    public matches(value?: number): Condition;
     /**
      * Checks if the variable value matches the pattern.
      *
      * @param value Pattern to match
-     * @returns Pattern statement.
+     * @returns Condition.
      */
-    public matches(value?: boolean): Statement;
+    public matches(value?: boolean): Condition;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public matches(value?: any): Condition {
         return this._compare(StringCompareOptions.Match, value);
     }
 
     /**
      * Checks if the variable is empty.
      *
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public get isEmpty(): Statement {
+    public get isEmpty(): Condition {
         return this._compare(StringCompareOptions.Empty);
     }
 
     /**
      * Checks if the variable is not empty.
      *
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public get isNotEmpty(): Statement {
+    public get isNotEmpty(): Condition {
         return this._compare(StringCompareOptions.NotEmpty);
     }
 
@@ -423,7 +425,7 @@ export class StringVariable extends Variable {
      * @param compareOperator Specifies how the values shall be compared.
      * @param value           Value to compare with.
      *
-     * @returns Compare Statement.
+     * @returns Compare string.
      */
     protected _buildCompareString(compareOperator: StringCompareOptions, value: string): string {
         const preparedVariable = wrapInQuotes(this.value, true);

@@ -12,6 +12,7 @@ import {
 import { Statement } from './statement.mjs';
 import { SubshellStatement } from '../components/subshell/subshell-statement.mjs';
 import { EvalSubshellStatement } from '../components/subshell/eval-subshell-statement.mjs';
+import { Condition } from '../components/condition/condition.mjs';
 
 /**
  * Helper class to instantiate a simple Statement
@@ -332,7 +333,7 @@ export abstract class Variable extends Statement {
      *
      * @returns Compare Statement.
      */
-    protected _compare(compareOperator: number, value?: string): VariableStatement {
+    protected _compare(compareOperator: number, value?: string): Condition {
         /* Let subclass convert the value to what's needed. */
         value = this._convertValueInternal(value);
 
@@ -347,6 +348,6 @@ export abstract class Variable extends Statement {
         } else if (typeof compareString !== 'string') {
             throw new Error('Returned compare value is not a string');
         }
-        return new VariableStatement(compareString);
+        return new Condition(compareString);
     }
 }

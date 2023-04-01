@@ -9,7 +9,7 @@ describe('StringVariable tests', () => {
                 const compareValue = 'world';
                 const variable = new StringVariable(name);
 
-                expect(variable.isEqual(compareValue).value).to.be.equal(`"$\{${name}}" = "${compareValue}"`);
+                expect(variable.isEqual(compareValue).value).to.be.equal(`[ "$\{${name}}" = "${compareValue}" ]`);
             });
 
             it('number value', () => {
@@ -17,14 +17,14 @@ describe('StringVariable tests', () => {
                 const compareValue = 3;
                 const variable = new StringVariable(name);
 
-                expect(variable.isEqual(compareValue).value).to.be.equal(`"$\{${name}}" = "${compareValue}"`);
+                expect(variable.isEqual(compareValue).value).to.be.equal(`[ "$\{${name}}" = "${compareValue}" ]`);
             });
 
             it('empty value', () => {
                 const name = 'test';
                 const variable = new StringVariable(name);
 
-                expect(variable.isEqual().value).to.be.equal(`"$\{${name}}" = ""`);
+                expect(variable.isEqual().value).to.be.equal(`[ "$\{${name}}" = "" ]`);
             });
         });
     });
@@ -36,7 +36,7 @@ describe('StringVariable tests', () => {
                 const compareValue = 'world';
                 const variable = new StringVariable(name);
 
-                expect(variable.isNotEqual(compareValue).value).to.be.equal(`"$\{${name}}" != "${compareValue}"`);
+                expect(variable.isNotEqual(compareValue).value).to.be.equal(`[ "$\{${name}}" != "${compareValue}" ]`);
             });
         });
     });
@@ -48,7 +48,7 @@ describe('StringVariable tests', () => {
                 const compareValue = 'world';
                 const variable = new StringVariable(name);
 
-                expect(variable.matches(compareValue).value).to.be.equal(`echo "$\{${name}}" | grep -q -e "${compareValue}"`);
+                expect(variable.matches(compareValue).value).to.be.equal(`[ "$(echo "$\{${name}}" | grep -e "${compareValue}")" ]`);
             });
         });
     });
@@ -59,7 +59,7 @@ describe('StringVariable tests', () => {
                 const name = 'test';
                 const variable = new StringVariable(name);
 
-                expect(variable.isEmpty.value).to.be.equal(`-z "$\{${name}}"`);
+                expect(variable.isEmpty.value).to.be.equal(`[ -z "$\{${name}}" ]`);
             });
         });
     });
@@ -70,7 +70,7 @@ describe('StringVariable tests', () => {
                 const name = 'test';
                 const variable = new StringVariable(name);
 
-                expect(variable.isNotEmpty.value).to.be.equal(`-n "$\{${name}}"`);
+                expect(variable.isNotEmpty.value).to.be.equal(`[ -n "$\{${name}}" ]`);
             });
         });
     });
