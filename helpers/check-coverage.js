@@ -4,7 +4,10 @@ import {
     Script,
     StringVariable,
 } from '../dist/index.mjs';
-import { readdirSync, statSync } from 'fs';
+import {
+    readdirSync,
+    statSync,
+} from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 
@@ -35,12 +38,13 @@ const files = getSourceFiles('src')
 const variable = new StringVariable('file');
 const script = new Script([
     new For(variable, files, [
-        `echo "------------------ testing ${variable.value} ------------------"`,
         new Command('npx tsc -p tsconfig-tests.json')
             .and(`npx c8 mocha ./tests-build/tests/${variable.value}.test.js`)
-            .pipe(`grep -e "${variable.value}"`),
+            .pipe(`grep -e "${variable.value}.mts"`)
+            .pipe('sed -e "s/\\s\\+/ /g"'),
     ]),
 ]).dump();
 
-console.log(script);
-/* example-end */
+exec(script, {
+    shell: '/bin/sh',
+}).stdout.on('data', (chunk) => console.log(chunk));
