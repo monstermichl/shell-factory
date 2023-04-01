@@ -56,7 +56,7 @@ const script = new Script([
                 ]),
             ]).read(matchVariable.value),
             new Command(`echo "\\\`\\\`\\\`"`).append(outputFile),
-            '',
+            new Command(`echo ""`).append(outputFile),
 
             /* Write result content to generated README.md. */
             new Command(`echo "\\\`\\\`\\\`sh"`).append(outputFile),
