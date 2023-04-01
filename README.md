@@ -318,6 +318,34 @@ if [ -e "hello.txt" ]; then
 else
   exit_function -1 "File doesn't exit."
 fi
+
+```
+
+### Condition
+Conditions are separate Statement instances which test the passed condition string. Each string or Statement that is passed to a ConditionBlock (e.g., If, While, Until, ...) is converted to a Condition instance. However, they can also exist and be tested on their own. The Condition class additionally provides logical chaining using the *and*- and *or*-method. If you don't want to test the Condition, you can easily disable it using the *setTest*-method.
+
+```typescript
+const script = new Script([
+    new Condition('1 -eq 1')
+        .and('2 -eq 2')
+        .or('2 -eq 2'),
+
+    new Condition('3 -ne 2')
+        .setTest(false)
+        .setComment('Interpreter will throw an error here because the statement doesn\'t make sense.'),
+]).dump({
+    common: { newlinesBefore: 1 }
+});
+
+console.log(script);
+```
+
+```sh
+#!/bin/sh
+
+[ 1 -eq 1 -a 2 -eq 2 -o 2 -eq 2 ]
+
+3 -ne 2 # Interpreter will throw an error here because the statement doesn't make sense.
 ```
 
 ## Operations
