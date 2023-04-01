@@ -16,3 +16,4 @@ const script = new Script([
 });
 
 console.log(script);
+/* example-end */

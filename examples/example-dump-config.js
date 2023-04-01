@@ -27,3 +27,4 @@ const script = new Script([
 ]).dump(spacyConfig);
 
 console.log(script);
+/* example-end */

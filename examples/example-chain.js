@@ -13,3 +13,4 @@ const script = new Script([
 ]);
 
 console.log(script.dump()); /* Dump the updated script. */
+/* example-end */

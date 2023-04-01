@@ -19,3 +19,4 @@ script.removeContent(/remove/);
 
 /* Dump the altered script. */
 console.log(script.dump());
+/* example-end */

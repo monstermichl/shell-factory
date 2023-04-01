@@ -43,3 +43,4 @@ const script = new Script([
 ]).dump();
 
 console.log(script);
+/* example-end */

@@ -21,3 +21,4 @@ statement.statement = 'echo "World"';
 statement.setComment('It has been altered"');
 
 console.log(script.dump()); /* Dump the altered script. */
+/* example-end */
