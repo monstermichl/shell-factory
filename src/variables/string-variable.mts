@@ -1,6 +1,12 @@
 import { Statement } from '../base/statement.mjs';
-import { Variable } from '../base/variable.mjs';
+import {
+    Variable,
+    VariableStatement,
+} from '../base/variable.mjs';
 import { wrapInQuotes } from '../helpers/string.mjs';
+import { Subshell } from '../components/subshell/subshell.mjs';
+import { Command } from '../base/command.mjs';
+import { Condition } from '../components/condition/condition.mjs';
 
 /**
  * Possible string operations.
@@ -8,20 +14,9 @@ import { wrapInQuotes } from '../helpers/string.mjs';
 enum StringCompareOptions {
     Equal,
     NotEqual,
+    Match,
     Empty,
     NotEmpty,
-}
-
-/**
- * Helper class to instantiate a simple Statement.
- */
-class StatementHelper extends Statement {
-    /**
-     * Returns the statement.
-     */
-    public get value(): string {
-        return this.statement;
-    }
 }
 
 /**
@@ -32,32 +27,32 @@ export class StringVariable extends Variable {
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value?: Statement): Statement;
+    public isEqual(value?: Statement): Condition;
     /**
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value?: string): Statement;
+    public isEqual(value?: string): Condition;
     /**
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value?: number): Statement;
+    public isEqual(value?: number): Condition;
     /**
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value?: boolean): Statement;
+    public isEqual(value?: boolean): Condition;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isEqual(value?: any): Statement {
+    public isEqual(value?: any): Condition {
         return this._compare(StringCompareOptions.Equal, value);
     }
 
@@ -65,50 +60,83 @@ export class StringVariable extends Variable {
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value?: Statement): Statement;
+    public isNotEqual(value?: Statement): Condition;
     /**
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value?: string): Statement;
+    public isNotEqual(value?: string): Condition;
     /**
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value?: number): Statement;
+    public isNotEqual(value?: number): Condition;
     /**
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value?: boolean): Statement;
+    public isNotEqual(value?: boolean): Condition;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isNotEqual(value?: any): Statement {
+    public isNotEqual(value?: any): Condition {
         return this._compare(StringCompareOptions.NotEqual, value);
+    }
+
+    /**
+     * Checks if the variable value matches the pattern.
+     *
+     * @param value Pattern to match
+     * @returns Condition.
+     */
+    public matches(value?: Statement): Condition;
+    /**
+     * Checks if the variable value matches the pattern.
+     *
+     * @param value Pattern to match
+     * @returns Condition.
+     */
+    public matches(value?: string): Condition;
+    /**
+     * Checks if the variable value matches the pattern.
+     *
+     * @param value Pattern to match
+     * @returns Condition.
+     */
+    public matches(value?: number): Condition;
+    /**
+     * Checks if the variable value matches the pattern.
+     *
+     * @param value Pattern to match
+     * @returns Condition.
+     */
+    public matches(value?: boolean): Condition;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public matches(value?: any): Condition {
+        return this._compare(StringCompareOptions.Match, value);
     }
 
     /**
      * Checks if the variable is empty.
      *
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public get isEmpty(): Statement {
+    public get isEmpty(): Condition {
         return this._compare(StringCompareOptions.Empty);
     }
 
     /**
      * Checks if the variable is not empty.
      *
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public get isNotEmpty(): Statement {
+    public get isNotEmpty(): Condition {
         return this._compare(StringCompareOptions.NotEmpty);
     }
 
@@ -118,7 +146,9 @@ export class StringVariable extends Variable {
      * @returns Length evaluation Statement.
      */
     public get length(): Statement {
-        return new StatementHelper(`$\{#${this.name}}`);
+        return new VariableStatement(
+            Subshell.eval(`expr length "${this.value}"`),
+        );
     }
 
     /**
@@ -152,250 +182,186 @@ export class StringVariable extends Variable {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public append(value?: any): Statement {
         value = this._convertValueToString(value);
-        return new StatementHelper(`"${this.value}${value}"`);
-    }
-
-    /**
-     * Removes the front of the variable string based on the provided pattern.
-     *
-     * @param pattern Pattern to remove from front of the string.
-     * @param lazy    If true, matching stops at the first found
-     *                value. E.g.:
-     *                input: AbcAbcX
-     *                pattern: A*c
-     *                result lazy: AbcX
-     *                result not lazy: X
-     *
-     * @returns Remove-substring Statement.
-     */
-    public removeFront(pattern?: Statement, lazy?: boolean): Statement;
-    /**
-     * Removes the front of the variable string based on the provided pattern.
-     *
-     * @param pattern Pattern to remove from front of the string.
-     * @param lazy    If true, matching stops at the first found
-     *                value. E.g.:
-     *                input: AbcAbcX
-     *                pattern: A*c
-     *                result lazy: AbcX
-     *                result not lazy: X
-     *
-     * @returns Remove-substring Statement.
-     */
-    public removeFront(pattern?: string, lazy?: boolean): Statement;
-    /**
-     * Removes the front of the variable string based on the provided pattern.
-     *
-     * @param pattern Pattern to remove from front of the string.
-     * @param lazy    If true, matching stops at the first found
-     *                value. E.g.:
-     *                input: AbcAbcX
-     *                pattern: A*c
-     *                result lazy: AbcX
-     *                result not lazy: X
-     *
-     * @returns Remove-substring Statement.
-     */
-    public removeFront(pattern?: number, lazy?: boolean): Statement;
-    /**
-     * Removes the front of the variable string based on the provided pattern.
-     *
-     * @param pattern Pattern to remove from front of the string.
-     * @param lazy    If true, matching stops at the first found
-     *                value. E.g.:
-     *                input: AbcAbcX
-     *                pattern: A*c
-     *                result lazy: AbcX
-     *                result not lazy: X
-     *
-     * @returns Remove-substring Statement.
-     */
-    public removeFront(pattern?: boolean, lazy?: boolean): Statement;
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public removeFront(pattern?: any, lazy=true): Statement {
-        pattern = this._convertValueToString(pattern);
-        return new StatementHelper(`"${this.value}#${!lazy ? '#' : ''}${pattern}"`);
-    }
-
-    /**
-     * Removes the back of the variable string based on the provided pattern.
-     *
-     * @param pattern Pattern to remove from front of the string.
-     * @param lazy    If true, matching stops at the first found
-     *                value. E.g.:
-     *                input: XAbcAbc
-     *                pattern: A*c
-     *                result lazy: XAbc
-     *                result not lazy: X
-     *
-     * @returns Remove-substring Statement.
-     */
-    public removeBack(pattern?: Statement, lazy?: boolean): Statement;
-    /**
-     * Removes the back of the variable string based on the provided pattern.
-     *
-     * @param pattern Pattern to remove from front of the string.
-     * @param lazy    If true, matching stops at the first found
-     *                value. E.g.:
-     *                input: XAbcAbc
-     *                pattern: A*c
-     *                result lazy: XAbc
-     *                result not lazy: X
-     *
-     * @returns Remove-substring Statement.
-     */
-    public removeBack(pattern?: string, lazy?: boolean): Statement;
-    /**
-     * Removes the back of the variable string based on the provided pattern.
-     *
-     * @param pattern Pattern to remove from front of the string.
-     * @param lazy    If true, matching stops at the first found
-     *                value. E.g.:
-     *                input: XAbcAbc
-     *                pattern: A*c
-     *                result lazy: XAbc
-     *                result not lazy: X
-     *
-     * @returns Remove-substring Statement.
-     */
-    public removeBack(pattern?: number, lazy?: boolean): Statement;
-    /**
-     * Removes the back of the variable string based on the provided pattern.
-     *
-     * @param pattern Pattern to remove from front of the string.
-     * @param lazy    If true, matching stops at the first found
-     *                value. E.g.:
-     *                input: XAbcAbc
-     *                pattern: A*c
-     *                result lazy: XAbc
-     *                result not lazy: X
-     *
-     * @returns Remove-substring Statement.
-     */
-    public removeBack(pattern?: boolean, lazy?: boolean): Statement;
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public removeBack(pattern?: any, lazy=true): Statement {
-        pattern = this._convertValueToString(pattern);
-        return new StatementHelper(`"${this.value}%${!lazy ? '%' : ''}${pattern}"`);
+        return new VariableStatement(`${this.value}${value}`);
     }
 
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: Statement, replaceValue: Statement, all?: boolean): Statement;
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: string, replaceValue: Statement, all?: boolean): Statement;
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: number, replaceValue: Statement, all?: boolean): Statement;
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: boolean, replaceValue: Statement, all?: boolean): Statement;
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: Statement, replaceValue: string, all?: boolean): Statement;
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: string, replaceValue: string, all?: boolean): Statement;
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: number, replaceValue: string, all?: boolean): Statement;
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: boolean, replaceValue: string, all?: boolean): Statement;
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: Statement, replaceValue: Statement, all?: boolean): Statement;
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: string, replaceValue: string, all?: boolean): Statement;
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: number, replaceValue: number, all?: boolean): Statement;
     /**
      * Replaces the search-value in the variable value with the replace-value.
+     * As shortcuts for string-replacement (e.g., ${var/foo/hello}) are not
+     * available in the Bourne shell, replace is implemented using sed,
+     * which according to  https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility. This means that the search-value can be a
+     * sed-compliant regexp.
      *
-     * @param search  Search value.
-     * @param replace Replace value.
-     * @param all     If true, replace all occurrences.
-     * 
+     * @param searchValue  Search value.
+     * @param replaceValue Replace value.
+     * @param all          If true, replace all occurrences.
+     *
      * @returns Replace statement.
      */
     public replace(searchValue: boolean, replaceValue: boolean, all?: boolean): Statement;
@@ -404,46 +370,62 @@ export class StringVariable extends Variable {
         searchValue = this._convertValueToString(searchValue);
         replaceValue = this._convertValueToString(replaceValue);
 
-        return new StatementHelper(`"${this.value}/${all ? '/' : ''}${searchValue}/${replaceValue}"`);
+        /* Echo string value into sed to perform replacement. TODO: Use different
+           separator if string contains slash. */
+        return new VariableStatement(
+            Subshell.eval(`echo "${this.value}" | sed "s/${searchValue}/${replaceValue}/${all ? 'g': ''}"`),
+        );
     }
 
     /**
      * Returns a sub-part of the variable string.
      *
-     * @param start  Start position in the original string.
+     * @param start  Start position in the original string (0-based).
      * @param length Substring length.
-     * 
+     *
      * @returns Substring Statement.
      */
     public substring(start?: number, length?: number): Statement {
+        const isNothing = (value?: number) => [null, undefined].includes(value);
         /* Make sure the provided values are ok. */
-        const convertValue = (value?: number): string => {
-            let result = `${value}`;
-
-            /* If value null or undefined, return an empty string. */
-            if ([null, undefined].includes(value)) {
-                result = '';
+        const validateValue = (value?: number): string => {
+            if (isNothing(value)) {
+                /* If value null or undefined, correct value later. */
             } else if (!Number.isInteger(value)) {
                 throw new Error('Value is not a number');
             } else if (value < 0) {
                 throw new Error('Invalid value');
             }
-            return result;
+            return `${value}`;
         };
-        const startString = convertValue(start);
-        const lengthString = convertValue(length);
 
-        return new StatementHelper(`"$\{${this.name}:${startString}:${lengthString}}"`);
+        /* Validate values. */
+        validateValue(start);
+        validateValue(length);
+
+        /* Set start if undefined. */
+        if (isNothing(start)) {
+            start = 0;
+        }
+
+        /* Evaluate length string. */
+        const lengthString = isNothing(length) ? this.length.value : length;
+
+        /* Add 1 to start since position is 1-based. */
+        start++;
+
+        /* FYI: There might be a better solution than using expr. */
+        return new VariableStatement(Subshell.eval(`expr substr "${this.value}" ${start} ${lengthString}`));
     }
 
     /**
-     * Creates the compare string based on the compare operator, the 
+     * Creates the compare string based on the compare operator, the
      * value and the variable.
      *
      * @param compareOperator Specifies how the values shall be compared.
      * @param value           Value to compare with.
      *
-     * @returns Compare Statement.
+     * @returns Compare string.
      */
     protected _buildCompareString(compareOperator: StringCompareOptions, value: string): string {
         const preparedVariable = wrapInQuotes(this.value, true);
@@ -452,6 +434,15 @@ export class StringVariable extends Variable {
         switch(compareOperator) {
             case StringCompareOptions.Equal: compareString = `${preparedVariable} = ${value}`; break;
             case StringCompareOptions.NotEqual: compareString = `${preparedVariable} != ${value}`; break;
+            case StringCompareOptions.Match: compareString = wrapInQuotes(
+                new Command(
+                    `echo ${wrapInQuotes(this.value, true)}`
+                )
+                    .pipe(`grep -e ${wrapInQuotes(value, true)}`)
+                    .eval()
+                    .value, true
+            );
+                break;
             case StringCompareOptions.Empty: compareString = `-z ${preparedVariable}`; break;
             case StringCompareOptions.NotEmpty: compareString = `-n ${preparedVariable}`; break;
         }

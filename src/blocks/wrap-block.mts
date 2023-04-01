@@ -6,7 +6,19 @@ import {
 import { Command } from '../base/command.mjs';
 import { Statement } from '../base/statement.mjs';
 
-export class OpeningStatement extends Command {
+/**
+ * Helper class to instantiate a simple Statement.
+ */
+class StatementHelper extends Statement {
+    /**
+     * Returns the statement.
+     */
+    public get value(): string {
+        return this.statement;
+    }
+}
+
+export class OpeningStatement extends StatementHelper {
     /* Nothing to do. */
 }
 
@@ -32,6 +44,8 @@ export abstract class WrapBlock extends Block {
     protected _openingStatement: OpeningStatement;
     protected _closingStatement: ClosingStatement | null;
 
+    private _trueStatement = new StatementHelper('true').setComment('Placeholder statement');
+
     /**
      * WrapBlock constructor.
      *
@@ -52,7 +66,7 @@ export abstract class WrapBlock extends Block {
      * WrapBlock constructor.
      *
      * @param openingStatement WrapBlock opening statement.
-     * @param statement        WrapBlock content.
+     * @param block            WrapBlock content.
      * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, block?: Block, closingStatement?: string);
@@ -60,7 +74,7 @@ export abstract class WrapBlock extends Block {
      * WrapBlock constructor.
      *
      * @param openingStatement WrapBlock opening statement.
-     * @param statement        WrapBlock content.
+     * @param statements       WrapBlock content.
      * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, statements?: Statement[], closingStatement?: string);
@@ -68,7 +82,7 @@ export abstract class WrapBlock extends Block {
      * WrapBlock constructor.
      *
      * @param openingStatement WrapBlock opening statement.
-     * @param statement        WrapBlock content.
+     * @param statements       WrapBlock content.
      * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, statements?: string[], closingStatement?: string);
@@ -76,7 +90,7 @@ export abstract class WrapBlock extends Block {
      * WrapBlock constructor.
      *
      * @param openingStatement WrapBlock opening statement.
-     * @param statement        WrapBlock content.
+     * @param blocks           WrapBlock content.
      * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, blocks?: Block[], closingStatement?: string);
@@ -84,7 +98,7 @@ export abstract class WrapBlock extends Block {
      * WrapBlock constructor.
      *
      * @param openingStatement WrapBlock opening statement.
-     * @param statement        WrapBlock content.
+     * @param content          WrapBlock content.
      * @param closingStatement WrapBlock closing statement.
      */
     protected constructor(openingStatement: string, content?: StatementOrBlockOrString[], closingStatement?: string);
@@ -263,7 +277,7 @@ export abstract class WrapBlock extends Block {
 
     /**
      * Removes all entries based on the provided ID or Statement pattern from the block's body.
-     * 
+     *
      * @param idOrPattern Content ID or Statement pattern.
      * @param recursive   The id will also be searched in all sub-blocks.
      *
@@ -272,7 +286,7 @@ export abstract class WrapBlock extends Block {
     public override removeContent(idOrPattern: string, recursive?: boolean): this;
     /**
      * Removes all entries based on the provided ID or Statement pattern from the block's body.
-     * 
+     *
      * @param pattern   Content ID or Statement pattern.
      * @param recursive The id will also be searched in all sub-blocks.
      *
@@ -282,13 +296,13 @@ export abstract class WrapBlock extends Block {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public override removeContent(arg: any, recursive=false): this {
         this._body.removeContent(arg, recursive);
-        return this;
+        return this._checkBody();
     }
 
     /**
      * Searches all entries based on the provided ID or Statement pattern in the
      * block's body.
-     * 
+     *
      * @param idOrPattern Content ID or Statement pattern.
      * @param recursive   The id will also be searched in all sub-blocks.
      *
@@ -298,7 +312,7 @@ export abstract class WrapBlock extends Block {
     /**
      * Searches all entries based on the provided ID or Statement pattern in the
      * block's body.
-     * 
+     *
      * @param pattern   Content ID or Statement pattern.
      * @param recursive The id will also be searched in all sub-blocks.
      *
@@ -375,7 +389,7 @@ export abstract class WrapBlock extends Block {
     protected _insertBodyContent(position: number, content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     protected _insertBodyContent(position: number, content: any): this | null {
-        return this._body.insertContent(position, content) ? this : null;
+        return this._body.insertContent(position, content) ? this._checkBody() : null;
     }
 
     /**
@@ -429,6 +443,23 @@ export abstract class WrapBlock extends Block {
     protected _addBodyContent(content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     protected _addBodyContent(content: any): this | null {
-        return this._body.addContent(content) ? this : null;
+        return this._body.addContent(content) ? this._checkBody() : null;
+    }
+
+    /**
+     * If the body is empty, a true-statement is added to make sure that interpreter
+     * can interpret it correctly.
+     *
+     * @returns The current instance.
+     */
+    private _checkBody(): this {
+        /* If body doesn't contain content, add a placeholder statement. */
+        if (!this._body.content.length) {
+            this._body.addContent(this._trueStatement);
+        } else {
+            /* If the body contains content, remove the placeholder statement. */
+            this._body.removeContent(this._trueStatement.id);
+        }
+        return this;
     }
 }

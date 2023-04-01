@@ -4,6 +4,7 @@ import {
     MetaData,
 } from '../dist/index.mjs';
 
+/* example-start */
 const meta = new MetaData(); /* MetaData container. */
 const script = new Script([
     new Command('echo "Hello"')
@@ -16,7 +17,8 @@ console.log(script.dump()); /* Dump the original script. */
 const statement = script.findContent(meta.id)[0];
 
 /* Update the Statement's value and comment. */
-statement.value = 'echo "World"';
+statement.statement = 'echo "World"';
 statement.setComment('It has been altered"');
 
 console.log(script.dump()); /* Dump the altered script. */
+/* example-end */

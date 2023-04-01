@@ -3,6 +3,7 @@ import {
     Script,
 } from '../dist/index.mjs';
 
+/* example-start */
 const script = new Script([
     new Select('selection', ['a', 'b', 'c'], [
         'echo "You\'ve selected $selection"',
@@ -10,3 +11,4 @@ const script = new Script([
 ]).dump();
 
 console.log(script);
+/* example-end */

@@ -6,6 +6,7 @@ import {
     NumberVariable,
 } from '../dist/index.mjs';
 
+/* example-start */
 const stringVariable = new StringVariable('string');
 const numberVariable = new NumberVariable('number');
 
@@ -37,3 +38,4 @@ const script = new Script([
 ]).dump();
 
 console.log(script);
+/* example-end */

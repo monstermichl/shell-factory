@@ -3,6 +3,7 @@ import {
     While,
 } from '../dist/index.mjs';
 
+/* example-start */
 const script = new Script([
     'input=0',
     new While(true, [
@@ -13,3 +14,4 @@ const script = new Script([
 ]).dump();
 
 console.log(script);
+/* example-end */

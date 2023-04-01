@@ -1,6 +1,11 @@
 import { Statement } from '../base/statement.mjs';
-import { Variable } from '../base/variable.mjs';
+import {
+    Variable,
+    VariableStatement,
+} from '../base/variable.mjs';
 import { isNumber } from '../helpers/string.mjs';
+import { Subshell } from '../components/subshell/subshell.mjs';
+import { Condition } from '../components/condition/condition.mjs';
 
 /**
  * Possible number operations.
@@ -15,18 +20,6 @@ enum NumberCompareOptions {
 }
 
 /**
- * Helper class to instantiate a simple Statement.
- */
-class StatementHelper extends Statement {
-    /**
-     * Returns the statement.
-     */
-    public get value(): string {
-        return this.statement;
-    }
-}
-
-/**
  * Represents a Bourne Shell number variable.
  */
 export class NumberVariable extends Variable {
@@ -34,32 +27,32 @@ export class NumberVariable extends Variable {
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value: Statement): Statement;
+    public isEqual(value: Statement): Condition;
     /**
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value: string): Statement;
+    public isEqual(value: string): Condition;
     /**
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value: number): Statement;
+    public isEqual(value: number): Condition;
     /**
      * Checks if the variable value and the provided value are equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isEqual(value: boolean): Statement;
+    public isEqual(value: boolean): Condition;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isEqual(value: any): Statement {
+    public isEqual(value: any): Condition {
         return this._compare(NumberCompareOptions.Equal, value || 0);
     }
 
@@ -67,32 +60,32 @@ export class NumberVariable extends Variable {
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value: Statement): Statement;
+    public isNotEqual(value: Statement): Condition;
     /**
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value: string): Statement;
+    public isNotEqual(value: string): Condition;
     /**
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value: number): Statement;
+    public isNotEqual(value: number): Condition;
     /**
      * Checks if the variable value and the provided value are not equal.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isNotEqual(value: boolean): Statement;
+    public isNotEqual(value: boolean): Condition;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isNotEqual(value: any): Statement {
+    public isNotEqual(value: any): Condition {
         return this._compare(NumberCompareOptions.NotEqual, value || 0);
     }
 
@@ -100,32 +93,32 @@ export class NumberVariable extends Variable {
      * Checks if the variable value is smaller than the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isLess(value: Statement): Statement;
+    public isLess(value: Statement): Condition;
     /**
      * Checks if the variable value is smaller than the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isLess(value: string): Statement;
+    public isLess(value: string): Condition;
     /**
      * Checks if the variable value is smaller than the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isLess(value: number): Statement;
+    public isLess(value: number): Condition;
     /**
      * Checks if the variable value is smaller than the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isLess(value: boolean): Statement;
+    public isLess(value: boolean): Condition;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isLess(value: any): Statement {
+    public isLess(value: any): Condition {
         return this._compare(NumberCompareOptions.Less, value || 0);
     }
 
@@ -133,32 +126,32 @@ export class NumberVariable extends Variable {
      * Checks if the variable value is smaller or equal the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isLessOrEqual(value: Statement): Statement;
+    public isLessOrEqual(value: Statement): Condition;
     /**
      * Checks if the variable value is smaller or equal the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isLessOrEqual(value: string): Statement;
+    public isLessOrEqual(value: string): Condition;
     /**
      * Checks if the variable value is smaller or equal the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isLessOrEqual(value: number): Statement;
+    public isLessOrEqual(value: number): Condition;
     /**
      * Checks if the variable value is smaller or equal the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isLessOrEqual(value: boolean): Statement;
+    public isLessOrEqual(value: boolean): Condition;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isLessOrEqual(value: any): Statement {
+    public isLessOrEqual(value: any): Condition {
         return this._compare(NumberCompareOptions.LessOrEqual, value || 0);
     }
 
@@ -166,32 +159,32 @@ export class NumberVariable extends Variable {
      * Checks if the variable value is greater than the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isGreater(value: Statement): Statement;
+    public isGreater(value: Statement): Condition;
     /**
      * Checks if the variable value is greater than the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isGreater(value: string): Statement;
+    public isGreater(value: string): Condition;
     /**
      * Checks if the variable value is greater than the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isGreater(value: number): Statement;
+    public isGreater(value: number): Condition;
     /**
      * Checks if the variable value is greater than the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isGreater(value: boolean): Statement;
+    public isGreater(value: boolean): Condition;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isGreater(value: any): Statement {
+    public isGreater(value: any): Condition {
         return this._compare(NumberCompareOptions.Greater, value || 0);
     }
 
@@ -199,32 +192,32 @@ export class NumberVariable extends Variable {
      * Checks if the variable value is greater or equal the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isGreaterOrEqual(value: Statement): Statement;
+    public isGreaterOrEqual(value: Statement): Condition;
     /**
      * Checks if the variable value is greater or equal the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isGreaterOrEqual(value: string): Statement;
+    public isGreaterOrEqual(value: string): Condition;
     /**
      * Checks if the variable value is greater or equal the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isGreaterOrEqual(value: number): Statement;
+    public isGreaterOrEqual(value: number): Condition;
     /**
      * Checks if the variable value is greater or equal the provided value.
      *
      * @param value Value to compare with.
-     * @returns Compare Statement.
+     * @returns Condition.
      */
-    public isGreaterOrEqual(value: boolean): Statement;
+    public isGreaterOrEqual(value: boolean): Condition;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public isGreaterOrEqual(value: any): Statement {
+    public isGreaterOrEqual(value: any): Condition {
         return this._compare(NumberCompareOptions.GreateOrEqual, value || 0);
     }
 
@@ -236,7 +229,7 @@ export class NumberVariable extends Variable {
      *
      * @returns Add Statement.
      */
-    public add(value: number): Statement;
+    public add(value: number): Condition;
     /**
      * Adds the specified value to the variable.
      *
@@ -456,13 +449,13 @@ export class NumberVariable extends Variable {
     }
 
     /**
-     * Creates the compare string based on the compare operator, the 
+     * Creates the compare string based on the compare operator, the
      * value and the variable.
      *
      * @param compareOperator Specifies how the values shall be compared.
      * @param value           Value to compare with.
      *
-     * @returns Compare Statement.
+     * @returns Compare string.
      */
     protected _buildCompareString(compareOperator: NumberCompareOptions, value: string): string {
         const preparedVariable = this.value;
@@ -496,7 +489,7 @@ export class NumberVariable extends Variable {
      * @param leftSide  Left-side operand.
      * @param operator  Operator.
      * @param rightSide Right-side operand.
-     * 
+     *
      * @returns Operation Statement.
      */
     private _arithmetic(leftSide: number, operator: string, rightSide: string): Statement;
@@ -506,7 +499,7 @@ export class NumberVariable extends Variable {
      * @param leftSide  Left-side operand.
      * @param operator  Operator.
      * @param rightSide Right-side operand.
-     * 
+     *
      * @returns Operation Statement.
      */
     private _arithmetic(leftSide: string, operator: string, rightSide: number): Statement;
@@ -516,7 +509,7 @@ export class NumberVariable extends Variable {
      * @param leftSide  Left-side operand.
      * @param operator  Operator.
      * @param rightSide Right-side operand.
-     * 
+     *
      * @returns Operation Statement.
      */
     private _arithmetic(leftSide: number, operator: string, rightSide: number): Statement;
@@ -526,7 +519,7 @@ export class NumberVariable extends Variable {
      * @param leftSide  Left-side operand.
      * @param operator  Operator.
      * @param rightSide Right-side operand.
-     * 
+     *
      * @returns Operation Statement.
      */
     private _arithmetic(leftSide: string, operator: string, rightSide: string): Statement;
@@ -543,6 +536,6 @@ export class NumberVariable extends Variable {
         } else if (!checkType(typeof operator)) {
             throwTypeError('operator');
         }
-        return new StatementHelper(`\`expr ${leftSide} ${operator} ${rightSide}\``);
+        return new VariableStatement(Subshell.call(`expr ${leftSide} ${operator} ${rightSide}`).eval());
     }
 }

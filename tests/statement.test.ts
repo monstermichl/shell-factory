@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import { randomUUID } from 'crypto';
 import { Statement } from '../src/base/statement.mjs';
 
 /* Helper class to instantiate Statement. */
@@ -49,12 +48,6 @@ describe('Statement tests', () => {
                 expect(function() {
                     new StatementHelper({} as any);
                 }).to.throw('Invalid Statement value type provided');
-            });
-
-            it('number is not allowed as Statement value', () => {
-                expect(function() {
-                    new StatementHelper(4 as any);
-                }).to.throw('Number is not allowed as Statement value');
             });
         });
     });

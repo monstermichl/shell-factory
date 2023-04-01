@@ -1,8 +1,22 @@
 import { expect } from 'chai';
 import { Command } from '../src/base/command.mjs';
-import { ChainType } from '../src/interfaces/chainable.mjs';
+import { Statement } from '../src/base/statement.mjs';
+import { LogicalConnectType } from '../src/interfaces/logically-connectable.mjs';
+import { OperationalConnectType } from '../src/interfaces/operationally-connectable.mjs';
 
-describe('Statement tests', () => {
+/**
+ * Helper class to instantiate a simple Statement.
+ */
+class StatementHelper extends Statement {
+    /**
+     * Returns the statement.
+     */
+    public get value(): string {
+        return this.statement;
+    }
+}
+
+describe('Command tests', () => {
     describe('value', () => {
         describe('successful', () => {
             it('get read chained', () => {
@@ -52,7 +66,7 @@ describe('Statement tests', () => {
                 const statement = new Command('echo "Hello World")').write('test.txt');
 
                 expect(statement.chain.length).to.be.equal(1);
-                statement.chain[0].type = 25; /* Set invalid type. */
+                statement.chain[0].type = 'nevermind' as OperationalConnectType; /* Set invalid type. */
 
                 expect(function() {
                     statement.value;
@@ -71,11 +85,13 @@ describe('Statement tests', () => {
                 expect(statement.read(source)).to.be.equal(statement);
 
                 expect(statement.chain.length).to.be.equal(1);
-                expect(statement.chain[0].type).to.be.equal(ChainType.Read);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Read);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(source);
+
+                expect(statement.value).to.be.equal(`${statement.statement} < ${source}`);
             });
 
-            it('instance of Statement', () => {
+            it('instance of Command', () => {
                 const source = new Command('test.txt');
                 const statement = new Command('echo "hello"');
 
@@ -83,8 +99,20 @@ describe('Statement tests', () => {
                 expect(statement.read(source)).to.be.equal(statement);
 
                 expect(statement.chain.length).to.be.equal(1);
-                expect(statement.chain[0].type).to.be.equal(ChainType.Read);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Read);
                 expect(statement.chain[0].target).to.be.equal(source);
+            });
+
+            it('instance of Statement', () => {
+                const source = new StatementHelper('test.txt');
+                const statement = new Command('echo "hello"');
+
+                expect(statement.chain.length).to.be.equal(0);
+                expect(statement.read(source)).to.be.equal(statement);
+
+                expect(statement.chain.length).to.be.equal(1);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Read);
+                expect(statement.chain[0].target.value).to.be.equal(source.value);
             });
         });
 
@@ -119,8 +147,10 @@ describe('Statement tests', () => {
                 expect(statement.write(target)).to.be.equal(statement);
 
                 expect(statement.chain.length).to.be.equal(1);
-                expect(statement.chain[0].type).to.be.equal(ChainType.Write);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Write);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
+
+                expect(statement.value).to.be.equal(`${statement.statement} > ${target}`);
             });
         });
     });
@@ -135,8 +165,10 @@ describe('Statement tests', () => {
                 expect(statement.append(target)).to.be.equal(statement);
 
                 expect(statement.chain.length).to.be.equal(1);
-                expect(statement.chain[0].type).to.be.equal(ChainType.Append);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Append);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
+
+                expect(statement.value).to.be.equal(`${statement.statement} >> ${target}`);
             });
         });
     });
@@ -151,8 +183,66 @@ describe('Statement tests', () => {
                 expect(statement.pipe(target)).to.be.equal(statement);
 
                 expect(statement.chain.length).to.be.equal(1);
-                expect(statement.chain[0].type).to.be.equal(ChainType.Pipe);
+                expect(statement.chain[0].type).to.be.equal(OperationalConnectType.Pipe);
                 expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
+
+                expect(statement.value).to.be.equal(`${statement.statement} | ${target}`);
+            });
+        });
+    });
+
+    describe('and', () => {
+        describe('successful', () => {
+            it('valid path', () => {
+                const target = 'test';
+                const statement = new Command('echo "hello"');
+
+                expect(statement.chain.length).to.be.equal(0);
+                expect(statement.and(target)).to.be.equal(statement);
+
+                expect(statement.chain.length).to.be.equal(1);
+                expect(statement.chain[0].type).to.be.equal(LogicalConnectType.And);
+                expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
+
+                expect(statement.value).to.be.equal(`${statement.statement} && ${target}`);
+            });
+        });
+    });
+
+    describe('or', () => {
+        describe('successful', () => {
+            it('valid path', () => {
+                const target = 'test';
+                const statement = new Command('echo "hello"');
+
+                expect(statement.chain.length).to.be.equal(0);
+                expect(statement.or(target)).to.be.equal(statement);
+
+                expect(statement.chain.length).to.be.equal(1);
+                expect(statement.chain[0].type).to.be.equal(LogicalConnectType.Or);
+                expect((statement.chain[0].target as Command)?.statement).to.be.equal(target);
+
+                expect(statement.value).to.be.equal(`${statement.statement} || ${target}`);
+            });
+        });
+    });
+
+    describe('subshell', () => {
+        describe('successful', () => {
+            it('check result', () => {
+                const command = new Command('echo "hello"');
+
+                expect(command.subshell().value).to.be.equal(`(${command.value})`);
+            });
+        });
+    });
+
+    describe('eval', () => {
+        describe('successful', () => {
+            it('check result', () => {
+                const command = new Command('echo "hello"');
+
+                expect(command.eval().value).to.be.equal(`$(${command.value})`);
             });
         });
     });
@@ -193,7 +283,7 @@ describe('Statement tests', () => {
                     .write(chainValue3);
                 
                 expect(statement.chain.length).to.be.equal(3);
-                const found = statement.findInChain(/.*/, ChainType.Pipe);
+                const found = statement.findInChain(/.*/, OperationalConnectType.Pipe);
 
                 expect(found.length).to.be.equal(2);
                 expect(found[0].target.value).to.be.equal(chainValue1);
@@ -214,7 +304,7 @@ describe('Statement tests', () => {
                     .write(chainValue3);
                 
                 expect(statement.chain.length).to.be.equal(3);
-                const found = statement.findInChain(ChainType.Write);
+                const found = statement.findInChain(OperationalConnectType.Write);
 
                 expect(found.length).to.be.equal(1);
                 expect(found[0].target.value).to.be.equal(chainValue3);
@@ -226,7 +316,7 @@ describe('Statement tests', () => {
                 const statement = new Command('echo "test"').write('test.txt');
                 
                 expect(function() {
-                    statement.findInChain(25);
+                    statement.findInChain(35 as any);
                 }).to.throw('Invalid ID or pattern type');
             });
         });
@@ -269,7 +359,7 @@ describe('Statement tests', () => {
                     .write(chainValue3);
                 
                     expect(statement.chain.length).to.be.equal(3);
-                    expect(statement.removeFromChain(/.+/, ChainType.Pipe)).to.be.equal(statement);
+                    expect(statement.removeFromChain(/.+/, OperationalConnectType.Pipe)).to.be.equal(statement);
     
                     expect(statement.chain.length).to.be.equal(1);
                     expect(statement.chain[0].target.value).to.be.equal(chainValue3);
@@ -289,7 +379,7 @@ describe('Statement tests', () => {
                     .write(chainValue3);
                 
                     expect(statement.chain.length).to.be.equal(3);
-                    expect(statement.removeFromChain(ChainType.Pipe)).to.be.equal(statement);
+                    expect(statement.removeFromChain(OperationalConnectType.Pipe)).to.be.equal(statement);
     
                     expect(statement.chain.length).to.be.equal(1);
                     expect(statement.chain[0].target.value).to.be.equal(chainValue3);
@@ -301,7 +391,7 @@ describe('Statement tests', () => {
                 const statement = new Command('echo "test"').write('test.txt');
                 
                 expect(function() {
-                    statement.removeFromChain(25);
+                    statement.removeFromChain(25 as any);
                 }).to.throw('Invalid ID or pattern type');
             });
         });

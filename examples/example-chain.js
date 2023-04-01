@@ -3,6 +3,7 @@ import {
     Command,
 } from '../dist/index.mjs';
 
+/* example-start */
 const script = new Script([
     new Command('echo "Bauhaus in the middle of the street"').pipe('grep -e "middle"'),
     new Command('echo "File info"').write('info.txt'),
@@ -12,3 +13,4 @@ const script = new Script([
 ]);
 
 console.log(script.dump()); /* Dump the updated script. */
+/* example-end */

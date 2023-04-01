@@ -11,12 +11,16 @@ import { Case } from '../src/components/flow/case/case.mjs';
 import { CaseOption } from '../src/components/flow/case/case-option.mjs';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { Statement } from '../src/base/statement.mjs';
 import { Select } from '../src/components/select/select.mjs';
 import { Until } from '../src/components/flow/until/until.mjs';
 import { Command } from '../src/base/command.mjs';
+import { StringVariable } from '../src/variables/string-variable.mjs';
+import { NumberVariable } from '../src/variables/number-variable.mjs';
+import { Condition } from '../src/components/condition/condition.mjs';
 
 describe('Script tests', () => {
+    const stringVariable = new StringVariable('bs');
+    const numberVariable = new NumberVariable('result');
     const scriptBlock = new Script([
         new Command().setComment('Script start'),
         new Function('func1', [
@@ -32,13 +36,21 @@ describe('Script tests', () => {
             'echo "First level If"',
             new If('2 -eq 2', [
                 'echo "Second level If"',
-                new If('3 -eq 3', [
-                    'echo "Third level If"',
-                ]).elseIf('4 -eq 4', [
-                    'echo "Third level If-ElseIf"',
-                ]).else([
-                    new Command('echo "Third level If-Else"').setComment('I have no idea how I got here.'),
-                ]),
+                stringVariable.set(
+                    new If('3 -eq 3', [
+                        'echo "Third level If"',
+                    ]).elseIf('4 -eq 4', [
+                        'echo "Third level If-ElseIf"',
+                    ]).else([
+                        new Command('echo "Third level If-Else"').setComment('I have no idea how I got here.'),
+                    ]).eval(),
+                ),
+                stringVariable.set(
+                    new Condition(
+                        stringVariable.isEqual('Why would I keep the if-result?'),
+                    ).eval(),
+                ).subshell(),
+                numberVariable.set(stringVariable.set().eval()),
             ]),
         ]),
         new While('$i -gt 0', [

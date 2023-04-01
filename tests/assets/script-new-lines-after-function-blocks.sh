@@ -24,14 +24,17 @@ if [ 1 -eq 1 ]; then
 
   if [ 2 -eq 2 ]; then
     echo "Second level If"
-
-    if [ 3 -eq 3 ]; then
-      echo "Third level If"
-    elif [ 4 -eq 4 ]; then
-      echo "Third level If-ElseIf"
-    else
-      echo "Third level If-Else" # I have no idea how I got here.
-    fi
+    bs=$(
+      if [ 3 -eq 3 ]; then
+        echo "Third level If"
+      elif [ 4 -eq 4 ]; then
+        echo "Third level If-ElseIf"
+      else
+        echo "Third level If-Else" # I have no idea how I got here.
+      fi
+    )
+    (bs="$([ "${bs}" = "Why would I keep the if-result?" ])")
+    result=$(bs="")
   fi
 fi
 

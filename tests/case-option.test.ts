@@ -36,10 +36,16 @@ describe('CaseOption tests', () => {
         });
 
         describe('failed', () => {
-            it('undefined pattern', () => {
+            it('missing pattern', () => {
                 expect(function() {
                     new CaseOption(undefined as any)
                 }).to.throw('Missing pattern');
+            });
+
+            it('invalid pattern type', () => {
+                expect(function() {
+                    new CaseOption({} as any)
+                }).to.throw('Invalid pattern type');
             });
         });
     });

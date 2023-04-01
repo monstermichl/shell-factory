@@ -3,6 +3,7 @@ import {
     If,
 } from '../dist/index.mjs';
 
+/* example-start */
 const script = new Script([
     'read -p "What do you want to say? " input',
     new If('"$input" == "Hello"', [
@@ -15,3 +16,4 @@ const script = new Script([
 ]).dump();
 
 console.log(script);
+/* example-end */

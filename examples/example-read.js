@@ -4,6 +4,7 @@ import {
     While,
 } from '../dist/index.mjs';
 
+/* example-start */
 const script = new Script([
     new While('read -r line', [
         'echo "$line"',
@@ -15,3 +16,4 @@ const script = new Script([
 });
 
 console.log(script);
+/* example-end */

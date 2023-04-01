@@ -1,18 +1,99 @@
+import { EvalSubshellBlock } from '../components/subshell/eval-subshell-block.mjs';
 import {
     convertToString,
     ConvertToStringError,
 } from '../helpers/string.mjs';
+import { ISubshellable } from '../interfaces/subshellable.mjs';
+import { IEvaluable } from '../interfaces/evaluable.mjs';
+import {
+    Block,
+    StatementOrBlockOrString,
+} from './block.mjs';
 import { Statement } from './statement.mjs';
+import { SubshellStatement } from '../components/subshell/subshell-statement.mjs';
+import { EvalSubshellStatement } from '../components/subshell/eval-subshell-statement.mjs';
+import { Condition } from '../components/condition/condition.mjs';
 
 /**
- * Helper class to instantiate a simple Statement.
+ * Helper class to instantiate a simple Statement
+ * which allows subshelling and evaluation..
  */
-class StatementHelper extends Statement {
+export class VariableStatement extends Statement implements ISubshellable, IEvaluable {
     /**
      * Returns the statement.
      */
     public get value(): string {
         return this.statement;
+    }
+
+    /**
+     * Returns the statement in a subshell statement.
+     *
+     * @returns A new SubshellStatement instance.
+     */
+    public subshell(): SubshellStatement {
+        return new SubshellStatement(this);
+    }
+
+    /**
+     * Returns the statement in an evaluation-subshell statement.
+     *
+     * @returns A new EvalSubshellStatement instance.
+     */
+    eval(): EvalSubshellStatement {
+        return this.subshell().eval();
+    }
+}
+
+/**
+ * Helper class to instantiate a simple Block.
+ */
+export class VariableBlock extends Block {
+    /**
+     * Block constructor.
+     *
+     * @param statement Block content.
+     */
+    public constructor(statement?: Statement);
+    /**
+     * Block constructor.
+     *
+     * @param statement Block content.
+     */
+    public constructor(statement?: string);
+    /**
+     * Block constructor.
+     *
+     * @param block Block content.
+     */
+    public constructor(block?: Block);
+    /**
+     * Block constructor.
+     *
+     * @param statements Block content.
+     */
+    public constructor(statements?: Statement[]);
+    /**
+     * Block constructor.
+     *
+     * @param statements Block content.
+     */
+    public constructor(statements?: string[]);
+    /**
+     * Block constructor.
+     *
+     * @param blocks Block content.
+     */
+    public constructor(blocks?: Block[]);
+    /**
+     * Block constructor.
+     *
+     * @param content Block content.
+     */
+    public constructor(content?: StatementOrBlockOrString[]);
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public constructor(content?: any) {
+        super(content);
     }
 }
 
@@ -27,7 +108,7 @@ export abstract class Variable extends Statement {
      * VariableBase constructor.
      *
      * @param name  Variable name.
-     * @param local Specifis if the variable is a local variable.
+     * @param local Specifies if the variable is a local variable.
      */
     constructor(name: string, local?: boolean) {
         if (typeof name !== 'string') {
@@ -64,7 +145,7 @@ export abstract class Variable extends Statement {
 
     /**
      * Returns the variable including the ${...} brackets.
-     * 
+     *
      * @returns Variable with ${...} brackets.
      */
     public get value(): string {
@@ -75,51 +156,72 @@ export abstract class Variable extends Statement {
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
      * front.
-     * 
-     * @param value Value to set. Must be a Statement, string, number or boolean.
+     *
+     * @param value Statement to set as value.
      * @returns Assignment statement.
      */
-    public set(value?: Statement): Statement;
+    public set(value?: Statement): VariableStatement;
     /**
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
      * front.
-     * 
-     * @param value Value to set. Must be a Statement, string, number or boolean.
+     *
+     * @param value String to set as value.
      * @returns Assignment statement.
      */
-    public set(value?: string): Statement;
+    public set(value?: string): VariableStatement;
     /**
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
      * front.
-     * 
-     * @param value Value to set. Must be a Statement, string, number or boolean.
+     *
+     * @param value Number to set as value.
      * @returns Assignment statement.
      */
-    public set(value?: number): Statement;
+    public set(value?: number): VariableStatement;
     /**
      * Creates an assignment-statement. If the variable is assigned the
      * first time and it's a local variable, the local keyword is put in
      * front.
-     * 
-     * @param value Value to set. Must be a Statement, string, number or boolean.
+     *
+     * @param value Boolean to set as value.
      * @returns Assignment statement.
      */
-    public set(value?: boolean): Statement;
+    public set(value?: boolean): VariableStatement;
+    /**
+     * Creates an assignment-statement. If the variable is assigned the
+     * first time and it's a local variable, the local keyword is put in
+     * front.
+     *
+     * @param value Block to set as value.
+     * @returns Assignment statement.
+     */
+    public set(value?: EvalSubshellBlock): VariableBlock;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public set(value?: any): Statement {
-        /* Convert value to string. */
-        value = this._convertValueInternal(value);
-
+    public set(value?: any): VariableStatement | VariableBlock {
         /* If the variable has not been initialize and is local,
            prepend the 'local' keyword. */
         let prefix = '';
         if (this._local && !this._defined) {
             prefix = 'local ';
-            this._defined = true;
         }
-        return new StatementHelper(`${prefix}${this.name}=${value}`);
+        const assign = (value: string) => new VariableStatement(`${prefix}${this.name}=${value}`);
+
+        /* If value is instance of EvalSubshellBlock create a
+           new Block whereat the block's first statement is the
+           assign statement. */
+        if (value instanceof EvalSubshellBlock) {
+            value = new VariableBlock([
+                assign(value.openingStatement.value),
+                ...value.raw.slice(1),
+            ]);
+        } else {
+            /* Convert value to string. */
+            value = this._convertValueInternal(value);
+            value = assign(value);
+        }
+        this._defined = true;
+        return value;
     }
 
     /**
@@ -131,7 +233,7 @@ export abstract class Variable extends Statement {
      */
     protected abstract _convertValue(value?: string): string;
     /**
-     * Creates the compare string based on the compare operator, the 
+     * Creates the compare string based on the compare operator, the
      * value and the variable.
      *
      * @param compareOperator Specifies how the values shall be compared.
@@ -231,7 +333,7 @@ export abstract class Variable extends Statement {
      *
      * @returns Compare Statement.
      */
-    protected _compare(compareOperator: number, value?: string): Statement {
+    protected _compare(compareOperator: number, value?: string): Condition {
         /* Let subclass convert the value to what's needed. */
         value = this._convertValueInternal(value);
 
@@ -246,6 +348,6 @@ export abstract class Variable extends Statement {
         } else if (typeof compareString !== 'string') {
             throw new Error('Returned compare value is not a string');
         }
-        return new StatementHelper(compareString);
+        return new Condition(compareString);
     }
 }

@@ -9,7 +9,7 @@ describe('StringVariable tests', () => {
                 const compareValue = 'world';
                 const variable = new StringVariable(name);
 
-                expect(variable.isEqual(compareValue).value).to.be.equal(`"$\{${name}}" = "${compareValue}"`);
+                expect(variable.isEqual(compareValue).value).to.be.equal(`[ "$\{${name}}" = "${compareValue}" ]`);
             });
 
             it('number value', () => {
@@ -17,14 +17,14 @@ describe('StringVariable tests', () => {
                 const compareValue = 3;
                 const variable = new StringVariable(name);
 
-                expect(variable.isEqual(compareValue).value).to.be.equal(`"$\{${name}}" = "${compareValue}"`);
+                expect(variable.isEqual(compareValue).value).to.be.equal(`[ "$\{${name}}" = "${compareValue}" ]`);
             });
 
             it('empty value', () => {
                 const name = 'test';
                 const variable = new StringVariable(name);
 
-                expect(variable.isEqual().value).to.be.equal(`"$\{${name}}" = ""`);
+                expect(variable.isEqual().value).to.be.equal(`[ "$\{${name}}" = "" ]`);
             });
         });
     });
@@ -36,7 +36,19 @@ describe('StringVariable tests', () => {
                 const compareValue = 'world';
                 const variable = new StringVariable(name);
 
-                expect(variable.isNotEqual(compareValue).value).to.be.equal(`"$\{${name}}" != "${compareValue}"`);
+                expect(variable.isNotEqual(compareValue).value).to.be.equal(`[ "$\{${name}}" != "${compareValue}" ]`);
+            });
+        });
+    });
+
+    describe('matches', () => {
+        describe('successful', () => {
+            it('string value', () => {
+                const name = 'test';
+                const compareValue = 'world';
+                const variable = new StringVariable(name);
+
+                expect(variable.matches(compareValue).value).to.be.equal(`[ "$(echo "$\{${name}}" | grep -e "${compareValue}")" ]`);
             });
         });
     });
@@ -47,7 +59,7 @@ describe('StringVariable tests', () => {
                 const name = 'test';
                 const variable = new StringVariable(name);
 
-                expect(variable.isEmpty.value).to.be.equal(`-z "$\{${name}}"`);
+                expect(variable.isEmpty.value).to.be.equal(`[ -z "$\{${name}}" ]`);
             });
         });
     });
@@ -58,7 +70,7 @@ describe('StringVariable tests', () => {
                 const name = 'test';
                 const variable = new StringVariable(name);
 
-                expect(variable.isNotEmpty.value).to.be.equal(`-n "$\{${name}}"`);
+                expect(variable.isNotEmpty.value).to.be.equal(`[ -n "$\{${name}}" ]`);
             });
         });
     });
@@ -69,7 +81,7 @@ describe('StringVariable tests', () => {
                 const name = 'test';
                 const variable = new StringVariable(name);
 
-                expect(variable.length.value).to.be.equal(`$\{#${name}}`);
+                expect(variable.length.value).to.be.equal(`$(expr length "${variable.value}")`);
             });
         });
     });
@@ -81,7 +93,7 @@ describe('StringVariable tests', () => {
                 const appendValue = 'oh no';
                 const variable = new StringVariable(name);
 
-                expect(variable.append(appendValue).value).to.be.equal(`"$\{${name}}${appendValue}"`);
+                expect(variable.append(appendValue).value).to.be.equal(`$\{${name}}${appendValue}`);
             });
 
             it('number value', () => {
@@ -89,7 +101,7 @@ describe('StringVariable tests', () => {
                 const appendValue = 4;
                 const variable = new StringVariable(name);
 
-                expect(variable.append(appendValue).value).to.be.equal(`"$\{${name}}${appendValue}"`);
+                expect(variable.append(appendValue).value).to.be.equal(`$\{${name}}${appendValue}`);
             });
 
             it('boolean value', () => {
@@ -97,47 +109,7 @@ describe('StringVariable tests', () => {
                 const appendValue = true;
                 const variable = new StringVariable(name);
 
-                expect(variable.append(appendValue).value).to.be.equal(`"$\{${name}}${appendValue}"`);
-            });
-        });
-    });
-
-    describe('removeFront', () => {
-        describe('successful', () => {
-            it('lazy', () => {
-                const name = 'test';
-                const removeValue = 'removeMe';
-                const variable = new StringVariable(name);
-
-                expect(variable.removeFront(removeValue).value).to.be.equal(`"$\{${name}}#${removeValue}"`);
-            });
-
-            it('diligent', () => {
-                const name = 'test';
-                const removeValue = 'removeMe';
-                const variable = new StringVariable(name);
-
-                expect(variable.removeFront(removeValue, false).value).to.be.equal(`"$\{${name}}##${removeValue}"`);
-            });
-        });
-    });
-
-    describe('removeBack', () => {
-        describe('successful', () => {
-            it('lazy', () => {
-                const name = 'test';
-                const removeValue = 'removeMe';
-                const variable = new StringVariable(name);
-
-                expect(variable.removeBack(removeValue).value).to.be.equal(`"$\{${name}}%${removeValue}"`);
-            });
-
-            it('diligent', () => {
-                const name = 'test';
-                const removeValue = 'removeMe';
-                const variable = new StringVariable(name);
-
-                expect(variable.removeBack(removeValue, false).value).to.be.equal(`"$\{${name}}%%${removeValue}"`);
+                expect(variable.append(appendValue).value).to.be.equal(`$\{${name}}${appendValue}`);
             });
         });
     });
@@ -150,7 +122,7 @@ describe('StringVariable tests', () => {
                 const replaceValue = 'withThat';
                 const variable = new StringVariable(name);
 
-                expect(variable.replace(searchValue, replaceValue).value).to.be.equal(`"$\{${name}}/${searchValue}/${replaceValue}"`);
+                expect(variable.replace(searchValue, replaceValue).value).to.be.equal(`$(echo "${variable.value}" | sed "s/${searchValue}/${replaceValue}/")`);
             });
 
             it('all', () => {
@@ -159,7 +131,7 @@ describe('StringVariable tests', () => {
                 const replaceValue = 'withThat';
                 const variable = new StringVariable(name);
 
-                expect(variable.replace(searchValue, replaceValue, true).value).to.be.equal(`"$\{${name}}//${searchValue}/${replaceValue}"`);
+                expect(variable.replace(searchValue, replaceValue, true).value).to.be.equal(`$(echo "${variable.value}" | sed "s/${searchValue}/${replaceValue}/g")`);
             });
         });
     });
@@ -170,7 +142,7 @@ describe('StringVariable tests', () => {
                 const name = 'test';
                 const variable = new StringVariable(name);
 
-                expect(variable.substring().value).to.be.equal(`"$\{${name}::}"`);
+                expect(variable.substring().value).to.be.equal(`$(expr substr "${variable.value}" 1 $(expr length "${variable.value}"))`);
             });
 
             it('start parameter', () => {
@@ -178,7 +150,7 @@ describe('StringVariable tests', () => {
                 const start = 1;
                 const variable = new StringVariable(name);
 
-                expect(variable.substring(start).value).to.be.equal(`"$\{${name}:${start}:}"`);
+                expect(variable.substring(start).value).to.be.equal(`$(expr substr "${variable.value}" ${start + 1} $(expr length "${variable.value}"))`);
             });
 
             it('length parameter', () => {
@@ -186,7 +158,7 @@ describe('StringVariable tests', () => {
                 const length = 4;
                 const variable = new StringVariable(name);
 
-                expect(variable.substring(undefined, length).value).to.be.equal(`"$\{${name}::${length}}"`);
+                expect(variable.substring(undefined, length).value).to.be.equal(`$(expr substr "${variable.value}" 1 ${length})`);
             });
 
             it('start + length parameter', () => {
@@ -195,7 +167,7 @@ describe('StringVariable tests', () => {
                 const length = 4;
                 const variable = new StringVariable(name);
 
-                expect(variable.substring(start, length).value).to.be.equal(`"$\{${name}:${start}:${length}}"`);
+                expect(variable.substring(start, length).value).to.be.equal(`$(expr substr "${variable.value}" ${start + 1} ${length})`);
             });
         });
 

@@ -1,6 +1,8 @@
 import { expect } from 'chai';
+import { Block } from '../src/base/block.mjs';
 import { Statement } from '../src/base/statement.mjs';
 import { Variable } from '../src/base/variable.mjs';
+import { EvalSubshellBlock } from '../src/components/subshell/eval-subshell-block.mjs';
 
 /* Helper class to instantiate Variable. */
 class VariableHelper extends Variable {
@@ -28,6 +30,16 @@ class VariableHelper extends Variable {
 class StatementHelper extends Statement {
     public get value(): string {
         return this.statement;
+    }
+}
+
+/**
+ * Helper class to instantiate a simple Block.
+ */
+class BlockHelper extends Block {
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public constructor(content?: any) {
+        super(content);
     }
 }
 
@@ -94,14 +106,57 @@ describe('Variable tests', () => {
 
                 expect(variable.set(setValue).value).to.be.equal(`${name}=${setValue.value}`);
             });
-        });
 
-        describe('failed', () => {
-            it('invalid value type provided', () => {
-                expect(function() {
-                    new VariableHelper('hello').set({} as any);
-                }).to.throw('Invalid value type provided');
+            it('set Block', () => {
+                const name = 'test';
+                const value1 = 'echo "Hello"';
+                const value2 = 'echo "World"';
+                const setValue = new EvalSubshellBlock([
+                    value1,
+                    value2,
+                ]);
+                const variable = new VariableHelper(name);
+                const setBlock = variable.set(setValue);
+
+                expect(setBlock.raw.length).to.be.equal(3);
+                expect((setBlock.raw[0] as Statement).value).to.be.equal(`${name}=$(`);
+                expect((setBlock.raw[1] as Block).content.length).to.be.equal(2);
+                expect(((setBlock.raw[1] as Block).content[0] as Statement).value).to.be.equal(value1);
+                expect(((setBlock.raw[1] as Block).content[1] as Statement).value).to.be.equal(value2);
+                expect((setBlock.raw[2] as Statement).value).to.be.equal(')');
             });
+        });
+    });
+
+    describe('subshell', () => {
+        describe('successful', () => {
+            it('string value', () => {
+                const value = 'echo "test"';
+                const name = 'helper';
+                const variable = new VariableHelper(name);
+
+                expect(variable.set(value).subshell().value).to.be.equal(`(${name}=${value})`);
+            });
+        });
+    });
+
+    describe('eval', () => {
+        describe('successful', () => {
+            it('string value', () => {
+                const value = 'echo "test"';
+                const name = 'helper';
+                const variable = new VariableHelper(name);
+
+                expect(variable.set(value).eval().value).to.be.equal(`$(${name}=${value})`);
+            });
+        });
+    });
+
+    describe('failed', () => {
+        it('invalid value type provided', () => {
+            expect(function() {
+                new VariableHelper('hello').set({} as any);
+            }).to.throw('Invalid value type provided');
         });
     });
 
@@ -112,7 +167,7 @@ describe('Variable tests', () => {
                 const compareValue = 4;
                 const variable = new VariableHelper(name);
 
-                expect(variable.compare(2, `${compareValue}`).value).to.be.equal(`$\{${name}} = ${compareValue}`);
+                expect(variable.compare(2, `${compareValue}`).value).to.be.equal(`[ $\{${name}} = ${compareValue} ]`);
             });
         });
 

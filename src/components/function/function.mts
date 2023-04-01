@@ -1,4 +1,3 @@
-import { WrapBlock } from '../../blocks/wrap-block.mjs';
 import { Statement } from '../../base/statement.mjs';
 import {
     Block,
@@ -11,7 +10,8 @@ import {
 } from '../../helpers/string.mjs';
 import { Command } from '../../base/command.mjs';
 import { Variable } from '../../base/variable.mjs';
-import { StringVariable } from '../../index.mjs';
+import { StringVariable } from '../../variables/string-variable.mjs';
+import { SubshellableWrapBlock } from '../../blocks/subshellable-wrap-block.mjs';
 
 type StringOrVariable = string | Variable;
 type StringOrNumberOrBoolean = string | number | boolean;
@@ -19,7 +19,7 @@ type StringOrNumberOrBoolean = string | number | boolean;
 /**
  * Represents a Bourne Shell function-block.
  */
-export class Function extends WrapBlock {
+export class Function extends SubshellableWrapBlock {
     private _name: string;
     private _parameters = [] as Variable[];
 

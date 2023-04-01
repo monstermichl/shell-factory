@@ -4,6 +4,7 @@ import {
     If,
 } from '../dist/index.mjs';
 
+/* example-start */
 const meta = new MetaData(); /* MetaData container. */
 const script = new Script([
     new If(1, [
@@ -19,3 +20,4 @@ const ifBlock = script.findContent(meta.id)[0];
 ifBlock.addContent('echo "Here\'s another statement"');
 
 console.log(script.dump()); /* Dump the updated script. */
+/* example-end */

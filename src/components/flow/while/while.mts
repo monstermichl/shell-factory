@@ -3,17 +3,13 @@ import {
     Block,
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
-import {
-    ConditionBlock,
-    BracketType,
-} from '../../../blocks/condition-block.mjs';
 import { Condition } from '../../condition/condition.mjs';
-import { Conditions } from '../../condition/conditions.mjs';
+import { SubshellableConditionBlock } from '../../../blocks/subshellable-condition-block.mjs';
 
 /**
  * Represents a Bourne Shell while-block.
  */
-export class While extends ConditionBlock {
+export class While extends SubshellableConditionBlock {
     /**
      * While constructor.
      *
@@ -210,57 +206,8 @@ export class While extends ConditionBlock {
      * @param content   While-block content.
      */
     constructor(condition: Condition, content?: StatementOrBlockOrString[]);
-    /**
-     * While constructor.
-     *
-     * @param conditions While conditions.
-     * @param statement  While-block content.
-     */
-    constructor(conditions: Conditions, statement?: Statement);
-    /**
-     * While constructor.
-     *
-     * @param conditions While conditions.
-     * @param statement  While-block content.
-     */
-    constructor(conditions: Conditions, statement?: string);
-    /**
-     * While constructor.
-     *
-     * @param conditions While conditions.
-     * @param block      While-block content.
-     */
-    constructor(conditions: Conditions, block?: Block);
-    /**
-     * While constructor.
-     *
-     * @param conditions While conditions.
-     * @param statements While-block content.
-     */
-    constructor(conditions: Conditions, statements?: Statement[]);
-    /**
-     * While constructor.
-     *
-     * @param conditions While conditions.
-     * @param statements While-block content.
-     */
-    constructor(conditions: Conditions, statements?: string[]);
-    /**
-     * While constructor.
-     *
-     * @param conditions While conditions.
-     * @param blocks     While-block content.
-     */
-    constructor(conditions: Conditions, blocks?: Block[]);
-    /**
-     * While constructor.
-     *
-     * @param conditions While conditions.
-     * @param content    While-block content.
-     */
-    constructor(conditions: Conditions, content?: StatementOrBlockOrString[]);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     constructor(condition: any, content?: any) {
-        super('while', BracketType.Square, condition, 'do', content, 'done');
+        super('while', condition, 'do', content, 'done');
     }
 }

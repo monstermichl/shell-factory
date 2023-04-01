@@ -3,6 +3,7 @@ import {
     Script,
 } from '../dist/index.mjs';
 
+/* example-start */
 const script = new Script([
     new Command().setComment('First line of this script'),
     'echo "Is this going to be removed?"',
@@ -18,3 +19,4 @@ script.removeContent(/remove/);
 
 /* Dump the altered script. */
 console.log(script.dump());
+/* example-end */

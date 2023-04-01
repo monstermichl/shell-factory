@@ -3,20 +3,20 @@ import {
     StatementOrBlockOrString,
 } from '../../../base/block.mjs';
 import { Statement } from '../../../base/statement.mjs';
-import { WrapBlock } from '../../../blocks/wrap-block.mjs';
+import { SubshellableWrapBlock } from '../../../blocks/subshellable-wrap-block.mjs';
 import { CaseOption } from './case-option.mjs';
 
 /**
  * Represents a Bourne Shell case-block.
  */
-export class Case extends WrapBlock {
+export class Case extends SubshellableWrapBlock {
     protected _cases: CaseOption[] = [];
 
     /**
      * Case constructor.
      *
      * @param value Case value/variable.
-     * @param cas Case-option to add.
+     * @param cas   Case-option to add.
      */
     public constructor(value: string, cas?: CaseOption);
     /**
@@ -29,55 +29,47 @@ export class Case extends WrapBlock {
     /**
      * Case constructor.
      *
-     * @param value Case value/variable.
-     * @param pattern Pattern to create a new case-option from.
+     * @param value     Case value/variable.
+     * @param pattern   Pattern to create a new case-option from.
      * @param statement Content of the new case-option.
      */
     public constructor(value: string, pattern?: string, statement?: string);
     /**
      * Case constructor.
      *
-     * @param value Case value/variable.
-     * @param pattern Pattern to create a new case-option from.
+     * @param value     Case value/variable.
+     * @param pattern   Pattern to create a new case-option from.
      * @param statement Content of the new case-option.
      */
     public constructor(value: string, pattern?: string, statement?: Statement);
     /**
      * Case constructor.
      *
-     * @param value Case value/variable.
+     * @param value   Case value/variable.
      * @param pattern Pattern to create a new case-option from.
-     * @param block Content of the new case-option.
+     * @param block   Content of the new case-option.
      */
     public constructor(value: string, pattern?: string, block?: Block);
     /**
      * Case constructor.
      *
-     * @param value Case value/variable.
-     * @param pattern Pattern to create a new case-option from.
-     * @param statements Content of the new case-option.
-     */
-    public constructor(value: string, pattern?: string, statements?: WrapBlock[]);
-    /**
-     * Case constructor.
-     *
-     * @param value Case value/variable.
-     * @param pattern Pattern to create a new case-option from.
+     * @param value      Case value/variable.
+     * @param pattern    Pattern to create a new case-option from.
      * @param statements Content of the new case-option.
      */
     public constructor(value: string, pattern?: string, statements?: Statement[]);
     /**
      * Case constructor.
      *
-     * @param value Case value/variable.
+     * @param value   Case value/variable.
      * @param pattern Pattern to create a new case-option from.
-     * @param blocks Content of the new case-option.
+     * @param blocks  Content of the new case-option.
      */
     public constructor(value: string, pattern?: string, blocks?: Block[]);
     /**
      * Case constructor.
      *
-     * @param value Case value/variable.
+     * @param value   Case value/variable.
      * @param pattern Pattern to create a new case-option from.
      * @param content Content of the new case-option.
      */
@@ -113,14 +105,14 @@ export class Case extends WrapBlock {
     /**
      * Adds a new case-option to the case.
      *
-     * @param pattern Pattern to create a new case-option from.
+     * @param pattern   Pattern to create a new case-option from.
      * @param statement Content of the new case-option.
      */
     public override addContent(pattern: string, statement: string): this;
     /**
      * Adds a new case-option to the case.
      *
-     * @param pattern Pattern to create a new case-option from.
+     * @param pattern   Pattern to create a new case-option from.
      * @param statement Content of the new case-option.
      */
     public override addContent(pattern: string, statement: Statement): this;
@@ -128,20 +120,13 @@ export class Case extends WrapBlock {
      * Adds a new case-option to the case.
      *
      * @param pattern Pattern to create a new case-option from.
-     * @param block Content of the new case-option.
+     * @param block   Content of the new case-option.
      */
     public override addContent(pattern: string, block: Block): this;
     /**
      * Adds a new case-option to the case.
      *
-     * @param pattern Pattern to create a new case-option from.
-     * @param statements Content of the new case-option.
-     */
-    public override addContent(pattern: string, statements: WrapBlock[]): this;
-    /**
-     * Adds a new case-option to the case.
-     *
-     * @param pattern Pattern to create a new case-option from.
+     * @param pattern    Pattern to create a new case-option from.
      * @param statements Content of the new case-option.
      */
     public override addContent(pattern: string, statements: Statement[]): this;
@@ -149,7 +134,7 @@ export class Case extends WrapBlock {
      * Adds a new case-option to the case.
      *
      * @param pattern Pattern to create a new case-option from.
-     * @param blocks Content of the new case-option.
+     * @param blocks  Content of the new case-option.
      */
     public override addContent(pattern: string, blocks: Block[]): this;
     /**
@@ -177,12 +162,6 @@ export class Case extends WrapBlock {
      * @param block Content to add to the last case-option.
      */
     public override addContent(block: Block): this;
-    /**
-     * Adds the provided content to the last case-option.
-     *
-     * @param statements Content to add to the last case-option.
-     */
-    public override addContent(statements: WrapBlock[]): this;
     /**
      * Adds the provided content to the last case-option.
      *

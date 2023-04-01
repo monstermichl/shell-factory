@@ -4,308 +4,283 @@ import {
     Block,
     StatementOrBlockOrString,
 } from '../base/block.mjs';
-import { Conditions } from '../components/condition/conditions.mjs';
-import {
-    Link,
-    LinkedCondition,
-} from '../components/condition/linked-condition.mjs';
 import { Condition } from '../components/condition/condition.mjs';
 import {
     ChainElement,
-    ChainType,
     IChainable,
 } from '../interfaces/chainable.mjs';
 import { Command } from '../base/command.mjs';
-
-/**
- * ConditionBlock bracket type.
- */
-export enum BracketType {
-    Square,
-    Round,
-    None,
-}
+import { IConditionable } from '../interfaces/conditionable.mjs';
+import {
+    LogicalConnectType,
+    ILogicallyConnectable,
+} from '../interfaces/logically-connectable.mjs';
+import { OperationalConnectType } from '../interfaces/operationally-connectable.mjs';
 
 /**
  * Serves as the base for all blocks that require to handle conditions
  * (e.g., If, While, ...).
  */
-export abstract class ConditionBlock extends WrapBlock implements IChainable<Command> {
-    protected _conditions: Conditions;
+export abstract class ConditionBlock extends WrapBlock implements IChainable<OperationalConnectType | LogicalConnectType, Command>, IConditionable, ILogicallyConnectable {
+    protected _condition: Condition;
 
     private _testOverwritten: boolean;
     private _conditionKeyword: string;
-    private _bracketType: BracketType;
     private _blockStartKeyword: string;
     private _blockEndKeyword: string;
 
     /**
-     * Returns the condition block's conditions.
-     */
-    public get conditions(): Conditions {
-        return this._conditions;
-    }
-
-    public get test(): this {
-        this._testOverwritten = true;
-        return this._test(true);
-    }
-
-    public get dontTest(): this {
-        this._testOverwritten = true;
-        return this._test(false);
-    }
-
-    /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param statement         ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: string, blockStartKeyword: string, statement?: Statement, blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: string, blockStartKeyword: string, statement?: Statement, blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param statement         ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: string, blockStartKeyword: string, statement?: string, blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: string, blockStartKeyword: string, statement?: string, blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param block             ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: string, blockStartKeyword: string, block?: Block, blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: string, blockStartKeyword: string, block?: Block, blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param statements        ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: string, blockStartKeyword: string, statements?: Statement[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: string, blockStartKeyword: string, statements?: Statement[], blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param statements        ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: string, blockStartKeyword: string, statements?: string[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: string, blockStartKeyword: string, statements?: string[], blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param blocks            ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: string, blockStartKeyword: string, blocks?: Block[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: string, blockStartKeyword: string, blocks?: Block[], blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param content           ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: string, blockStartKeyword: string, content?: StatementOrBlockOrString[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: string, blockStartKeyword: string, content?: StatementOrBlockOrString[], blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param statement         ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: Condition, blockStartKeyword: string, statement?: Statement, blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, statement?: Statement, blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param statement         ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: Condition, blockStartKeyword: string, statement?: string, blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, statement?: string, blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param block             ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: Condition, blockStartKeyword: string, block?: Block, blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, block?: Block, blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param statements        ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: Condition, blockStartKeyword: string, statements?: Statement[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, statements?: Statement[], blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param statements        ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: Condition, blockStartKeyword: string, statements?: string[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, statements?: string[], blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param blocks            ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: Condition, blockStartKeyword: string, blocks?: Block[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, blocks?: Block[], blockEndKeyword?: string);
     /**
      * ConditionBlock constructor.
      *
      * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
      * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
      * @param condition         Actual condition.
      * @param content           ConditionBlock body content.
      * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
      */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, condition: Condition, blockStartKeyword: string, content?: StatementOrBlockOrString[], blockEndKeyword?: string);
-    /**
-     * ConditionBlock constructor.
-     *
-     * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
-     * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
-     * @param condition         Actual condition.
-     * @param statement         ConditionBlock body content.
-     * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
-     */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string, statement?: Statement, blockEndKeyword?: string);
-    /**
-     * ConditionBlock constructor.
-     *
-     * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
-     * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
-     * @param condition         Actual condition.
-     * @param statement         ConditionBlock body content.
-     * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
-     */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string, statement?: string, blockEndKeyword?: string);
-    /**
-     * ConditionBlock constructor.
-     *
-     * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
-     * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
-     * @param condition         Actual condition.
-     * @param block             ConditionBlock body content.
-     * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
-     */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string, block?: Block, blockEndKeyword?: string);
-    /**
-     * ConditionBlock constructor.
-     *
-     * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
-     * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
-     * @param condition         Actual condition.
-     * @param statements        ConditionBlock body content.
-     * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
-     */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string, statements?: Statement[], blockEndKeyword?: string);
-    /**
-     * ConditionBlock constructor.
-     *
-     * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
-     * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
-     * @param condition         Actual condition.
-     * @param statements        ConditionBlock body content.
-     * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
-     */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string, statements?: string[], blockEndKeyword?: string);
-    /**
-     * ConditionBlock constructor.
-     *
-     * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
-     * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
-     * @param condition         Actual condition.
-     * @param blocks            ConditionBlock body content.
-     * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
-     */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string, blocks?: Block[], blockEndKeyword?: string);
-    /**
-     * ConditionBlock constructor.
-     *
-     * @param conditionKeyword  ConditionBlock start keyword (e.g., 'if', 'while', 'for', ...).
-     * @param bracketType       Bracket type.
-     * @param blockStartKeyword ConditionBlock body start keyword (e.g. 'then', 'do', ...).
-     * @param condition         Actual condition.
-     * @param content           ConditionBlock body content.
-     * @param blockEndKeyword   ConditionBlock body end keyword (e.g. 'fi', 'done', ...).
-     */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string, content?: StatementOrBlockOrString[], blockEndKeyword?: string);
+    protected constructor(conditionKeyword: string, condition: Statement, blockStartKeyword: string, content?: StatementOrBlockOrString[], blockEndKeyword?: string);
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    protected constructor(conditionKeyword: string, bracketType: BracketType, arg: any, blockStartKeyword: string, content?: any, blockEndKeyword?: string) {
-        const conditions = Conditions.convert(arg);
-        const openingStatement = ConditionBlock._buildOpeningStatementString(conditionKeyword, bracketType, conditions, blockStartKeyword);
+    protected constructor(conditionKeyword: string, arg: any, blockStartKeyword: string, content?: any, blockEndKeyword?: string) {
+        const condition = Condition.fromString(arg);
+        const openingStatement = ConditionBlock._buildOpeningStatementString(conditionKeyword, condition, blockStartKeyword);
 
         super(openingStatement, content, blockEndKeyword);
 
         this._conditionKeyword = conditionKeyword;
-        this._bracketType = bracketType;
-        this._conditions = conditions;
+        this._condition = condition;
         this._blockStartKeyword = blockStartKeyword;
         this._blockEndKeyword = blockEndKeyword;
     }
 
     /**
+     * Returns the condition block's condition.
+     */
+    public get condition(): Condition {
+        return this._condition;
+    }
+
+    /**
      * Returns a the applied chain.
      */
-    public get chain(): ChainElement<Command>[] {
+    public get chain(): ChainElement<OperationalConnectType | LogicalConnectType, Command>[] {
         return this.closingStatement?.chain;
+    }
+
+    /**
+     * Returns if the condition gets tested.
+     *
+     * @returns True if the gets tested.
+     */
+    public getTest(): boolean {
+        return this._condition.getTest();
+    }
+
+    /**
+     * Sets if the condition shall be tested.
+     *
+     * @param test Sets if the condition shall be tested.
+     */
+    public setTest(test: boolean) {
+        this._testOverwritten = true;
+        return this._test(test);
+    }
+
+    /**
+     * Adds a new and-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public and(condition: Condition): this;
+    /**
+     * Adds a new and-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public and(condition: string): this;
+    /**
+     * Adds a new and-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public and(condition: boolean): this;
+    /**
+     * Adds a new and-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public and(condition: number): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public and(condition: any): this {
+        this._condition.and(condition);
+        return this._updateOpeningStatement();
+    }
+
+    /**
+     * Adds a new or-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public or(condition: Condition): this;
+    /**
+     * Adds a new or-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public or(condition: string): this;
+    /**
+     * Adds a new or-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public or(condition: boolean): this;
+    /**
+     * Adds a new or-connected condition to the condition.
+     *
+     * @param condition Condition to add.
+     * @returns The current instance.
+     */
+    public or(condition: number): this;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+    public or(condition: any): this {
+        this._condition.or(condition);
+        return this._updateOpeningStatement();
     }
 
     /**
@@ -338,7 +313,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
     public read(source: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public read(source: any): this {
-        return this._addToChain(source, ChainType.Read);
+        return this._addToChain(source, OperationalConnectType.Read);
     }
 
     /**
@@ -371,7 +346,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
     public write(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public write(target: any): this {
-        return this._addToChain(target, ChainType.Write);
+        return this._addToChain(target, OperationalConnectType.Write);
     }
 
     /**
@@ -404,7 +379,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
     public append(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public append(target: any): this {
-        return this._addToChain(target, ChainType.Append);
+        return this._addToChain(target, OperationalConnectType.Append);
     }
 
     /**
@@ -437,7 +412,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
     public pipe(target: Statement): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public pipe(target: any): this {
-        return this._addToChain(target, ChainType.Pipe);
+        return this._addToChain(target, OperationalConnectType.Pipe);
     }
 
     /**
@@ -448,7 +423,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      *
      * @returns List of found chain elements.
      */
-    public findInChain(idOrPattern: string, type?: ChainType): ChainElement<Command>[];
+    public findInChain(idOrPattern: string, type?: OperationalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[];
     /**
      * Finds all elements based on the provided ID or pattern in the chain.
      * 
@@ -457,16 +432,16 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      *
      * @returns List of found chain elements.
      */
-    public findInChain(pattern: RegExp, type?: ChainType): ChainElement<Command>[];
+    public findInChain(pattern: RegExp, type?: OperationalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[];
     /**
      * Finds all elements based on the provided type.
      * 
      * @param type Type to look for.
      * @returns List of found chain elements.
      */
-    public findInChain(type: ChainType): ChainElement<Command>[];
+    public findInChain(type: OperationalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[];
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public findInChain(arg1: any, arg2?: ChainType): ChainElement<Command>[] {
+    public findInChain(arg1: any, arg2?: OperationalConnectType): ChainElement<OperationalConnectType | LogicalConnectType, Command>[] {
         return this.closingStatement?.findInChain(arg1, arg2);
     }
 
@@ -479,7 +454,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      *
      * @returns The current instance.
      */
-    public removeFromChain(idOrPattern: string, type?: ChainType): this;
+    public removeFromChain(idOrPattern: string, type?: OperationalConnectType): this;
     /**
      * Removes all elements based on the provided ID or pattern from the chain.
      * 
@@ -488,16 +463,16 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      *
      * @returns The current instance.
      */
-    public removeFromChain(pattern: RegExp, type?: ChainType): this;
+    public removeFromChain(pattern: RegExp, type?: OperationalConnectType): this;
     /**
      * Removes all elements based on the provided type.
      * 
      * @param type Type to remove.
      * @returns The current instance.
      */
-    public removeFromChain(type: ChainType): this;
+    public removeFromChain(type: OperationalConnectType): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    public removeFromChain(arg1: any, arg2?: ChainType): this {
+    public removeFromChain(arg1: any, arg2?: OperationalConnectType): this {
         this.closingStatement?.removeFromChain(arg1, arg2);
         return this;
     }
@@ -516,42 +491,24 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * Creates the opening statement.
      *
      * @param conditionKeyword  Condition keyword (e.g. if).
-     * @param bracketType       Which brackets shall be used.
-     * @param conditions        Conditions to incorporate.
+     * @param condition         Condition object to incorporate.
      * @param blockStartKeyword Block end-keyword (e.g. fi)
      *
      * @returns The built opening statement string.
      */
-    private static _buildOpeningStatementString(conditionKeyword: string, bracketType: BracketType, conditions: Conditions, blockStartKeyword: string): string {
+    private static _buildOpeningStatementString(conditionKeyword: string, condition: Condition, blockStartKeyword: string): string {
         if (!conditionKeyword) {
-            throw new Error('Missing condition');
+            throw new Error('Missing condition keyword');
+        } else if (typeof conditionKeyword !== 'string') {
+            throw new Error('Invalid condition keyword type provided');
         } else if (!blockStartKeyword) {
             throw new Error('Missing block-start keyword');
+        } else if (typeof blockStartKeyword !== 'string') {
+            throw new Error('Invalid block-start keyword type provided');
+        } else if (!(condition instanceof Condition)) {
+            throw new Error('Invalid condition type provided');
         }
-        let startBracket = '';
-        let stopBracket = '';
-
-        switch(bracketType) {
-            case BracketType.Square:
-                startBracket = '[';
-                stopBracket = ']';
-                break;
-            case BracketType.Round:
-                startBracket = '(';
-                stopBracket = ')';
-                break;
-        }
-        /* Build conditions string. */
-        let conditionString = '';
-        conditions.conditions.forEach((condition) => {
-            const value = condition.value;
-
-            if (condition instanceof LinkedCondition) {
-                conditionString += ` ${condition.link === Link.And ? '&&' : '||'} `;
-            }
-            conditionString += `${startBracket}${startBracket ? ` ${value}` : value}${startBracket ? ` ${stopBracket}` : stopBracket}`; /* Add space in front if brackets are used. */
-        });
-        return `${conditionKeyword} ${conditionString}; ${blockStartKeyword}`;
+        return `${conditionKeyword} ${condition.value}; ${blockStartKeyword}`;
     }
 
     /**
@@ -561,7 +518,8 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * @returns The current instance.
      */
     private _test(test: boolean): this {
-        return this._updateOpeningStatement(test);
+        this._condition.setTest(test);
+        return this._updateOpeningStatement();
     }
 
     /**
@@ -570,11 +528,10 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * @param test If true the condition is being tested (brackets).
      * @returns The current instance.
      */
-    private _updateOpeningStatement(test: boolean): this {
+    private _updateOpeningStatement(): this {
         this._openingStatement.statement = ConditionBlock._buildOpeningStatementString(
             this._conditionKeyword,
-            test ? this._bracketType : BracketType.None,
-            this._conditions,
+            this._condition,
             this._blockStartKeyword,
         );
         return this;
@@ -589,13 +546,13 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
      * @returns The current instance.
      */
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    private _addToChain(target: any, type: ChainType): this {
+    private _addToChain(target: any, type: OperationalConnectType): this {
         if (this.closingStatement) {
             switch(type) {
-                case ChainType.Read: this.closingStatement.read(target); break;
-                case ChainType.Write: this.closingStatement.write(target); break;
-                case ChainType.Append: this.closingStatement.append(target); break;
-                case ChainType.Pipe: this.closingStatement.pipe(target); break;
+                case OperationalConnectType.Read: this.closingStatement.read(target); break;
+                case OperationalConnectType.Write: this.closingStatement.write(target); break;
+                case OperationalConnectType.Append: this.closingStatement.append(target); break;
+                case OperationalConnectType.Pipe: this.closingStatement.pipe(target); break;
             }
 
             /* If test has not been overwritten, dis-/enable it. */
@@ -603,7 +560,7 @@ export abstract class ConditionBlock extends WrapBlock implements IChainable<Com
                 const chain = this.closingStatement.chain;
 
                 /* Disable testing if first chain element is of read-type. */
-                if (chain.length && (chain[0].type === ChainType.Read)) {
+                if (chain.length && (chain[0].type === OperationalConnectType.Read)) {
                     /* Disable testing. */
                     this._test(false);
                 } else {

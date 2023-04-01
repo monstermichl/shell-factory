@@ -4,6 +4,7 @@ import {
     Script,
 } from '../dist/index.mjs';
 
+/* example-start */
 const script = new Script([
     'read -p "Where are we running? " input',
     new Case('$input', [
@@ -18,3 +19,4 @@ const script = new Script([
 ]).dump();
 
 console.log(script);
+/* example-end */

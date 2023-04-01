@@ -4,6 +4,7 @@ import {
     Command,
 } from '../dist/index.mjs';
 
+/* example-start */
 const spacyConfig = {
     detailed: {
         for: {
@@ -26,3 +27,4 @@ const script = new Script([
 ]).dump(spacyConfig);
 
 console.log(script);
+/* example-end */
