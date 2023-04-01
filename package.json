@@ -37,6 +37,7 @@
     "example:and": "npm run build && node ./examples/example-and.js",
     "example:or": "npm run build && node ./examples/example-or.js",
     "example:subshell": "npm run build && node ./examples/example-subshell.js",
+    "example:condition": "npm run build && node ./examples/example-condition.js",
   },
   "author": "monstermichl",
   "license": "MIT",
