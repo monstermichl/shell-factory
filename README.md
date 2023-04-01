@@ -5,7 +5,6 @@ Shell-factory is a simple yet powerful ESM module that allows you to create Bour
 npm install shell-factory
 ```
 
-
 ## Components
 Each shell-script is built with the Script-class which serves as the container for all building blocks. At this point, the following building-blocks are supported.
 
@@ -318,7 +317,6 @@ if [ -e "hello.txt" ]; then
 else
   exit_function -1 "File doesn't exit."
 fi
-
 ```
 
 ### Condition
