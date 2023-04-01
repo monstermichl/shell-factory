@@ -62,7 +62,7 @@ const script = new Script([
             new Command(`echo "\\\`\\\`\\\`sh"`).append(outputFile),
             new Command(Subshell.call(
                 `node ${matchVariable.value}`
-            )).append(outputFile),
+            )).pipe('head -c -1').append(outputFile), /* "head -c -1" Removes the trailing newline. */
             new Command(`echo "\\\`\\\`\\\`"`).append(outputFile),
         ]).else([
             new Command(`echo "${lineVariable.value}"`).append(outputFile),
