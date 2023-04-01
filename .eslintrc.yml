@@ -18,6 +18,7 @@ ignorePatterns: [
   'dist/**/*',
   'tests/**/*',
   'docs/**/*',
+  'helpers/**/*',
   node_modules/**/*
 ]
 rules:
