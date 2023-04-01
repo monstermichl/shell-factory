@@ -1,4 +1,4 @@
-import { writeFileSync } from 'fs';
+import { exec } from 'child_process';
 import {
     Command,
     If,
@@ -68,7 +68,8 @@ const script = new Script([
             new Command(`echo "${lineVariable.value}"`).append(outputFile),
         ]),
     ]).read('README-template.md'),
-]);
+]).dump();
 
-writeFileSync('test.sh', script.dump());
-console.log(script.dump());
+exec(script, {
+    shell: '/bin/sh',
+}).stdout.on('data', (chunk) => console.log(chunk));
