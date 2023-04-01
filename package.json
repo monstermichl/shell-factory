@@ -1,10 +1,14 @@
 {
   "name": "shell-factory",
   "version": "3.0.1",
-  "description": "Typescript ESM module to dynamically build Bourne Shell scripts",
+  "description": "Typescript ESM module to build Bourne Shell scripts comfortably, dynamically",
   "main": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
   "type": "module",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./helpers": "./dist/helpers/index.mjs"
+  },
   "scripts": {
     "build": "npx tsc",
     "test": "npx tsc -p tsconfig-tests.json && npx c8 -r html mocha ./tests-build/tests/*.test.js",
