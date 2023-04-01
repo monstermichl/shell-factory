@@ -7,7 +7,7 @@ npm install shell-factory
 
 
 ## Components
-Each shell-script is built with the Script-class which serves as the container for all building blocks. At this point, the following building-blocks are supported (*the output of the following examples was provided by console.log. It is not dumped to the console or any file automatically. This is shown in the first example but for readability reasons avoided in the other ones.*).
+Each shell-script is built with the Script-class which serves as the container for all building blocks. At this point, the following building-blocks are supported.
 
 ### Command
 A command represents a single line of code. It can be a string or an instance of the Command class. Usually, a simple string is sufficient. However, the Command class inherits from the Statement class which offers additional functionalities like having an ID for later adjustment or adding comments which will be added to the generated code. For further modification commands also can be chained with several operators (see [Operations](#operations)).
@@ -34,7 +34,10 @@ At this point two types of Variables are supported. *StringVariable* (or *StrVar
 The example might seem intimidating at first glance as some of the concepts like *If* or *While* have not been discussed yet. Don't worry, just focus on the *Variable* operations to understand, how they work and how they can be combined. The rest will become clear later on (or intuitionally).
 
 ```typescript
-new Script([
+const stringVariable = new StringVariable('string');
+const numberVariable = new NumberVariable('number');
+
+const script = new Script([
     stringVariable.set(),  /* Initialize string variable. */
     numberVariable.set(0), /* Initialze the number variable. */
 
@@ -60,6 +63,8 @@ new Script([
         numberVariable.set(numberVariable.increment()),
     ]),
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
@@ -77,7 +82,7 @@ while [ ${number} -lt 5 ]; do
     string="${string} and again"
   fi
   echo "${string}"
-  number=`expr ${number} + 1`
+  number=$(expr ${number} + 1)
 done
 ```
 
@@ -85,7 +90,7 @@ done
 If-statements control the further code execution flow. The If-class adds the possibility to add all required else-if (+ else) branches via chaining as shown in the example. *NICE-TO-KNOW: The If-class also supports dis-/enabling testing (the brackets in the statement) by using the dontTest-, respectively test-getter.*
 
 ```typescript
-new Script([
+const script = new Script([
     'read -p "What do you want to say? " input',
     new If('"$input" == "Hello"', [
         'echo "Hello"',
@@ -95,6 +100,8 @@ new Script([
         'echo "What shall we do with the drunken sailor?"',
     ]),
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
@@ -115,7 +122,7 @@ fi
 While-loops execute the content in their body as long as the condition is fulfilled. *NICE-TO-KNOW: The While-class also supports dis-/enabling testing (the brackets in the statement) by using the dontTest-, respectively test-getter.*
 
 ```typescript
-new Script([
+const script = new Script([
     'input=0',
     new While(true, [
         'input=$(expr $input + 1)',
@@ -123,6 +130,8 @@ new Script([
         'sleep 1',
     ]),
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
@@ -141,7 +150,7 @@ done
 Until-loops execute the content in their body until the condition is fulfilled. *NICE-TO-KNOW: The Until-class also supports dis-/enabling testing (the brackets in the statement) by using the dontTest-, respectively test-getter.*
 
 ```typescript
-new Script([
+const script = new Script([
     'input=0',
     new Until(false, [
         'input=$(expr $input + 1)',
@@ -149,6 +158,8 @@ new Script([
         'sleep 1',
     ]),
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
@@ -167,12 +178,14 @@ done
 For-loops iterate over a defined collection of values and provid the current value via the specified variable.
 
 ```typescript
-new Script([
+const script = new Script([
     new For('i', [true, 2, 'three'], [
         'echo $i',
         'sleep 1',
     ]),
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
@@ -188,11 +201,13 @@ done
 Select is a builtin Shell function which provides the user with a selection menu based on the provided values.
 
 ```typescript
-new Script([
+const script = new Script([
     new Select('selection', ['a', 'b', 'c'], [
         'echo "You\'ve selected $selection"',
     ]),
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
@@ -207,7 +222,7 @@ done
 Case looks at the provided input and decides, based on the defined cases, which branch to execute. *The Case-class expects CaseOption as it's content. Everything that is not a CaseOption instance is being added to the latest defined CaseOption.*
 
 ```typescript
-new Script([
+const script = new Script([
     'read -p "Where are we running? " input',
     new Case('$input', [
         new CaseOption('We need some time to clear our heads', [
@@ -219,6 +234,8 @@ new Script([
         'echo "I\'m added to the last CaseOption"',
     ]),
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
@@ -241,23 +258,25 @@ esac
 Functions are reusable code blocks which can be called at later points in the script. The Function-class also adds the possibility to map the positional parameters to function-internal variables for better usability.
 
 ```typescript
-new Script([
+const script = new Script([
     new Function('hello_world', [
         'echo "Greetings $first_name, $last_name"',
     ], [
         'first_name',
-        'last name',
+        'last_name',
     ]),
     'hello_world',
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
 #!/bin/sh
 
 hello_world() {
-  first_name=$1
-  last_name=$2
+  local first_name="$1"
+  local last_name="$2"
   echo "Greetings $first_name, $last_name"
 }
 hello_world
@@ -308,7 +327,7 @@ Commands and ConditionBlocks support the appliance of operations in a chained ma
 Reads content from a file into the Command or ConditionBlock. *NOTICE: If testing has not been explicitely set on the ConditionBlock (e.g. If, While, Until, ...), testing gets disabled automatically (see example).*
 
 ```typescript
-new Script([
+const script = new Script([
     new While('read -r line', [
         'echo "$line"',
     ]).read('input.txt'),
@@ -317,6 +336,8 @@ new Script([
 ]).dump({
     detailed: { while: { newlinesAfter: 1 } }
 });
+
+console.log(script);
 ```
 
 ```sh
@@ -333,15 +354,17 @@ cat < test.txt
 Writes content to a file. *NOTICE: An existing file gets overwritten.*
 
 ```typescript
-new Script([
+const script = new Script([
     new Command('echo "File content"').write('test.txt'),
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
 #!/bin/sh
 
-echo "File content > test.txt
+echo "File content" > test.txt
 ```
 
 ### Append
@@ -368,13 +391,15 @@ echo "Additional content" >> test.txt
 Pipes the output of a command into another command.
 
 ```typescript
-new Script([
+const script = new Script([
     new Command('cat test.txt')
         .pipe('grep -e "hello"')
         .pipe('cut -d" " -f0')
         .write('test2.txt')
         .setComment('Nice chain!'),
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
@@ -387,7 +412,7 @@ cat test.txt | grep -e "hello" | cut -d" " -f0 > test2.txt # Nice chain!
 Connects two commands with a logical AND. In case of a ConditionBlock instance, this operation adds a new AND-connected condition. *NICE-TO-KNOW: This operation can also be applied to standalone Condition-class instances.*
 
 ```typescript
-new Script([
+const script = new Script([
     new Command('echo "File content"')
         .pipe('grep -o -e "content"')
         .and('echo "ok"'),
@@ -396,6 +421,8 @@ new Script([
         'echo "What a useless comparison"',
     ]),
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
@@ -412,7 +439,7 @@ fi
 Connects two commands with a logical OR. In case of a ConditionBlock instance, this operation adds a new OR-connected condition. *NICE-TO-KNOW: This operation can also be applied to standalone Condition-class instances.*
 
 ```typescript
-new Script([
+const script = new Script([
     new Command('echo "File content"')
         .pipe('grep -o -e "content"')
         .or('echo "nevermind"'),
@@ -421,6 +448,8 @@ new Script([
         'echo "What a useless comparison"',
     ]),
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
@@ -438,7 +467,7 @@ Many Statement- and Block-types support subshelling/evaluation, meaning, the Sta
 
 ```typescript
 const variable = new StringVariable('response');
-new Script([
+const script = new Script([
     'read -p "What\'s your name? " name',
 
     variable.set(
@@ -453,6 +482,8 @@ new Script([
 
     `echo "${variable.value}"`,
 ]).dump();
+
+console.log(script);
 ```
 
 ```sh
@@ -495,6 +526,8 @@ const script = new Script([
     new Command('echo "Second statement"').setComment('Another far away comment.'),
     'echo "Third statement"',
 ]).dump(spacyConfig);
+
+console.log(script);
 ```
 
 ```sh
@@ -604,7 +637,7 @@ console.log(script.dump()); /* Dump the original script. */
 const statement = script.findContent(meta.id)[0];
 
 /* Update the Statement's value and comment. */
-statement.value = 'echo "World';
+statement.statement = 'echo "World"';
 statement.setComment('It has been altered"');
 
 console.log(script.dump()); /* Dump the altered script. */
