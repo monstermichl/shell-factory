@@ -10,7 +10,7 @@ describe('NumberVariable tests', () => {
                 const compareValue = '3';
                 const variable = new NumberVariable(name);
 
-                expect(variable.isEqual(compareValue).value).to.be.equal(`$\{${name}} -eq ${compareValue}`);
+                expect(variable.isEqual(compareValue).value).to.be.equal(`[ $\{${name}} -eq ${compareValue} ]`);
             });
 
             it('number value', () => {
@@ -18,14 +18,14 @@ describe('NumberVariable tests', () => {
                 const compareValue = 3;
                 const variable = new NumberVariable(name);
 
-                expect(variable.isEqual(compareValue).value).to.be.equal(`$\{${name}} -eq ${compareValue}`);
+                expect(variable.isEqual(compareValue).value).to.be.equal(`[ $\{${name}} -eq ${compareValue} ]`);
             });
 
             it('undefined value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.isEqual(undefined as any).value).to.be.equal(`$\{${name}} -eq 0`);
+                expect(variable.isEqual(undefined as any).value).to.be.equal(`[ $\{${name}} -eq 0 ]`);
             });
         });
     });
@@ -37,14 +37,14 @@ describe('NumberVariable tests', () => {
                 const compareValue = 3;
                 const variable = new NumberVariable(name);
 
-                expect(variable.isNotEqual(compareValue).value).to.be.equal(`$\{${name}} -ne ${compareValue}`);
+                expect(variable.isNotEqual(compareValue).value).to.be.equal(`[ $\{${name}} -ne ${compareValue} ]`);
             });
 
             it('undefined value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.isNotEqual(undefined as any).value).to.be.equal(`$\{${name}} -ne 0`);
+                expect(variable.isNotEqual(undefined as any).value).to.be.equal(`[ $\{${name}} -ne 0 ]`);
             });
         });
     });
@@ -56,14 +56,14 @@ describe('NumberVariable tests', () => {
                 const compareValue = 3;
                 const variable = new NumberVariable(name);
 
-                expect(variable.isLess(compareValue).value).to.be.equal(`$\{${name}} -lt ${compareValue}`);
+                expect(variable.isLess(compareValue).value).to.be.equal(`[ $\{${name}} -lt ${compareValue} ]`);
             });
 
             it('undefined value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.isLess(undefined as any).value).to.be.equal(`$\{${name}} -lt 0`);
+                expect(variable.isLess(undefined as any).value).to.be.equal(`[ $\{${name}} -lt 0 ]`);
             });
         });
     });
@@ -75,14 +75,14 @@ describe('NumberVariable tests', () => {
                 const compareValue = 3;
                 const variable = new NumberVariable(name);
 
-                expect(variable.isLessOrEqual(compareValue).value).to.be.equal(`$\{${name}} -le ${compareValue}`);
+                expect(variable.isLessOrEqual(compareValue).value).to.be.equal(`[ $\{${name}} -le ${compareValue} ]`);
             });
 
             it('undefined value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.isLessOrEqual(undefined as any).value).to.be.equal(`$\{${name}} -le 0`);
+                expect(variable.isLessOrEqual(undefined as any).value).to.be.equal(`[ $\{${name}} -le 0 ]`);
             });
         });
     });
@@ -94,14 +94,14 @@ describe('NumberVariable tests', () => {
                 const compareValue = 3;
                 const variable = new NumberVariable(name);
 
-                expect(variable.isGreater(compareValue).value).to.be.equal(`$\{${name}} -gt ${compareValue}`);
+                expect(variable.isGreater(compareValue).value).to.be.equal(`[ $\{${name}} -gt ${compareValue} ]`);
             });
 
             it('undefined value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.isGreater(undefined as any).value).to.be.equal(`$\{${name}} -gt 0`);
+                expect(variable.isGreater(undefined as any).value).to.be.equal(`[ $\{${name}} -gt 0 ]`);
             });
         });
     });
@@ -113,14 +113,14 @@ describe('NumberVariable tests', () => {
                 const compareValue = 3;
                 const variable = new NumberVariable(name);
 
-                expect(variable.isGreaterOrEqual(compareValue).value).to.be.equal(`$\{${name}} -ge ${compareValue}`);
+                expect(variable.isGreaterOrEqual(compareValue).value).to.be.equal(`[ $\{${name}} -ge ${compareValue} ]`);
             });
 
             it('undefined value', () => {
                 const name = 'test';
                 const variable = new NumberVariable(name);
 
-                expect(variable.isGreaterOrEqual(undefined as any).value).to.be.equal(`$\{${name}} -ge 0`);
+                expect(variable.isGreaterOrEqual(undefined as any).value).to.be.equal(`[ $\{${name}} -ge 0 ]`);
             });
         });
     });

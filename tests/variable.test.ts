@@ -167,7 +167,7 @@ describe('Variable tests', () => {
                 const compareValue = 4;
                 const variable = new VariableHelper(name);
 
-                expect(variable.compare(2, `${compareValue}`).value).to.be.equal(`$\{${name}} = ${compareValue}`);
+                expect(variable.compare(2, `${compareValue}`).value).to.be.equal(`[ $\{${name}} = ${compareValue} ]`);
             });
         });
 
