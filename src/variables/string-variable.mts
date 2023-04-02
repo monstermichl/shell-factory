@@ -1,10 +1,6 @@
 import { Statement } from '../base/statement.mjs';
-import {
-    Variable,
-    VariableStatement,
-} from '../base/variable.mjs';
+import { Variable } from '../base/variable.mjs';
 import { wrapInQuotes } from '../helpers/string.mjs';
-import { Subshell } from '../components/subshell/subshell.mjs';
 import { Command } from '../base/command.mjs';
 import { Condition } from '../components/condition/condition.mjs';
 
@@ -146,9 +142,29 @@ export class StringVariable extends Variable {
      * @returns Length evaluation Statement.
      */
     public get length(): Statement {
-        return new VariableStatement(
-            Subshell.eval(`expr length "${this.value}"`),
-        );
+        return new Command(`expr length "${this.value}"`).eval();
+    }
+
+    /**
+     * Converts the variable's value to uppercase. As shortcuts for
+     * string-casing (e.g., ${var^^foo}) are not available in the
+     * Bourne shell, casing is implemented using tr, which according
+     * to https://en.wikipedia.org/wiki/List_of_Unix_commands is a
+     * mandatory Unix-utility.
+     */
+    public get uppercase(): Statement {
+        return this._toCase(true);
+    }
+
+    /**
+     * Converts the variable's value to lowercase. As shortcuts for
+     * string-casing (e.g., ${var,,foo}) are not available in the
+     * Bourne shell, casing is implemented using tr, which according
+     * to https://en.wikipedia.org/wiki/List_of_Unix_commands is a
+     * mandatory Unix-utility.
+     */
+    public get lowercase(): Statement {
+        return this._toCase(false);
     }
 
     /**
@@ -182,7 +198,7 @@ export class StringVariable extends Variable {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public append(value?: any): Statement {
         value = this._convertValueToString(value);
-        return new VariableStatement(`${this.value}${value}`);
+        return new Command(`${this.value}${value}`);
     }
 
     /**
@@ -372,9 +388,9 @@ export class StringVariable extends Variable {
 
         /* Echo string value into sed to perform replacement. TODO: Use different
            separator if string contains slash. */
-        return new VariableStatement(
-            Subshell.eval(`echo "${this.value}" | sed "s/${searchValue}/${replaceValue}/${all ? 'g': ''}"`),
-        );
+        return new Command(`echo "${this.value}"`)
+            .pipe(`sed "s/${searchValue}/${replaceValue}/${all ? 'g': ''}"`)
+            .eval();
     }
 
     /**
@@ -415,7 +431,7 @@ export class StringVariable extends Variable {
         start++;
 
         /* FYI: There might be a better solution than using expr. */
-        return new VariableStatement(Subshell.eval(`expr substr "${this.value}" ${start} ${lengthString}`));
+        return new Command(`expr substr "${this.value}" ${start} ${lengthString}`).eval();
     }
 
     /**
@@ -457,5 +473,24 @@ export class StringVariable extends Variable {
      */
     protected _convertValue(value?: string): string {
         return wrapInQuotes(value || '', true);
+    }
+
+    /**
+     * Converts the variable's value to upper- or lowercase. As shortcuts for
+     * string-casing (e.g., ${var,,foo}) are not available in the Bourne shell,
+     * casing is implemented using tr, which according to
+     * https://en.wikipedia.org/wiki/List_of_Unix_commands
+     * is a mandatory Unix-utility.
+     */
+    private _toCase(upper: boolean): Statement {
+        let conversion = ['[:upper:]', '[:lower:]'];
+
+        /* If uppercase is required, flip the conversion order. */
+        if (upper) {
+            conversion = conversion.reverse();
+        }
+        return new Command(`echo "${this.value}"`)
+            .pipe(`tr ${conversion.join(' ')}`)
+            .eval();
     }
 }

@@ -86,6 +86,28 @@ describe('StringVariable tests', () => {
         });
     });
 
+    describe('uppercase', () => {
+        describe('successful', () => {
+            it('test', () => {
+                const name = 'test';
+                const variable = new StringVariable(name);
+
+                expect(variable.uppercase.value).to.be.equal(`$(echo "${variable.value}" | tr [:lower:] [:upper:])`);
+            });
+        });
+    });
+
+    describe('lowercase', () => {
+        describe('successful', () => {
+            it('test', () => {
+                const name = 'test';
+                const variable = new StringVariable(name);
+
+                expect(variable.lowercase.value).to.be.equal(`$(echo "${variable.value}" | tr [:upper:] [:lower:])`);
+            });
+        });
+    });
+
     describe('append', () => {
         describe('successful', () => {
             it('string value', () => {
