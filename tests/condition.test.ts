@@ -66,6 +66,19 @@ describe('Condition tests', () => {
                 expect(condition.value).to.equal(`[ ${s} ]`);
             });
         });
+
+        describe('successful', () => {
+            it('nested conditions', () => {
+                const condition1 = '1 -eq 1';
+                const nestedCondition1 = '2 -eq 2';
+                const nestedCondition2 = '3 -eq 3';
+                const condition = new Condition(condition1).and(
+                    new Condition(nestedCondition1).or(nestedCondition2),
+                );
+
+                expect(condition.value).to.equal(`[ ${condition1} -a \\( ${nestedCondition1} -o ${nestedCondition2} \\) ]`);
+            });
+        });
     });
 
     describe('test', () => {

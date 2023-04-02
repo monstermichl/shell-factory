@@ -378,7 +378,13 @@ export class Condition extends Statement implements IConditionable,
 
         /* Add linked conditions. */
         this._chain.forEach((element) => {
-            conditionString += ` ${element.type === LogicalConnectType.And ? '-a' : '-o'} ${element.target._getValue(false)}`;
+            const subcondition = (element.target.chain.length > 0);
+            const startBracket = subcondition ? '\\( ' : '';
+            const endBracket = subcondition ? ' \\)' : '';
+
+            conditionString += ` ${element.type === LogicalConnectType.And ? '-a' : '-o'} ${startBracket}${
+                element.target._getValue(false)
+            }${endBracket}`;
         });
         return `${conditionString}${test ? ' ]' : ''}`;  /* If tested, surround with brackets. */
     }
