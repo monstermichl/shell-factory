@@ -11,7 +11,7 @@ Each shell-script is built with the Script-class which serves as the container f
 ### Command
 A command represents a single line of code. It can be a string or an instance of the Command class. Usually, a simple string is sufficient. However, the Command class inherits from the Statement class which offers additional functionalities like having an ID for later adjustment or adding comments which will be added to the generated code. For further modification commands also can be chained with several operators (see [Operations](#operations)).
 
-*To give you a head start with regularly used commands, please have a look at the [common commands collection (shell-factory-cocos)](https://github.com/monstermichl/shell-factory-cocos).*
+*To give you a jump start using regularely used commands, please refer to the [common commands collection (shell-factory-cocos)](https://github.com/monstermichl/shell-factory-cocos).*
 
 ```typescript
 const script = new Script([
