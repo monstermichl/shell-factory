@@ -66,11 +66,16 @@
   ],
   "keywords": [
     "bourne",
+    "bash",
     "shell",
     "generator",
     "builder",
     "typescript",
     "dynamically",
     "chainable"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/monstermichl/shell-factory.git"
+  }
 }
