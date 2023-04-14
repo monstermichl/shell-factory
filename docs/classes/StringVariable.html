@@ -25,7 +25,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">StringVariable</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L25">variables/string-variable.mts:25</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L21">variables/string-variable.mts:21</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -47,8 +47,10 @@
 <a href="StringVariable.html#isNotEmpty" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>is<wbr/>Not<wbr/>Empty</span></a>
 <a href="StringVariable.html#length" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>length</span></a>
 <a href="StringVariable.html#local" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>local</span></a>
+<a href="StringVariable.html#lowercase" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>lowercase</span></a>
 <a href="StringVariable.html#name" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>name</span></a>
 <a href="StringVariable.html#statement" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>statement</span></a>
+<a href="StringVariable.html#uppercase" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>uppercase</span></a>
 <a href="StringVariable.html#value" class="tsd-index-link tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg><span>value</span></a>
 </div></section>
 <section class="tsd-index-section">
@@ -58,6 +60,7 @@
 <a href="StringVariable.html#_convertValue" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>_convert<wbr/>Value</span></a>
 <a href="StringVariable.html#_convertValueInternal" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>_convert<wbr/>Value<wbr/>Internal</span></a>
 <a href="StringVariable.html#_convertValueToString" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>_convert<wbr/>Value<wbr/>To<wbr/>String</span></a>
+<a href="StringVariable.html#_toCase" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-private"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>_to<wbr/>Case</span></a>
 <a href="StringVariable.html#append" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>append</span></a>
 <a href="StringVariable.html#clearComment" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>clear<wbr/>Comment</span></a>
 <a href="StringVariable.html#compareIdOrPattern" class="tsd-index-link tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</span></a>
@@ -95,7 +98,7 @@
 <h4 class="tsd-returns-title">Returns <a href="StringVariable.html" class="tsd-signature-type" data-tsd-kind="Class">StringVariable</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#constructor">constructor</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L113">base/variable.mts:113</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L113">base/variable.mts:113</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="_statement" class="tsd-anchor"></a>
@@ -103,7 +106,7 @@
 <div class="tsd-signature">_statement<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#_statement">_statement</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/statement.mts#L13">base/statement.mts:13</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/statement.mts#L13">base/statement.mts:13</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Accessors</h2>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a id="comment" class="tsd-anchor"></a>
@@ -116,7 +119,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from Variable.comment</p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/base.mts#L35">base/base.mts:35</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/base.mts#L35">base/base.mts:35</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a id="id" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>id</span><a href="#id" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
@@ -127,7 +130,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from Variable.id</p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/base.mts#L28">base/base.mts:28</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/base.mts#L28">base/base.mts:28</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="isEmpty" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Empty</span><a href="#isEmpty" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
@@ -139,7 +142,7 @@
 </div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L130">variables/string-variable.mts:130</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L126">variables/string-variable.mts:126</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="isNotEmpty" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Not<wbr/>Empty</span><a href="#isNotEmpty" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
@@ -151,7 +154,7 @@
 </div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L139">variables/string-variable.mts:139</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L135">variables/string-variable.mts:135</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="length" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>length</span><a href="#length" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
@@ -163,7 +166,7 @@
 </div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L148">variables/string-variable.mts:148</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L144">variables/string-variable.mts:144</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a id="local" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>local</span><a href="#local" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
@@ -174,7 +177,21 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <p>Inherited from Variable.local</p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L142">base/variable.mts:142</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L142">base/variable.mts:142</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="lowercase" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>lowercase</span><a href="#lowercase" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+<li class="tsd-signature" id="lowercase.lowercase-1"><span class="tsd-signature-symbol">get</span> lowercase<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Converts the variable&#39;s value to lowercase. As shortcuts for
+string-casing (e.g., ${var,,foo}) are not available in the
+Bourne shell, casing is implemented using tr, which according
+to <a href="https://en.wikipedia.org/wiki/List_of_Unix_commands">https://en.wikipedia.org/wiki/List_of_Unix_commands</a> is a
+mandatory Unix-utility.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L166">variables/string-variable.mts:166</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a id="name" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>name</span><a href="#name" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
@@ -187,7 +204,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from Variable.name</p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L135">base/variable.mts:135</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L135">base/variable.mts:135</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a id="statement" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>statement</span><a href="#statement" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
@@ -200,7 +217,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from Variable.statement</p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/statement.mts#L50">base/statement.mts:50</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/statement.mts#L50">base/statement.mts:50</a></li></ul></aside></li>
 <li class="tsd-signature" id="statement.statement-2"><span class="tsd-signature-symbol">set</span> statement<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Sets the Statement value.</p>
@@ -213,7 +230,21 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Inherited from Variable.statement</p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/statement.mts#L57">base/statement.mts:57</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/statement.mts#L57">base/statement.mts:57</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="uppercase" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>uppercase</span><a href="#uppercase" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+<li class="tsd-signature" id="uppercase.uppercase-1"><span class="tsd-signature-symbol">get</span> uppercase<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Converts the variable&#39;s value to uppercase. As shortcuts for
+string-casing (e.g., ${var^^foo}) are not available in the
+Bourne shell, casing is implemented using tr, which according
+to <a href="https://en.wikipedia.org/wiki/List_of_Unix_commands">https://en.wikipedia.org/wiki/List_of_Unix_commands</a> is a
+mandatory Unix-utility.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L155">variables/string-variable.mts:155</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a id="value" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>value</span><a href="#value" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
@@ -226,7 +257,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from Variable.value</p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L151">base/variable.mts:151</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L151">base/variable.mts:151</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="_buildCompareString" class="tsd-anchor"></a>
@@ -253,7 +284,7 @@ value and the variable.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Overrides <a href="Variable.html">Variable</a>.<a href="Variable.html#_buildCompareString">_buildCompareString</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L430">variables/string-variable.mts:430</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L446">variables/string-variable.mts:446</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="_compare" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_compare</span><a href="#_compare" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited">
@@ -279,7 +310,7 @@ method.</p>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#_compare">_compare</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L336">base/variable.mts:336</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L336">base/variable.mts:336</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a id="_convertValue" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_convert<wbr/>Value</span><a href="#_convertValue" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
@@ -299,7 +330,7 @@ method.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Overrides <a href="Variable.html">Variable</a>.<a href="Variable.html#_convertValue">_convertValue</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L458">variables/string-variable.mts:458</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L474">variables/string-variable.mts:474</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="_convertValueInternal" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_convert<wbr/>Value<wbr/>Internal</span><a href="#_convertValueInternal" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited">
@@ -320,7 +351,7 @@ _convertValue method.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#_convertValueInternal">_convertValueInternal</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L253">base/variable.mts:253</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L253">base/variable.mts:253</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="_convertValueInternal._convertValueInternal-2">_convert<wbr/>Value<wbr/>Internal<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#_convertValueInternal._convertValueInternal-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Converts the provided value to a string and passes it the the subclass&#39;
@@ -338,7 +369,7 @@ _convertValue method.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#_convertValueInternal">_convertValueInternal</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L261">base/variable.mts:261</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L261">base/variable.mts:261</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="_convertValueInternal._convertValueInternal-3">_convert<wbr/>Value<wbr/>Internal<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#_convertValueInternal._convertValueInternal-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Converts the provided value to a string and passes it the the subclass&#39;
@@ -356,7 +387,7 @@ _convertValue method.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#_convertValueInternal">_convertValueInternal</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L269">base/variable.mts:269</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L269">base/variable.mts:269</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="_convertValueInternal._convertValueInternal-4">_convert<wbr/>Value<wbr/>Internal<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#_convertValueInternal._convertValueInternal-4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Converts the provided value to a string and passes it the the subclass&#39;
@@ -374,7 +405,7 @@ _convertValue method.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#_convertValueInternal">_convertValueInternal</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L277">base/variable.mts:277</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L277">base/variable.mts:277</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a id="_convertValueToString" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_convert<wbr/>Value<wbr/>To<wbr/>String</span><a href="#_convertValueToString" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited">
@@ -394,7 +425,7 @@ _convertValue method.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#_convertValueToString">_convertValueToString</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L290">base/variable.mts:290</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L290">base/variable.mts:290</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="_convertValueToString._convertValueToString-2">_convert<wbr/>Value<wbr/>To<wbr/>String<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#_convertValueToString._convertValueToString-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Converts the provided value to a string.</p>
@@ -411,7 +442,7 @@ _convertValue method.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#_convertValueToString">_convertValueToString</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L297">base/variable.mts:297</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L297">base/variable.mts:297</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="_convertValueToString._convertValueToString-3">_convert<wbr/>Value<wbr/>To<wbr/>String<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#_convertValueToString._convertValueToString-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Converts the provided value to a string.</p>
@@ -428,7 +459,7 @@ _convertValue method.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#_convertValueToString">_convertValueToString</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L304">base/variable.mts:304</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L304">base/variable.mts:304</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="_convertValueToString._convertValueToString-4">_convert<wbr/>Value<wbr/>To<wbr/>String<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#_convertValueToString._convertValueToString-4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Converts the provided value to a string.</p>
@@ -445,7 +476,26 @@ _convertValue method.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#_convertValueToString">_convertValueToString</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L311">base/variable.mts:311</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L311">base/variable.mts:311</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private"><a id="_toCase" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_to<wbr/>Case</span><a href="#_toCase" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+<li class="tsd-signature tsd-anchor-link" id="_toCase._toCase-1">_to<wbr/>Case<span class="tsd-signature-symbol">(</span>upper<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#_toCase._toCase-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Converts the variable&#39;s value to upper- or lowercase. As shortcuts for
+string-casing (e.g., ${var,,foo}) are not available in the Bourne shell,
+casing is implemented using tr, which according to
+<a href="https://en.wikipedia.org/wiki/List_of_Unix_commands">https://en.wikipedia.org/wiki/List_of_Unix_commands</a>
+is a mandatory Unix-utility.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5>upper: <span class="tsd-signature-type">boolean</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L485">variables/string-variable.mts:485</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="append" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>append</span><a href="#append" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -464,7 +514,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L160">variables/string-variable.mts:160</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L176">variables/string-variable.mts:176</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="append.append-2">append<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#append.append-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Appends the provided value to the variable value.</p>
@@ -480,7 +530,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L167">variables/string-variable.mts:167</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L183">variables/string-variable.mts:183</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="append.append-3">append<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#append.append-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Appends the provided value to the variable value.</p>
@@ -496,7 +546,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L174">variables/string-variable.mts:174</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L190">variables/string-variable.mts:190</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="append.append-4">append<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#append.append-4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Appends the provided value to the variable value.</p>
@@ -512,7 +562,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L181">variables/string-variable.mts:181</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L197">variables/string-variable.mts:197</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="clearComment" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>clear<wbr/>Comment</span><a href="#clearComment" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -525,7 +575,7 @@ _convertValue method.</p>
 <h4 class="tsd-returns-title">Returns <a href="StringVariable.html" class="tsd-signature-type" data-tsd-kind="Class">StringVariable</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#clearComment">clearComment</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/base.mts#L55">base/base.mts:55</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/base.mts#L55">base/base.mts:55</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="compareIdOrPattern" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</span><a href="#compareIdOrPattern" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -545,7 +595,7 @@ _convertValue method.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#compareIdOrPattern">compareIdOrPattern</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/statement.mts#L75">base/statement.mts:75</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/statement.mts#L75">base/statement.mts:75</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="compareIdOrPattern.compareIdOrPattern-2">compare<wbr/>Id<wbr/>Or<wbr/>Pattern<span class="tsd-signature-symbol">(</span>idOrPattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#compareIdOrPattern.compareIdOrPattern-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if a Statement matches an ID or a pattern.</p>
@@ -562,7 +612,7 @@ _convertValue method.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#compareIdOrPattern">compareIdOrPattern</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/statement.mts#L82">base/statement.mts:82</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/statement.mts#L82">base/statement.mts:82</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="isEqual" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Equal</span><a href="#isEqual" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -581,7 +631,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L32">variables/string-variable.mts:32</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L28">variables/string-variable.mts:28</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="isEqual.isEqual-2">is<wbr/>Equal<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a><a href="#isEqual.isEqual-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if the variable value and the provided value are equal.</p>
@@ -597,7 +647,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L39">variables/string-variable.mts:39</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L35">variables/string-variable.mts:35</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="isEqual.isEqual-3">is<wbr/>Equal<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a><a href="#isEqual.isEqual-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if the variable value and the provided value are equal.</p>
@@ -613,7 +663,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L46">variables/string-variable.mts:46</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L42">variables/string-variable.mts:42</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="isEqual.isEqual-4">is<wbr/>Equal<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a><a href="#isEqual.isEqual-4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if the variable value and the provided value are equal.</p>
@@ -629,7 +679,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L53">variables/string-variable.mts:53</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L49">variables/string-variable.mts:49</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="isNotEqual" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Not<wbr/>Equal</span><a href="#isNotEqual" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -648,7 +698,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L65">variables/string-variable.mts:65</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L61">variables/string-variable.mts:61</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="isNotEqual.isNotEqual-2">is<wbr/>Not<wbr/>Equal<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a><a href="#isNotEqual.isNotEqual-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if the variable value and the provided value are not equal.</p>
@@ -664,7 +714,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L72">variables/string-variable.mts:72</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L68">variables/string-variable.mts:68</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="isNotEqual.isNotEqual-3">is<wbr/>Not<wbr/>Equal<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a><a href="#isNotEqual.isNotEqual-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if the variable value and the provided value are not equal.</p>
@@ -680,7 +730,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L79">variables/string-variable.mts:79</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L75">variables/string-variable.mts:75</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="isNotEqual.isNotEqual-4">is<wbr/>Not<wbr/>Equal<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a><a href="#isNotEqual.isNotEqual-4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if the variable value and the provided value are not equal.</p>
@@ -696,7 +746,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L86">variables/string-variable.mts:86</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L82">variables/string-variable.mts:82</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="matches" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>matches</span><a href="#matches" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -715,7 +765,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L98">variables/string-variable.mts:98</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L94">variables/string-variable.mts:94</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="matches.matches-2">matches<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a><a href="#matches.matches-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if the variable value matches the pattern.</p>
@@ -731,7 +781,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L105">variables/string-variable.mts:105</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L101">variables/string-variable.mts:101</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="matches.matches-3">matches<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a><a href="#matches.matches-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if the variable value matches the pattern.</p>
@@ -747,7 +797,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L112">variables/string-variable.mts:112</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L108">variables/string-variable.mts:108</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="matches.matches-4">matches<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a><a href="#matches.matches-4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if the variable value matches the pattern.</p>
@@ -763,7 +813,7 @@ _convertValue method.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Condition.html" class="tsd-signature-type" data-tsd-kind="Class">Condition</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L119">variables/string-variable.mts:119</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L115">variables/string-variable.mts:115</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="meta" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>meta</span><a href="#meta" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -786,7 +836,7 @@ the required calls.</p>
 <h4 class="tsd-returns-title">Returns <a href="StringVariable.html" class="tsd-signature-type" data-tsd-kind="Class">StringVariable</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#meta">meta</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/base.mts#L69">base/base.mts:69</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/base.mts#L69">base/base.mts:69</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="replace" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>replace</span><a href="#replace" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -818,7 +868,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L202">variables/string-variable.mts:202</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L218">variables/string-variable.mts:218</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="replace.replace-2">replace<span class="tsd-signature-symbol">(</span>searchValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, replaceValue<span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#replace.replace-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Replaces the search-value in the variable value with the replace-value.
@@ -847,7 +897,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L217">variables/string-variable.mts:217</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L233">variables/string-variable.mts:233</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="replace.replace-3">replace<span class="tsd-signature-symbol">(</span>searchValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, replaceValue<span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#replace.replace-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Replaces the search-value in the variable value with the replace-value.
@@ -876,7 +926,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L232">variables/string-variable.mts:232</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L248">variables/string-variable.mts:248</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="replace.replace-4">replace<span class="tsd-signature-symbol">(</span>searchValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, replaceValue<span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#replace.replace-4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Replaces the search-value in the variable value with the replace-value.
@@ -905,7 +955,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L247">variables/string-variable.mts:247</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L263">variables/string-variable.mts:263</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="replace.replace-5">replace<span class="tsd-signature-symbol">(</span>searchValue<span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a>, replaceValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#replace.replace-5" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Replaces the search-value in the variable value with the replace-value.
@@ -934,7 +984,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L262">variables/string-variable.mts:262</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L278">variables/string-variable.mts:278</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="replace.replace-6">replace<span class="tsd-signature-symbol">(</span>searchValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, replaceValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#replace.replace-6" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Replaces the search-value in the variable value with the replace-value.
@@ -963,7 +1013,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L277">variables/string-variable.mts:277</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L293">variables/string-variable.mts:293</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="replace.replace-7">replace<span class="tsd-signature-symbol">(</span>searchValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, replaceValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#replace.replace-7" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Replaces the search-value in the variable value with the replace-value.
@@ -992,7 +1042,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L292">variables/string-variable.mts:292</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L308">variables/string-variable.mts:308</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="replace.replace-8">replace<span class="tsd-signature-symbol">(</span>searchValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, replaceValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#replace.replace-8" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Replaces the search-value in the variable value with the replace-value.
@@ -1021,7 +1071,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L307">variables/string-variable.mts:307</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L323">variables/string-variable.mts:323</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="replace.replace-9">replace<span class="tsd-signature-symbol">(</span>searchValue<span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a>, replaceValue<span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#replace.replace-9" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Replaces the search-value in the variable value with the replace-value.
@@ -1050,7 +1100,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L322">variables/string-variable.mts:322</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L338">variables/string-variable.mts:338</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="replace.replace-10">replace<span class="tsd-signature-symbol">(</span>searchValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, replaceValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#replace.replace-10" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Replaces the search-value in the variable value with the replace-value.
@@ -1079,7 +1129,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L337">variables/string-variable.mts:337</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L353">variables/string-variable.mts:353</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="replace.replace-11">replace<span class="tsd-signature-symbol">(</span>searchValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, replaceValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#replace.replace-11" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Replaces the search-value in the variable value with the replace-value.
@@ -1108,7 +1158,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L352">variables/string-variable.mts:352</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L368">variables/string-variable.mts:368</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="replace.replace-12">replace<span class="tsd-signature-symbol">(</span>searchValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, replaceValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><a href="#replace.replace-12" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Replaces the search-value in the variable value with the replace-value.
@@ -1137,7 +1187,7 @@ sed-compliant regexp.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L367">variables/string-variable.mts:367</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L383">variables/string-variable.mts:383</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="set" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set</span><a href="#set" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -1159,7 +1209,7 @@ front.</p>
 <h4 class="tsd-returns-title">Returns <a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#set">set</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L163">base/variable.mts:163</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L163">base/variable.mts:163</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="set.set-2">set<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a><a href="#set.set-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Creates an assignment-statement. If the variable is assigned the
@@ -1178,7 +1228,7 @@ front.</p>
 <h4 class="tsd-returns-title">Returns <a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#set">set</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L172">base/variable.mts:172</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L172">base/variable.mts:172</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="set.set-3">set<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a><a href="#set.set-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Creates an assignment-statement. If the variable is assigned the
@@ -1197,7 +1247,7 @@ front.</p>
 <h4 class="tsd-returns-title">Returns <a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#set">set</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L181">base/variable.mts:181</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L181">base/variable.mts:181</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="set.set-4">set<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a><a href="#set.set-4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Creates an assignment-statement. If the variable is assigned the
@@ -1216,7 +1266,7 @@ front.</p>
 <h4 class="tsd-returns-title">Returns <a href="VariableStatement.html" class="tsd-signature-type" data-tsd-kind="Class">VariableStatement</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#set">set</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L190">base/variable.mts:190</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L190">base/variable.mts:190</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="set.set-5">set<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">?: </span><a href="EvalSubshellBlock.html" class="tsd-signature-type" data-tsd-kind="Class">EvalSubshellBlock</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="VariableBlock.html" class="tsd-signature-type" data-tsd-kind="Class">VariableBlock</a><a href="#set.set-5" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Creates an assignment-statement. If the variable is assigned the
@@ -1235,7 +1285,7 @@ front.</p>
 <h4 class="tsd-returns-title">Returns <a href="VariableBlock.html" class="tsd-signature-type" data-tsd-kind="Class">VariableBlock</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#set">set</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/variable.mts#L199">base/variable.mts:199</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/variable.mts#L199">base/variable.mts:199</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="setComment" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Comment</span><a href="#setComment" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -1255,7 +1305,7 @@ front.</p>
 <h4 class="tsd-returns-title">Returns <a href="StringVariable.html" class="tsd-signature-type" data-tsd-kind="Class">StringVariable</a></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#setComment">setComment</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/base.mts#L45">base/base.mts:45</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/base.mts#L45">base/base.mts:45</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="substring" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>substring</span><a href="#substring" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -1278,7 +1328,7 @@ front.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/variables/string-variable.mts#L388">variables/string-variable.mts:388</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/variables/string-variable.mts#L404">variables/string-variable.mts:404</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="compareIdOrPattern-3" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</span><a href="#compareIdOrPattern-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -1302,7 +1352,7 @@ front.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#compareIdOrPattern-3">compareIdOrPattern</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/statement.mts#L96">base/statement.mts:96</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/statement.mts#L96">base/statement.mts:96</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="compareIdOrPattern-3.compareIdOrPattern-5">compare<wbr/>Id<wbr/>Or<wbr/>Pattern<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a>, idOrPattern<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#compareIdOrPattern-3.compareIdOrPattern-5" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Checks if a Statement matches an ID or a pattern.</p>
@@ -1323,7 +1373,7 @@ front.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#compareIdOrPattern-3">compareIdOrPattern</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/statement.mts#L105">base/statement.mts:105</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/statement.mts#L105">base/statement.mts:105</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="convert" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>convert</span><a href="#convert" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -1344,7 +1394,7 @@ the purpose of being callable with a string).</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#convert">convert</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/statement.mts#L127">base/statement.mts:127</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/statement.mts#L127">base/statement.mts:127</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="convert.convert-2">convert<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><a href="Statement.html" class="tsd-signature-type" data-tsd-kind="Class">Statement</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#convert.convert-2" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Converts a statement instance to a string.</p>
@@ -1361,7 +1411,7 @@ the purpose of being callable with a string).</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#convert">convert</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/statement.mts#L134">base/statement.mts:134</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/statement.mts#L134">base/statement.mts:134</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="convert.convert-3">convert<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#convert.convert-3" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Converts a number to a string.</p>
@@ -1378,7 +1428,7 @@ the purpose of being callable with a string).</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#convert">convert</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/statement.mts#L141">base/statement.mts:141</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/statement.mts#L141">base/statement.mts:141</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="convert.convert-4">convert<span class="tsd-signature-symbol">(</span>statement<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#convert.convert-4" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Converts a boolean to a string.</p>
@@ -1395,7 +1445,7 @@ the purpose of being callable with a string).</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Variable.html">Variable</a>.<a href="Variable.html#convert">convert</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/293ee60/src/base/statement.mts#L148">base/statement.mts:148</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/monstermichl/shell-builder/blob/081feeb/src/base/statement.mts#L148">base/statement.mts:148</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -1429,14 +1479,17 @@ the purpose of being callable with a string).</p>
 <li class="tsd-kind-accessor tsd-parent-kind-class"><a href="StringVariable.html#isNotEmpty" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>is<wbr/>Not<wbr/>Empty</a></li>
 <li class="tsd-kind-accessor tsd-parent-kind-class"><a href="StringVariable.html#length" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>length</a></li>
 <li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="StringVariable.html#local" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>local</a></li>
+<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="StringVariable.html#lowercase" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>lowercase</a></li>
 <li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="StringVariable.html#name" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>name</a></li>
 <li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="StringVariable.html#statement" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>statement</a></li>
+<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="StringVariable.html#uppercase" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>uppercase</a></li>
 <li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="StringVariable.html#value" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-262144-path"></use><use href="#icon-262144-text"></use></svg>value</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="StringVariable.html#_buildCompareString" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>_build<wbr/>Compare<wbr/>String</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a href="StringVariable.html#_compare" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>_compare</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="StringVariable.html#_convertValue" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>_convert<wbr/>Value</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a href="StringVariable.html#_convertValueInternal" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>_convert<wbr/>Value<wbr/>Internal</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected tsd-is-inherited"><a href="StringVariable.html#_convertValueToString" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>_convert<wbr/>Value<wbr/>To<wbr/>String</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="StringVariable.html#_toCase" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>_to<wbr/>Case</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="StringVariable.html#append" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>append</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="StringVariable.html#clearComment" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>clear<wbr/>Comment</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="StringVariable.html#compareIdOrPattern" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>compare<wbr/>Id<wbr/>Or<wbr/>Pattern</a></li>
