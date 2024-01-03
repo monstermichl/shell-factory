@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { v4 } from 'uuid';
 
 /**
  * Base class meta-data container.
@@ -19,7 +19,7 @@ export abstract class Base {
      * Base constructor.
      */
     public constructor() {
-        this._id = randomUUID();
+        this._id = v4();
     }
 
     /**

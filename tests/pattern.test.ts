@@ -1,12 +1,12 @@
 import { expect } from 'chai';
-import { randomUUID } from 'crypto';
+import { v4 } from 'uuid';
 import { evaluateIdOrPattern } from '../src/helpers/pattern.mjs';
 
 describe('pattern tests', () => {
     describe('evaluateIdOrPattern', () => {
         describe('successful', () => {
             it('id', () => {
-                const uuid = randomUUID();
+                const uuid = v4();
                 const result = evaluateIdOrPattern(uuid);
 
                 expect(result.isId).to.be.true;
