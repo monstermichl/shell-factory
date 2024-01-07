@@ -6,12 +6,30 @@ import { Statement } from './statement.mjs';
 export type StatementOrBlock = Statement | Block;
 export type StatementOrBlockOrString = StatementOrBlock | string;
 
+type onAddCallback<T> = (block: T, content: StatementOrBlock[]) => void;
+type onInsertCallback<T> = (block: T, position: number, content: StatementOrBlock[]) => void;
+type onMoveCallback<T> = (block: T, target: Block, content: StatementOrBlock[]) => void;
+type onRemoveCallback<T> = (block: T, content: StatementOrBlock[]) => void;
+
+const EVENT_ADD = 'add';
+const EVENT_INSERT = 'insert';
+const EVENT_MOVE = 'move';
+const EVENT_REMOVE = 'remove';
+type EventType = typeof EVENT_ADD | typeof EVENT_INSERT | typeof EVENT_MOVE | typeof EVENT_REMOVE;
+
 /**
  * Represents a container to group a list of Statement- and other
  * Block-objects. New content can be added dynamically.
  */
 export abstract class Block extends Base {
     protected _contentList: StatementOrBlock[] = [];
+
+    private _onCallbacks = {
+        add: [] as onAddCallback<this>[],
+        insert: [] as onInsertCallback<this>[],
+        move: [] as onMoveCallback<this>[],
+        remove: [] as onRemoveCallback<this>[],
+    };
 
     /**
      * Block constructor.
@@ -240,35 +258,8 @@ export abstract class Block extends Base {
      *                      encounters will be moved.
      */
     public moveContent(searchIdOrPattern: string, toId: string, recursive=true, maxEncounters=-1): boolean {
-        let ok = false;
-        let foundContent = this.findContent(searchIdOrPattern, recursive); /* Find content to move. */
-
-        if (foundContent.length) {
-            const targetBlocks = this.findContent(toId);
-
-            if (targetBlocks.length) {
-                const targetBlock = targetBlocks[0];
-
-                /* Make sure target is a block. */
-                if (targetBlock instanceof Block) {
-                    /* Limit encounters if necessary. */
-                    if (maxEncounters >= 0) {
-                        foundContent = foundContent.slice(0, maxEncounters);
-                    }
-
-                    /* Remove encountered content. */
-                    foundContent.forEach((content) => this.removeContent(content.id, recursive));
-
-                    /* Add content at new position. */
-                    targetBlock.addContent(foundContent);
-                    ok = true;
-                }
-            }
-        }
-        return ok;
+        return this._moveContent(searchIdOrPattern, toId, recursive, maxEncounters);
     }
-
-    /* TODO: on('add' | 'remove' | 'insert' | ...) */
 
     /**
      * Searches all entries based on the provided ID or Statement pattern in the
@@ -316,6 +307,102 @@ export abstract class Block extends Base {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public removeContent(arg: any, recursive=false): this {
         return this._removeContent(arg, recursive);
+    }
+
+    /**
+     * Adds a callback that's triggered if content has been added to the block.
+     *
+     * @param event    Event name.
+     * @param callback Callback function.
+     */
+    public on(event: typeof EVENT_ADD, callback: onAddCallback<this>): this;
+    /**
+     * Adds a callback that's triggered if content has been inserted into the block.
+     *
+     * @param event    Event name.
+     * @param callback Callback function.
+     */
+    public on(event: typeof EVENT_INSERT, callback: onInsertCallback<this>): this;
+    /**
+     * Adds a callback that's triggered if content has been moved within the block.
+     *
+     * @param event    Event name.
+     * @param callback Callback function.
+     */
+    public on(event: typeof EVENT_MOVE, callback: onMoveCallback<this>): this;
+    /**
+     * Adds a callback that's triggered if content has been removed from the block.
+     *
+     * @param event    Event name.
+     * @param callback Callback function.
+     */
+    public on(event: typeof EVENT_REMOVE, callback: onRemoveCallback<this>): this;
+    public on(event: EventType, callback: unknown): this {
+        function addCallback<T>(list: T[]) {
+            const found = !!list.find((entry) => entry === (callback as T));
+
+            if (!found) {
+                list.push(callback as T);
+            }
+        }
+
+        if (event && callback) {
+            switch (event) {
+                case EVENT_ADD: addCallback(this._onCallbacks.add); break;
+                case EVENT_INSERT: addCallback(this._onCallbacks.insert); break;
+                case EVENT_MOVE: addCallback(this._onCallbacks.move); break;
+                case EVENT_REMOVE: addCallback(this._onCallbacks.remove); break;
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Removes a callback that's triggered if content has been added to the block.
+     *
+     * @param event    Event name.
+     * @param callback Callback function.
+     */
+    public off(event: typeof EVENT_ADD, callback: onAddCallback<this>): this;
+    /**
+     * Removes a callback that's triggered if content has been inserted into the block.
+     *
+     * @param event    Event name.
+     * @param callback Callback function.
+     */
+    public off(event: typeof EVENT_INSERT, callback: onInsertCallback<this>): this;
+    /**
+     * Removes a callback that's triggered if content has been moved within the block.
+     *
+     * @param event    Event name.
+     * @param callback Callback function.
+     */
+    public off(event: typeof EVENT_MOVE, callback: onMoveCallback<this>): this;
+    /**
+     * Removes a callback that's triggered if content has been removed from the block.
+     *
+     * @param event    Event name.
+     * @param callback Callback function.
+     */
+    public off(event: typeof EVENT_REMOVE, callback: onRemoveCallback<this>): this;
+    public off(event: EventType, callback: unknown): this {
+        function removeCallback<T>(list: T[]) {
+            const foundIndex = list.findIndex((entry) => entry === (callback as T));
+
+            if (foundIndex >= 0) {
+                list.splice(foundIndex, 1);
+            }
+        }
+
+        if (event && callback) {
+            switch (event) {
+                case EVENT_ADD: removeCallback(this._onCallbacks.add); break;
+                case EVENT_INSERT: removeCallback(this._onCallbacks.insert); break;
+                case EVENT_MOVE: removeCallback(this._onCallbacks.move); break;
+                case EVENT_REMOVE: removeCallback(this._onCallbacks.remove); break;
+            }
+        }
+        return this;
     }
 
     /**
@@ -398,7 +485,7 @@ export abstract class Block extends Base {
     protected _insertContent(position: number, content: StatementOrBlockOrString[]): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     protected _insertContent(position: number, content: any): this | null {
-        let contentTyped;
+        let contentTyped: StatementOrBlock[] | null;
 
         /* No position check required, splice does that for us. */
         if (content) {
@@ -406,6 +493,9 @@ export abstract class Block extends Base {
 
             if (contentTyped) {
                 this._contentList.splice(position, 0, ...contentTyped as StatementOrBlock[]);
+
+                /* Inform subscribers. */
+                this._onCallbacks.insert.forEach((callback) => callback(this, position, contentTyped));
             }
         }
         return contentTyped ? this : null;
@@ -466,8 +556,53 @@ export abstract class Block extends Base {
 
         if (contentTyped) {
             this._contentList.push(...contentTyped as StatementOrBlock[]);
+
+            /* Inform subscribers. */
+            this._onCallbacks.add.forEach((callback) => callback(this, contentTyped));
         }
         return contentTyped ? this : null;
+    }
+
+    /**
+     * Moves content to a different block.
+     *
+     * @param searchId      Content ID or Statement pattern.
+     * @param toId          ID of the block where to move the content to.
+     * @param recursive     The id will also be searched in all sub-blocks.
+     * @param maxEncounters Sets a content upper limit if more than one content
+     *                      entry has been found. If it's less than 0, all
+     *                      encounters will be moved.
+     */
+    public _moveContent(searchIdOrPattern: string, toId: string, recursive: boolean, maxEncounters: number): boolean {
+        let ok = false;
+        let foundContent = this.findContent(searchIdOrPattern, recursive); /* Find content to move. */
+
+        if (foundContent.length) {
+            const targetBlocks = this.findContent(toId);
+
+            if (targetBlocks.length) {
+                const targetBlock = targetBlocks[0];
+
+                /* Make sure target is a block. */
+                if (targetBlock instanceof Block) {
+                    /* Limit encounters if necessary. */
+                    if (maxEncounters >= 0) {
+                        foundContent = foundContent.slice(0, maxEncounters);
+                    }
+                    ok = true;
+
+                    /* Remove encountered content. */
+                    foundContent.forEach((content) => this.removeContent(content.id, recursive));
+
+                    /* Add content at new position. */
+                    targetBlock.addContent(foundContent);
+
+                    /* Inform subscribers. */
+                    this._onCallbacks.move.forEach((callback) => callback(this, targetBlock, foundContent));
+                }
+            }
+        }
+        return ok;
     }
 
     /**
@@ -513,25 +648,29 @@ export abstract class Block extends Base {
      *
      * @param idOrPattern Content ID or Statement pattern.
      * @param recursive   The id will also be searched in all sub-blocks.
+     * @param collected   Internal list to keep track of the deleted content.
+     * @param level       Internal index to keep track of the recursion level.
      *
      * @returns The current object.
      */
-    protected _removeContent(idOrPattern: string, recursive?: boolean): this;
+    protected _removeContent(idOrPattern: string, recursive?: boolean, collected?: StatementOrBlock[], level?: number): this;
     /**
      * Removes all entries based on the provided ID or Statement pattern from the content-list.
      *
      * @param pattern   Content ID or Statement pattern.
      * @param recursive The id will also be searched in all sub-blocks.
+     * @param collected Internal list to keep track of the deleted content.
+     * @param level     Internal index to keep track of the recursion level.
      *
      * @returns The current object.
      */
-    protected _removeContent(pattern: RegExp, recursive?: boolean): this;
+    protected _removeContent(pattern: RegExp, recursive?: boolean, collected?: StatementOrBlock[], level?: number): this;
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    protected _removeContent(arg: any, recursive=false): this {
+    protected _removeContent(arg: any, recursive=false, collected=[] as StatementOrBlock[], level=0): this {
         /* Iterate from back to front to be able to remove entries. */
         for (let i = this._contentList.length - 1; i >= 0; --i) {
             if (this._compareIdOrPattern(this._contentList[i], arg)) {
-                this._contentList.splice(i, 1);
+                collected.push(...this._contentList.splice(i, 1));
             }
         }
 
@@ -539,9 +678,14 @@ export abstract class Block extends Base {
         if (recursive) {
             this._contentList.forEach((entry) => {
                 if (entry instanceof Block) {
-                    entry.removeContent(arg, recursive);
+                    entry._removeContent(arg, recursive, collected, level + 1);
                 }
             });
+        }
+
+        if (level === 0) {
+            /* Inform subscribers. */
+            this._onCallbacks.remove.forEach((callback) => callback(this, collected));
         }
         return this;
     }
