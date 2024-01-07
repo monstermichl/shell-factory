@@ -229,7 +229,45 @@ export abstract class Block extends Base {
         return this._addContent(content);
     }
 
-    /* TODO: moveContent */
+    /**
+     * Moves content to a different block.
+     *
+     * @param searchId      Content ID or Statement pattern.
+     * @param toId          ID of the block where to move the content to.
+     * @param recursive     The id will also be searched in all sub-blocks.
+     * @param maxEncounters Sets a content upper limit if more than one content
+     *                      entry has been found. If it's less than 0, all
+     *                      encounters will be moved.
+     */
+    public moveContent(searchIdOrPattern: string, toId: string, recursive=true, maxEncounters=-1): boolean {
+        let ok = false;
+        let foundContent = this.findContent(searchIdOrPattern, recursive); /* Find content to move. */
+
+        if (foundContent.length) {
+            const targetBlocks = this.findContent(toId);
+
+            if (targetBlocks.length) {
+                const targetBlock = targetBlocks[0];
+
+                /* Make sure target is a block. */
+                if (targetBlock instanceof Block) {
+                    /* Limit encounters if necessary. */
+                    if (maxEncounters >= 0) {
+                        foundContent = foundContent.slice(0, maxEncounters);
+                    }
+
+                    /* Remove encountered content. */
+                    foundContent.forEach((content) => this.removeContent(content.id, recursive));
+
+                    /* Add content at new position. */
+                    targetBlock.addContent(foundContent);
+                    ok = true;
+                }
+            }
+        }
+        return ok;
+    }
+
     /* TODO: on('add' | 'remove' | 'insert' | ...) */
 
     /**
