@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { MetaData } from '../src/base/base.mjs';
-import { Block } from '../src/base/block.mjs';
+import { Block, StatementOrBlock } from '../src/base/block.mjs';
 import { Command } from '../src/base/command.mjs';
 
 /* Helper class to instantiate Block. */
@@ -311,6 +311,114 @@ describe('Block tests', () => {
         });
     });
 
+    describe('moveContent', () => {
+        describe('successful', () => {
+            it('move single content non recursive', () => {
+                const statement = 'echo 123';
+                const subBlock = new BlockHelper();
+                const mainBlock = new BlockHelper([statement, subBlock]);
+                const mainContent = mainBlock.content;
+                const subContent = subBlock.content;
+
+                expect(mainContent.length).to.be.equal(2);
+                expect((mainContent[0] as Command).value).to.be.equal(statement);
+                expect(subContent.length).to.be.equal(0);
+
+                expect(mainBlock.moveContent(statement, subBlock.id, false)).to.be.true;
+
+                expect(mainContent.length).to.be.equal(1);
+                expect(subContent.length).to.be.equal(1);
+                expect((subContent[0] as Command).value).to.be.equal(statement);
+            });
+
+            it('move single content recursive', () => {
+                const statement = 'echo 123';
+                const subBlock1 = new BlockHelper(statement);
+                const subBlock2 = new BlockHelper();
+                const mainBlock = new BlockHelper([subBlock1, subBlock2]);
+                const mainContent = mainBlock.content;
+                const subContent1 = subBlock1.content;
+                const subContent2 = subBlock2.content;
+
+                expect(mainContent.length).to.be.equal(2);
+                expect(subContent1.length).to.be.equal(1);
+                expect((subContent1[0] as Command).value).to.be.equal(statement);
+                expect(subContent2.length).to.be.equal(0);
+
+                expect(mainBlock.moveContent(statement, subBlock2.id)).to.be.true;
+
+                expect(mainContent.length).to.be.equal(2);
+                expect(subContent1.length).to.be.equal(0);
+                expect(subContent2.length).to.be.equal(1);
+                expect((subContent2[0] as Command).value).to.be.equal(statement);
+            });
+
+            it('move single content', () => {
+                const statement = 'echo 123';
+                const subBlock = new BlockHelper();
+                const mainBlock = new BlockHelper([statement, statement, subBlock]);
+                const mainContent = mainBlock.content;
+                const subContent = subBlock.content;
+
+                expect(mainContent.length).to.be.equal(3);
+                expect((mainContent[0] as Command).value).to.be.equal(statement);
+                expect((mainContent[1] as Command).value).to.be.equal(statement);
+                expect(subContent.length).to.be.equal(0);
+
+                expect(mainBlock.moveContent(statement, subBlock.id, false)).to.be.true;
+
+                expect(mainContent.length).to.be.equal(1);
+                expect(subContent.length).to.be.equal(2);
+                expect((subContent[0] as Command).value).to.be.equal(statement);
+                expect((subContent[1] as Command).value).to.be.equal(statement);
+            });
+
+            it('move single content limited', () => {
+                const statement = 'echo 123';
+                const subBlock = new BlockHelper();
+                const mainBlock = new BlockHelper([statement, statement, subBlock]);
+                const mainContent = mainBlock.content;
+                const subContent = subBlock.content;
+
+                expect(mainContent.length).to.be.equal(3);
+                expect((mainContent[0] as Command).value).to.be.equal(statement);
+                expect((mainContent[1] as Command).value).to.be.equal(statement);
+                expect(subContent.length).to.be.equal(0);
+
+                expect(mainBlock.moveContent(statement, subBlock.id, false, 1)).to.be.true;
+
+                expect(mainContent.length).to.be.equal(2);
+                expect((mainContent[0] as Command).value).to.be.equal(statement);
+                expect(subContent.length).to.be.equal(1);
+                expect((subContent[0] as Command).value).to.be.equal(statement);
+            });
+        });
+
+        describe('failed', () => {
+            it('move single content non recursive', () => {
+                const statement = 'echo 123';
+                const subBlock1 = new BlockHelper(statement);
+                const subBlock2 = new BlockHelper();
+                const mainBlock = new BlockHelper([subBlock1, subBlock2]);
+                const mainContent = mainBlock.content;
+                const subContent1 = subBlock1.content;
+                const subContent2 = subBlock2.content;
+
+                expect(mainContent.length).to.be.equal(2);
+                expect(subContent1.length).to.be.equal(1);
+                expect((subContent1[0] as Command).value).to.be.equal(statement);
+                expect(subContent2.length).to.be.equal(0);
+
+                expect(mainBlock.moveContent(statement, subBlock2.id, false)).to.be.false;
+
+                expect(mainContent.length).to.be.equal(2);
+                expect(subContent1.length).to.be.equal(1);
+                expect((subContent1[0] as Command).value).to.be.equal(statement);
+                expect(subContent2.length).to.be.equal(0);
+            });
+        });
+    });
+
     describe('insertContent', () => {
         describe('successful', () => {
             it('insert string statement content', () => {
@@ -501,6 +609,91 @@ describe('Block tests', () => {
                         'echo "Hello World"',
                     ]).removeContent({} as any)
                 }).to.throw('Invalid ID or pattern type');
+            });
+        });
+    });
+
+    describe('on', () => {
+        describe('successful', () => {
+            it('add', (done) => {
+                const statement = 'echo 123';
+                const block = new BlockHelper();
+                const callback = (blockTemp: BlockHelper, contentTemp: StatementOrBlock[]) => {
+                    expect(blockTemp).to.be.equal(block);
+                    expect(blockTemp.content.length).to.be.equal(1);
+                    expect(contentTemp.length).to.be.equal(1);
+                    expect((contentTemp[0] as Command).value).to.be.equal(statement);
+
+                    /* Unregister callback. */
+                    block.off('add', callback);
+
+                    done();
+                };
+                block.on('add', callback);
+                block.addContent(statement);
+            });
+
+            it('insert', (done) => {
+                const statement1 = 'echo 123';
+                const statement2 = 'echo 456';
+                const block = new BlockHelper(statement1);
+                const callback = (blockTemp: BlockHelper, position: number, contentTemp: StatementOrBlock[]) => {
+                    expect(position).to.be.equal(0);
+                    expect(blockTemp).to.be.equal(block);
+                    expect(blockTemp.content.length).to.be.equal(2);
+                    expect(contentTemp.length).to.be.equal(1);
+                    expect((contentTemp[0] as Command).value).to.be.equal(statement2);
+
+                    /* Unregister callback. */
+                    block.off('insert', callback);
+
+                    done();
+                };
+                block.on('insert', callback);
+                block.insertContent(0, statement2);
+            });
+
+            it('move', (done) => {
+                const statement = 'echo 123';
+                const subBlock = new BlockHelper(statement);
+                const mainBlock = new BlockHelper([statement, subBlock]);
+                const callback = (blockTemp: BlockHelper, target: BlockHelper, contentTemp: StatementOrBlock[]) => {
+                    expect(blockTemp).to.be.equal(mainBlock);
+                    expect(target).to.be.equal(subBlock);
+                    expect(blockTemp.content.length).to.be.equal(1);
+                    expect(target.content.length).to.be.equal(2);
+                    expect(contentTemp.length).to.be.equal(2);
+                    expect((subBlock.content[0] as Command).value).to.be.equal(statement);
+                    expect((subBlock.content[1] as Command).value).to.be.equal(statement);
+
+                    /* Unregister callback. */
+                    mainBlock.off('move', callback);
+
+                    done();
+                };
+                mainBlock.on('move', callback);
+                expect(mainBlock.moveContent(statement, subBlock.id)).to.be.true;
+            });
+
+            it('remove', (done) => {
+                const statement = 'echo 123';
+                const subBlock = new BlockHelper(statement);
+                const mainBlock = new BlockHelper([statement, subBlock]);
+                const callback = (blockTemp: BlockHelper, removedContentTemp: StatementOrBlock[]) => {
+                    expect(blockTemp).to.be.equal(mainBlock);
+                    expect(mainBlock.content.length).to.be.equal(1);
+                    expect(subBlock.content.length).to.be.equal(0);
+                    expect(removedContentTemp.length).to.be.equal(2);
+                    expect((removedContentTemp[0] as Command).value).to.be.equal(statement);
+                    expect((removedContentTemp[1] as Command).value).to.be.equal(statement);
+
+                    /* Unregister callback. */
+                    mainBlock.off('remove', callback);
+
+                    done();
+                };
+                mainBlock.on('remove', callback);
+                mainBlock.removeContent(statement, true);
             });
         });
     });
