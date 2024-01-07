@@ -229,6 +229,9 @@ export abstract class Block extends Base {
         return this._addContent(content);
     }
 
+    /* TODO: moveContent */
+    /* TODO: on('add' | 'remove' | 'insert' | ...) */
+
     /**
      * Searches all entries based on the provided ID or Statement pattern in the
      * content-list.
