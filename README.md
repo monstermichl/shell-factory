@@ -1,4 +1,4 @@
-# Shell-factory
+# shell-factory
 Shell-factory is a simple yet powerful ESM module that supports you at creating Bourne shell scripts dynamically, using Typescript. Its intuitive syntax and chainable commands take all the hassle of formatting strings manually, and remembering weird syntax away from you and provides you with a rich set of configurations to tailor the dumped script according to your needs.
 
 ```sh
