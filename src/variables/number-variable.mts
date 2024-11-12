@@ -414,7 +414,6 @@ export class NumberVariable extends Variable {
      * @returns Increment Statement.
      */
     public increment(): Statement;
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public increment(): Statement {
         return this.add(1);
     }
@@ -443,7 +442,6 @@ export class NumberVariable extends Variable {
      * @returns Decrement Statement.
      */
     public decrement(): Statement;
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     public decrement(): Statement {
         return this.subtract(1);
     }
