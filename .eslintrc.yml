@@ -20,7 +20,8 @@ ignorePatterns: [
   'tests-build/**/*',
   'docs/**/*',
   'helpers/**/*',
-  node_modules/**/*
+  node_modules/**/*,
+  eslint.config.mjs
 ]
 rules:
   indent: [

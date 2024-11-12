@@ -25,6 +25,7 @@ export default [{
         "docs/**/*",
         "helpers/**/*",
         "node_modules/**/*",
+        "**/eslint.config.mjs",
     ],
 }, ...compat.extends("eslint:recommended", "plugin:@typescript-eslint/recommended"), {
     plugins: {
